@@ -2,7 +2,7 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.kreditbee.android.debug",
+    "package_name": "com.kreditbee.android",
     "sha256_cert_fingerprints":
     ["ED:92:DA:08:AC:C8:F4:10:6E:22:C4:1A:36:19:CB:AB:0C:8F:25:7B:8F:28:9A:7F:B4:EB:9C:9A:04:30:C9:4C"]
   }
@@ -18,7 +18,7 @@
   "relation": ["delegate_permission/common.get_login_creds"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.kreditbee.android.debug",
+    "package_name": "com.kreditbee.android",
     "sha256_cert_fingerprints":
     ["ED:92:DA:08:AC:C8:F4:10:6E:22:C4:1A:36:19:CB:AB:0C:8F:25:7B:8F:28:9A:7F:B4:EB:9C:9A:04:30:C9:4C"]
   }
