@@ -2,9 +2,9 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.kreditbee.android.stage",
+    "package_name": "com.kreditbee.android.debug",
     "sha256_cert_fingerprints":
-    ["B9:B1:6F:A4:1A:F0:87:53:75:0B:D0:1E:64:C0:69:8F:CE:11:E1:10:D7:EC:55:5D:A1:29:A5:FE:64:06:A2:8A"]
+    ["ED:92:DA:08:AC:C8:F4:10:6E:22:C4:1A:36:19:CB:AB:0C:8F:25:7B:8F:28:9A:7F:B4:EB:9C:9A:04:30:C9:4C"]
   }
 },
 {
@@ -18,8 +18,8 @@
   "relation": ["delegate_permission/common.get_login_creds"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.kreditbee.android.stage",
+    "package_name": "com.kreditbee.android.debug",
     "sha256_cert_fingerprints":
-    ["B9:B1:6F:A4:1A:F0:87:53:75:0B:D0:1E:64:C0:69:8F:CE:11:E1:10:D7:EC:55:5D:A1:29:A5:FE:64:06:A2:8A"]
+    ["ED:92:DA:08:AC:C8:F4:10:6E:22:C4:1A:36:19:CB:AB:0C:8F:25:7B:8F:28:9A:7F:B4:EB:9C:9A:04:30:C9:4C"]
   }
 }]
