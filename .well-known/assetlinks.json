@@ -2,8 +2,24 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.example.testjava",
+    "package_name": "com.kreditbee.android.stage",
     "sha256_cert_fingerprints":
-    ["72:61:5B:27:28:74:07:DA:EF:35:E7:48:F3:82:C8:80:F5:6D:76:FA:A3:9D:E2:02:9E:E8:BA:9C:21:16:9D:A1"]
+    ["B9:B1:6F:A4:1A:F0:87:53:75:0B:D0:1E:64:C0:69:8F:CE:11:E1:10:D7:EC:55:5D:A1:29:A5:FE:64:06:A2:8A"]
+  }
+},
+{
+  "relation": ["delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "web",
+    "site": "https://arindamxd.github.io"
+  }
+},
+{
+  "relation": ["delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.kreditbee.android.stage",
+    "sha256_cert_fingerprints":
+    ["B9:B1:6F:A4:1A:F0:87:53:75:0B:D0:1E:64:C0:69:8F:CE:11:E1:10:D7:EC:55:5D:A1:29:A5:FE:64:06:A2:8A"]
   }
 }]
