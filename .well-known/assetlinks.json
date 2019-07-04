@@ -2,8 +2,24 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.arindam.certification.training",
+    "package_name": "com.kreditbee.android.debug",
     "sha256_cert_fingerprints":
-    ["94:B4:45:AA:F1:13:8A:9E:16:29:97:20:3B:F4:09:FB:34:5A:65:BE:F3:9D:30:18:89:7A:EA:D9:3A:BB:1F:09"]
+    ["ED:92:DA:08:AC:C8:F4:10:6E:22:C4:1A:36:19:CB:AB:0C:8F:25:7B:8F:28:9A:7F:B4:EB:9C:9A:04:30:C9:4C"]
+  }
+},
+{
+  "relation": ["delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "web",
+    "site": "https://arindamxd.github.io"
+  }
+},
+{
+  "relation": ["delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.kreditbee.android.debug",
+    "sha256_cert_fingerprints":
+    ["ED:92:DA:08:AC:C8:F4:10:6E:22:C4:1A:36:19:CB:AB:0C:8F:25:7B:8F:28:9A:7F:B4:EB:9C:9A:04:30:C9:4C"]
   }
 }]
