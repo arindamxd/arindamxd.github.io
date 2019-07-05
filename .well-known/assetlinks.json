@@ -2,9 +2,9 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.kreditbee.android.debug",
+    "package_name": "com.arindam.certification.training",
     "sha256_cert_fingerprints":
-    ["B9:B1:6F:A4:1A:F0:87:53:75:0B:D0:1E:64:C0:69:8F:CE:11:E1:10:D7:EC:55:5D:A1:29:A5:FE:64:06:A2:8A"]
+    ["94:B4:45:AA:F1:13:8A:9E:16:29:97:20:3B:F4:09:FB:34:5A:65:BE:F3:9D:30:18:89:7A:EA:D9:3A:BB:1F:09"]
   }
 },
 {
@@ -18,8 +18,8 @@
   "relation": ["delegate_permission/common.get_login_creds"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.kreditbee.android.debug",
+    "package_name": "com.arindam.certification.training",
     "sha256_cert_fingerprints":
-    ["B9:B1:6F:A4:1A:F0:87:53:75:0B:D0:1E:64:C0:69:8F:CE:11:E1:10:D7:EC:55:5D:A1:29:A5:FE:64:06:A2:8A"]
+    ["94:B4:45:AA:F1:13:8A:9E:16:29:97:20:3B:F4:09:FB:34:5A:65:BE:F3:9D:30:18:89:7A:EA:D9:3A:BB:1F:09"]
   }
 }]
