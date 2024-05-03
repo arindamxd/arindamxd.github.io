@@ -1,25 +1,47 @@
-[{
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
+[
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
         "namespace": "android_app",
         "package_name": "com.arindam.certification.training",
-        "sha256_cert_fingerprints":
-        ["24:6B:6D:29:D1:FE:5B:B3:AD:62:4E:43:3B:24:69:A5:AB:4C:DE:17:30:27:B5:47:8D:23:CD:53:83:C3:80:7F"]
-    }
-},
-{
-    "relation": ["delegate_permission/common.get_login_creds"],
-    "target": {
+        "sha256_cert_fingerprints": [
+          "24:6B:6D:29:D1:FE:5B:B3:AD:62:4E:43:3B:24:69:A5:AB:4C:DE:17:30:27:B5:47:8D:23:CD:53:83:C3:80:7F"
+        ]
+      }
+    },
+    {
+      "relation": [
+        "delegate_permission/common.get_login_creds"
+      ],
+      "target": {
         "namespace": "web",
         "site": "https://arindamxd.github.io"
-    }
-},
-{
-    "relation": ["delegate_permission/common.get_login_creds"],
-    "target": {
+      }
+    },
+    {
+      "relation": [
+        "delegate_permission/common.get_login_creds"
+      ],
+      "target": {
         "namespace": "android_app",
         "package_name": "com.arindam.certification.training",
-        "sha256_cert_fingerprints":
-        ["24:6B:6D:29:D1:FE:5B:B3:AD:62:4E:43:3B:24:69:A5:AB:4C:DE:17:30:27:B5:47:8D:23:CD:53:83:C3:80:7F"]
+        "sha256_cert_fingerprints": [
+          "24:6B:6D:29:D1:FE:5B:B3:AD:62:4E:43:3B:24:69:A5:AB:4C:DE:17:30:27:B5:47:8D:23:CD:53:83:C3:80:7F"
+        ]
+      }
+    },
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.arindam.camerax",
+        "sha256_cert_fingerprints": [
+          "E9:60:7A:C5:9C:C1:8B:93:A5:12:2E:2B:45:12:D5:01:18:EB:BB:EE:DD:AC:A8:79:C6:14:F9:75:0D:3F:60:45"
+        ]
+      }
     }
-}]
+  ]
