@@ -148,9 +148,3 @@ a[rel~=nofollow]:hover {
     margin: 32px 0 0;
     padding: 16px 0
 }
-
-.footer-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
