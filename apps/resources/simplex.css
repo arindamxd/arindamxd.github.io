@@ -54,20 +54,13 @@ h6 {
 a {
     text-decoration: none;
     cursor: pointer;
-    color: #000
+    color: #000;
+    transition: color 0.2s ease-in-out; /* smooth hover effect */
 }
 
-a:hover,
-a[rel~=nofollow] {
-    text-decoration: underline
-}
-
-a[rel~=nofollow] {
-    color: #0452a5
-}
-
-a[rel~=nofollow]:hover {
-    text-decoration: none
+/* Normal link hover = change color */
+a:hover {
+    color: #0452a5; /* typical hyperlink blue */
 }
 
 .visible {
