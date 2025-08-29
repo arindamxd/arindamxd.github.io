@@ -76,7 +76,8 @@ a::after {
     /* not underlined */
     line-height: 1;
     /* fixes the vertical misalignment */
-    vertical-align: -5px; /* push it down */
+    align-items: flex-end; /* push arrow lower */
+    padding-bottom: 1px;   /* fine tune the drop */
 }
 
 /* Hover effect */
