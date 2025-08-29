@@ -55,15 +55,14 @@ a {
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
-    color: #444;
-    transition: color 0.2s, border-bottom-color 0.2s;
+    color: #1a73e8;
+    transition: color 0.2s ease-in-out;
     display: inline-flex;   /* keep text + arrow aligned */
     align-items: center;    /* fix arrow vertical alignment */
-    gap: 4px;               /* space between text and arrow */
 }
 
 /* External arrow */
-a::after {
+a[rel="external"]::after {
     content: "↗";
     font-size: 1em;
     font-weight: bold;
@@ -72,13 +71,13 @@ a::after {
     text-decoration: none;  /* not underlined */
     line-height: 1;
     position: relative;
-    top: 1px;               /* 🔽 push arrow downward */
+    top: 1px;               /* push arrow downward */
+    margin-left: 2px;       /* spacing between text and arrow */
 }
 
 /* Hover effect */
 a:hover {
     color: #1a73e8;
-    border-bottom-color: #1a73e8;
 }
 
 .visible {
