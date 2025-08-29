@@ -68,7 +68,7 @@ a {
 a::after {
     content: "↗";
     font-size: 1em;
-    top: 30%;
+    top: 2px; /* push it down */
     pointer-events: none;
     /* not clickable */
     user-select: none;
