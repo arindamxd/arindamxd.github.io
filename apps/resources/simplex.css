@@ -53,6 +53,36 @@ h6 {
 }
 
 a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #0452a5;
+  border-bottom: 1px dashed #ccc; /* underline only under text */
+  transition: color 0.2s, border-bottom-color 0.2s;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+               Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  display: inline-flex;     /* keep text + arrow aligned */
+  align-items: center;      /* fix arrow vertical alignment */
+  gap: 4px;                 /* space between text and arrow */
+}
+
+/* External arrow */
+a[rel~="nofollow"]::after {
+  content: "↗";
+  font-size: 0.85em;
+  opacity: 0.7;
+  pointer-events: none;   /* not clickable */
+  user-select: none;      /* not copyable */
+  text-decoration: none;  /* not underlined */
+  line-height: 1;         /* fixes the vertical misalignment */
+}
+
+/* Hover effect */
+a[rel~="nofollow"]:hover {
+  color: #1a73e8;
+  border-bottom-color: #1a73e8;
+}
+
+/* a {
     text-decoration: none;
     cursor: pointer;
     color: #000;
@@ -62,17 +92,13 @@ a {
         Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* External link style */
 a[rel~="nofollow"] {
     color: #0452a5;
     border-bottom-color: #ccc;
-    /* dashed underline only under text */
     position: relative;
     padding-right: 14px;
-    /* space for arrow */
 }
 
-/* Add arrow but exclude from selection & underline */
 a[rel~="nofollow"]::after {
     content: "↗";
     position: absolute;
@@ -82,12 +108,9 @@ a[rel~="nofollow"]::after {
     font-size: 0.9em;
     opacity: 0.7;
     pointer-events: none;
-    /* not clickable */
     user-select: none;
-    /* not copyable */
     text-decoration: none;
-    /* not underlined */
-}
+} */
 
 /* Hover effect */
 a[rel~="nofollow"]:hover {
