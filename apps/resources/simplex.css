@@ -53,6 +53,7 @@ h6 {
 
 a {
     text-decoration: none;
+    font-weight: bold;
     cursor: pointer;
     color: #444;
     transition: color 0.2s, border-bottom-color 0.2s;
@@ -65,6 +66,7 @@ a {
 a::after {
     content: "↗";
     font-size: 1em;
+    font-weight: bold;
     pointer-events: none;   /* not clickable */
     user-select: none;      /* not copyable */
     text-decoration: none;  /* not underlined */
