@@ -52,15 +52,36 @@ h6 {
 }
 
 a {
-    text-decoration: none;
-    cursor: pointer;
-    color: #000;
-    transition: color 0.2s ease-in-out; /* smooth hover effect */
+  text-decoration: none;
+  cursor: pointer;
+  color: #000;
+  border-bottom: 1px dashed transparent; /* subtle underline effect */
+  transition: color 0.2s, border-bottom-color 0.2s;
 }
 
-/* Normal link hover = change color */
-a:hover {
-    color: #0452a5; /* typical hyperlink blue */
+/* Style external/reference links */
+a[rel~="nofollow"] {
+  color: #0452a5;
+  border-bottom-color: #ccc; /* gray dashed underline */
+  position: relative;
+  padding-right: 18px; /* space for arrow */
+}
+
+/* Add the ↗ arrow */
+a[rel~="nofollow"]::after {
+  content: "↗";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+/* Hover effect */
+a[rel~="nofollow"]:hover {
+  color: #1a73e8; /* nice blue */
+  border-bottom-color: #1a73e8; /* blue underline */
 }
 
 .visible {
