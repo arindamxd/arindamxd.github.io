@@ -109,6 +109,13 @@ a[rel~=nofollow]:hover {
     color: #444;
 }
 
+.footer-title {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 400;
+    color: #444;
+}
+
 .translations-list-container {
     color: #000;
     padding-bottom: 8px;
@@ -149,8 +156,8 @@ a[rel~=nofollow]:hover {
     padding: 16px 0
 }
 
-.space-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.footer-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
