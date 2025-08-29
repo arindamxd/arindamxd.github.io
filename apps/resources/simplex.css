@@ -65,12 +65,12 @@ a {
 a::after {
     content: "↗";
     font-size: 1em;
-    pointer-events: none;  /* not clickable */
-    user-select: none;     /* not copyable */
-    text-decoration: none; /* not underlined */
+    pointer-events: none;   /* not clickable */
+    user-select: none;      /* not copyable */
+    text-decoration: none;  /* not underlined */
     line-height: 1;
     position: relative;
-    top: 2px; /* 🔽 push arrow downward */
+    top: 1px;               /* 🔽 push arrow downward */
 }
 
 /* Hover effect */
