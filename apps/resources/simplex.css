@@ -68,7 +68,6 @@ a {
 a::after {
     content: "↗";
     font-size: 1em;
-    top: 2px; /* push it down */
     pointer-events: none;
     /* not clickable */
     user-select: none;
@@ -77,6 +76,7 @@ a::after {
     /* not underlined */
     line-height: 1;
     /* fixes the vertical misalignment */
+    vertical-align: -5px; /* push it down */
 }
 
 /* Hover effect */
