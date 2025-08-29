@@ -67,7 +67,7 @@ a {
 /* External arrow */
 a::after {
     content: "↗";
-    font-size: 1em;
+    font-size: 0.85em;
     pointer-events: none;
     /* not clickable */
     user-select: none;
