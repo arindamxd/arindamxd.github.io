@@ -56,28 +56,21 @@ a {
     cursor: pointer;
     color: #444;
     transition: color 0.2s, border-bottom-color 0.2s;
-    display: inline-flex;
-    /* keep text + arrow aligned */
-    align-items: center;
-    /* fix arrow vertical alignment */
-    gap: 4px;
-    /* space between text and arrow */
+    display: inline-flex;   /* keep text + arrow aligned */
+    align-items: center;    /* fix arrow vertical alignment */
+    gap: 4px;               /* space between text and arrow */
 }
 
 /* External arrow */
 a::after {
     content: "↗";
     font-size: 1em;
-    pointer-events: none;
-    /* not clickable */
-    user-select: none;
-    /* not copyable */
-    text-decoration: none;
-    /* not underlined */
+    pointer-events: none;  /* not clickable */
+    user-select: none;     /* not copyable */
+    text-decoration: none; /* not underlined */
     line-height: 1;
-    /* fixes the vertical misalignment */
-    align-items: flex-end; /* push arrow lower */
-    padding-bottom: 1px;   /* fine tune the drop */
+    position: relative;
+    top: 2px; /* 🔽 push arrow downward */
 }
 
 /* Hover effect */
