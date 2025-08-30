@@ -108,7 +108,7 @@
     <div class="footer">
       <div class="container">
         <p class="footer-title">© 2025 Arindam Karmakar</p>
-        <p class="footer-title"><a class="store-link" target="_blank" rel="noopener noreferrer footer"><span class="app-name"></span> on Google Play</a></p>
+        <p class="footer-title"><a class="store-link" target="_blank" rel="noopener noreferrer footer"></a></p>
       </div>
     </div>
 
@@ -130,6 +130,7 @@
     // Update Play Store link
     document.querySelectorAll(".store-link").forEach(el => {
       el.href = "https://play.google.com/store/apps/details?id=" + PLAY_PACKAGE;
+      el.textContent = APP_NAME + " on Google Play Store";
     });
 
     // Update browser tab title
