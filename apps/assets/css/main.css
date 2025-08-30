@@ -145,6 +145,13 @@ a[rel~="footer"]:hover {
     padding: 21px 0;
 }
 
+/* Flexbox for header content */
+.header-content {
+  display: flex;
+  justify-content: space-between; /* pushes icon to right */
+  align-items: center;            /* vertically center */
+}
+
 .header-title {
     font-size: 24px;
     line-height: 24px;
@@ -330,12 +337,11 @@ a[rel~="footer"]:hover {
 }
 
 .android-icon::before {
-  font-family: "bootstrap-icons"; /* Make sure Bootstrap Icons font is loaded */
-  content: "\F7D0";               /* Unicode for your icon */
-  display: inline-block;           /* needed for transform */
-  color: green;                    /* icon color */
-  transform: rotate(0deg);        /* rotate 90 degrees clockwise */
-  font-size: 3rem;               /* adjust size as needed */
-  vertical-align: middle;          /* align nicely with text */
-  position: relative;
+    font-family: "bootstrap-icons";
+    content: "\F7D0";
+    display: inline-block;
+    color: green;
+    transform: rotate(0deg);
+    font-size: 3rem;
+    position: relative;
 }
