@@ -240,7 +240,7 @@ a[rel~="footer"]:hover {
 /* Add Bootstrap icon (example: info-circle) before text */
 .disclaimer-special::before {
   font-family: "bootstrap-icons";   /* Bootstrap Icons font */
-  content: "\f430";                 /* Unicode for bi-info-circle */
+  content: "\F431";                 /* Unicode for bi-info-circle */
   font-size: 1.2rem;
   color: red;
   position: absolute;
