@@ -178,7 +178,7 @@
 
     // Permission Information Update
     if (PERMISSION_LIST.length) {
-      permissionIntro.textContent = `${APP_NAME} requests only the permissions required for its core functionality:`;
+      permissionIntro.textContent = `To function properly, ${APP_NAME} requires only these permissions for its core functionality:`;
       permissionList.append(...PERMISSION_LIST.map(permission => {
         const li = document.createElement("li");
         li.innerHTML = `<strong>${permission}</strong>`;
