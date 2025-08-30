@@ -279,3 +279,26 @@ a[rel~="footer"]:hover {
     text-underline-offset: 5px;
     font-weight: bold;
 }
+
+.store-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;       /* spacing between icon and text */
+    text-decoration: none;
+    color: #666;    /* default grey */
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.store-link .google-play-icon g path {
+    filter: grayscale(100%);    /* default grey look */
+    transition: filter 0.2s ease;
+}
+
+.store-link:hover {
+    color: #0452a5; /* text color on hover */
+}
+
+.store-link:hover .google-play-icon g path {
+    filter: none;   /* show original colored icon */
+}
