@@ -222,11 +222,17 @@ a[rel~="footer"]:hover {
     top: 10px;
 }
 
+.copyright {
+    display: inline-flex;
+    align-items: center;
+}
+
 .copyright::before {
     font-family: "bootstrap-icons";
     content: "\F7DB";
     font-size: 1rem;
-    top: 10px;
+    margin-right: 5px;
+    color: inherit;
 }
 
 /* Regular disclaimer */
