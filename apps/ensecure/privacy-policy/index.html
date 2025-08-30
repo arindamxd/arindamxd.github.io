@@ -106,7 +106,9 @@
           <p id="permission-intro"><span class="app-name"></span> <strong>does not</strong> request any special
             permissions to operate.</p>
           <ul id="permission-list" style="display: none;"></ul>
-          <p id="permission-note" style="display: none;"></p>
+          <p id="permission-note" style="display: none;"><strong>You are always in control:</strong> permissions can be
+            managed or revoked through your device settings. Please note that disabling certain permissions may limit
+            app functionality.</p>
 
           <h2>Data Security</h2>
           <p>We use industry‑standard measures and rely on Google’s platform security for Crashlytics. However, no
@@ -174,18 +176,14 @@
     const permissionNote = document.getElementById("permission-note");
 
     // Permission Information Update
-    if (PERMISSION_LIST.length > 0) {
-      if (PERMISSION_LIST.length <= 2) {
-        permissionIntro.textContent = `${APP_NAME} requests the following permissions for its core functionality (e.g., ${PERMISSION_LIST.join(", ")}).`;
-      } else {
-        permissionIntro.textContent = `${APP_NAME} requests only the permissions required for its core functionality:`;
-        PERMISSION_LIST.forEach(permission => {
-          const li = document.createElement("li");
-          li.textContent = permission;
-          permissionList.appendChild(li);
-        });
-        permissionList.style.display = "block";
-      }
+    if (PERMISSION_LIST.length) {
+      permissionIntro.textContent = `${APP_NAME} requests only the permissions required for its core functionality:`;
+      permissionList.append(...PERMISSION_LIST.map(permission => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${permission}</strong>`;
+        return li;
+      }));
+      permissionList.style.display = "block";
       permissionNote.style.display = "block";
     }
 
