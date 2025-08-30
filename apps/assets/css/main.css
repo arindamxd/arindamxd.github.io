@@ -318,8 +318,15 @@ a[rel~="footer"]:hover {
     /* show original colored icon */
 }
 
-.google-play-icon {
+/* .google-play-icon {
     margin: -8px 0;
     display: block;
-    /* ensures no inline spacing issues */
+} */
+.google-play-icon {
+    margin: -8px 0;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url('../assets/icons/google-play.svg') no-repeat center center;
+    background-size: contain;
 }
