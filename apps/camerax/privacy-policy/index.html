@@ -25,6 +25,7 @@
     const APP_NAME = "CameraX";
     const CONTACT_EMAIL = "arindamxd+camerax@gmail.com";
     const PLAY_PACKAGE = "com.arindam.camerax";
+    const LAST_UPDATED = "August 28, 2025";
   </script>
 </head>
 
@@ -43,7 +44,7 @@
         <div class="tab-content translations-content-item en visible" id="en">
 
           <h1>Privacy Policy</h1>
-          <p><strong>Last updated:</strong> August 28, 2025</p>
+          <p><strong>Last updated:</strong> <span id="last-updated"></span></p>
           <p>This Privacy Policy explains how the <span class="app-name"></span> app ("<span class="app-name"></span>", "we", "us", "our", or "developer") handles data. <span class="app-name"></span> is a personal project developed and maintained by <strong>Arindam Karmakar</strong>, an independent developer based in <strong>Bengaluru, India</strong>. It is separate from any other professional engagements.</p>
 
           <h2>Data Collection</h2>
@@ -126,14 +127,17 @@
       if (span) span.textContent = CONTACT_EMAIL;
     });
 
-    // Update copyright year
-    document.getElementById("year").textContent = new Date().getFullYear();
-    
     // Update Play Store link
     document.querySelectorAll(".store-link").forEach(el => {
       el.href = "https://play.google.com/store/apps/details?id=" + PLAY_PACKAGE;
       el.textContent = APP_NAME + " on Google Play Store";
     });
+
+    // Update copyright year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Update last updated date
+    document.getElementById("last-updated").textContent = LAST_UPDATED;
 
     // Update browser tab title
     document.title = "Privacy Policy for " + APP_NAME;
