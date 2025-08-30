@@ -336,5 +336,4 @@ a[rel~="footer"]:hover {
   color: green;                    /* icon color */
   transform: rotate(90deg);        /* rotate 90 degrees clockwise */
   font-size: 1.5rem;               /* adjust size as needed */
-  vertical-align: middle;          /* align nicely with text */
 }
