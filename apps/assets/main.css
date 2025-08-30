@@ -164,6 +164,7 @@ a[rel~="footer"]:hover {
     font-size: 18px;
     line-height: 28px;
     font-weight: 400;
+    margin: inherit;
     color: #444;
 }
 
