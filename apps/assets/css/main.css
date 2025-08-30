@@ -12,12 +12,12 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
     line-height: 28px;
-    margin: 0
+    margin: 0;
 }
 
 h1 {
     font-size: 40px;
-    line-height: 60px
+    line-height: 60px;
 }
 
 h1,
@@ -41,26 +41,26 @@ h3 {
 
 h3,
 h4 {
-    font-weight: 700
+    font-weight: 700;
 }
 
 h4 {
     font-size: 20px;
-    line-height: 30px
+    line-height: 30px;
 }
 
 h5 {
-    font-size: 16px
+    font-size: 16px;
 }
 
 h5,
 h6 {
     line-height: 24px;
-    font-weight: 700
+    font-weight: 700;
 }
 
 h6 {
-    font-size: cacl(16px)
+    font-size: calc(16px);
 }
 
 a[rel~="external"] {
@@ -122,22 +122,22 @@ a[rel~="footer"]:hover {
 }
 
 .visible {
-    display: block
+    display: block;
 }
 
 .hidden {
-    display: none
+    display: none;
 }
 
 .page {
-    width: 100%
+    width: 100%;
 }
 
 .container {
     position: relative;
     width: 90%;
     max-width: 1024px;
-    margin: 0 auto
+    margin: 0 auto;
 }
 
 .header {
@@ -156,7 +156,7 @@ a[rel~="footer"]:hover {
     font-size: 24px;
     line-height: 24px;
     font-weight: 700;
-    margin: 0.2em 0 0 0;
+    margin: 4.5px 0 0 0;
     color: #000;
 }
 
@@ -171,7 +171,6 @@ a[rel~="footer"]:hover {
 .footer {
     border-top: 1px solid #eee;
     padding: 18px 0;
-    margin: 32px 0 0;
 }
 
 .footer-title {
@@ -195,37 +194,9 @@ a[rel~="footer"]:hover {
     align-items: center;
 }
 
-.translations-list-container {
-    color: #000;
-    padding-bottom: 8px;
-    margin: 0 0 16px
-}
-
-.translations-list-container .translations-list {
-    margin: 0;
-    padding: 0;
-    list-style: none
-}
-
-.translations-list-container .translations-list .translations-list-item {
-    display: inline-block;
-    padding: 0;
-    margin: 0 8px 8px 0;
-    color: #fff
-}
-
-.translations-list-container .translations-list .translations-list-item a {
-    display: inline-block;
-    padding: 4px 8px
-}
-
-.translations-list-container .translations-list .translations-list-item a.active {
-    color: #fff;
-    background: #334055
-}
-
 .translations-content-container {
     padding-top: 8px;
+    padding-bottom: 16px;
 }
 
 /* Regular disclaimer */
@@ -245,7 +216,7 @@ a[rel~="footer"]:hover {
     color: #009dff;
     position: absolute;
     left: 0;
-    top: -0.1em;
+    top: -2px;
 }
 
 /* Special disclaimer */
@@ -265,7 +236,7 @@ a[rel~="footer"]:hover {
     color: #07ac49;
     position: absolute;
     left: 0;
-    top: -0.1em;
+    top: -2px;
 }
 
 /* Warning disclaimer */
@@ -285,7 +256,7 @@ a[rel~="footer"]:hover {
     color: #ffad03;
     position: absolute;
     left: 0;
-    top: -0.1em;
+    top: -2px;
 }
 
 /* Dashed underline */
@@ -307,7 +278,7 @@ a[rel~="footer"]:hover {
     font-size: 1rem;
     color: red;
     position: relative;
-    top: 0.15em;
+    top: 2.5px;
 }
 
 .copyright::before {
