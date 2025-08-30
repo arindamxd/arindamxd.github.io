@@ -219,31 +219,42 @@ a[rel~="footer"]:hover {
     color: red;
 }
 
-/* Regular disclaimer (neutral, gray tone) */
+/* Regular disclaimer */
 .disclaimer-regular {
-    color: #555;
-    border-left: 4px solid #555;
-    padding-left: 10px;
-    margin-top: 30px;
-    font-weight: lighter;
+    color: #009dff;
+    font-weight: 450;
+    position: relative;
+    padding-left: 30px;
+    line-height: 1.5;
 }
 
-/* Special disclaimer (warning/important in red) */
+/* Add Bootstrap icon before text */
+.disclaimer-regular::before {
+    font-family: "bootstrap-icons";
+    content: "\F26B";
+    font-size: 1.2rem;
+    color: #009dff;
+    position: absolute;
+    left: 0;
+    top: -0.1em;
+}
+
+/* Special disclaimer */
 .disclaimer-special {
-  color: red;
-  font-weight: 450;
-  position: relative;
-  padding-left: 30px;   /* space for the icon */
-  line-height: 1.5;     /* better readability */
+    color: #ff5930;
+    font-weight: 450;
+    position: relative;
+    padding-left: 30px;
+    line-height: 1.5;
 }
 
-/* Add Bootstrap icon (example: info-circle) before text */
+/* Add Bootstrap icon before text */
 .disclaimer-special::before {
-  font-family: "bootstrap-icons";   /* Bootstrap Icons font */
-  content: "\F431";                 /* Unicode for bi-info-circle */
-  font-size: 1.2rem;
-  color: red;
-  position: absolute;
-  left: 0;                          /* stick to the left */
-  top: -0.1em;
+    font-family: "bootstrap-icons";
+    content: "\F333";
+    font-size: 1.2rem;
+    color: #ff5930;
+    position: absolute;
+    left: 0;
+    top: -0.1em;
 }
