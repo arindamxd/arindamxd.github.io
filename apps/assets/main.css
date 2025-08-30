@@ -237,10 +237,9 @@ a[rel~="footer"]:hover {
     font-family: "bootstrap-icons";
     content: "\F7DB";
     font-size: 1rem;
-    margin-right: 5px;
     color: inherit;
     position: relative;
-    top: 0.15em;
+    top: 0.1em;
 }
 
 /* Regular disclaimer */
