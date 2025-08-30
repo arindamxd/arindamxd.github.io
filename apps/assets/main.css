@@ -230,8 +230,7 @@ a[rel~="footer"]:hover {
 /* Special disclaimer (warning/important in red) */
 .disclaimer-special {
   color: red;
-  border-left: 5px solid red;
+  border-left: 4px solid red;
   padding-left: 10px;
-  margin-top: 150px;
-  font-weight: 600;
+  margin-top: 50px;
 }
