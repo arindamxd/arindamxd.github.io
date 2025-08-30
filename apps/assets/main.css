@@ -244,7 +244,7 @@ a[rel~="footer"]:hover {
 
 /* Special disclaimer */
 .disclaimer-special {
-    color: #11e056;
+    color: #00953c;
     font-weight: 450;
     position: relative;
     padding-left: 30px;
@@ -256,7 +256,7 @@ a[rel~="footer"]:hover {
     font-family: "bootstrap-icons";
     content: "\F151";
     font-size: 1.2rem;
-    color: #11e056;
+    color: #00953c;
     position: absolute;
     left: 0;
     top: -0.1em;
