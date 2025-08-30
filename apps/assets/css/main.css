@@ -150,7 +150,6 @@ a[rel~="footer"]:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: inherit;
 }
 
 .header-title {
