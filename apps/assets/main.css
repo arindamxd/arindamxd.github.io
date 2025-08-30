@@ -232,5 +232,6 @@ a[rel~="footer"]:hover {
     color: red;
     border-left: 3px solid red;
     padding-left: 10px;
-    margin-top: 20px;
+    margin-top: 30px;
+    font-weight: bold;
 }
