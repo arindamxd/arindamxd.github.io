@@ -246,6 +246,4 @@ a[rel~="footer"]:hover {
   color: red;
   position: absolute;
   left: 0;                          /* stick to the left */
-  top: 50%;                         /* halfway down the container */
-  transform: translateY(-50%);      /* true vertical center relative to line */
 }
