@@ -318,14 +318,7 @@ a[rel~="footer"]:hover {
 }
 
 .keep-together {
-  page-break-inside: avoid; /* older browsers */
-  break-inside: avoid;      /* modern browsers */
-  break-after: avoid;       /* avoid page break immediately after */
-}
-
-/* Add top margin when printing if moved to next page */
-@media print {
-  .keep-together {
-    padding-top: 32px;
-  }
+    page-break-inside: avoid;
+    break-inside: avoid;
+    break-after: avoid;
 }
