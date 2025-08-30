@@ -334,7 +334,8 @@ a[rel~="footer"]:hover {
   content: "\F7D0";               /* Unicode for your icon */
   display: inline-block;           /* needed for transform */
   color: green;                    /* icon color */
-  transform: rotate(90deg);        /* rotate 90 degrees clockwise */
+  transform: rotate(0deg);        /* rotate 90 degrees clockwise */
   font-size: 3rem;               /* adjust size as needed */
   vertical-align: middle;          /* align nicely with text */
+  position: relative;
 }
