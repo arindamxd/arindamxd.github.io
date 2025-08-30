@@ -23,6 +23,7 @@
     const APP_NAME = "Ensecure";
     const CONTACT_EMAIL = "arindamxd+ensecure@gmail.com";
     const PLAY_PACKAGE = "com.ensecure";
+    const PERMISSION_LIST = [];
     const LAST_UPDATED = "August 30, 2025";
   </script>
 </head>
@@ -46,7 +47,8 @@
           <p>This Privacy Policy explains how the <span class="app-name"></span> app ("<span class="app-name"></span>",
             "we", "us", "our", or "developer") manages data. <span class="app-name"></span> is a personal project
             developed and maintained by <strong>Arindam Karmakar</strong>, a professional software developer based in
-            <strong>Bengaluru, India</strong>.</p>
+            <strong>Bengaluru, India</strong>.
+          </p>
           <p class="disclaimer-special">This app is a personal project and <span class="dashed-underline">is not</span>
             affiliated with, sponsored by, or endorsed by any organization I work with professionally.</p>
 
@@ -101,10 +103,12 @@
             contact us at the email address below.</p>
 
           <h2>User Choices & Controls</h2>
-          <p><span class="app-name"></span> requests only the permissions required for its core functionality (e.g.,
-            camera).</p>
-          <p><strong>You are always in control:</strong> permissions can be managed or revoked through your device
-            settings. Please note that disabling certain permissions may limit app functionality.</p>
+          <p id="permission-intro"><span class="app-name"></span> does not request any special permissions to operate.
+          </p>
+          <ul id="permission-list"></ul>
+          <p id="permission-note"><strong>You are always in control:</strong> permissions can be managed or revoked
+            through your device settings. Please note that disabling certain permissions may limit app functionality.
+          </p>
 
           <h2>Data Security</h2>
           <p>We use industry‑standard measures and rely on Google’s platform security for Crashlytics. However, no
@@ -165,6 +169,30 @@
     document.querySelectorAll(".store-link").forEach(el => {
       el.href = "https://play.google.com/store/apps/details?id=" + PLAY_PACKAGE;
     });
+
+    const permissionIntro = document.getElementById("permission-intro");
+    const permissionList = document.getElementById("permission-list");
+    const permissionNote = document.getElementById("permission-note");
+
+    if (PERMISSION_LIST.length > 0) {
+      if (PERMISSION_LIST.length === 2) {
+        permissionIntro.textContent = `${appName} requests the following permissions for its core functionality (e.g., ${PERMISSION_LIST.join(", ")}).`;
+        permissionList.style.display = "none";
+      } else {
+        permissionIntro.textContent = `${appName} requests only the permissions required for its core functionality:`;
+        PERMISSION_LIST.forEach(permission => {
+          const li = document.createElement("li");
+          li.textContent = permission;
+          permissionList.appendChild(li);
+        });
+        permissionList.style.display = "block";
+      }
+      permissionNote.style.display = "block";
+    } else {
+      permissionIntro.innerHTML = `${appName} <strong>does not</strong> request any special permissions to operate.`;
+      permissionList.style.display = "none";
+      permissionNote.style.display = "none";
+    }
 
     // Update copyright year
     document.getElementById("year").textContent = new Date().getFullYear();
