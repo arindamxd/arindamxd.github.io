@@ -176,12 +176,16 @@ a[rel~="footer"]:hover {
 
 .footer-title {
     font-size: 18px;
+    line-height: 28px;
+    font-weight: 400;
+    margin: inherit;
     color: #444;
 }
 
 .footer-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: inherit;
 }
 
