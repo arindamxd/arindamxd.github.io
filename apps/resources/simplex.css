@@ -20,11 +20,9 @@ h2 {
 h2 {
     font-size: 32px;
     line-height: 48px;
+    margin-bottom: 0.3em;
 }
 
-h2+p {
-    margin-top: 0.25em;
-}
 h3 {
     font-size: 24px;
     line-height: 36px
