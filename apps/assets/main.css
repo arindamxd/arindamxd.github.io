@@ -213,6 +213,8 @@ a[rel~="footer"]:hover {
     align-items: center;
 }
 
-.heart {
-    color: red;
+.heart::before {
+  content: "♥";
+  color: red;
+  font-size: 24px;
 }
