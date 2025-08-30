@@ -216,3 +216,13 @@ a[rel~="footer"]:hover {
 .heart {
     color: red;
 }
+
+.contact-list {
+    list-style-type: none;
+    padding-left: 1.2em;
+    margin: 0;
+}
+
+.contact-list li {
+    margin: 0;
+}
