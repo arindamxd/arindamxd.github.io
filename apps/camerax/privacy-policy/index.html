@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Privacy Policy</title>
+  <title>Privacy Policy for CameraX</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,15 +16,41 @@
   <meta property="og:image" content="https://play-lh.googleusercontent.com/1kXSagM4769Hhjm8ndttW_W_0LhFM5SmkHer8MSXaqMghO8E1Nyqihf-DqUS6dsk2BM=w480-h960-rw">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="720">
-
   <meta property="og:url" content="https://arindamxd.github.io/apps/camerax/privacy-policy/">
   <meta property="og:site_name" content="Arindam Karmakar">
 
   <script>
+    // Constants
     const APP_NAME = "CameraX";
     const CONTACT_EMAIL = "arindamxd+camerax@gmail.com";
     const PLAY_PACKAGE = "com.arindam.camerax";
     const LAST_UPDATED = "August 30, 2025";
+
+    // === DOM Updates ===
+    document.addEventListener("DOMContentLoaded", () => {
+      // Replace all .app-name placeholders
+      document.querySelectorAll(".app-name").forEach(el => {
+        el.textContent = APP_NAME;
+      });
+
+      // Replace all .contact-email placeholders
+      document.querySelectorAll(".contact-email").forEach(el => {
+        el.setAttribute("href", "mailto:" + CONTACT_EMAIL);
+        el.querySelector(".link-text")?.textContent = CONTACT_EMAIL;
+      });
+
+      // Update Play Store link(s)
+      document.querySelectorAll(".store-link").forEach(el => {
+        el.setAttribute("href", "https://play.google.com/store/apps/details?id=" + PLAY_PACKAGE);
+        el.textContent = `${APP_NAME} on Google Play Store`;
+      });
+
+      // Update copyright year
+      document.getElementById("year")?.textContent = new Date().getFullYear();
+
+      // Update last updated date
+      document.getElementById("last-updated")?.textContent = LAST_UPDATED;
+    });
   </script>
 </head>
 
@@ -146,35 +172,6 @@
     </div>
 
   </div>
-
-  <script>
-    // Replace all .app-name placeholders with APP_NAME
-    document.querySelectorAll(".app-name").forEach(el => {
-      el.textContent = APP_NAME;
-    });
-
-    // Replace all .contact-email placeholders with CONTACT_EMAIL
-    document.querySelectorAll(".contact-email").forEach(el => {
-      el.href = "mailto:" + CONTACT_EMAIL;
-      const span = el.querySelector(".link-text");
-      if (span) span.textContent = CONTACT_EMAIL;
-    });
-
-    // Update Play Store link
-    document.querySelectorAll(".store-link").forEach(el => {
-      el.href = "https://play.google.com/store/apps/details?id=" + PLAY_PACKAGE;
-      el.textContent = APP_NAME + " on Google Play Store";
-    });
-
-    // Update copyright year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Update last updated date
-    document.getElementById("last-updated").textContent = LAST_UPDATED;
-
-    // Update browser tab title
-    document.title = "Privacy Policy for " + APP_NAME;
-  </script>
 
 </body>
 
