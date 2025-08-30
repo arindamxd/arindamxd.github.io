@@ -141,8 +141,8 @@ a[rel~="footer"]:hover {
 }
 
 .header {
-    padding: 18px 0;
     border-bottom: 1px solid #eee;
+    padding: 18px 0;
     margin: 0 0 32px;
 }
 
@@ -163,9 +163,9 @@ a[rel~="footer"]:hover {
 }
 
 .footer {
-    margin: 32px 0 0;
     border-top: 1px solid #eee;
     padding: 18px 0;
+    margin: 32px 0 0;
 }
 
 .footer-title {
