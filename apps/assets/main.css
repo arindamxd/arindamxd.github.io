@@ -216,5 +216,4 @@ a[rel~="footer"]:hover {
 .heart::before {
   content: "♥";
   color: red;
-  font-size: 24px;
 }
