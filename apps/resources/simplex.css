@@ -52,34 +52,36 @@ h6 {
 }
 
 a[rel~="external"] {
-    cursor: pointer;
-    transition: color 0.2s ease-in-out;
-    display: inline-flex;
-    align-items: center;
-    color: #000;
-    font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none; /* prevent underline on the whole link */
 }
 
 a[rel~="external"] .link-text {
-  text-decoration: underline;
+  text-decoration-line: underline;
   text-decoration-style: dashed;
   text-underline-offset: 3px;
+  font-weight: bold; /* keep text bold */
 }
 
 a[rel~="external"]::after {
-    content: "↗";
-    font-size: 0.85em;
-    pointer-events: none;
-    user-select: none;
-    line-height: 1;
-    position: relative;
-    top: 2px;
-    margin-left: 2px;
-    font-weight: normal;
+  content: "↗";
+  font-size: 0.85em;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  position: relative;
+  top: 2px;
+  margin-left: 2px;
+  font-weight: normal; /* arrow not bold */
 }
 
-a[rel~="external"]:hover {
-    color: #1a73e8;
+a[rel~="external"]:hover .link-text {
+  color: #1a73e8;
 }
 
 a[rel~="footer"] {
