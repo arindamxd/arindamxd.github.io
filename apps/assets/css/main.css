@@ -302,7 +302,7 @@ a[rel~="footer"]:hover {
     transition: color 0.2s ease;
 }
 
-.store-link .google-play-icon g path {
+.store-link .google-play-icon {
     filter: grayscale(100%);
     /* default grey look */
     transition: filter 0.2s ease;
@@ -313,7 +313,7 @@ a[rel~="footer"]:hover {
     /* text color on hover */
 }
 
-.store-link:hover .google-play-icon g path {
+.store-link:hover .google-play-icon {
     filter: none;
     /* show original colored icon */
 }
