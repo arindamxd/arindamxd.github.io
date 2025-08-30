@@ -282,6 +282,26 @@ a[rel~="footer"]:hover {
     top: -0.1em;
 }
 
+/* Warning disclaimer */
+.disclaimer-warning {
+    color: #d8a200;
+    font-weight: 450;
+    position: relative;
+    padding-left: 30px;
+    line-height: 1.5;
+}
+
+/* Add Bootstrap icon before text */
+.disclaimer-warning::before {
+    font-family: "bootstrap-icons";
+    content: "\F151";
+    font-size: 1.2rem;
+    color: #d8a200;
+    position: absolute;
+    left: 0;
+    top: -0.1em;
+}
+
 /* Dashed underline */
 .dashed-underline {
     text-decoration-line: underline;
