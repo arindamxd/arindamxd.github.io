@@ -143,7 +143,6 @@ a[rel~="footer"]:hover {
 .header {
     border-bottom: 1px solid #eee;
     padding: 18px 0;
-    margin: 0 0 32px;
 }
 
 .header-title {
