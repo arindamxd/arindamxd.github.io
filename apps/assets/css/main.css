@@ -65,7 +65,7 @@ h6 {
 
 a[rel~="external"] {
     cursor: pointer;
-    transition: color 0.2s ease-in-out;
+    transition: color 0.3s ease-in-out;
     display: inline-flex;
     align-items: center;
     color: #000;
@@ -99,7 +99,7 @@ a[rel~="external"]:hover {
 a[rel~="footer"] {
     text-decoration: none;
     cursor: pointer;
-    transition: color 0.2s ease-in-out;
+    transition: color 0.3s ease-in-out;
     display: inline-flex;
     align-items: center;
     color: #444;
@@ -315,12 +315,12 @@ a[rel~="footer"]:hover {
 }
 
 .google-play-icon {
-    margin: -8px 0;
     display: inline-block;
     width: 40px;
     height: 40px;
     background: url('../assets/icons/google-play.svg') no-repeat center center;
     background-size: contain;
+    margin: -8px 0;
 }
 
 .store-link {
@@ -329,7 +329,7 @@ a[rel~="footer"]:hover {
 
 .store-link .google-play-icon {
     filter: grayscale(100%);
-    transition: filter 0.2s ease-in-out;
+    transition: filter 0.3s ease-in-out;
 }
 
 .store-link:hover .google-play-icon {
@@ -337,14 +337,11 @@ a[rel~="footer"]:hover {
 }
 
 .android-icon {
-    display: flex;
-}
-
-.android-icon::before {
     font-family: "bootstrap-icons";
     content: "\F7D0";
     color: green;
+    display: flex;
     transform: rotate(270deg);
     font-size: 3rem;
-    margin-right: -10dp;
+    margin: 0 -8px;
 }
