@@ -229,17 +229,7 @@ a[rel~="footer"]:hover {
 }
 
 .copyright {
-    display: inline-flex;
-    align-items: center;
-}
-
-.copyright::before {
-    font-family: "bootstrap-icons";
-    content: "\F7DB";
-    font-size: 1rem;
-    color: inherit;
-    position: relative;
-    top: 0.1em;
+    content: "©";
 }
 
 /* Regular disclaimer */
