@@ -61,7 +61,7 @@ a {
 }
 
 /* External arrow */
-a::after {
+a[rel="external"]::after {
     content: "↗";
     font-size: 1em;
     pointer-events: none;   /* not clickable */
@@ -76,7 +76,6 @@ a::after {
 /* Hover effect */
 a:hover {
     color: #1a73e8;
-    font-weight: bold;
 }
 
 .visible {
