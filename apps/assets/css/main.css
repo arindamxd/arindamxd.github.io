@@ -176,16 +176,12 @@ a[rel~="footer"]:hover {
 
 .footer-title {
     font-size: 18px;
-    line-height: 28px;
-    font-weight: 400;
-    margin: inherit;
     color: #444;
 }
 
 .footer-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: inherit;
 }
 
@@ -336,12 +332,15 @@ a[rel~="footer"]:hover {
     filter: none;
 }
 
+.android-icon {
+    display: flex;
+}
+
 .android-icon::before {
     font-family: "bootstrap-icons";
     content: "\F7D0";
-    display: inline-block;
     color: green;
     transform: rotate(0deg);
     font-size: 3rem;
-    position: relative;
+    margin-right: -10dp;
 }
