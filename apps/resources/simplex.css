@@ -64,7 +64,7 @@ a[rel~="external"] {
 a[rel~="external"] .link-text {
   text-decoration-line: underline;
   text-decoration-style: dashed;
-  text-underline-offset: 4px;
+  text-underline-offset: 5px;
   font-weight: bold;
 }
 
