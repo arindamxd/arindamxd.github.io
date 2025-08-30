@@ -314,7 +314,7 @@ a[rel~="footer"]:hover {
     content: "©";
 }
 
-.google-play-icon {
+.google-play-icon::before {
     display: inline-block;
     width: 40px;
     height: 40px;
@@ -336,7 +336,7 @@ a[rel~="footer"]:hover {
     filter: none;
 }
 
-.android-icon {
+.android-icon::before {
     font-family: "bootstrap-icons";
     content: "\F7D0";
     color: green;
