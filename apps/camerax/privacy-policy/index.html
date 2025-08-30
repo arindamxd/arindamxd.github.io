@@ -106,7 +106,7 @@
 
     <div class="footer">
       <div class="container">
-        <p class="footer-title">© 2025 Arindam Karmakar</p>
+        <p class="footer-title">© <span id="year"></span> Arindam Karmakar</p>
         <p class="footer-title"><a class="store-link" target="_blank" rel="noopener noreferrer footer"></a></p>
       </div>
     </div>
@@ -126,6 +126,9 @@
       if (span) span.textContent = CONTACT_EMAIL;
     });
 
+    // Update copyright year
+    document.getElementById("year").textContent = new Date().getFullYear();
+    
     // Update Play Store link
     document.querySelectorAll(".store-link").forEach(el => {
       el.href = "https://play.google.com/store/apps/details?id=" + PLAY_PACKAGE;
