@@ -142,18 +142,19 @@ a[rel~="footer"]:hover {
 
 .header {
     border-bottom: 1px solid #eee;
-
-    padding: 18px 0
+    padding: 18px 0;
+    margin: 0 0 0 32px;
 }
 
-.header .title {
+.header-title {
     font-size: 24px;
     line-height: 24px;
     font-weight: 700;
     margin: 0.2em 0 0 0;
+    color: #000;
 }
 
-.subtitle {
+.header-subtitle {
     font-size: 18px;
     line-height: 28px;
     font-weight: 400;
@@ -163,8 +164,8 @@ a[rel~="footer"]:hover {
 
 .footer {
     border-top: 1px solid #eee;
-    margin: 32px 0 0;
     padding: 18px 0;
+    margin: 32px 0 0;
 }
 
 .footer-title {
@@ -189,13 +190,6 @@ a[rel~="footer"]:hover {
     /* allows inline alignment with children */
     align-items: center;
     /* vertically center text and icons inside <p> */
-}
-
-.google-play-icon {
-    margin: 0;
-    /* remove any default SVG margin */
-    display: block;
-    /* ensures no inline spacing issues */
 }
 
 .translations-list-container {
@@ -323,4 +317,11 @@ a[rel~="footer"]:hover {
 .store-link:hover .google-play-icon g path {
     filter: none;
     /* show original colored icon */
+}
+
+.google-play-icon {
+    margin: 0;
+    /* remove any default SVG margin */
+    display: block;
+    /* ensures no inline spacing issues */
 }
