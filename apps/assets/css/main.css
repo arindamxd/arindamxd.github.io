@@ -184,11 +184,8 @@ a[rel~="footer"]:hover {
 
 .footer-bar p {
     margin: 0;
-    /* remove default paragraph margin */
     display: flex;
-    /* allows inline alignment with children */
     align-items: center;
-    /* vertically center text and icons inside <p> */
 }
 
 .translations-list-container {
@@ -222,24 +219,6 @@ a[rel~="footer"]:hover {
 
 .translations-content-container {
     padding-top: 8px;
-}
-
-.heart {
-    display: inline-flex;
-    align-items: center;
-}
-
-.heart::before {
-    font-family: "bootstrap-icons";
-    content: "\F415";
-    font-size: 1rem;
-    color: red;
-    position: relative;
-    top: 0.15em;
-}
-
-.copyright::before {
-    content: "©";
 }
 
 /* Regular disclaimer */
@@ -308,6 +287,24 @@ a[rel~="footer"]:hover {
     text-decoration-style: dashed;
     text-underline-offset: 5px;
     font-weight: bold;
+}
+
+.heart {
+    display: inline-flex;
+    align-items: center;
+}
+
+.heart::before {
+    font-family: "bootstrap-icons";
+    content: "\F415";
+    font-size: 1rem;
+    color: red;
+    position: relative;
+    top: 0.15em;
+}
+
+.copyright::before {
+    content: "©";
 }
 
 .google-play-icon {
