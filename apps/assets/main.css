@@ -228,7 +228,7 @@ a[rel~="footer"]:hover {
     top: 0.15em;
 }
 
-.copyright {
+.copyright::before {
     content: "©";
 }
 
