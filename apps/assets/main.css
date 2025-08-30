@@ -224,7 +224,7 @@ a[rel~="footer"]:hover {
     content: "\F415";
     font-size: 1rem;
     color: red;
-    margin-top: 0.2em;
+    bottom: -0.2em;
 }
 
 .copyright {
@@ -238,7 +238,7 @@ a[rel~="footer"]:hover {
     font-size: 1rem;
     margin-right: 5px;
     color: inherit;
-    margin-top: 0.2em;
+    bottom: -0.2em;
 }
 
 /* Regular disclaimer */
