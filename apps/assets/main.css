@@ -219,6 +219,7 @@ a[rel~="footer"]:hover {
     content: "\F415";
     font-size: 1rem;
     color: red;
+    top: 0.1em;
 }
 
 /* Regular disclaimer */
