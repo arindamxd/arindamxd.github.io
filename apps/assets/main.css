@@ -231,7 +231,7 @@ a[rel~="footer"]:hover {
 /* Add Bootstrap icon before text */
 .disclaimer-regular::before {
     font-family: "bootstrap-icons";
-    content: "\F26B";
+    content: "\F333";
     font-size: 1.2rem;
     color: #009dff;
     position: absolute;
