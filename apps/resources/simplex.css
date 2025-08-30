@@ -51,31 +51,65 @@ h6 {
     font-size: cacl(16px)
 }
 
-a {
+/* Base link style */
+a[rel~="external"],
+a[rel~="footer"] {
     text-decoration: none;
     cursor: pointer;
-    color: #444;
     transition: color 0.2s ease-in-out;
-    display: inline-flex;   /* keep text + arrow aligned */
-    align-items: center;    /* fix arrow vertical alignment */
+    display: inline-flex;
+    /* keep text + arrow aligned */
+    align-items: center;
+    /* fix arrow vertical alignment */
+    color: #000;
+    /* default color (can override below) */
+    font-weight: bold;
+    /* default weight (can override below) */
 }
 
-/* External arrow */
-a[rel~="external"]::after {
+/* After link arrow */
+a[rel~="external"]::after,
+a[rel~="footer"]::after {
     content: "↗";
     font-size: 1em;
-    pointer-events: none;   /* not clickable */
-    user-select: none;      /* not copyable */
-    text-decoration: none;  /* not underlined */
+    pointer-events: none;
+    /* not clickable */
+    user-select: none;
+    /* not copyable */
+    text-decoration: none;
+    /* not underlined */
     line-height: 1;
     position: relative;
-    top: 1px;               /* push arrow downward */
-    margin-left: 2px;       /* spacing between text and arrow */
+    top: 2px;
+    /* push arrow downward */
+    margin-left: 2px;
+    /* spacing between text and arrow */
 }
 
-/* Hover effect */
-a:hover {
+/* Variations for external links */
+a[rel~="external"] {
+    color: #000;
+    /* black */
+    font-weight: bold;
+}
+
+a[rel~="external"]:hover {
     color: #1a73e8;
+    /* blue on hover */
+    font-weight: bold;
+}
+
+/* Variations for footer links */
+a[rel~="footer"] {
+    color: #444;
+    /* different base color */
+    font-weight: normal;
+}
+
+a[rel~="footer"]:hover {
+    color: #1a73e8;
+    /* different hover color */
+    font-weight: normal;
 }
 
 .visible {
@@ -172,5 +206,5 @@ a:hover {
 }
 
 .heart {
-  color: red;
+    color: red;
 }
