@@ -222,6 +222,14 @@ a[rel~="footer"]:hover {
     top: 10px;
 }
 
+.copyright::before {
+    font-family: "bootstrap-icons";
+    content: "\F7DB";
+    font-size: 1rem;
+    color: red;
+    top: 10px;
+}
+
 /* Regular disclaimer */
 .disclaimer-regular {
     color: #009dff;
