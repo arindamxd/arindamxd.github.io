@@ -231,7 +231,7 @@ a[rel~="footer"]:hover {
 /* Special disclaimer (warning/important in red) */
 .disclaimer-special {
   color: red;
-  font-weight: 400;
+  font-weight: 450;
   position: relative;
   padding-left: 30px;   /* space for the icon */
   line-height: 1.5;     /* better readability */
