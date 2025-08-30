@@ -215,7 +215,8 @@ a[rel~="footer"]:hover {
 }
 
 .heart::before {
-    content: "♥";
+    font-family: "bootstrap-icons";
+    content: "\F415";
     color: red;
 }
 
