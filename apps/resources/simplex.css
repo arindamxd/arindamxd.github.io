@@ -71,7 +71,7 @@ a[rel~="footer"] {
 a[rel~="external"]::after,
 a[rel~="footer"]::after {
     content: "↗";
-    font-size: 1em;
+    font-size: 0.9em;
     pointer-events: none;
     /* not clickable */
     user-select: none;
