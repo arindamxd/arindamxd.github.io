@@ -340,7 +340,7 @@ a[rel~="footer"]:hover {
     font-family: "bootstrap-icons";
     content: "\F7D0";
     color: green;
-    transform: rotate(0deg);
+    transform: rotate(270deg);
     font-size: 3rem;
     margin-right: -10dp;
 }
