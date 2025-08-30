@@ -219,7 +219,7 @@ a[rel~="footer"]:hover {
     content: "\F415";
     font-size: 1rem;
     color: red;
-    top: 0.5em;
+    top: 10px;
 }
 
 /* Regular disclaimer */
@@ -234,7 +234,7 @@ a[rel~="footer"]:hover {
 /* Add Bootstrap icon before text */
 .disclaimer-regular::before {
     font-family: "bootstrap-icons";
-    content: "\F333";
+    content: "\F151";
     font-size: 1.2rem;
     color: #009dff;
     position: absolute;
@@ -244,7 +244,7 @@ a[rel~="footer"]:hover {
 
 /* Special disclaimer */
 .disclaimer-special {
-    color: #ff5930;
+    color: #11e056;
     font-weight: 450;
     position: relative;
     padding-left: 30px;
@@ -256,7 +256,7 @@ a[rel~="footer"]:hover {
     font-family: "bootstrap-icons";
     content: "\F151";
     font-size: 1.2rem;
-    color: #ff5930;
+    color: #11e056;
     position: absolute;
     left: 0;
     top: -0.1em;
