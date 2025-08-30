@@ -316,3 +316,16 @@ a[rel~="footer"]:hover {
     font-size: 2.5rem;
     margin: 0 -8px;
 }
+
+.keep-together {
+  page-break-inside: avoid; /* older browsers */
+  break-inside: avoid;      /* modern browsers */
+  break-after: avoid;       /* avoid page break immediately after */
+}
+
+/* Add top margin when printing if moved to next page */
+@media print {
+  .keep-together {
+    margin-top: 16px;
+  }
+}
