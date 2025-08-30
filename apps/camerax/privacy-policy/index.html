@@ -172,7 +172,7 @@
     const permissionNote = document.getElementById("permission-note");
 
     if (PERMISSION_LIST.length > 0) {
-      if (PERMISSION_LIST.length > 2) {
+      if (PERMISSION_LIST.length <= 2) {
         permissionIntro.textContent = `${APP_NAME} requests the following permissions for its core functionality (e.g., ${PERMISSION_LIST.join(", ")}).`;
       } else {
         permissionIntro.textContent = `${APP_NAME} requests only the permissions required for its core functionality:`;
