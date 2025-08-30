@@ -214,12 +214,16 @@ a[rel~="footer"]:hover {
     align-items: center;
 }
 
+.heart {
+    display: inline-flex;
+    align-items: center;
+}
+
 .heart::before {
     font-family: "bootstrap-icons";
     content: "\F415";
     font-size: 1rem;
     color: red;
-    top: 10px;
 }
 
 .copyright {
