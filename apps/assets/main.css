@@ -167,6 +167,24 @@ a[rel~="footer"]:hover {
     color: #444;
 }
 
+.footer-bar {
+  display: flex;                 /* horizontal layout */
+  justify-content: space-between;/* left and right alignment */
+  align-items: center;           /* vertically center both <p> items */
+  padding: 10px 0;               /* optional spacing above/below */
+}
+
+.footer-bar p {
+  margin: 0;                     /* remove default paragraph margin */
+  display: flex;                 /* allows inline alignment with children */
+  align-items: center;           /* vertically center text and icons inside <p> */
+}
+
+.google-play-icon {
+  margin: 0;                     /* remove any default SVG margin */
+  display: block;                 /* ensures no inline spacing issues */
+}
+
 .translations-list-container {
     color: #000;
     padding-bottom: 8px;
