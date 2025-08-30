@@ -299,12 +299,8 @@ a[rel~="footer"]:hover {
     background-size: contain;
 }
 
-.store-link {
-    display: inline-flex;
-    align-items: center;
-}
-
 .store-link .google-play-icon {
+    display: inline-flex;
     filter: grayscale(100%);
     transition: filter 0.2s ease-in-out;
 }
