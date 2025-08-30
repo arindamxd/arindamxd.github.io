@@ -91,6 +91,9 @@ a[rel~="external"] {
     color: #000;
     /* black */
     font-weight: bold;
+    text-decoration: underline;
+    text-decoration-style: dashed;   /* dashed underline */
+    text-underline-offset: 3px;      /* spacing between text and underline */
 }
 
 a[rel~="external"]:hover {
