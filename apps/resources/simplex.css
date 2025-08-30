@@ -58,9 +58,12 @@ a[rel~="external"] {
     align-items: center;
     color: #000;
     font-weight: bold;
-    text-decoration: underline;
-    text-decoration-style: dashed;
-    text-underline-offset: 3px;
+}
+
+a[rel~="external"] .link-text {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 3px;
 }
 
 a[rel~="external"]::after {
@@ -68,12 +71,10 @@ a[rel~="external"]::after {
     font-size: 0.85em;
     pointer-events: none;
     user-select: none;
-    text-decoration: none;
     line-height: 1;
     position: relative;
     top: 2px;
     margin-left: 2px;
-    text-decoration: none;
     font-weight: normal;
 }
 
