@@ -230,12 +230,12 @@ a[rel~="footer"]:hover {
 
 /* Special disclaimer (warning/important in red) */
 .disclaimer-special {
-    color: red;
-    border-left: 4px solid red;
-    padding-left: 10px;
-    margin-top: 30px;
-    font-weight: 500;
-    position: relative;
+  color: red;
+  margin-top: 30px;
+  font-weight: 500;
+  position: relative;
+  padding-left: 30px;   /* space for the icon */
+  line-height: 1.5;     /* better readability */
 }
 
 /* Add Bootstrap icon (example: info-circle) before text */
@@ -244,6 +244,7 @@ a[rel~="footer"]:hover {
   content: "\f430";                 /* Unicode for bi-info-circle */
   font-size: 1.2rem;
   color: red;
-  margin-right: 8px;
-  vertical-align: middle;
+  position: absolute;
+  left: 0;                          /* stick to the left */
+  top: 0.1em;                       /* align vertically with text */
 }
