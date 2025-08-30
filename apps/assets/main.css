@@ -217,3 +217,11 @@ a[rel~="footer"]:hover {
   content: "♥";
   color: red;
 }
+
+.disclaimer-note {
+  color: #d32f2f; /* material red */
+  font-style: italic;
+  display: block;
+  margin-top: 0.5em;
+  font-size: 0.95em;
+}
