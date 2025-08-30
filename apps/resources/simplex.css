@@ -77,7 +77,7 @@ a[rel~="external"]::after {
     position: relative;
     top: 3px;
     margin-left: 2px;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 a[rel~="external"]:hover {
