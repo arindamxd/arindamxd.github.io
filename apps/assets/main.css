@@ -225,12 +225,6 @@ a[rel~="footer"]:hover {
     padding: 16px 0
 }
 
-.footer-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .heart {
     display: inline-flex;
     align-items: center;
