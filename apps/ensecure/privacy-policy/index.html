@@ -24,6 +24,7 @@
     const APP_NAME = "Ensecure";
     const CONTACT_EMAIL = "arindamxd+ensecure@gmail.com";
     const PLAY_PACKAGE = "com.ensecure";
+    const PLAY_ACCOUNT = "8427782270571014251";
     const PERMISSION_LIST = [];
     const LAST_UPDATED = "August 30, 2025";
   </script>
@@ -38,7 +39,7 @@
           <p class="header-title"><span class="app-name"></span></p>
           <p class="header-subtitle">Made with <span class="heart"></span> in Bengaluru, India</p>
         </div>
-        <span class="android-icon"></span>
+        <a class="developer-link" target="_blank" rel="noopener noreferrer"><span class="android-icon"></span></a>
       </div>
     </div>
 
@@ -52,7 +53,8 @@
           <p>This Privacy Policy explains how the <span class="app-name"></span> app ("<span class="app-name"></span>",
             "we", "us", "our", or "developer") manages data. <span class="app-name"></span> is a personal project
             developed and maintained by <strong>Arindam Karmakar</strong>, a professional software developer based in
-            <strong>Bengaluru, India</strong>.</p>
+            <strong>Bengaluru, India</strong>.
+          </p>
           <p class="disclaimer-special">This app is a personal project and <span class="dashed-underline">is not</span>
             affiliated with, sponsored by, or endorsed by any organization I work with professionally.</p>
 
@@ -62,7 +64,8 @@
             Firebase Crashlytics, solely to improve app stability and performance. This data is <strong>technical in
               nature</strong> (e.g., device model, OS version, app version, crash stack trace, timestamp), and contains
             <strong>no personal identifiers</strong> such as your name, email address, phone number, or precise
-            location.</p>
+            location.
+          </p>
 
           <h3>Firebase Crashlytics</h3>
           <p><span class="app-name"></span> uses Firebase Crashlytics to gather crash reports and technical diagnostics.
@@ -182,6 +185,11 @@
     // Update Play Store link
     document.querySelectorAll(".store-link").forEach(el => {
       el.href = "https://play.google.com/store/apps/details?id=" + PLAY_PACKAGE;
+    });
+
+    // Update Developer Link
+    document.querySelectorAll(".developer-link").forEach(el => {
+      el.href = "https://play.google.com/store/apps/dev?id=" + PLAY_ACCOUNT;
     });
 
     // Permission Elements
