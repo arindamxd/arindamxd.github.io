@@ -61,7 +61,7 @@ a {
 }
 
 /* External arrow */
-a[rel="external"]::after {
+a::after {
     content: "↗";
     font-size: 1em;
     font-weight: bold;
