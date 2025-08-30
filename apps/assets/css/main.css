@@ -342,6 +342,6 @@ a[rel~="footer"]:hover {
     color: #07ac49;
     display: flex;
     transform: rotate(270deg);
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin: 0 -8px;
 }
