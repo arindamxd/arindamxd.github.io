@@ -230,15 +230,20 @@ a[rel~="footer"]:hover {
 
 /* Special disclaimer (warning/important in red) */
 .disclaimer-special {
-    /* color: red; */
-    /* border-left: 4px solid red; */
-    /* padding-left: 10px; */
+    color: red;
+    border-left: 4px solid red;
+    padding-left: 10px;
     margin-top: 30px;
-    /* font-weight: 500; */
-    display: inline-block;
-    content: "";
-    vertical-align: -.125em;
-    background-image: url("data:image/svg+xml,<svg viewBox='0 0 160 160' fill='%23333' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z' clip-rule='evenodd'/></svg>");
-    background-repeat: no-repeat;
-    background-size: 10rem 10rem;
+    font-weight: 500;
+    position: relative;
+}
+
+/* Add Bootstrap icon (example: info-circle) before text */
+.disclaimer-special::before {
+  font-family: "bootstrap-icons";   /* Bootstrap Icons font */
+  content: "\f430";                 /* Unicode for bi-info-circle */
+  font-size: 1.2rem;
+  color: red;
+  margin-right: 8px;
+  vertical-align: middle;
 }
