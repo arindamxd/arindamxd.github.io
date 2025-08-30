@@ -80,7 +80,7 @@ a[rel~="external"]::after {
     font-weight: normal;
 }
 
-a[rel~="external"]:hover .link-text {
+a[rel~="external"]:hover {
     color: #1a73e8;
 }
 
