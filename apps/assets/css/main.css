@@ -339,7 +339,7 @@ a[rel~="footer"]:hover {
 .android-icon::before {
     font-family: "bootstrap-icons";
     content: "\F7D0";
-    color: green;
+    color: #07ac49;
     display: flex;
     transform: rotate(270deg);
     font-size: 3rem;
