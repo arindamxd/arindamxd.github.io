@@ -226,7 +226,6 @@ a[rel~="footer"]:hover {
     font-family: "bootstrap-icons";
     content: "\F7DB";
     font-size: 1rem;
-    color: red;
     top: 10px;
 }
 
