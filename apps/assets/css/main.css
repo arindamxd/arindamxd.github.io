@@ -143,6 +143,7 @@ a[rel~="footer"]:hover {
 .header {
     border-bottom: 1px solid #eee;
     padding: 21px 0;
+    background-color: snow;
 }
 
 /* Flexbox for header content */
@@ -171,6 +172,7 @@ a[rel~="footer"]:hover {
 .footer {
     border-top: 1px solid #eee;
     padding: 18px 0;
+    background-color: snow;
 }
 
 .footer-title {
@@ -194,9 +196,9 @@ a[rel~="footer"]:hover {
     align-items: center;
 }
 
-.translations-content-container {
+.content-container {
     padding-top: 8px;
-    padding-bottom: 16px;
+    padding-bottom: 32px;
 }
 
 /* Regular disclaimer */
