@@ -160,6 +160,12 @@ a[rel~="footer"]:hover {
     color: #444;
 }
 
+.footer {
+    border-top: 1px solid #eee;
+    margin: 32px 0 0;
+    padding: 16px 0
+}
+
 .footer-title {
     font-size: 18px;
     line-height: 28px;
@@ -169,10 +175,10 @@ a[rel~="footer"]:hover {
 }
 
 .footer-bar {
-  display: flex;                 /* horizontal layout */
-  justify-content: space-between;/* left and right alignment */
-  align-items: center;           /* vertically center both <p> items */
-  padding: 10px 0;               /* optional spacing above/below */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 100px 0;
 }
 
 .footer-bar p {
@@ -218,12 +224,6 @@ a[rel~="footer"]:hover {
 .translations-content-container {
     padding-top: 8px;
     border-top: 1px solid #eee
-}
-
-.footer {
-    border-top: 1px solid #eee;
-    margin: 32px 0 0;
-    padding: 16px 0
 }
 
 .heart {
