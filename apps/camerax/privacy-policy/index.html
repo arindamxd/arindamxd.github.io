@@ -128,8 +128,7 @@
           <h2>Contact</h2>
           <p>We value your feedback and are committed to addressing any questions about your privacy or the way <span class="app-name"></span>
             handles data. If you have concerns, suggestions, or requests regarding this Privacy Policy or your data,
-            please feel free to reach out: <a rel="external"><span
-                class="link-text"><a class="contact-email"></a></span></a>.</p>
+            please feel free to reach out: <a class="contact-email" rel="external"><span class="link-text"></span></a>.</p>
 
         </div>
 
@@ -154,8 +153,9 @@
 
     // Replace all .contact-email placeholders with CONTACT_EMAIL
     document.querySelectorAll(".contact-email").forEach(el => {
-      el.textContent = CONTACT_EMAIL;
       el.href = "mailto:" + CONTACT_EMAIL;
+      const span = el.querySelector(".link-text");
+      if (span) span.textContent = CONTACT_EMAIL;
     });
 
     // Update browser tab title
