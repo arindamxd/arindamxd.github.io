@@ -54,7 +54,7 @@ h6 {
 a {
     text-decoration: none;
     cursor: pointer;
-    color: #1a73e8;
+    color: #444;
     transition: color 0.2s ease-in-out;
     display: inline-flex;   /* keep text + arrow aligned */
     align-items: center;    /* fix arrow vertical alignment */
