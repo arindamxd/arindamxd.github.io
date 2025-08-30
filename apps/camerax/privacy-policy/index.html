@@ -103,7 +103,8 @@
             contact us at the email address below.</p>
 
           <h2>User Choices & Controls</h2>
-          <p id="permission-intro"><span class="app-name"></span> <strong>does not</strong> request any special permissions to operate.</p>
+          <p id="permission-intro"><span class="app-name"></span> <strong>does not</strong> request any special
+            permissions to operate.</p>
           <ul id="permission-list" style="display: none;"></ul>
           <p id="permission-note" style="display: none;"></p>
 
@@ -167,26 +168,26 @@
       el.href = "https://play.google.com/store/apps/details?id=" + PLAY_PACKAGE;
     });
 
+    // Permission Elements
     const permissionIntro = document.getElementById("permission-intro");
     const permissionList = document.getElementById("permission-list");
     const permissionNote = document.getElementById("permission-note");
 
-    // if (PERMISSION_LIST.length > 0) {
-    //   if (PERMISSION_LIST.length <= 2) {
-    //     permissionIntro.textContent = `${APP_NAME} requests the following permissions for its core functionality (e.g., ${PERMISSION_LIST.join(", ")}).`;
-    //   } else {
-    //     permissionIntro.textContent = `${APP_NAME} requests only the permissions required for its core functionality:`;
-    //     PERMISSION_LIST.forEach(permission => {
-    //       const li = document.createElement("li");
-    //       li.textContent = permission;
-    //       permissionList.appendChild(li);
-    //     });
-    //     permissionList.style.display = "block";
-    //   }
-    //   permissionNote.style.display = "block";
-    // } else {
-    //   permissionIntro.innerHTML = `${APP_NAME} <strong>does not</strong> request any special permissions to operate.`;
-    // }
+    // Permission Information Update
+    if (PERMISSION_LIST.length > 0) {
+      if (PERMISSION_LIST.length <= 2) {
+        permissionIntro.textContent = `${APP_NAME} requests the following permissions for its core functionality (e.g., ${PERMISSION_LIST.join(", ")}).`;
+      } else {
+        permissionIntro.textContent = `${APP_NAME} requests only the permissions required for its core functionality:`;
+        PERMISSION_LIST.forEach(permission => {
+          const li = document.createElement("li");
+          li.textContent = permission;
+          permissionList.appendChild(li);
+        });
+        permissionList.style.display = "block";
+      }
+      permissionNote.style.display = "block";
+    }
 
     // Update copyright year
     document.getElementById("year").textContent = new Date().getFullYear();
