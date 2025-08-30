@@ -318,3 +318,10 @@ a[rel~="footer"]:hover {
     font-size: 2.5rem;
     margin: 0 -8px;
 }
+
+.developer-link {
+    text-decoration: none;
+    outline: none;
+    border: none;
+    display: inline-flex;
+}
