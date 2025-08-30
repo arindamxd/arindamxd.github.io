@@ -61,7 +61,7 @@ a {
 }
 
 /* External arrow */
-a[rel="external"]::after {
+a[rel~="external"]::after {
     content: "↗";
     font-size: 1em;
     pointer-events: none;   /* not clickable */
