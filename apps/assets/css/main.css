@@ -300,14 +300,14 @@ a[rel~="footer"]:hover {
     display: inline-flex;
 }
 
-.store-link .google-play-icon {
+/* .store-link .google-play-icon {
     filter: grayscale(100%);
     transition: filter 0.2s ease-in-out;
 }
 
 .store-link:hover .google-play-icon {
     filter: none;
-}
+} */
 
 .android-icon::before {
     font-family: "bootstrap-icons";
