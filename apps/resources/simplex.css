@@ -64,7 +64,6 @@ a {
 a::after {
     content: "↗";
     font-size: 1em;
-    font-weight: bold;
     pointer-events: none;   /* not clickable */
     user-select: none;      /* not copyable */
     text-decoration: none;  /* not underlined */
@@ -77,6 +76,7 @@ a::after {
 /* Hover effect */
 a:hover {
     color: #1a73e8;
+    font-weight: bold;
 }
 
 .visible {
