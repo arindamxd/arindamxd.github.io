@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/*
+	Privacy Policy by Arindam Karmakar
+    © 2025 Arindam Karmakar. All rights reserved.
+*/
+
 body {
     background: #fff;
     color: #000;
@@ -20,13 +27,15 @@ h2 {
 h2 {
     font-size: 32px;
     line-height: 48px;
+    margin-top: 0.2em;
     margin-bottom: 0em;
 }
 
 h3 {
     font-size: 24px;
     line-height: 36px;
-    margin-bottom: -2em;
+    margin-top: 0.2em;
+    margin-bottom: 0em;
 }
 
 h3,
