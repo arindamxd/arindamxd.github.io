@@ -262,7 +262,8 @@ a[rel~="footer"]:hover {
     top: -0.1em;
 }
 
-.link-text::before {
+/* Dashed underline */
+.dashed-underline {
     text-decoration-line: underline;
     text-decoration-style: dashed;
     text-underline-offset: 5px;
