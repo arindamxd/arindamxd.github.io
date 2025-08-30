@@ -319,7 +319,7 @@ a[rel~="footer"]:hover {
 }
 
 .google-play-icon {
-    margin: -5px 0;
+    margin: -8px 0;
     display: block;
     /* ensures no inline spacing issues */
 }
