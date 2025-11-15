@@ -1,0 +1,30 @@
+{
+    "title": "Runtime Journey",
+    "description": "Tracing my path one commit at a time  —  a log of where I’ve coded (and debugged).",
+    "data": [
+        {
+            "title": "SDE 2",
+            "company": "Trell",
+            "start": "2017-10",
+            "end": "2019-05"
+        },
+        {
+            "title": "Senior Software Engineer",
+            "company": "KrazyBee",
+            "start": "2019-05",
+            "end": "2021-06"
+        },
+        {
+            "title": "Senior Custom Software Engineer",
+            "company": "Accenture",
+            "start": "2021-07",
+            "end": "2023-06"
+        },
+        {
+            "title": "Technical Lead",
+            "company": "KreditBee",
+            "start": "2023-06",
+            "end": "-"
+        }
+    ]
+}

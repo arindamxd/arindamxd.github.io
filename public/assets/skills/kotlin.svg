@@ -1,0 +1,12 @@
+<svg width="34" height="34" fill="none" id="kotlin" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <defs id="defs5">
+    <radialGradient id="kotlin-logo-large_svg__a" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(22.9097,0,0,22.9097,19.335,1.822)">
+      <stop offset="0.003" stop-color="#EF4857" id="stop1" />
+      <stop offset="0.469" stop-color="#D211EC" id="stop2" />
+      <stop offset="1" stop-color="#7F52FF" id="stop3" />
+    </radialGradient>
+  </defs>
+  <g style="fill:none" id="g1" transform="matrix(1.55,0,0,1.55,1.5,-0.05)">
+    <path d="M 20,21 H 0 V 1 H 20 L 9.793,10.855 Z" fill="url(#kotlin-logo-large_svg__a)" id="path1" style="fill:url(#kotlin-logo-large_svg__a)" />
+  </g>
+</svg>

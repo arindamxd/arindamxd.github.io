@@ -1,0 +1,24 @@
+{
+    "title": "What People Say",
+    "description": "Not bribed, I promise. Just real words from real humans.",
+    "data": [
+        {
+            "text": "Rarely do you come across someone who’s truly self-taught and has mastered the craft through pure dedication. Arindam is one of those people. Whether it’s a small UI tweak or a major new feature, he always dives deep into every detail, ensuring each flow is polished and delivered flawlessly.",
+            "author": "Neeraj Kumawat",
+            "position": "Co-Founder, House of X / IIT Guwahati",
+            "background": "/assets/testimonials/1589283973304.png"
+        },
+        {
+            "text": "Highly skilled android developer with solid knowledge of the Android ecosystem. Had the honour to cooperate with him in a project, for sure a valuable team member.",
+            "author": "Georgios Tzortzidis",
+            "position": "Application Development Specialist, Accenture",
+            "background": "/assets/testimonials/1604828922394.png"
+        },
+        {
+            "text": "Arindam is an extremely dedicated and hardworking character. He can develop things from scratch and scale-up from there. He will be an asset to any company he works with.",
+            "author": "Sahil Taneja",
+            "position": "Senior Product Manager, Zalando",
+            "background": "/assets/testimonials/1616447891865.png"
+        }
+    ]
+}

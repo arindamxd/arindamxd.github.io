@@ -1,0 +1,81 @@
+---
+// data
+const author = (await import("../../content/author-metadata.json")).default;
+---
+
+<section class="section">
+
+    <div class="hero-tie-container" style="opacity: 1; transform: translateX(-50%); will-change: transform;">
+        <div class="hero-tie hero-tie-centered" style="">
+            <div class="hero-tie-stripe" />
+            <div class="hero-tie-holder" style="background-color: rgb(23, 23, 23); border-radius: 6px; opacity: 1;"></div>
+            <div class="hero-tie-box" style="background: linear-gradient(rgb(7, 7, 7) 0%, rgb(45, 45, 45) 100%); border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; opacity: 1;"></div>
+        </div>
+    </div>
+
+    <div class="hero-badge" style="padding-bottom: 50px;">
+        <div class="hero-card" data-border=true id="hero">
+            <div class="hero-card-hole" data-border=true></div>
+
+            <div class="hero-card-content" style="--padding: 50px">
+                <div class="not-found-text-container" style="padding-top: 50px;">
+                    <h1 class="proton-text proton-style-preset-404">404</h1>
+                </div>
+                <div class="hero-card-content-404">
+                    <div class="not-found-text-container">
+                        <p class="proton-text proton-styles-preset-subtitle-not-found">Page not found</p>
+                    </div>
+                    <div class="hero-card-content-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+                        <p class="proton-text proton-styles-preset-paragraph">The page you are looking for could not be found</p>
+                    </div>
+                </div>
+
+                <div class="hero-card-content-buttons" style="transform:none;will-change:transform;">
+                    <div class="hero-card-content-button-primary">
+                        <a class="button-primary button-primary-align display-block" style="border-radius: 100px; opacity: 1;" href="/">
+                            <div class="button-label" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                                <p class="proton-text proton-styles-preset-paragraph" style="--proton-text-color:var(--color-bg)">Go back home</p>
+                            </div>
+                            <div class="button-icon" style="background-color: var(--color-bg); border-radius: 100px; transform: none; opacity: 1;">
+                                <div class="svg-arrow" style="image-rendering: pixelated; flex-shrink: 0;">
+                                    <div class="svg-container" style="width:100%;height:100%;aspect-ratio:inherit">
+                                        <svg style="width:100%;height:100%;"><use href="#link-arrow"></use></svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-background-main" style="background-color: var(--color-primary); border-radius: 50px;"></div>
+                            <div class="button-background-hover" style="background-color:rgba(0, 0, 0, 0.1);border-bottom-left-radius:50px;border-bottom-right-radius:50px;border-top-left-radius:50px;border-top-right-radius:50px;"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-card-bottom">
+                <div class="hero-card-bottom-location">
+                    <div class="location-icon" style="image-rendering:pixelated;flex-shrink:0;fill:rgba(0,0,0,1);color:rgba(0,0,0,1)">
+                        <div class="svg-container" style="width:100%;height:100%;aspect-ratio:inherit">
+                            <svg style="width:100%;height:100%;" viewBox="0 0 13 14" preserveAspectRatio="none" width="100%" height="100%"><use href="#svg-1885035283_1212"></use></svg>
+                        </div>
+                    </div>
+                    <div class="location-text-container" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+                        <p class="proton-text proton-styles-preset-small-text"><span style="--proton-text-color:rgba(23, 23, 23, 0.6)" class="proton-text">Located in </span>{author.location}<span style="--proton-text-color:rgba(23, 23, 23, 0.6)" class="proton-text">, available worldwide.</span></p>
+                    </div>
+                </div>
+                <div class="hero-card-bottom-links">
+                    <a class="link-label-icon link-item-align display-block" href={author.intro.cardLinkURL} target="_blank" rel="noopener">
+                        <div class="link-text-span" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                            <p class="proton-text proton-styles-preset-role">{author.intro.cardLinkText}</p>
+                        </div>
+                        <div class="link-icon">
+                            <div style="display:contents">
+                                <svg style="width:100%;height:100%"><use href="#link-arrow"></use></svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>

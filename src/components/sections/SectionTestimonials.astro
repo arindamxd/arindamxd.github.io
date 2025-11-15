@@ -1,0 +1,125 @@
+---
+// data
+const author = (await import("../../content/author-metadata.json")).default;
+const metadata = (await import("../../content/testimonials-metadata.json")).default;
+---
+
+<section id="testimonials" class="section">
+
+    <!-- Heading -->
+    <div class="section-header">
+        <div class="section-header-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <h2 class="proton-text proton-styles-preset-heading-2">{metadata.title}</h2>
+        </div>
+        <div class="section-header-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <p class="proton-text proton-styles-preset-paragraph" style="--proton-text-alignment:center;">{metadata.description}</p>
+        </div>
+    </div>
+
+    <div class="testimonials-container">
+        <div id="phone" class="testimonials-phone">
+
+            <!-- Left Screen Art -->
+            <div class="screen-left-art"></div>
+
+            <!-- Mobile Phone with Testimonial -->
+            <div class="testimonials-phone-container">
+                <div class="testimonials main-wrapper" style="background-color: var(--color-primary); opacity: 1; border-radius: 60px;">
+
+                    <!-- Mobile Border -->
+                    <div class="mobile-border">
+                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0" data-proton-background-image-wrapper="true">
+                            <img decoding="auto" loading="lazy" src="/assets/resources/phone-border.png" alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Gestures -->
+                    <div class="gestures" style="border-radius: 60px; opacity: 1;">
+                        <div class="gesture-left-container">
+                            <div id="prevButton" class="gesture-item gesture-wrapper" style="height: 100%; width: 100%; opacity: 1;">
+                                <div class="gesture-item-full" style="background:linear-gradient(270deg, rgba(0, 0, 0, 0) -4%, rgba(0, 0, 0, 0.16) 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="gesture-right-container">
+                            <div id="nextButton" class="gesture-item gesture-wrapper" style="height: 100%; width: 100%; opacity: 1;">
+                                <div class="gesture-item-full" style="background:linear-gradient(270deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 100%);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Content -->
+                    <div class="vertical-stack">
+                        <div class="vertical-stack-top">
+
+                            <!-- Testimonial Progress Bar -->
+                            <div id="progressBarsContainer" class="progress-bar"></div>
+
+                            <!-- Personal Details -->
+                            <div id="testimonialPerson" class="vertical-stack-top-person" style="display: none;">
+                                <div class="vertical-stack-top-person-avatar" style="opacity: 1; border-radius: 100%;">
+                                    <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0" data-proton-background-image-wrapper="true">
+                                        <img decoding="auto" loading="lazy" sizes="33px" src={author.intro.avatar} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:fill">
+                                    </div>
+                                </div>
+                                <div class="vertical-stack-top-person-info">
+                                    <div class="vertical-stack-top-person-info-name" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                                        <p class="proton-text" style="--proton-font-family:&quot;Manrope&quot;, &quot;Manrope Placeholder&quot;, sans-serif;--proton-font-size:14px;--proton-font-weight:600;--proton-letter-spacing:-0.04em;--proton-line-height:130%;--proton-text-alignment:left;--proton-text-color:var(--color-bg)">{author.name}</p>
+                                    </div>
+                                    <div class="vertical-stack-top-person-info-role" style="outline:none;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.6;transform:none;padding-bottom:2px;">
+                                        <p class="proton-text" style="--proton-font-family:&quot;Manrope&quot;, &quot;Manrope Placeholder&quot;, sans-serif;--proton-font-size:12px;--proton-font-weight:600;--proton-letter-spacing:-0.04em;--proton-line-height:100%;--proton-text-alignment:left;--proton-text-color:var(--color-bg)">{author.role}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Testimonial Info -->
+                        <div class="vertical-stack-info" style="will-change: transform; opacity: 1; transform: none; transform-origin: 50% 50% 0px;">
+                            <div class="vertical-stack-info-data" style="transform: none; transform-origin: 50% 50% 0px;">
+                                <div id="starsIcon" class="stars-icon" style="image-rendering: pixelated; flex-shrink: 0; transform: none; transform-origin: 50% 50% 0px; display: none;" aria-hidden="true">
+                                    <div class="svg-container" style="width:100%;height:100%;aspect-ratio:inherit">
+                                        <svg style="width:100%;height:100%;"><use href="#svg8935606026"></use></svg>
+                                    </div>
+                                </div>
+                                <div class="vertical-stack-info-recommendation-text" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; transform-origin: 50% 50% 0px;">
+                                    <p id="testimonialText" class="proton-text" style="--proton-font-family:&quot;Manrope&quot;, &quot;Manrope Placeholder&quot;, sans-serif;--proton-font-size:22px;--proton-font-weight:600;--proton-letter-spacing:-0.04em;--proton-line-height:120%;--proton-text-color:var(--color-bg)"></p>
+                                </div>
+                            </div>
+                            <div class="vertical-stack-info-recommendation-author" style="transform: none; transform-origin: 50% 50% 0px;">
+                                <div class="vertical-stack-info-recommendation-author-name" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; transform-origin: 50% 50% 0px;">
+                                    <p id="testimonialAuthor" class="proton-text" style="--proton-font-family:&quot;Manrope&quot;, &quot;Manrope Placeholder&quot;, sans-serif;--proton-font-size:14px;--proton-font-weight:600;--proton-letter-spacing:-0.04em;--proton-line-height:130%;--proton-text-alignment:left;--proton-text-color:var(--color-bg)"></p>
+                                </div>
+                                <div class="vertical-stack-info-recommendation-author-role" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; --proton-paragraph-spacing: 0px; opacity: 0.6; transform: none; transform-origin: 50% 50% 0px;">
+                                    <p id="testimonialPosition" class="proton-text" style="--proton-font-family:&quot;Manrope&quot;, &quot;Manrope Placeholder&quot;, sans-serif;--proton-font-size:12px;--proton-font-weight:600;--proton-letter-spacing:-0.04em;--proton-line-height:100%;--proton-text-alignment:left;--proton-text-color:var(--color-bg)"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Testimonial Image -->
+                    <div class="vertical-stack-image" style="opacity:0.07">
+                        <div class="vertical-stack-image-background" style="will-change: transform; opacity: 1; transform: none; border-radius: 60px;">
+                            <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0" data-proton-background-image-wrapper="true">
+                                <img id="screenBg" decoding="auto" loading="lazy" alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Screen Art -->
+            <div class="screen-right-art" style="will-change: transform; opacity: 1; transform: none;"></div>
+
+            <!-- Hand Art -->
+            <div class="hand-art" style="will-change: transform; opacity: 1; transform: none;">
+                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                    <img decoding="auto" loading="lazy" src="/assets/resources/holding-phone.png" alt="Close-up of the hand holding the mobile phone" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>

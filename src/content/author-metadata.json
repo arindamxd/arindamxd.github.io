@@ -1,0 +1,70 @@
+{
+    "name": "Arindam Karmakar",
+    "role": "Mobile App Developer",
+    "subRole": "iOS / Android",
+    "bio": "A young Google-certified associate programmer with many talents and a passion for all things Google/Android.",
+    "canonical": "https://arindamxd.github.io/",
+    "ogImage": "/assets/resources/og-image.png",
+    "location": "India",
+    "intro": {
+        "avatar": "/assets/author/me.png",
+        "title": "I code apps that stay awake longer than me",
+        "subTitle": "From Android to iOS, I design, develop, and deliver mobile solutions that work in the real world.",
+        "social": [
+            {
+                "name": "Stack Overflow",
+                "url": "https://stackoverflow.com/users/8515192/arindam-karmakar?tab=profile",
+                "icon": "/assets/socials/stackoverflow.svg"
+            },
+            {
+                "name": "GitHub",
+                "url": "https://github.com/arindamxd",
+                "icon": "/assets/socials/github.svg"
+            },
+            {
+                "name": "LinkedIn",
+                "url": "https://www.linkedin.com/in/arindamxd",
+                "icon": "/assets/socials/linkedin.svg"
+            },
+            {
+                "name": "Google Play",
+                "url": "https://play.google.com/store/apps/dev?id=8427782270571014251",
+                "icon": "/assets/socials/google-play.svg"
+            }
+        ],
+        "cardLinkText": "LinkedIn",
+        "cardLinkURL": "https://www.linkedin.com/in/arindamxd/"
+    },
+    "footer": {
+        "avatar": "/assets/author/author-grey.png",
+        "title": "Say Hello  👋",
+        "description": "WARNING: I sometimes ghost by accident. Not personal. I’ll get back when I remember I’m human.",
+        "social": [
+            {
+                "name": "X",
+                "url": "https://x.com/arindamxd",
+                "icon": "/assets/socials/x-small.svg"
+            },
+            {
+                "name": "LinkedIn",
+                "url": "https://www.linkedin.com/in/arindamxd",
+                "icon": "/assets/socials/linkedin.svg"
+            },
+            {
+                "name": "GitHub",
+                "url": "https://github.com/arindamxd",
+                "icon": "/assets/socials/github.svg"
+            },
+            {
+                "name": "Stack Overflow",
+                "url": "https://stackoverflow.com/users/8515192/arindam-karmakar?tab=profile",
+                "icon": "/assets/socials/stackoverflow.svg"
+            },
+            {
+                "name": "Google Play",
+                "url": "https://play.google.com/store/apps/dev?id=8427782270571014251",
+                "icon": "/assets/socials/google-play.svg"
+            }
+        ]
+    }
+}

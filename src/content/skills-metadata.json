@@ -1,0 +1,38 @@
+{
+    "title": "Powered By",
+    "description": "From IDEs to frameworks  —  here’s what powers my daily workflow.",
+    "tech": {
+        "stack": [
+            {
+                "icon": "/assets/skills/kotlin.svg",
+                "label": "Kotlin"
+            },
+            {
+                "icon": "/assets/skills/swift.svg",
+                "label": "Swift"
+            },
+            {
+                "icon": "/assets/skills/python.svg",
+                "label": "Python"
+            },
+            {
+                "icon": "/assets/skills/compose.svg",
+                "label": "Jetpack Compose"
+            }
+        ],
+        "tools": [
+            {
+                "icon": "/assets/skills/android-studio.svg",
+                "label": "Android Studio"
+            },
+            {
+                "icon": "/assets/skills/xcode.svg",
+                "label": "Xcode"
+            },
+            {
+                "icon": "/assets/skills/vs-code.svg",
+                "label": "Visual Studio Code"
+            }
+        ]
+    }
+}

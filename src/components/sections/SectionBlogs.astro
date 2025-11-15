@@ -1,0 +1,73 @@
+---
+import type { Blog } from "../../types/blog";
+import BlogElement from "../elements/BlogElement.astro";
+import BlogViewAll from "../elements/BlogViewAll.astro";
+
+// data
+const metadata = (await import("../../content/blogs-metadata.json")).default;
+
+// return early if no blogs
+if (metadata.data.length === 0) {
+    return;
+}
+
+// props
+const { home = false, slug = false, limit = false, current = null } = Astro.props;
+
+// parse dates
+const blogs: Blog[] = metadata.data.map(blog => ({
+    ...blog,
+    date: new Date(blog.date),
+}));
+
+// select all random except current if provided
+const filtered = current ? (
+    blogs
+        .filter((item) => item.slug !== current.slug)
+        .sort(() => Math.random() - 0.5)
+) : blogs;
+
+// sort by date descending
+const sorted = current ? filtered : [...blogs].sort((a, b) =>
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+
+// show only 3 on home, else all
+const items = limit ? sorted.slice(0, 3) : sorted;
+
+// section styles and text
+const section_header_style = slug ? "padding: 0;" : (home ? "padding: 0;" : "padding: 110px 0 0;");
+const title = slug ? "More articles" : metadata.title;
+const description = slug ? (items.length < 1 ? "Coming soon ..." : "Check out some of my favorite & most recent articles.") : metadata.description;
+---
+
+<section id="blogs" class="section">
+
+    <!-- Heading -->
+    <div class="section-header" style={section_header_style}>
+        <div class="section-header-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <h2 class="proton-text proton-styles-preset-heading-2">{title}</h2>
+        </div>
+        <div class="section-header-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <p class="proton-text proton-styles-preset-paragraph" style="--proton-text-alignment:center;">{description}</p>
+        </div>    
+    </div>
+
+    <!-- Articles Container -->
+    {items.length > 0 && (
+        <div class="journal-list" data-border="true">
+
+            <!-- Articles -->
+            {items.map((blog) => (
+                <BlogElement blog={blog} />
+            ))}
+
+            <!-- View All -->
+            {home && metadata.data.length > 3 && (
+                <BlogViewAll />
+            )}
+
+        </div>
+    )}
+
+</section>

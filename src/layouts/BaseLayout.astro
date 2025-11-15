@@ -1,0 +1,75 @@
+---
+import "../styles/proton.css";
+
+const author = (await import("../content/author-metadata.json")).default;
+
+// props
+const { home = false, title = author.name } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Title -->
+        <title>{home ? author.name : `${author.name} | ${title}`}</title>
+
+        <!-- SEO -->
+        <meta name="description" content={author.bio} />
+        <link rel="canonical" href={author.canonical} />
+        <meta name="robots" content="max-image-preview:large" />
+
+        <!-- Favicons -->
+        <link rel="icon" href="/assets/resources/favicon.svg" />
+        <link rel="apple-touch-icon" href="/assets/resources/favicon.svg" />
+
+        <!-- Color scheme -->
+        <meta name="theme-color" content="#171717" />
+        <meta name="color-scheme" content="light dark" />
+
+        <!-- Facebook Open Graph -->
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={author.bio} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={author.canonical} />
+        <meta property="og:image" content={author.ogImage} />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={author.bio} />
+        <meta name="twitter:image" content={author.ogImage} />
+
+        <!-- Preload critical assets -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="image" href={author.ogImage} />
+
+        <!-- Structured data -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Person",
+                "name": "Arindam Karmakar",
+                "url": "https://arindamxd.github.io/",
+                "sameAs": [
+                    "https://github.com/arindamxd",
+                    "https://linkedin.com/in/arindamxd",
+                    "https://x.com/arindamxd"
+                ],
+                "jobTitle": "Mobile App Developer"
+            }
+        </script>
+
+        <!-- Available text responsive script -->
+        <script type="module" src="/src/scripts/available-text.js" is:inline />
+
+        <!-- Testimonial slider script -->
+        <script type="module" src="/src/scripts/testimonial-slider.js" is:inline />
+    </head>
+
+    <body oncontextmenu="return true;">
+        <slot />
+    </body>
+</html>

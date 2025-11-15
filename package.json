@@ -1,0 +1,44 @@
+{
+  "name": "arindam-karmakar",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Personal portfolio website of Arindam Karmakar - Mobile App Developer",
+  "author": {
+    "name": "Arindam Karmakar",
+    "email": "arindamxd@gmail.com",
+    "url": "https://arindamxd.github.io"
+  },
+  "license": "MIT",
+  "homepage": "https://arindamxd.github.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arindamxd/arindamxd.github.io.git"
+  },
+  "keywords": [
+    "portfolio",
+    "astro",
+    "static-site",
+    "mobile-developer",
+    "android",
+    "kotlin",
+    "swift"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "clean": "rm -rf dist .astro node_modules/.vite",
+    "check": "astro check",
+    "lint": "echo 'No linting configured'",
+    "test": "echo 'No tests configured'"
+  },
+  "dependencies": {
+    "astro": "^5.15.6"
+  },
+  "devDependencies": {},
+  "private": true
+}

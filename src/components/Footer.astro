@@ -1,0 +1,63 @@
+---
+// data
+const author = (await import("../content/author-metadata.json")).default;
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer-container" style="background-color: rgb(255, 255, 255); width: 100%;">
+    <div class="footer-contact" data-border="true">
+
+        <div class="footer-contact-main">
+
+            <div class="footer-contact-main-header">
+                <div class="footer-header-title" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                    <h2 class="proton-text proton-styles-preset-heading-2">{author.footer.title}</h2>
+                </div>
+                <div class="footer-header-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.6;transform:none">
+                    <p class="proton-text proton-styles-preset-paragraph" style="--proton-text-alignment:center">{author.footer.description}</p>
+                </div>
+            </div>
+
+            <div class="footer-contact-main-social">
+                {author.footer.social.map((link) => (
+                    <div class="social-link-footer" style="will-change: transform;">
+                        <a aria-label={link.name} class="social-circle-flex social-icons display-block" style="--icon-padding: 8px; background-color: var(--color-surface, rgb(246, 246, 246)); border-radius: 50px; height: 100%; width: 100%; opacity: 1;" href={link.url} target="_blank" rel="noopener">
+                            <div class="social-link-icon">
+                                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                                    <img decoding="auto" width="18" height="18" src={link.icon} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                ))}
+            </div>
+
+            <div class="footer-contact-main-copyright">
+                <div class="footer-copyright-text" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.6;transform:none">
+                    <p class="proton-text proton-styles-preset-role" style="--proton-text-alignment:center">&copy; <b>{currentYear}</b> / All rights Reserved.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-contact-creator">
+            <a class="footer-contact-creator-link horizontal-flex display-block" href="/" rel="noopener">
+                <div class="footer-contact-creator-link-text-created-by" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.6;transform:none">
+                    <p class="proton-text proton-styles-preset-role" style="--proton-font-size:13px;--proton-font-weight:500;--proton-letter-spacing:-0.04em;--proton-line-height:1.4em;--proton-text-alignment:center;--proton-text-color:var(--color-text)">Created by</p>
+                </div>
+                <div class="footer-contact-creator-link-image">
+                    <div class="footer-contact-creator-link-image-avatar" style="border-radius: 100%;">
+                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                            <img decoding="auto" loading="lazy" src={author.footer.avatar} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-contact-creator-link-text-author-name" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none;">
+                    <p class="proton-text proton-styles-preset-role" style="--proton-font-size:13px;--proton-font-weight:500;--proton-letter-spacing:-0.04em;--proton-line-height:1.4em;--proton-text-alignment:center;--proton-text-color:var(--color-text)">{author.name}</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</footer>

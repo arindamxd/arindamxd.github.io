@@ -1,0 +1,61 @@
+---
+import ProjectElement from "./../elements/ProjectElement.astro";
+import ProjectViewAll from "./../elements/ProjectViewAll.astro";
+
+// data
+const metadata = (await import("../../content/projects-metadata.json")).default;
+
+// return early if no projects
+if (metadata.data.length === 0) {
+    return;
+}
+
+// props
+const { home = false, slug = false, limit = false, current = null } = Astro.props;
+
+// select all random except current if provided
+const filtered = current ? (
+    metadata.data
+        .filter((item) => item.slug !== current.slug)
+        .sort(() => Math.random() - 0.5)
+) : metadata.data;
+
+// sort by date descending
+const sorted = current ? filtered : [...filtered].sort((a, b) =>
+    new Date(b.page.header.updated_date).getTime() - new Date(a.page.header.updated_date).getTime()
+);
+
+// show only 2 on home, else all
+const items = limit ? sorted.slice(0, 2) : sorted;
+
+// section styles and text
+const section_header_style = slug ? "padding: 0;" : (home ? "padding: 0;" : "padding: 110px 0 0;");
+const title = slug ? "More projects" : metadata.title;
+const description = slug ? (items.length < 1 ? "Coming soon ..." : "Check out some of my favorite & most recent projects.") : metadata.description;
+---
+
+<section id="projects" class="section" style="will-change: transform;">
+
+    <!-- Heading -->
+    <div class="section-header" style={section_header_style}>
+        <div class="section-header-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <h2 class="proton-text proton-styles-preset-heading-2">{title}</h2>
+        </div>
+        <div class="section-header-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <p class="proton-text proton-styles-preset-paragraph" style="--proton-text-alignment:center;">{description}</p>
+        </div>
+    </div>
+
+    <!-- Projects List -->
+    <div class="projects-list">
+        {items.map((project) => (
+            <ProjectElement project={project} />
+        ))}
+
+        <!-- View All -->
+        {home && metadata.data.length > 2 && (
+            <ProjectViewAll />
+        )}
+    </div>
+
+</section>

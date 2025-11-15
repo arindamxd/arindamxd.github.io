@@ -1,0 +1,42 @@
+---
+// props
+const { project } = Astro.props;
+---
+
+<a class="projects-list-item-link display-block" href={`/projects/${project.slug}`}>
+    <div class="projects-list-item">
+        <div class="projects-card typography-card-title projects-card-container card-hover" style="border-radius: 45px; height: 100%; width: 100%;">
+            <div class="caption-info" style="background-color: var(--color-bg); border-radius: 50px;">
+                <div class="caption-info-content">
+                    <div class="caption-info-logo" style={`background-color: ${project.images.thumb_bg_color}; border-radius: 50px;`}>
+                        <div class="project-logo">
+                            <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                                <img decoding="auto" loading="lazy" sizes="22px" src={project.images.thumb} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:contain">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="caption-info-text">
+                        <div class="caption-info-text-title" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none;">
+                            <p class="proton-text proton-styles-preset-default">{project.title}</p>
+                        </div>
+                        <div class="caption-info-text-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.6;transform:none">
+                            <p class="proton-text proton-styles-preset-role">{project.desc.short}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="caption-info-arrow" style="background-color: var(--color-surface, rgb(246, 246, 246)); border-radius: 100%; transform: none; will-change: transform;">
+                    <div class="link-icon-circle-bg" style="image-rendering: pixelated; flex-shrink: 0;" aria-hidden="true">
+                        <div class="svg-container" style="width:100%;height:100%;aspect-ratio:inherit">
+                            <svg style="width:100%;height:100%;"><use href="#svg12157825541"></use></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="project-background-image" style="will-change: transform;">
+                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0;">
+                    <img decoding="auto" loading="lazy" src={project.images.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

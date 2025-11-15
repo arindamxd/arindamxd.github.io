@@ -1,0 +1,224 @@
+---
+import { formatDate } from "../../utils/date";
+
+// props
+const { project } = Astro.props;
+
+// project data
+const { header, body } = project.page;
+---
+
+<article class="project-content-container">
+    <div class="project-content-top">
+
+        <div class="hero-tie-container" style="opacity: 1; transform: translateX(-50%); will-change: transform;">
+            <div class="hero-tie hero-tie-centered">
+                <div class="hero-tie-stripe" />
+                <div class="hero-tie-holder" style="background-color: rgb(23, 23, 23); border-radius: 6px; opacity: 1;"></div>
+                <div class="hero-tie-box" style="background: linear-gradient(rgb(7, 7, 7) 0%, rgb(45, 45, 45) 100%); border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; opacity: 1;"></div>
+            </div>
+        </div>
+
+        <div class="hero-badge">
+            <div class="hero-card" data-border=true id="hero">
+                <div class="hero-card-hole" data-border=true></div>
+
+                <!-- Project Image -->
+                <div class="hero-card-header-image-container">
+                    <div class="hero-card-header-image" style="will-change: transform; opacity: 1; transform: none;">
+                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                            <img decoding="auto" loading="lazy" src={project.images.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Organization -->
+                {header.organization && (
+                    <div class="hero-card-header-info-container">
+                        <div class="hero-card-header-info hero-card-header-info-text-style" style="background-color: rgb(255, 255, 255); border-radius: 41px; width: 100%;">
+                            <div class="hero-card-header-info-type-container">
+                                <div class="hero-card-header-info-type-logo" style="background-color: var(--color-surface); border-radius: 50px;">
+                                    <div class="logo-container">
+                                        <div style="display:contents">
+                                            <img decoding="auto" src="/assets/resources/organization.svg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hero-card-header-info-type-text" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.5;transform:none">
+                                    <p class="proton-text proton-styles-preset-back-button-text">Organization</p>
+                                </div>
+                            </div>
+                            <div class="hero-card-header-info-type-menu">
+                                <div class="hero-card-header-info-type-menu-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                                    <p class="proton-text proton-styles-preset-menu-text" style="--proton-text-alignment:right">{header.organization}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <!-- Category -->
+                {header.category && (
+                    <div class="hero-card-header-info-container">
+                        <div class="hero-card-header-info hero-card-header-info-text-style" style="background-color: rgb(255, 255, 255); border-radius: 41px; width: 100%; opacity: 1;">
+                            <div class="hero-card-header-info-type-container">
+                                <div class="hero-card-header-info-type-logo" style="background-color: var(--color-surface); border-radius: 50px; opacity: 1;">
+                                    <div class="logo-container">
+                                        <div style="display:contents">
+                                            <img decoding="auto" src="/assets/resources/category.svg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hero-card-header-info-type-text" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.5;transform:none">
+                                    <p class="proton-text proton-styles-preset-back-button-text">Category</p>
+                                </div>
+                            </div>
+                            <div class="hero-card-header-info-type-menu">
+                                <div class="hero-card-header-info-type-menu-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                                    <p class="proton-text proton-styles-preset-menu-text" style="--proton-text-alignment:right">{header.category}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <!-- Released on -->
+                {header.released_date && (
+                    <div class="hero-card-header-info-container">
+                        <div class="hero-card-header-info hero-card-header-info-text-style" style="background-color: rgb(255, 255, 255); border-radius: 41px; width: 100%; opacity: 1;">
+                            <div class="hero-card-header-info-type-container">
+                                <div class="hero-card-header-info-type-logo" style="background-color: var(--color-surface); border-radius: 50px; opacity: 1;">
+                                    <div class="logo-container">
+                                        <div style="display:contents">
+                                            <img decoding="auto" src="/assets/resources/date.svg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hero-card-header-info-type-text" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.5;transform:none">
+                                    <p class="proton-text proton-styles-preset-back-button-text">Released on</p>
+                                </div>
+                            </div>
+                            <div class="hero-card-header-info-type-menu">
+                                <div class="hero-card-header-info-type-menu-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                                    <p class="proton-text proton-styles-preset-menu-text" style="--proton-text-alignment:right">{formatDate(header.released_date, 'long')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <!-- Website Link -->
+                {header.link && (
+                    <div class="hero-card-bottom" style="justify-content: center;">
+                        <div class="hero-card-bottom-links">
+                            <a class="link-label-icon link-item-align display-block" href={header.link} target="_blank" rel="noopener">
+                                <div class="link-text-span" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                                    <p class="proton-text proton-styles-preset-role">Visit website</p>
+                                </div>
+                                <div class="link-icon">
+                                    <svg style="width:100%;height:100%"><use href="#link-arrow"></use></svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                )}
+
+            </div>
+        </div>
+
+        <!-- Project Header Info -->
+        <div class="project-content-header" style="opacity: 1; transform: none; will-change: transform;">
+            <div class="project-content-header-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+                <h1 class="proton-text proton-styles-preset-article-title">{project.title}</h1>
+            </div>
+            <div class="project-content-header-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+                <p class="proton-text proton-styles-preset-past-year">{project.desc.long}</p>
+            </div>
+            <div class="project-content-back-button-container">
+                <a class="back-button-link back-button-link-text display-block" href="/projects">
+                    <div class="back-arrow" data-border="true" style="--border-bottom-width: 1px; --border-color: rgb(233, 233, 233); --border-left-width: 1px; --border-right-width: 1px; --border-style: solid; --border-top-width: 1px; background-color: rgb(255, 255, 255); border-radius: 100%; opacity: 1;">
+                        <div class="back-arrow-vector" style="image-rendering: pixelated; flex-shrink: 0; opacity: 1;" aria-hidden="true">
+                            <div class="svgContainer" style="width:100%;height:100%;aspect-ratio:inherit">
+                                <svg style="width:100%;height:100%;"><use href="#svg12261373696"></use></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="back-button-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
+                        <p class="proton-text proton-styles-preset-back-button-text" style="--proton-text-alignment:left">Back to projects</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Project Body -->
+
+    <!-- Image Small Two -->
+    <div class="project-content-body-image-multiple">
+        <div class="project-content-body-image-multiple-top">
+            <div class="project-content-image-banner">
+                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                    <img decoding="auto" loading="lazy" src={body.container_top.left_image.src} alt={body.container_top.left_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                </div>
+            </div>
+            <div class="project-content-image-banner">
+                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                    <img decoding="auto" loading="lazy" src={body.container_top.right_image.src} alt={body.container_top.right_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content First -->
+    <div class="project-content-body-text-container">
+        <div class="project-content-body-text-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <p class="proton-text proton-styles-preset-article-intro">{body.container_middle.content.title}</p>
+        </div>
+        <div class="project-content-body-text-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <p class="proton-text proton-styles-preset-past-year">{body.container_middle.content.description}</p>
+        </div>
+    </div>
+
+    <!-- Image Single Large -->
+    <div class="project-content-body-image-single">
+        <div class="project-content-image-banner-large">
+            <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                <img decoding="auto" loading="lazy" src={body.container_middle.large_image.src} alt={body.container_middle.large_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+            </div>
+        </div>
+    </div>
+
+    <!-- Contect Second -->
+    <div class="project-content-body-text-container">
+        <div class="project-content-body-text-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <p class="proton-text proton-styles-preset-article-intro">{body.container_bottom.content.title}</p>
+        </div>
+        <div class="project-content-body-text-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+            <p class="proton-text proton-styles-preset-past-year">{body.container_bottom.content.description}</p>
+        </div>
+    </div>
+
+    <!-- Image Small Two + Large One -->
+    <div class="project-content-body-image-multiple">
+        <div class="project-content-body-image-multiple-top">
+            <div class="project-content-image-banner">
+                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                    <img decoding="auto" loading="lazy" src={body.container_bottom.left_image.src} alt={body.container_bottom.left_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                </div>
+            </div>
+            <div class="project-content-image-banner">
+                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                    <img decoding="auto" loading="lazy" src={body.container_bottom.right_image.src} alt={body.container_bottom.right_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                </div>
+            </div>
+        </div>
+        <div class="project-content-image-banner-large-mixed">
+            <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                <img decoding="auto" loading="lazy" src={body.container_bottom.large_image.src} alt={body.container_bottom.large_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+            </div>
+        </div>
+    </div>
+
+</article>
