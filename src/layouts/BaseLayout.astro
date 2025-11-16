@@ -30,9 +30,9 @@ const { home = false, title = author.name } = Astro.props;
         <meta name="color-scheme" content="light dark" />
 
         <!-- Facebook Open Graph -->
-        <meta property="og:title" content={title} />
+        <meta property="og:title" content={home ? author.name : `${author.name} | ${title}`} />
         <meta property="og:description" content={author.bio} />
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="portfolio" />
         <meta property="og:url" content={author.canonical} />
         <meta property="og:image" content={author.ogImage} />
 
