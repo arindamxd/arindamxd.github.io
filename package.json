@@ -37,7 +37,7 @@
     "test": "echo 'No tests configured'"
   },
   "dependencies": {
-    "astro": "^5.15.6"
+    "astro": "^5.15.9"
   },
   "devDependencies": {},
   "private": true
