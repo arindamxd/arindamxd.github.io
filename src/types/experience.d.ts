@@ -1,6 +1,6 @@
 export interface Experience {
-    title: string;
-    company: string;
-    start: Date;
-    end: Date | "-";
+    title: string
+    company: string
+    start: Date
+    end: Date | '-'
 }

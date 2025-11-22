@@ -1,7 +1,7 @@
 // Use async IIFE to handle top-level await properly
 (async () => {
     try {
-        const metadataModule = await import("../content/testimonials-metadata.json");
+        const metadataModule = await import('../content/testimonials-metadata.json');
         const metadata = metadataModule.default;
 
         // Wait for DOM to be ready
@@ -11,7 +11,7 @@
 
         const testimonials = metadata.data;
         if (!testimonials || testimonials.length === 0) {
-            console.error("No testimonials data found!");
+            console.error('No testimonials data found!');
             return;
         }
 
@@ -40,7 +40,7 @@
             testimonialPosition,
             screenBg,
             prevButton,
-            nextButton
+            nextButton,
         };
 
         const missingElements = Object.entries(requiredElements)
@@ -48,7 +48,7 @@
             .map(([name]) => name);
 
         if (missingElements.length > 0) {
-            console.error("Missing required DOM elements:", missingElements);
+            console.error('Missing required DOM elements:', missingElements);
             return;
         }
 
@@ -145,7 +145,7 @@
         showTestimonial(currentIndex);
         startInterval();
     } catch (error) {
-        console.error("Error initializing testimonial slider:", error);
-        console.error("Error stack:", error.stack);
+        console.error('Error initializing testimonial slider:', error);
+        console.error('Error stack:', error.stack);
     }
 })();
