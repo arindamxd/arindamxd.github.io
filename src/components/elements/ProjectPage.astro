@@ -35,23 +35,21 @@ const { header, body } = project.page;
                 <!-- Organization -->
                 {header.organization && (
                     <div class="relative h-auto w-full flex-none">
-                        <div class="relative flex h-min w-full flex-row flex-nowrap content-center items-center justify-start gap-5 overflow-visible rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
-                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-visible p-0">
-                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 rounded-[50px] bg-surface p-0">
+                        <div class="relative flex h-[74px] w-full flex-row flex-nowrap items-center justify-start gap-5 overflow-hidden rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
+                            <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-start gap-4 overflow-hidden p-0">
+                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap items-center justify-center rounded-[50px] bg-surface p-0">
                                     <div class="relative h-[22px] w-[22px] flex-none">
                                         <div style="display:contents">
                                             <img decoding="auto" src="/assets/resources/organization.svg" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words opacity-50">
+                                <div class="relative min-w-0 flex-1 opacity-50">
                                     <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Organization</p>
                                 </div>
                             </div>
-                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-end gap-2.5 overflow-visible p-0">
-                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words">
-                                    <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text max-framer:text-[14px]">{header.organization}</p>
-                                </div>
+                            <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-end overflow-hidden p-0">
+                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-framer:text-[14px]">{header.organization}</p>
                             </div>
                         </div>
                     </div>
@@ -60,23 +58,21 @@ const { header, body } = project.page;
                 <!-- Category -->
                 {header.category && (
                     <div class="relative h-auto w-full flex-none">
-                        <div class="relative flex h-min w-full flex-row flex-nowrap content-center items-center justify-start gap-5 overflow-visible rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
-                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-visible p-0">
-                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 rounded-[50px] bg-surface p-0">
+                        <div class="relative flex h-[74px] w-full flex-row flex-nowrap items-center justify-start gap-5 overflow-hidden rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
+                            <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-start gap-4 overflow-hidden p-0">
+                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap items-center justify-center rounded-[50px] bg-surface p-0">
                                     <div class="relative h-[22px] w-[22px] flex-none">
                                         <div style="display:contents">
                                             <img decoding="auto" src="/assets/resources/category.svg" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words opacity-50">
+                                <div class="relative min-w-0 flex-1 opacity-50">
                                     <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Category</p>
                                 </div>
                             </div>
-                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-end gap-2.5 overflow-visible p-0">
-                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words">
-                                    <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text max-framer:text-[14px]">{header.category}</p>
-                                </div>
+                            <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-end overflow-hidden p-0">
+                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-framer:text-[14px]">{header.category}</p>
                             </div>
                         </div>
                     </div>
@@ -85,23 +81,21 @@ const { header, body } = project.page;
                 <!-- Released on -->
                 {header.released_date && (
                     <div class="relative h-auto w-full flex-none">
-                        <div class="relative flex h-min w-full flex-row flex-nowrap content-center items-center justify-start gap-5 overflow-visible rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
-                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-visible p-0">
-                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 rounded-[50px] bg-surface p-0">
+                        <div class="relative flex h-[74px] w-full flex-row flex-nowrap items-center justify-start gap-5 overflow-hidden rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
+                            <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-start gap-4 overflow-hidden p-0">
+                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap items-center justify-center rounded-[50px] bg-surface p-0">
                                     <div class="relative h-[22px] w-[22px] flex-none">
                                         <div style="display:contents">
                                             <img decoding="auto" src="/assets/resources/date.svg" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words opacity-50">
+                                <div class="relative min-w-0 flex-1 opacity-50">
                                     <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Released on</p>
                                 </div>
                             </div>
-                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-end gap-2.5 overflow-visible p-0">
-                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words">
-                                    <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text max-framer:text-[14px]">{formatDate(header.released_date, 'long')}</p>
-                                </div>
+                            <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-end overflow-hidden p-0">
+                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-framer:text-[14px]">{formatDate(header.released_date, 'long')}</p>
                             </div>
                         </div>
                     </div>
@@ -111,7 +105,7 @@ const { header, body } = project.page;
                 {header.link && (
                     <div class="hero-card-bottom" style="justify-content: center;">
                         <div class="relative h-auto w-auto flex-none">
-                            <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0.5 no-underline" href={header.link} target="_blank" rel="noopener">
+                            <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline" href={header.link} target="_blank" rel="noopener">
                                 <div class="relative h-auto w-auto flex-none whitespace-pre">
                                     <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">Visit website</p>
                                 </div>

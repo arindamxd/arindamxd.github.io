@@ -51,11 +51,11 @@
     align-content: center;
     justify-content: center;
     flex: 1 0 0px;
-    gap: 0;
+    gap: 10px;
     width: 1px;
     height: min-content;
     position: relative;
-    padding: 12px 10px 0;
+    padding: 12px 10px 10px;
     border-radius: 46px;
     background-color: var(--color-surface);
 }
@@ -365,19 +365,25 @@
     will-change: var(--proton-will-change-effect-override, transform);
 }
 
+/* Intro/project card footer — mobile-first compact stack */
 .proton-root .hero-card-bottom {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     align-items: center;
-    align-content: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 2px;
     flex: none;
     width: 100%;
-    height: 64px;
+    height: auto;
     position: relative;
-    padding: 0 50px;
-    overflow: hidden;
+    padding: 8px 16px 0;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+.proton-root .hero-card-bottom > * {
+    flex: 0 0 auto;
 }
 
 .proton-root .hero-card-bottom-location {
@@ -385,15 +391,14 @@
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    align-content: center;
-    justify-content: flex-start;
-    flex: none;
+    justify-content: center;
+    flex: 0 0 auto;
     gap: 5px;
-    width: min-content;
-    height: min-content;
+    width: auto;
+    max-width: 100%;
+    height: auto;
     position: relative;
     padding: 0;
-    overflow: visible;
 }
 
 .proton-root .location-icon {
@@ -401,6 +406,36 @@
     width: 13px;
     height: 14px;
     position: relative;
+}
+
+.proton-root .location-text-container {
+    white-space: nowrap;
+}
+
+.proton-root .location-text-container p {
+    letter-spacing: -0.02em;
+}
+
+/* Web: horizontal bar */
+@media (min-width: 610px) {
+    .proton-root .hero-card-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+        height: 48px;
+        padding: 0 50px;
+        overflow: hidden;
+    }
+
+    .proton-root .hero-card-bottom-location {
+        justify-content: flex-start;
+        width: min-content;
+    }
+
+    .proton-root .location-text-container p {
+        letter-spacing: -0.04em;
+        text-align: left;
+    }
 }
 
 /* ======================================================
@@ -1273,8 +1308,8 @@
 
     .proton-root .hero-card {
         border-radius: 36px;
-        gap: 0;
-        padding: 7px 10px 0;
+        gap: 9px;
+        padding: 7px 10px 2px;
     }
 
     .proton-root .hero-card-hole {
@@ -1334,15 +1369,6 @@
 
     .hero-card-content-buttons > div:not(:first-child) {
         display: none !important;
-    }
-
-    .proton-root .hero-card-bottom {
-        flex-direction: column;
-        gap: 6px;
-        justify-content: center;
-        height: auto;
-        min-height: 64px;
-        padding: 8px 50px;
     }
 
     .proton-root .projects-list-item {

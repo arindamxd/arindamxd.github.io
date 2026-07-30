@@ -130,11 +130,11 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                         </div>
                     </div>
                     <div class="location-text-container" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                        <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-left text-text max-framer:text-[12px]"><span class="text-[rgba(23,23,23,0.6)]">Located in </span>{author.location}<span class="text-[rgba(23,23,23,0.6)]">, available worldwide.</span></p>
+                        <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-left text-text max-framer:text-[12px] max-framer:tracking-[-0.02em]"><span class="text-[rgba(23,23,23,0.6)]">Located in&nbsp;</span>{author.location}<span class="text-[rgba(23,23,23,0.6)]">,&nbsp;available worldwide.</span></p>
                     </div>
                 </div>
                 <div class="relative h-auto w-auto flex-none">
-                    <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0.5 no-underline" href={author.intro.cardLinkURL} target="_blank" rel="noopener">
+                    <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline" href={author.intro.cardLinkURL} target="_blank" rel="noopener">
                         <div class="relative h-auto w-auto flex-none whitespace-pre">
                             <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">{author.intro.cardLinkText}</p>
                         </div>
