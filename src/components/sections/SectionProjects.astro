@@ -29,25 +29,25 @@ const sorted = current ? filtered : [...filtered].sort((a, b) =>
 const items = limit ? sorted.slice(0, 2) : sorted;
 
 // section styles and text
-const section_header_style = slug ? "padding: 0;" : (home ? "padding: 0;" : "padding: 110px 0 0;");
+const headerPad = slug || home ? "p-0" : "pt-[110px] p-0";
 const title = slug ? "More projects" : metadata.title;
 const description = slug ? (items.length < 1 ? "Coming soon ..." : "Check out some of my favorite & most recent projects.") : metadata.description;
 ---
 
-<section id="projects" class="section" style="will-change: transform;">
+<section id="projects" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5">
 
     <!-- Heading -->
-    <div class="section-header" style={section_header_style}>
-        <div class="section-header-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-            <h2 class="proton-text proton-styles-preset-heading-2">{title}</h2>
+    <div class={`relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-6 overflow-visible max-framer:gap-4 ${headerPad}`}>
+        <div class="relative h-auto w-full flex-none text-balance">
+            <h2 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-center text-text no-underline max-framer:text-[34px]">{title}</h2>
         </div>
-        <div class="section-header-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-            <p class="proton-text proton-styles-preset-paragraph" style="--proton-text-alignment:center;">{description}</p>
+        <div class="relative h-auto w-full max-w-[350px] flex-none whitespace-pre-wrap break-words text-balance opacity-60">
+            <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px] text-center">{description}</p>
         </div>
     </div>
 
     <!-- Projects List -->
-    <div class="projects-list">
+    <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-visible p-0">
         {items.map((project) => (
             <ProjectElement project={project} />
         ))}

@@ -5,20 +5,23 @@ import { formatDate } from "../../utils/date";
 const { blog } = Astro.props;
 ---
 
-<div class="journal-item">
-    <a class="journal-row typography-card-title row-align display-block" style="background-color: var(--color-bg); border-radius: 41px; width: 100%; opacity: 1;" href={`/blogs/${blog.slug}/`}>
-        <div class="journal-row-image" style="border-radius: 50px; opacity: 1;">
-            <div class="journal-image" style="border-radius: 50px; will-change: transform; opacity: 1; transform: none;">
-                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0;">
+<div class="relative h-auto w-full flex-none">
+    <a
+        class="group relative flex h-min w-full cursor-pointer flex-row flex-nowrap items-center justify-start gap-[15px] rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5 no-underline"
+        href={`/blogs/${blog.slug}/`}
+    >
+        <div class="relative aspect-square h-[54px] w-[54px] flex-none overflow-hidden rounded-[50px] transition-transform duration-300 ease-out will-change-transform group-hover:scale-110">
+            <div class="absolute inset-0 z-[1] aspect-square h-[54px] rounded-[50px]">
+                <div class="absolute inset-0" style="border-radius:inherit;">
                     <img decoding="auto" loading="lazy" src={blog.thumb} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                 </div>
             </div>
         </div>
-        <div class="journal-row-title" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; transform: none; opacity: 1;">
-            <p class="proton-text proton-styles-preset-default">{blog.title}</p>
+        <div class="relative h-auto w-px min-w-0 flex-1 text-balance">
+            <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text whitespace-normal max-framer:text-[14px]">{blog.title}</p>
         </div>
-        <div class="journal-row-date" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;opacity:0.5;transform:none">
-            <p class="proton-text proton-styles-preset-role" style="--proton-text-alignment:right">{formatDate(blog.date, "short")}</p>
+        <div class="relative h-auto w-auto flex-none shrink-0 whitespace-pre opacity-50">
+            <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px] text-right">{formatDate(blog.date, "short")}</p>
         </div>
     </a>
 </div>

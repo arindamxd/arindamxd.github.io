@@ -3,7 +3,7 @@
 const author = (await import("../../content/author-metadata.json")).default;
 ---
 
-<section class="section">
+<section class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5">
 
     <div class="hero-tie-container" style="opacity: 1; transform: translateX(-50%); will-change: transform;">
         <div class="hero-tie hero-tie-centered" style="">
@@ -18,33 +18,33 @@ const author = (await import("../../content/author-metadata.json")).default;
             <div class="hero-card-hole" data-border=true></div>
 
             <div class="hero-card-content" style="--padding: 50px">
-                <div class="not-found-text-container" style="padding-top: 50px;">
-                    <h1 class="proton-text proton-style-preset-404">404</h1>
+                <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words px-2.5 pt-[60px] pb-0">
+                    <h1 class="m-0 p-0 font-manrope text-[141px] font-semibold leading-[90%] tracking-[-0.09em] text-left text-text">404</h1>
                 </div>
-                <div class="hero-card-content-404">
-                    <div class="not-found-text-container">
-                        <p class="proton-text proton-styles-preset-subtitle-not-found">Page not found</p>
+                <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-2.5 overflow-visible p-0">
+                    <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words px-2.5 pt-2.5 pb-0">
+                        <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">Page not found</p>
                     </div>
-                    <div class="hero-card-content-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                        <p class="proton-text proton-styles-preset-paragraph">The page you are looking for could not be found</p>
+                    <div class="relative h-auto w-full flex-none">
+                        <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px]">The page you are looking for could not be found</p>
                     </div>
                 </div>
 
                 <div class="hero-card-content-buttons" style="transform:none;will-change:transform;">
-                    <div class="hero-card-content-button-primary">
-                        <a class="button-primary button-primary-align display-block" style="border-radius: 100px; opacity: 1;" href="/">
-                            <div class="button-label" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
-                                <p class="proton-text proton-styles-preset-paragraph" style="--proton-text-color:var(--color-bg)">Go back home</p>
+                    <div class="relative h-auto w-auto flex-none">
+                        <a class="group relative flex h-[58px] w-min cursor-pointer flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-hidden rounded-full py-[3px] pr-[74px] pl-7 no-underline" href="/">
+                            <div class="relative z-[2] h-auto w-auto flex-none whitespace-pre">
+                                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-bg no-underline max-framer:text-[15px]">Go back home</p>
                             </div>
-                            <div class="button-icon" style="background-color: var(--color-bg); border-radius: 100px; transform: none; opacity: 1;">
-                                <div class="svg-arrow" style="image-rendering: pixelated; flex-shrink: 0;">
-                                    <div class="svg-container" style="width:100%;height:100%;aspect-ratio:inherit">
-                                        <svg style="width:100%;height:100%;"><use href="#link-arrow"></use></svg>
+                            <div class="absolute top-[3px] right-[3px] z-[2] flex h-[52px] w-[52px] flex-col flex-nowrap content-center items-center justify-center rounded-full bg-bg p-0">
+                                <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45" style="image-rendering: pixelated;">
+                                    <div class="h-full w-full" style="aspect-ratio:inherit">
+                                        <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
                                     </div>
                                 </div>
                             </div>
-                            <div class="button-background-main" style="background-color: var(--color-primary); border-radius: 50px;"></div>
-                            <div class="button-background-hover" style="background-color:rgba(0, 0, 0, 0.1);border-bottom-left-radius:50px;border-bottom-right-radius:50px;border-top-left-radius:50px;border-top-right-radius:50px;"></div>
+                            <div class="absolute inset-0 z-0 overflow-hidden rounded-full bg-primary"></div>
+                            <div class="absolute inset-0 z-[1] overflow-hidden rounded-full bg-black/10 opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"></div>
                         </a>
                     </div>
                 </div>
@@ -58,18 +58,16 @@ const author = (await import("../../content/author-metadata.json")).default;
                         </div>
                     </div>
                     <div class="location-text-container" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                        <p class="proton-text proton-styles-preset-small-text"><span style="--proton-text-color:rgba(23, 23, 23, 0.6)" class="proton-text">Located in </span>{author.location}<span style="--proton-text-color:rgba(23, 23, 23, 0.6)" class="proton-text">, available worldwide.</span></p>
+                        <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-left text-text max-framer:text-[12px]"><span class="text-[rgba(23,23,23,0.6)]">Located in </span>{author.location}<span class="text-[rgba(23,23,23,0.6)]">, available worldwide.</span></p>
                     </div>
                 </div>
-                <div class="hero-card-bottom-links">
-                    <a class="link-label-icon link-item-align display-block" href={author.intro.cardLinkURL} target="_blank" rel="noopener">
-                        <div class="link-text-span" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
-                            <p class="proton-text proton-styles-preset-role">{author.intro.cardLinkText}</p>
+                <div class="relative h-auto w-auto flex-none">
+                    <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0.5 no-underline" href={author.intro.cardLinkURL} target="_blank" rel="noopener">
+                        <div class="relative h-auto w-auto flex-none whitespace-pre">
+                            <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">{author.intro.cardLinkText}</p>
                         </div>
-                        <div class="link-icon">
-                            <div style="display:contents">
-                                <svg style="width:100%;height:100%"><use href="#link-arrow"></use></svg>
-                            </div>
+                        <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
+                            <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
                         </div>
                     </a>
                 </div>

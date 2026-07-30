@@ -3,10 +3,20 @@
 const { icon, label } = Astro.props;
 ---
 
-<div class="skills-icon-wrapper" data-border="true" style="--border-color: #e8e8e8; --border-style: solid; --border-bottom-width: 1px; --border-left-width: 1px; --border-right-width: 1px; --border-top-width: 1px;" title={label} aria-label={label}>
-    <div class="skills-icon">
-        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0;">
-            <img decoding="auto" loading="lazy" src={icon} alt={label} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+<div
+    class="relative flex size-[54px] flex-none flex-row flex-nowrap content-center items-center justify-center overflow-hidden rounded-[9px] border border-[#e8e8e8] bg-surface"
+    title={label}
+    aria-label={label}
+>
+    <div class="relative aspect-square size-[30px] flex-none overflow-visible">
+        <div class="absolute inset-0 rounded-[inherit]">
+            <img
+                decoding="async"
+                loading="lazy"
+                src={icon}
+                alt={label}
+                class="block size-full rounded-[inherit] object-cover object-center"
+            />
         </div>
     </div>
 </div>

@@ -8,8 +8,8 @@ const { project } = Astro.props;
 const { header, body } = project.page;
 ---
 
-<article class="project-content-container">
-    <div class="project-content-top">
+<article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-20 p-0 max-framer:gap-[50px]">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 overflow-visible p-0 max-framer:gap-[50px] max-framer:px-2.5">
 
         <div class="hero-tie-container" style="opacity: 1; transform: translateX(-50%); will-change: transform;">
             <div class="hero-tie hero-tie-centered">
@@ -24,9 +24,9 @@ const { header, body } = project.page;
                 <div class="hero-card-hole" data-border=true></div>
 
                 <!-- Project Image -->
-                <div class="hero-card-header-image-container">
-                    <div class="hero-card-header-image" style="will-change: transform; opacity: 1; transform: none;">
-                        <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden rounded-[40px] p-0 will-change-transform max-framer:rounded-[30px]">
+                    <div class="relative aspect-[1.4627659574468086] h-auto w-px flex-1 overflow-hidden max-framer:rounded-[30px]">
+                        <div class="absolute inset-0" style="border-radius:inherit;">
                             <img decoding="auto" loading="lazy" src={project.images.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                         </div>
                     </div>
@@ -34,23 +34,23 @@ const { header, body } = project.page;
 
                 <!-- Organization -->
                 {header.organization && (
-                    <div class="hero-card-header-info-container">
-                        <div class="hero-card-header-info hero-card-header-info-text-style" style="background-color: rgb(255, 255, 255); border-radius: 41px; width: 100%;">
-                            <div class="hero-card-header-info-type-container">
-                                <div class="hero-card-header-info-type-logo" style="background-color: var(--color-surface); border-radius: 50px;">
-                                    <div class="logo-container">
+                    <div class="relative h-auto w-full flex-none">
+                        <div class="relative flex h-min w-full flex-row flex-nowrap content-center items-center justify-start gap-5 overflow-visible rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
+                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-visible p-0">
+                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 rounded-[50px] bg-surface p-0">
+                                    <div class="relative h-[22px] w-[22px] flex-none">
                                         <div style="display:contents">
                                             <img decoding="auto" src="/assets/resources/organization.svg" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="hero-card-header-info-type-text" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.5;transform:none">
-                                    <p class="proton-text proton-styles-preset-back-button-text">Organization</p>
+                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words opacity-50">
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Organization</p>
                                 </div>
                             </div>
-                            <div class="hero-card-header-info-type-menu">
-                                <div class="hero-card-header-info-type-menu-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
-                                    <p class="proton-text proton-styles-preset-menu-text" style="--proton-text-alignment:right">{header.organization}</p>
+                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-end gap-2.5 overflow-visible p-0">
+                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words">
+                                    <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text max-framer:text-[14px]">{header.organization}</p>
                                 </div>
                             </div>
                         </div>
@@ -59,23 +59,23 @@ const { header, body } = project.page;
 
                 <!-- Category -->
                 {header.category && (
-                    <div class="hero-card-header-info-container">
-                        <div class="hero-card-header-info hero-card-header-info-text-style" style="background-color: rgb(255, 255, 255); border-radius: 41px; width: 100%; opacity: 1;">
-                            <div class="hero-card-header-info-type-container">
-                                <div class="hero-card-header-info-type-logo" style="background-color: var(--color-surface); border-radius: 50px; opacity: 1;">
-                                    <div class="logo-container">
+                    <div class="relative h-auto w-full flex-none">
+                        <div class="relative flex h-min w-full flex-row flex-nowrap content-center items-center justify-start gap-5 overflow-visible rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
+                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-visible p-0">
+                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 rounded-[50px] bg-surface p-0">
+                                    <div class="relative h-[22px] w-[22px] flex-none">
                                         <div style="display:contents">
                                             <img decoding="auto" src="/assets/resources/category.svg" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="hero-card-header-info-type-text" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.5;transform:none">
-                                    <p class="proton-text proton-styles-preset-back-button-text">Category</p>
+                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words opacity-50">
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Category</p>
                                 </div>
                             </div>
-                            <div class="hero-card-header-info-type-menu">
-                                <div class="hero-card-header-info-type-menu-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
-                                    <p class="proton-text proton-styles-preset-menu-text" style="--proton-text-alignment:right">{header.category}</p>
+                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-end gap-2.5 overflow-visible p-0">
+                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words">
+                                    <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text max-framer:text-[14px]">{header.category}</p>
                                 </div>
                             </div>
                         </div>
@@ -84,23 +84,23 @@ const { header, body } = project.page;
 
                 <!-- Released on -->
                 {header.released_date && (
-                    <div class="hero-card-header-info-container">
-                        <div class="hero-card-header-info hero-card-header-info-text-style" style="background-color: rgb(255, 255, 255); border-radius: 41px; width: 100%; opacity: 1;">
-                            <div class="hero-card-header-info-type-container">
-                                <div class="hero-card-header-info-type-logo" style="background-color: var(--color-surface); border-radius: 50px; opacity: 1;">
-                                    <div class="logo-container">
+                    <div class="relative h-auto w-full flex-none">
+                        <div class="relative flex h-min w-full flex-row flex-nowrap content-center items-center justify-start gap-5 overflow-visible rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5">
+                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-visible p-0">
+                                <div class="relative flex h-[54px] w-[54px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 rounded-[50px] bg-surface p-0">
+                                    <div class="relative h-[22px] w-[22px] flex-none">
                                         <div style="display:contents">
                                             <img decoding="auto" src="/assets/resources/date.svg" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="hero-card-header-info-type-text" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--proton-paragraph-spacing:0px;opacity:0.5;transform:none">
-                                    <p class="proton-text proton-styles-preset-back-button-text">Released on</p>
+                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words opacity-50">
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Released on</p>
                                 </div>
                             </div>
-                            <div class="hero-card-header-info-type-menu">
-                                <div class="hero-card-header-info-type-menu-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
-                                    <p class="proton-text proton-styles-preset-menu-text" style="--proton-text-alignment:right">{formatDate(header.released_date, 'long')}</p>
+                            <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-end gap-2.5 overflow-visible p-0">
+                                <div class="relative h-auto w-px min-w-0 flex-1 whitespace-pre-wrap break-words">
+                                    <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text max-framer:text-[14px]">{formatDate(header.released_date, 'long')}</p>
                                 </div>
                             </div>
                         </div>
@@ -110,13 +110,13 @@ const { header, body } = project.page;
                 <!-- Website Link -->
                 {header.link && (
                     <div class="hero-card-bottom" style="justify-content: center;">
-                        <div class="hero-card-bottom-links">
-                            <a class="link-label-icon link-item-align display-block" href={header.link} target="_blank" rel="noopener">
-                                <div class="link-text-span" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
-                                    <p class="proton-text proton-styles-preset-role">Visit website</p>
+                        <div class="relative h-auto w-auto flex-none">
+                            <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0.5 no-underline" href={header.link} target="_blank" rel="noopener">
+                                <div class="relative h-auto w-auto flex-none whitespace-pre">
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">Visit website</p>
                                 </div>
-                                <div class="link-icon">
-                                    <svg style="width:100%;height:100%"><use href="#link-arrow"></use></svg>
+                                <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
+                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
                                 </div>
                             </a>
                         </div>
@@ -127,24 +127,24 @@ const { header, body } = project.page;
         </div>
 
         <!-- Project Header Info -->
-        <div class="project-content-header" style="opacity: 1; transform: none; will-change: transform;">
-            <div class="project-content-header-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                <h1 class="proton-text proton-styles-preset-article-title">{project.title}</h1>
+        <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-[30px] overflow-hidden p-0 max-framer:gap-[18px] max-framer:px-2.5">
+            <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words max-framer:order-0">
+                <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-none tracking-[-0.05em] text-left text-[#171717] max-framer:text-[34px]">{project.title}</h1>
             </div>
-            <div class="project-content-header-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                <p class="proton-text proton-styles-preset-past-year">{project.desc.long}</p>
+            <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words opacity-60 max-framer:order-1">
+                <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{project.desc.long}</p>
             </div>
-            <div class="project-content-back-button-container">
-                <a class="back-button-link back-button-link-text display-block" href="/projects">
+            <div class="relative h-auto w-auto flex-none max-framer:order-2">
+                <a class="back-button-link back-button-link-text" href="/projects">
                     <div class="back-arrow" data-border="true" style="--border-bottom-width: 1px; --border-color: rgb(233, 233, 233); --border-left-width: 1px; --border-right-width: 1px; --border-style: solid; --border-top-width: 1px; background-color: rgb(255, 255, 255); border-radius: 100%; opacity: 1;">
                         <div class="back-arrow-vector" style="image-rendering: pixelated; flex-shrink: 0; opacity: 1;" aria-hidden="true">
-                            <div class="svgContainer" style="width:100%;height:100%;aspect-ratio:inherit">
+                            <div style="width:100%;height:100%;aspect-ratio:inherit">
                                 <svg style="width:100%;height:100%;"><use href="#svg12261373696"></use></svg>
                             </div>
                         </div>
                     </div>
-                    <div class="back-button-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
-                        <p class="proton-text proton-styles-preset-back-button-text" style="--proton-text-alignment:left">Back to projects</p>
+                    <div class="relative h-auto w-auto flex-none whitespace-pre">
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Back to projects</p>
                     </div>
                 </a>
             </div>
@@ -156,15 +156,15 @@ const { header, body } = project.page;
     <!-- Project Body -->
 
     <!-- Image Small Two -->
-    <div class="project-content-body-image-multiple">
-        <div class="project-content-body-image-multiple-top">
-            <div class="project-content-image-banner">
-                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
+        <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:flex-col">
+            <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                <div class="absolute inset-0" style="border-radius:inherit;">
                     <img decoding="auto" loading="lazy" src={body.container_top.left_image.src} alt={body.container_top.left_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                 </div>
             </div>
-            <div class="project-content-image-banner">
-                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+            <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                <div class="absolute inset-0" style="border-radius:inherit;">
                     <img decoding="auto" loading="lazy" src={body.container_top.right_image.src} alt={body.container_top.right_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                 </div>
             </div>
@@ -172,50 +172,50 @@ const { header, body } = project.page;
     </div>
 
     <!-- Content First -->
-    <div class="project-content-body-text-container">
-        <div class="project-content-body-text-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-            <p class="proton-text proton-styles-preset-article-intro">{body.container_middle.content.title}</p>
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-5 overflow-hidden p-0 max-framer:px-5">
+        <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words">
+            <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{body.container_middle.content.title}</p>
         </div>
-        <div class="project-content-body-text-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-            <p class="proton-text proton-styles-preset-past-year">{body.container_middle.content.description}</p>
+        <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words opacity-60">
+            <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{body.container_middle.content.description}</p>
         </div>
     </div>
 
     <!-- Image Single Large -->
-    <div class="project-content-body-image-single">
-        <div class="project-content-image-banner-large">
-            <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
+        <div class="relative aspect-[1.463768115942029] h-auto w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+            <div class="absolute inset-0" style="border-radius:inherit;">
                 <img decoding="auto" loading="lazy" src={body.container_middle.large_image.src} alt={body.container_middle.large_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
             </div>
         </div>
     </div>
 
-    <!-- Contect Second -->
-    <div class="project-content-body-text-container">
-        <div class="project-content-body-text-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-            <p class="proton-text proton-styles-preset-article-intro">{body.container_bottom.content.title}</p>
+    <!-- Content Second -->
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-5 overflow-hidden p-0 max-framer:px-5">
+        <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words">
+            <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{body.container_bottom.content.title}</p>
         </div>
-        <div class="project-content-body-text-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-            <p class="proton-text proton-styles-preset-past-year">{body.container_bottom.content.description}</p>
+        <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words opacity-60">
+            <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{body.container_bottom.content.description}</p>
         </div>
     </div>
 
     <!-- Image Small Two + Large One -->
-    <div class="project-content-body-image-multiple">
-        <div class="project-content-body-image-multiple-top">
-            <div class="project-content-image-banner">
-                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
+        <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:flex-col">
+            <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                <div class="absolute inset-0" style="border-radius:inherit;">
                     <img decoding="auto" loading="lazy" src={body.container_bottom.left_image.src} alt={body.container_bottom.left_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                 </div>
             </div>
-            <div class="project-content-image-banner">
-                <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+            <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                <div class="absolute inset-0" style="border-radius:inherit;">
                     <img decoding="auto" loading="lazy" src={body.container_bottom.right_image.src} alt={body.container_bottom.right_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                 </div>
             </div>
         </div>
-        <div class="project-content-image-banner-large-mixed">
-            <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+        <div class="relative aspect-[1.463768115942029] h-[376px] w-full max-w-[1180px] flex-none overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:aspect-[1.3295454545454546]">
+            <div class="absolute inset-0" style="border-radius:inherit;">
                 <img decoding="auto" loading="lazy" src={body.container_bottom.large_image.src} alt={body.container_bottom.large_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
             </div>
         </div>

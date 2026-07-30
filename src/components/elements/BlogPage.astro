@@ -5,48 +5,52 @@ import { formatDate } from "../../utils/date";
 const { blog } = Astro.props;
 ---
 
-<article class="article" style="padding: 110px 0 0;">
+<article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 overflow-hidden p-0 pt-[110px] pb-[120px] max-framer:gap-10">
 
     <!-- Article Top -->
-    <div class="article-top-container">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-[34px] overflow-hidden p-0 max-framer:gap-[30px] max-framer:px-5">
         
         <!-- Article Header -->
-        <div class="article-header">
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-10 overflow-hidden p-0 max-framer:gap-[30px]">
 
             <!-- Back Button -->
-            <div class="back-button-container">
-                <a class="back-button-link back-button-link-text display-block" href="/blogs">
+            <div class="relative h-auto w-auto flex-none">
+                <a class="back-button-link back-button-link-text" href="/blogs">
                     <div class="back-arrow" data-border="true" style="--border-bottom-width: 1px; --border-color: rgb(233, 233, 233); --border-left-width: 1px; --border-right-width: 1px; --border-style: solid; --border-top-width: 1px; background-color: rgb(255, 255, 255); border-radius: 100%; opacity: 1;">
                         <div class="back-arrow-vector" style="image-rendering: pixelated; flex-shrink: 0; opacity: 1;" aria-hidden="true">
-                            <div class="svgContainer" style="width:100%;height:100%;aspect-ratio:inherit">
+                            <div style="width:100%;height:100%;aspect-ratio:inherit">
                                 <svg style="width:100%;height:100%;"><use href="#svg12261373696"></use></svg>
                             </div>
                         </div>
                     </div>
-                    <div class="back-button-text" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; --proton-paragraph-spacing: 0px; transform: none; opacity: 1;">
-                        <p class="proton-text proton-styles-preset-back-button-text" style="--proton-text-alignment:left">Back to articles</p>
+                    <div class="relative h-auto w-auto flex-none whitespace-pre">
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Back to articles</p>
                     </div>
                 </a>
             </div>
 
             <!-- Article Info -->
-            <div class="article-info-container" data-border="true">
-                <div class="article-info-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                    <h1 class="proton-text proton-styles-preset-article-title">{blog.title}</h1>
+            <div
+                class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-7 overflow-visible pt-0 pr-0 pb-8 pl-0"
+                data-border="true"
+                style="--border-bottom-width: 1px; --border-color: #e3e3e3; --border-left-width: 0px; --border-right-width: 0px; --border-style: solid; --border-top-width: 0px;"
+            >
+                <div class="relative h-auto w-full flex-none text-balance">
+                    <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-none tracking-[-0.05em] text-left text-[#171717] max-framer:text-[34px]">{blog.title}</h1>
                 </div>
-                <div class="article-info">
-                    <div class="article-info-author">
-                        <div class="article-info-author-avatar">
-                            <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
+                <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-start gap-[22px] overflow-visible p-0 max-framer:gap-[26px]">
+                    <div class="relative flex h-min w-min flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0">
+                        <div class="relative aspect-square h-7 w-7 flex-none rounded-full">
+                            <div class="absolute inset-0" style="border-radius:inherit;">
                                 <img decoding="auto" loading="lazy" src={blog.author.avatar} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
                             </div>
                         </div>
-                        <div class="article-info-author-name" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                            <p class="proton-text proton-styles-preset-nav-menu-item" style="--proton-text-alignment:left;--proton-text-color:var(--color-text)">{blog.author.name}</p>
+                        <div class="relative h-auto w-auto flex-none whitespace-pre">
+                            <p class="m-0 p-0 font-manrope text-[15px] font-semibold leading-none tracking-[-0.05em] text-left text-text whitespace-pre max-framer:text-[14px]">{blog.author.name}</p>
                         </div>
                     </div>
-                    <div class="article-info-date" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none;">
-                        <p class="proton-text proton-styles-preset-role">{formatDate(blog.date, "long")}</p>
+                    <div class="relative h-auto w-auto flex-none whitespace-pre opacity-50 max-framer:order-1">
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">{formatDate(blog.date, "long")}</p>
                     </div>
                 </div>
             </div>
@@ -54,46 +58,46 @@ const { blog } = Astro.props;
         </div>
 
         <!-- Article Intro -->
-        <div class="article-intro-container">
-            <div class="article-intro" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none;">
-                <p class="proton-text proton-styles-preset-article-intro">{blog.page.intro.title}</p>
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-5 overflow-hidden p-0">
+            <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words">
+                <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{blog.page.intro.title}</p>
             </div>
-            <div class="article-intro-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none;">
-                <p class="proton-text proton-styles-preset-past-year">{blog.page.intro.paragraph}</p>
+            <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words opacity-60">
+                <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{blog.page.intro.paragraph}</p>
             </div>
         </div>
 
     </div>
 
     <!-- Article Image -->
-    <div class="article-image-container" style="will-change: transform; opacity: 1; transform: none;">
-        <div class="article-image">
-            <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0;">
+    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
+        <div class="relative aspect-[1.6290322580645162] h-auto max-h-none w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-framer:rounded-[20px]">
+            <div class="absolute inset-0" style="border-radius:inherit;">
                 <img decoding="auto" loading="lazy" src={blog.page.intro.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
             </div>
         </div>
     </div>
 
     <!-- Article Content -->
-    <div class="article-content-container">
-        <div class="article-content" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none;">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:gap-[30px] max-framer:px-5">
+        <div class="article-content relative h-auto w-px max-w-[550px] flex-1 whitespace-pre-wrap break-words">
             {blog.page.body.map((block: { title: string; subtitle: string; paragraph: string; bullets: string[]; }) => (
                 <>
                     {block.title && (
-                        <h2 class="proton-text proton-styles-preset-article-h2">{block.title}</h2>
+                        <h2 class="mt-10 mb-0 p-0 font-manrope text-[38px] font-semibold leading-[120%] tracking-[-0.05em] text-left text-[#171717] first:mt-0 max-framer:text-[30px]">{block.title}</h2>
                     )}
                     {block.subtitle && (
-                        <h3 class="proton-text proton-styles-preset-article-h3">{block.subtitle}</h3>
+                        <h3 class="mt-10 mb-0 p-0 font-manrope text-[22px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-[#171717] first:mt-0 max-framer:mt-6 max-framer:text-[20px]">{block.subtitle}</h3>
                     )}
                     {block.paragraph && (
-                        <p class="proton-text proton-styles-preset-article-p">{block.paragraph}</p>
+                        <p class="mt-5 mb-0 p-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-[rgba(23,23,23,0.5)] first:mt-0 max-framer:mt-3.5 max-framer:text-[16px]">{block.paragraph}</p>
                     )}
                     {block.bullets && (
-                        <ul class="proton-text">
+                        <ul class="mt-5 mb-0 flex flex-col gap-5 pl-[1.35em] first:mt-0 max-framer:mt-3.5 max-framer:gap-3.5">
                             {block.bullets.map((bullet: string) => (
-                                <>
-                                    <li class="proton-text proton-styles-preset-article-p"><p class="proton-text proton-styles-preset-article-p">{bullet}</p></li>
-                                </>
+                                <li class="m-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-[rgba(23,23,23,0.5)] max-framer:text-[16px]">
+                                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-[rgba(23,23,23,0.5)] max-framer:text-[16px]">{bullet}</p>
+                                </li>
                             ))}
                         </ul>
                     )}

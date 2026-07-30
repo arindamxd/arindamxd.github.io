@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import './typography.css';
 @import './shell.css';
 @import './sections.css';
 @import './pages.css';
@@ -8,10 +7,23 @@
    Migration: proton.css → Tailwind
    Phase 1: tokens + fonts
    Phase 2: base reset + body shell
-   Phase 3: typography (typography.css)
-   Phase 4: nav + footer (shell.css)
+   Phase 3: typography → Tailwind utilities (C1–C5)
+   Phase 4: nav + footer (shell.css social hover kept)
    Phase 5: homepage sections (sections.css)
    Phase 6: detail pages (pages.css) + shared utils
+   Pass A2+B1: page shells + NavBar → Tailwind utilities
+   Pass B3: Footer → Tailwind utilities
+   Pass C1–C5: typography presets → Tailwind; proton-text removed
+   Pass D1: Hero layout kept Framer CSS (badge/tie/card — same risk class as project cards)
+   Pass D2: Brands marquee layout → Tailwind (scroll keyframes kept)
+   Pass D3: Projects — header Tailwind; card layout Framer CSS (match design); typography Tailwind
+   Pass D4: Skills layout → Tailwind
+   Pass D5: Experiences layout → Tailwind (data-border kept)
+   Pass D6: Testimonials — header/stage Tailwind; phone slider CSS kept
+   Pass D7: Blogs / journal layout → Tailwind (data-border kept)
+   Pass E: Detail pages (blog/project/404) → Tailwind; back-button CSS kept
+   Pass F: Cleanup — pages.css slimmed; migration notes finalized
+   Pass G: Shared buttons + link-icons + View All → Tailwind
    =================================================== */
 
 /* ---------- Design tokens (@theme) ---------- */
@@ -204,81 +216,23 @@
     }
 }
 
-/* ---------- Body shell (Phase 2) ---------- */
-@layer components {
-    .body-container {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-content: center;
-        align-items: center;
-        justify-content: flex-start;
-        width: 100%;
-        height: min-content;
-        position: relative;
-        overflow: hidden;
-        padding: 0;
-        gap: 0;
-        background-color: var(--color-bg, #fff);
-    }
-
-    /* Floating nav — Framer canvas positioning preserved */
-    .body-container .nav-bar-container {
-        position: var(--proton-canvas-fixed-position, fixed);
-        left: 50%;
-        bottom: calc(100% - min(var(--proton-viewport-height, 100%), 100%) + 18px);
-        transform: translateX(-50%);
-        order: -1000;
-        flex: none;
-        width: auto;
-        height: auto;
-        z-index: 9;
-    }
-
-    .main {
-        display: flex;
-        flex: none;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-items: center;
-        align-content: center;
-        justify-content: center;
-        gap: 100px;
-        width: 100%;
-        height: min-content;
-        position: relative;
-        padding: 0;
-        background-color: var(--color-bg);
-    }
-
-    .section {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-items: center;
-        align-content: center;
-        justify-content: center;
-        flex: none;
-        width: 100%;
-        max-width: 550px;
-        height: min-content;
-        position: relative;
-        padding: 0;
-        gap: 50px;
-        overflow: visible;
-    }
+/* ---------- Floating nav position (Framer canvas formula) ---------- */
+.nav-bar-container {
+    position: var(--proton-canvas-fixed-position, fixed);
+    left: 50%;
+    bottom: calc(100% - min(var(--proton-viewport-height, 100%), 100%) + 18px);
+    transform: translateX(-50%);
+    order: -1000;
+    flex: none;
+    width: auto;
+    height: auto;
+    z-index: 9;
 }
 
 @media (max-width: 609.98px) {
-    @layer components {
-        .section {
-            gap: 30px;
-            padding: 0 10px;
-        }
-
-        .main {
-            gap: 60px;
-        }
+    .nav-bar-container {
+        top: calc(100% - min(var(--proton-viewport-height, 100%), 100%) + 10px);
+        bottom: unset;
     }
 }
 

@@ -1,5 +1,9 @@
 // Available text responsive handler
 (function () {
+    const smallText =
+        'm-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-text max-framer:text-[12px]';
+    const muted = 'text-[rgba(23,23,23,0.6)]';
+
     function updateAvailableText() {
         const container = document.querySelector('.available-text-container');
         if (!container) return;
@@ -8,12 +12,12 @@
 
         if (isMobile) {
             container.innerHTML = `
-                <p class="proton-text proton-styles-preset-small-text">Available for <span class="proton-text" style="--proton-text-color: rgba(23, 23, 23, 0.6)">opportunities</span></p>
+                <p class="${smallText}">Available for <span class="${muted}">opportunities</span></p>
             `;
         } else {
             container.innerHTML = `
-                <p class="proton-text proton-styles-preset-small-text">Available for</p>
-                <p class="proton-text proton-styles-preset-small-text" style="--proton-text-color: rgba(23, 23, 23, 0.6)">opportunities</p>
+                <p class="${smallText}">Available for</p>
+                <p class="${smallText} ${muted}">opportunities</p>
             `;
         }
     }

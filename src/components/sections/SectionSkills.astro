@@ -5,38 +5,34 @@ import ElementSkill from "./../elements/SkillElement.astro";
 const metadata = (await import("../../content/skills-metadata.json")).default;
 ---
 
-<section id="skills" class="section">
+<section id="skills" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5">
 
     <!-- Heading -->
-    <div class="section-header">
-        <div class="section-header-title" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-            <h2 class="proton-text proton-styles-preset-heading-2">{metadata.title}</h2>
+    <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-6 overflow-visible p-0 max-framer:gap-4">
+        <div class="relative h-auto w-full flex-none text-balance">
+            <h2 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-center text-text no-underline max-framer:text-[34px]">{metadata.title}</h2>
         </div>
-        <div class="section-header-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-            <p class="proton-text proton-styles-preset-paragraph" style="--proton-text-alignment:center;">{metadata.description}</p>
+        <div class="relative h-auto w-full max-w-[350px] flex-none whitespace-pre-wrap break-words text-balance opacity-60">
+            <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px] text-center">{metadata.description}</p>
         </div>
     </div>
 
-    <div class="skills-items" style="will-change: transform;">
+    <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-3 overflow-hidden">
         {metadata.tech.stack.length > 0 && (
-            <div class="skills-row">
-                <div class="skills-item-container">
-                    <div class="skills-item-content">
-                        {metadata.tech.stack.map((item) => (
-                            <ElementSkill icon={item.icon} label={item.label} />
-                        ))}
-                    </div>
+            <div class="relative h-full w-full flex-none">
+                <div class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-3 overflow-hidden">
+                    {metadata.tech.stack.map((item) => (
+                        <ElementSkill icon={item.icon} label={item.label} />
+                    ))}
                 </div>
             </div>
         )}
         {metadata.tech.tools.length > 0 && (
-            <div class="skills-row">
-                <div class="skills-item-container">
-                    <div class="skills-item-content">
-                        {metadata.tech.tools.map((item) => (
-                            <ElementSkill icon={item.icon} label={item.label} />
-                        ))}
-                    </div>
+            <div class="relative h-full w-full flex-none">
+                <div class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-3 overflow-hidden">
+                    {metadata.tech.tools.map((item) => (
+                        <ElementSkill icon={item.icon} label={item.label} />
+                    ))}
                 </div>
             </div>
         )}

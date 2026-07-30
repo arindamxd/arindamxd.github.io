@@ -7,12 +7,12 @@ import Footer from "../components/Footer.astro";
 
 <BaseLayout home={false} title="Blogs">
 
-    <div class="body-container min-h-screen w-auto">
+    <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
         <div class="nav-bar-container">
             <NavBar />
         </div>
         <div class="proton-root contents min-h-screen w-auto">
-            <main class="main">
+            <main class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-[100px] bg-bg p-0 max-framer:gap-[60px]">
                 <SectionBlogs />
             </main>
         </div>
