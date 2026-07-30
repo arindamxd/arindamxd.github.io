@@ -1,1 +1,328 @@
 @import 'tailwindcss';
+@import './typography.css';
+@import './shell.css';
+@import './sections.css';
+@import './pages.css';
+
+/* ===================================================
+   Migration: proton.css → Tailwind
+   Phase 1: tokens + fonts
+   Phase 2: base reset + body shell
+   Phase 3: typography (typography.css)
+   Phase 4: nav + footer (shell.css)
+   Phase 5: homepage sections (sections.css)
+   Phase 6: detail pages (pages.css) + shared utils
+   =================================================== */
+
+/* ---------- Design tokens (@theme) ---------- */
+@theme {
+    /* Brand / UI colors (also exposed as --color-* on :root) */
+    --color-bg: #ffffff;
+    --color-accent: #29ffff;
+    --color-primary: #2a29ff;
+    --color-text: #171717;
+    --color-surface: #f6f6f6;
+    --color-border: #e3e3e3;
+    --color-active: #9ef34a;
+    --color-inactive: #efefef;
+
+    /* Font families */
+    --font-manrope: 'Manrope', 'Manrope Placeholder', sans-serif;
+    --font-inter: 'Inter', 'Inter Placeholder', sans-serif;
+    --font-fragment: 'Fragment Mono', monospace;
+
+    /*
+     * Framer mobile breakpoint was max-width: 609px.
+     * Tailwind screens are min-width, so `framer:` = 610px and up
+     * (desktop). Use `max-framer:` for the old mobile styles.
+     */
+    --breakpoint-framer: 610px;
+}
+
+/* ---------- Optimized Fonts ---------- */
+
+/* Manrope - 600 (semibold) */
+@font-face {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/assets/fonts/Manrope.woff2') format('woff2');
+    unicode-range: U+0000-00FF;
+}
+
+/* Manrope - 700 (bold) */
+@font-face {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/assets/fonts/Manrope.woff2') format('woff2');
+    unicode-range: U+0000-00FF;
+}
+
+/* Fragment Mono - 400 (regular) */
+@font-face {
+    font-family: 'Fragment Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/assets/fonts/FragmentMono.woff2') format('woff2');
+    unicode-range: U+0000-00FF;
+}
+
+/* Inter - 400 (regular) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/assets/fonts/Inter-Regular.woff2') format('woff2');
+    unicode-range: U+0000-00FF;
+}
+
+/* Inter - 500 (medium) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/assets/fonts/Inter-Medium.woff2') format('woff2');
+    unicode-range: U+0000-00FF;
+}
+
+/* Inter - 700 (bold) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/assets/fonts/Inter-Bold.woff2') format('woff2');
+    unicode-range: U+0000-00FF;
+}
+
+/* Inter - 400 italic */
+@font-face {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/assets/fonts/Inter-Regular-Italic.woff2') format('woff2');
+    unicode-range: U+0000-00FF;
+}
+
+/* Inter - 700 italic */
+@font-face {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/assets/fonts/Inter-Bold-Italic.woff2') format('woff2');
+    unicode-range: U+0000-00FF;
+}
+
+/* Placeholder fallbacks (reduce FOUT size jump) */
+@font-face {
+    font-family: 'Manrope Placeholder';
+    src: local('Arial');
+    ascent-override: 102.74%;
+    descent-override: 28.91%;
+    line-gap-override: 0%;
+    size-adjust: 103.76%;
+}
+
+@font-face {
+    font-family: 'Inter Placeholder';
+    src: local('Arial');
+    ascent-override: 89.79%;
+    descent-override: 22.36%;
+    line-gap-override: 0%;
+    size-adjust: 107.89%;
+}
+
+/* ---------- Base reset + defaults (Phase 2) ---------- */
+@layer base {
+    :root {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        -webkit-font-smoothing: inherit;
+    }
+
+    html,
+    body,
+    #main {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    figure {
+        margin: 0;
+    }
+
+    body,
+    input,
+    textarea,
+    select,
+    button {
+        font-size: 12px;
+        font-family: sans-serif;
+        -webkit-font-smoothing: inherit;
+    }
+
+    body {
+        --proton-will-change-override: none;
+        background: var(--color-bg);
+    }
+
+    img,
+    svg {
+        -webkit-user-drag: none;
+        user-select: none;
+        pointer-events: none;
+    }
+}
+
+@supports (background: -webkit-named-image(i)) and (not (grid-template-rows: subgrid)) {
+    @layer base {
+        body {
+            --proton-will-change-override: transform;
+        }
+    }
+}
+
+/* ---------- Body shell (Phase 2) ---------- */
+@layer components {
+    .body-container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        height: min-content;
+        position: relative;
+        overflow: hidden;
+        padding: 0;
+        gap: 0;
+        background-color: var(--color-bg, #fff);
+    }
+
+    /* Floating nav — Framer canvas positioning preserved */
+    .body-container .nav-bar-container {
+        position: var(--proton-canvas-fixed-position, fixed);
+        left: 50%;
+        bottom: calc(100% - min(var(--proton-viewport-height, 100%), 100%) + 18px);
+        transform: translateX(-50%);
+        order: -1000;
+        flex: none;
+        width: auto;
+        height: auto;
+        z-index: 9;
+    }
+
+    .main {
+        display: flex;
+        flex: none;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        gap: 100px;
+        width: 100%;
+        height: min-content;
+        position: relative;
+        padding: 0;
+        background-color: var(--color-bg);
+    }
+
+    .section {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        flex: none;
+        width: 100%;
+        max-width: 550px;
+        height: min-content;
+        position: relative;
+        padding: 0;
+        gap: 50px;
+        overflow: visible;
+    }
+}
+
+@media (max-width: 609.98px) {
+    @layer components {
+        .section {
+            gap: 30px;
+            padding: 0 10px;
+        }
+
+        .main {
+            gap: 60px;
+        }
+    }
+}
+
+/* ---------- Shared Proton utilities (Phase 6) ---------- */
+/* -------------------------
+   PRESENCE & POINTER EVENTS
+   ------------------------- */
+[data-is-present='false'],
+[data-is-present='false'] * {
+    pointer-events: none !important;
+}
+
+/* -------------------------
+   SVG & BUTTON RESET
+   ------------------------- */
+.svg-container svg {
+    display: block;
+}
+
+[data-reset='button'] {
+    border: 0;
+    padding: 0;
+    background: none;
+}
+
+/* -------------------------
+   SCROLLBAR HIDING
+   ------------------------- */
+[data-hide-scrollbars='true'] {
+    scrollbar-width: none; /* Firefox */
+}
+[data-hide-scrollbars='true']::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+[data-hide-scrollbars='true']::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+/* -------------------------
+   OVERFLOW FALLBACK
+   ------------------------- */
+@supports not (overflow: clip) {
+    :root {
+        --overflow-clip-fallback: hidden;
+    }
+}

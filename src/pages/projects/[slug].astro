@@ -30,11 +30,11 @@ export async function getStaticPaths() {
 
 <BaseLayout home={false} title={project.title}>
 
-    <div class="body-container" style="min-height: 100vh; width: auto;">
+    <div class="body-container min-h-screen w-auto">
         <div class="nav-bar-container">
             <NavBar />
         </div>
-        <div class="proton-root" style="min-height:100vh;width:auto;display:contents">
+        <div class="proton-root contents min-h-screen w-auto">
             <main class="main">
                 <ProjectPage project={project} />
                 <SectionProjects slug={true} limit={true} current={project} />
