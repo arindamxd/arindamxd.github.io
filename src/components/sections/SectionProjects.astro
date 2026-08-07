@@ -47,15 +47,17 @@ const description = slug ? (items.length < 1 ? "Coming soon ..." : "Check out so
     </div>
 
     <!-- Projects List -->
-    <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-visible p-0">
-        {items.map((project) => (
-            <ProjectElement project={project} />
-        ))}
+    {items.length > 0 && (
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-visible p-0">
+            {items.map((project) => (
+                <ProjectElement project={project} />
+            ))}
 
-        <!-- View All -->
-        {home && metadata.data.length > 2 && (
-            <ProjectViewAll />
-        )}
-    </div>
+            <!-- View All -->
+            {home && metadata.data.length > 2 && (
+                <ProjectViewAll />
+            )}
+        </div>
+    )}
 
 </section>
