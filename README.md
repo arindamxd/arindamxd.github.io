@@ -62,7 +62,8 @@ npm run preview  # preview production build
 ├── .github/workflows/deploy.yml   # GitHub Pages (push to trunk)
 ├── .well-known/assetlinks.json    # Android App Links
 ├── docs/
-│   └── blog-authoring.md          # Blog JSON catalog + Markdown authoring
+│   ├── blog-authoring.md          # Blog JSON catalog + Markdown authoring
+│   └── project-authoring.md       # Project JSON catalog + Markdown body
 ├── public/
 │   ├── apps/                      # App landing / privacy pages
 │   └── assets/                    # Fonts, images, icons, project art
@@ -72,7 +73,7 @@ npm run preview  # preview production build
 │   │   ├── Footer.astro
 │   │   ├── sections/              # Home / list page sections
 │   │   └── elements/              # Cards, project/blog pages, code block
-│   ├── content/                   # Site copy (JSON catalogs + blogs/*.md)
+│   ├── content/                   # Site copy (JSON catalogs + blogs|projects/*.md)
 │   ├── layouts/BaseLayout.astro
 │   ├── pages/
 │   │   ├── index.astro            # Home
@@ -86,7 +87,7 @@ npm run preview  # preview production build
 │   │   ├── global.css             # Tailwind + design tokens + Framer leftovers
 │   │   └── motion.css             # Appear / reveal / Lenis helpers
 │   ├── types/                     # blog / project / experience TS types
-│   └── utils/                     # date helpers, blog MD loader
+│   └── utils/                     # date helpers, blog/project MD loaders
 ├── MIGRATION.md                   # Proton → Tailwind migration notes
 ├── MOTION-GAP-PLAN.md             # Framer vs local motion checklist
 ├── astro.config.mjs
@@ -101,7 +102,7 @@ npm run preview  # preview production build
 | --- | --- | --- |
 | `/` | `pages/index.astro` | Full home composition |
 | `/projects` | `pages/projects.astro` | Project list |
-| `/projects/[slug]` | `pages/projects/[slug].astro` | From `projects-metadata.json` |
+| `/projects/[slug]` | `pages/projects/[slug].astro` | Catalog + `content/projects/*.md` |
 | `/blogs` | `pages/blogs.astro` | Blog list |
 | `/blogs/[slug]` | `pages/blogs/[slug].astro` | Catalog + `content/blogs/*.md` |
 | `/404` | `pages/404.astro` | Custom not-found |
@@ -117,7 +118,8 @@ Edit files in `src/content/`. Sections and detail pages import these at build ti
 | File | Role |
 | --- | --- |
 | `author-metadata.json` | Name, bio, SEO, intro hero, footer, social links |
-| `projects-metadata.json` | Project list + detail page layout (`page.header`, `page.body` containers) |
+| `projects-metadata.json` | Project list/card + hero `header` + `content` path to MD |
+| `projects/*.md` | Project body (image groups + `##` content sections) |
 | `blogs-metadata.json` | Blog list/card fields + `content` path to MD |
 | `blogs/*.md` | Blog intro frontmatter + Markdown body |
 | `brands-metadata.json` | Collaboration / brand logos (marquee) |
@@ -141,9 +143,11 @@ Full reference: **[docs/blog-authoring.md](./docs/blog-authoring.md)**. Markdown
 
 ### Adding a project
 
-1. Add an entry to `projects-metadata.json` with unique `slug`.
-2. Fill `desc`, `images`, and `page` (`header` + `body` image/content containers).
+1. Add a list entry to `projects-metadata.json` (`slug`, `title`, `desc`, `images`, `header`, `content`).
+2. Create `src/content/projects/<slug>.md` with the fixed body sequence (image groups + `##` sections).
 3. Add logos / assets under `public/assets/projects/<slug>/` as needed.
+
+Full reference: **[docs/project-authoring.md](./docs/project-authoring.md)**. Markdown compiles to the typed blocks rendered by `ProjectPage.astro`.
 
 ---
 
@@ -201,6 +205,7 @@ Motion gap notes / Framer parity: **[MOTION-GAP-PLAN.md](./MOTION-GAP-PLAN.md)**
 | Doc | What it’s for |
 | --- | --- |
 | [docs/blog-authoring.md](./docs/blog-authoring.md) | Blog catalog + Markdown authoring |
+| [docs/project-authoring.md](./docs/project-authoring.md) | Project catalog + Markdown body |
 | [MIGRATION.md](./MIGRATION.md) | Tailwind migration status & leftover CSS |
 | [MOTION-GAP-PLAN.md](./MOTION-GAP-PLAN.md) | Motion / layout parity vs Framer |
 

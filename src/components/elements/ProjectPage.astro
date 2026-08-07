@@ -1,11 +1,13 @@
 ---
 import { formatDate } from "../../utils/date";
+import type { ProjectBodyBlock } from "../../types/project";
 
 // props
 const { project } = Astro.props;
 
 // project data
-const { header, body } = project.page;
+const { header } = project;
+const body = project.page.body as ProjectBodyBlock[];
 ---
 
 <article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-12 p-0 max-framer:gap-8">
@@ -148,71 +150,76 @@ const { header, body } = project.page;
 
 
     <!-- Project Body -->
-
-    <!-- Image Small Two -->
-    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
-        <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:flex-col">
-            <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
-                <div class="absolute inset-0" style="border-radius:inherit;">
-                    <img decoding="auto" loading="lazy" src={body.container_top.left_image.src} alt={body.container_top.left_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+    {body.map((block) => {
+        if (block.type === "images-pair") {
+            return (
+                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
+                    <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:flex-col">
+                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                            <div class="absolute inset-0" style="border-radius:inherit;">
+                                <img decoding="auto" loading="lazy" src={block.left.src} alt={block.left.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                            </div>
+                        </div>
+                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                            <div class="absolute inset-0" style="border-radius:inherit;">
+                                <img decoding="auto" loading="lazy" src={block.right.src} alt={block.right.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
-                <div class="absolute inset-0" style="border-radius:inherit;">
-                    <img decoding="auto" loading="lazy" src={body.container_top.right_image.src} alt={body.container_top.right_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+            );
+        }
+
+        if (block.type === "content") {
+            return (
+                <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-5 overflow-hidden p-0 max-framer:px-5">
+                    <div class="relative h-auto w-full flex-none break-words">
+                        <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[115%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{block.title}</p>
+                    </div>
+                    <div class="relative h-auto w-full flex-none break-words opacity-60">
+                        <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{block.description}</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            );
+        }
 
-    <!-- Content First -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-5 overflow-hidden p-0 max-framer:px-5">
-        <div class="relative h-auto w-full flex-none break-words">
-            <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[115%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{body.container_middle.content.title}</p>
-        </div>
-        <div class="relative h-auto w-full flex-none break-words opacity-60">
-            <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{body.container_middle.content.description}</p>
-        </div>
-    </div>
-
-    <!-- Image Single Large -->
-    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
-        <div class="relative aspect-[1.463768115942029] h-auto w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
-            <div class="absolute inset-0" style="border-radius:inherit;">
-                <img decoding="auto" loading="lazy" src={body.container_middle.large_image.src} alt={body.container_middle.large_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-            </div>
-        </div>
-    </div>
-
-    <!-- Content Second -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-5 overflow-hidden p-0 max-framer:px-5">
-        <div class="relative h-auto w-full flex-none break-words">
-            <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[115%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{body.container_bottom.content.title}</p>
-        </div>
-        <div class="relative h-auto w-full flex-none break-words opacity-60">
-            <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{body.container_bottom.content.description}</p>
-        </div>
-    </div>
-
-    <!-- Image Small Two + Large One -->
-    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
-        <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:flex-col">
-            <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
-                <div class="absolute inset-0" style="border-radius:inherit;">
-                    <img decoding="auto" loading="lazy" src={body.container_bottom.left_image.src} alt={body.container_bottom.left_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+        if (block.type === "image-large") {
+            return (
+                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
+                    <div class="relative aspect-[1.463768115942029] h-auto w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                        <div class="absolute inset-0" style="border-radius:inherit;">
+                            <img decoding="auto" loading="lazy" src={block.image.src} alt={block.image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
-                <div class="absolute inset-0" style="border-radius:inherit;">
-                    <img decoding="auto" loading="lazy" src={body.container_bottom.right_image.src} alt={body.container_bottom.right_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+            );
+        }
+
+        if (block.type === "images-pair-then-large") {
+            return (
+                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
+                    <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:flex-col">
+                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                            <div class="absolute inset-0" style="border-radius:inherit;">
+                                <img decoding="auto" loading="lazy" src={block.left.src} alt={block.left.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                            </div>
+                        </div>
+                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                            <div class="absolute inset-0" style="border-radius:inherit;">
+                                <img decoding="auto" loading="lazy" src={block.right.src} alt={block.right.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative aspect-[1.463768115942029] h-[376px] w-full max-w-[1180px] flex-none overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:aspect-[1.3295454545454546]">
+                        <div class="absolute inset-0" style="border-radius:inherit;">
+                            <img decoding="auto" loading="lazy" src={block.large.src} alt={block.large.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="relative aspect-[1.463768115942029] h-[376px] w-full max-w-[1180px] flex-none overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:aspect-[1.3295454545454546]">
-            <div class="absolute inset-0" style="border-radius:inherit;">
-                <img decoding="auto" loading="lazy" src={body.container_bottom.large_image.src} alt={body.container_bottom.large_image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-            </div>
-        </div>
-    </div>
+            );
+        }
+
+        return null;
+    })}
 
 </article>

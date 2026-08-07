@@ -4,26 +4,15 @@ import NavBar from "../../components/NavBar.astro";
 import ProjectPage from "../../components/elements/ProjectPage.astro";
 import SectionProjects from "../../components/sections/SectionProjects.astro";
 import Footer from "../../components/Footer.astro";
+import { getProjects } from "../../utils/projects";
 
 // props
 const { project } = Astro.props;
 
-// generate routes from JSON instead of MD content
 export async function getStaticPaths() {
-    const projects = (await import("../../content/projects-metadata.json")).default;
-    return projects.data.map((project) => ({
+    return getProjects().map((project) => ({
         params: { slug: project.slug },
-        props: { project : {
-            ...project,
-            page: {
-                ...project.page,
-                header: {
-                    ...project.page.header,
-                    released_date: new Date(project.page.header.released_date),
-                    updated_date: new Date(project.page.header.updated_date),
-                },
-            }
-        }}
+        props: { project },
     }));
 }
 ---

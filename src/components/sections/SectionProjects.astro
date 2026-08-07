@@ -1,12 +1,13 @@
 ---
 import ProjectElement from "./../elements/ProjectElement.astro";
 import ProjectViewAll from "./../elements/ProjectViewAll.astro";
+import { getProjectCatalogMeta, getProjects } from "../../utils/projects";
 
-// data
-const metadata = (await import("../../content/projects-metadata.json")).default;
+const projects = getProjects();
+const metadata = getProjectCatalogMeta();
 
 // return early if no projects
-if (metadata.data.length === 0) {
+if (projects.length === 0) {
     return;
 }
 
@@ -15,14 +16,14 @@ const { home = false, slug = false, limit = false, current = null } = Astro.prop
 
 // select all random except current if provided
 const filtered = current ? (
-    metadata.data
+    projects
         .filter((item) => item.slug !== current.slug)
         .sort(() => Math.random() - 0.5)
-) : metadata.data;
+) : projects;
 
 // sort by date descending
 const sorted = current ? filtered : [...filtered].sort((a, b) =>
-    new Date(b.page.header.updated_date).getTime() - new Date(a.page.header.updated_date).getTime()
+    b.header.updated_date.getTime() - a.header.updated_date.getTime()
 );
 
 // show only 2 on home, else all
@@ -54,7 +55,7 @@ const description = slug ? (items.length < 1 ? "Coming soon ..." : "Check out so
             ))}
 
             <!-- View All -->
-            {home && metadata.data.length > 2 && (
+            {home && projects.length > 2 && (
                 <ProjectViewAll />
             )}
         </div>
