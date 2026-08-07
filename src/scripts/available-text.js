@@ -2,7 +2,7 @@
  * "Available for …" — auto-cycles words with Keel-style scramble on an interval.
  */
 import {
-    canScramble,
+    prefersReducedMotion,
     wrapWordsHtml,
     playScramble,
     stopScramble,
@@ -11,11 +11,10 @@ import {
 
 const SMALL_TEXT ='m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-text max-framer:text-[12px]';
 const MUTED = 'text-text/60';
-const WORDS = ['opportunities', 'discussion', 'collaborate', 'freelance', 'projects'];
+const WORDS = ['opportunities', 'discussion', 'collaborate', 'meetups', 'projects'];
 /** Time between word changes (scramble itself is ~0.8–1.2s). */
 const CYCLE_MS = 2800;
 const MOBILE_MQ = '(max-width: 610px)';
-const LONGEST_CH = Math.max(...WORDS.map((w) => w.length));
 
 let wordIndex = 0;
 let cycleTimer = null;
@@ -39,7 +38,7 @@ function setWord(word, { animate = false } = {}) {
     const target = getTarget();
     if (!target) return;
 
-    if (!animate || !canScramble()) {
+    if (!animate || prefersReducedMotion()) {
         applyWord(target, word);
         return;
     }
@@ -47,10 +46,14 @@ function setWord(word, { animate = false } = {}) {
     if (isAnimating) return;
     isAnimating = true;
 
+    const scrambleOpts = { allowMobile: true };
+
     playScramble(target, {
+        ...scrambleOpts,
         onComplete: () => {
             applyWord(target, word);
             playScramble(getTarget(), {
+                ...scrambleOpts,
                 onComplete: () => {
                     isAnimating = false;
                 },
@@ -86,7 +89,7 @@ function updateAvailableText() {
 
     const currentWord = WORDS[wordIndex] || WORDS[0];
     const isMobile = window.matchMedia(MOBILE_MQ).matches;
-    const wordHtml = `<span class="available-scramble scramble-host ${MUTED}" data-word="${currentWord}" data-no-scramble aria-label="Available for ${currentWord}" style="min-width:${LONGEST_CH}ch">${wrapWordsHtml(currentWord)}</span>`;
+    const wordHtml = `<span class="available-scramble scramble-host ${MUTED}" data-word="${currentWord}" data-no-scramble aria-label="Available for ${currentWord}">${wrapWordsHtml(currentWord)}</span>`;
 
     stopCycle();
 

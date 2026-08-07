@@ -5,13 +5,20 @@
  */
 
 export const SCRAMBLE_CHARS = '0+-*|{}`/()$&';
-export const NO_SCRAMBLE_MQ = '(max-width: 1080px), (prefers-reduced-motion: reduce)';
+/** Disable hover scramble on small viewports (Keel). Available-for auto-cycle ignores this. */
+export const NO_SCRAMBLE_MQ = '(max-width: 1080px)';
+export const REDUCED_MOTION_MQ = '(prefers-reduced-motion: reduce)';
 
 const timersByEl = new WeakMap();
 const boundTriggers = new WeakSet();
 
+export function prefersReducedMotion() {
+    return window.matchMedia(REDUCED_MOTION_MQ).matches;
+}
+
+/** Hover scramble: desktop + motion OK */
 export function canScramble() {
-    return !window.matchMedia(NO_SCRAMBLE_MQ).matches;
+    return !window.matchMedia(NO_SCRAMBLE_MQ).matches && !prefersReducedMotion();
 }
 
 export function randomScrambleChar() {
@@ -141,8 +148,9 @@ export function wrapElement(el) {
 }
 
 /** Flash random glyph blocks over scramble chars (Keel timing). */
-export function playScramble(el, { onComplete } = {}) {
-    if (!el || !canScramble()) {
+export function playScramble(el, { onComplete, allowMobile = false } = {}) {
+    const allowed = allowMobile ? !prefersReducedMotion() : canScramble();
+    if (!el || !allowed) {
         onComplete?.();
         return;
     }

@@ -386,15 +386,14 @@
     flex-wrap: nowrap;
     align-items: flex-start;
     align-content: flex-start;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex: none;
     gap: 20px;
-    width: 100%;
     width: 100%;
     height: min-content;
     position: relative;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;
     will-change: var(--proton-will-change-effect-override, transform);
 }
 
@@ -405,9 +404,10 @@
     align-items: flex-start;
     align-content: flex-start;
     justify-content: flex-start;
-    flex: 1 0 0px;
+    flex: 1 1 auto;
     gap: 18px;
-    width: 1px;
+    min-width: 0;
+    width: auto;
     height: min-content;
     position: relative;
     padding: 0;
@@ -487,11 +487,12 @@
     align-items: flex-start;
     align-content: flex-start;
     justify-content: flex-start;
-    flex: none;
+    flex: 0 0 auto;
     gap: 7px;
-    width: min-content;
+    width: max-content;
     height: min-content;
     position: relative;
+    margin-left: auto;
     padding: 4px 0 0;
     overflow: visible;
 }
@@ -543,6 +544,14 @@
     height: auto;
     position: relative;
     white-space: pre;
+}
+
+/* Keep both lines left-aligned (Framer); reserve width so cycle doesn’t shift the block */
+.proton-root .available-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 13ch;
 }
 
 /* Keel-style scramble — used by Available for… (opt-in elsewhere via JS) */
@@ -1449,15 +1458,18 @@
 
     .proton-root .hero-card-content-top {
         flex-direction: column;
+        align-items: flex-start;
         gap: 22px;
-        justify-content: center;
+        justify-content: flex-start;
         will-change: unset;
     }
 
     .proton-root .hero-card-content-top-left {
         flex: none;
         order: 1;
+        align-self: stretch;
         width: 100%;
+        margin-left: 0;
     }
 
     .proton-root .hero-card-content-avatar {
@@ -1469,8 +1481,14 @@
         gap: 4px;
     }
 
-    .proton-root .hero-card-content-main-text-name,
     .proton-root .hero-card-content-top-available {
+        order: 0;
+        align-self: flex-start;
+        margin-left: 0;
+        padding: 0;
+    }
+
+    .proton-root .hero-card-content-main-text-name {
         order: 0;
     }
 
