@@ -1,24 +1,18 @@
 ---
-import type { Blog } from "../../types/blog";
 import BlogElement from "../elements/BlogElement.astro";
 import BlogViewAll from "../elements/BlogViewAll.astro";
+import { getBlogCatalogMeta, getBlogs } from "../../utils/blogs";
 
-// data
-const metadata = (await import("../../content/blogs-metadata.json")).default;
+const blogs = getBlogs();
+const metadata = getBlogCatalogMeta();
 
 // return early if no blogs
-if (metadata.data.length === 0) {
+if (blogs.length === 0) {
     return;
 }
 
 // props
 const { home = false, slug = false, limit = false, current = null } = Astro.props;
-
-// parse dates
-const blogs: Blog[] = metadata.data.map(blog => ({
-    ...blog,
-    date: new Date(blog.date),
-}));
 
 // select all random except current if provided
 const filtered = current ? (
@@ -65,7 +59,7 @@ const description = slug ? (items.length < 1 ? "Coming soon ..." : "Check out so
             ))}
 
             <!-- View All -->
-            {home && metadata.data.length > 3 && (
+            {home && blogs.length > 3 && (
                 <BlogViewAll />
             )}
 

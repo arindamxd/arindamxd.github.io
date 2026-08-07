@@ -62,7 +62,7 @@ npm run preview  # preview production build
 ├── .github/workflows/deploy.yml   # GitHub Pages (push to trunk)
 ├── .well-known/assetlinks.json    # Android App Links
 ├── docs/
-│   └── blog-authoring.md          # How to write blog body blocks
+│   └── blog-authoring.md          # Blog JSON catalog + Markdown authoring
 ├── public/
 │   ├── apps/                      # App landing / privacy pages
 │   └── assets/                    # Fonts, images, icons, project art
@@ -72,7 +72,7 @@ npm run preview  # preview production build
 │   │   ├── Footer.astro
 │   │   ├── sections/              # Home / list page sections
 │   │   └── elements/              # Cards, project/blog pages, code block
-│   ├── content/                   # All site copy & data (JSON)
+│   ├── content/                   # Site copy (JSON catalogs + blogs/*.md)
 │   ├── layouts/BaseLayout.astro
 │   ├── pages/
 │   │   ├── index.astro            # Home
@@ -86,7 +86,7 @@ npm run preview  # preview production build
 │   │   ├── global.css             # Tailwind + design tokens + Framer leftovers
 │   │   └── motion.css             # Appear / reveal / Lenis helpers
 │   ├── types/                     # blog / project / experience TS types
-│   └── utils/date.ts
+│   └── utils/                     # date helpers, blog MD loader
 ├── MIGRATION.md                   # Proton → Tailwind migration notes
 ├── MOTION-GAP-PLAN.md             # Framer vs local motion checklist
 ├── astro.config.mjs
@@ -103,7 +103,7 @@ npm run preview  # preview production build
 | `/projects` | `pages/projects.astro` | Project list |
 | `/projects/[slug]` | `pages/projects/[slug].astro` | From `projects-metadata.json` |
 | `/blogs` | `pages/blogs.astro` | Blog list |
-| `/blogs/[slug]` | `pages/blogs/[slug].astro` | From `blogs-metadata.json` |
+| `/blogs/[slug]` | `pages/blogs/[slug].astro` | Catalog + `content/blogs/*.md` |
 | `/404` | `pages/404.astro` | Custom not-found |
 
 Keep **one metadata entry per slug** so static routes stay unique.
@@ -118,7 +118,8 @@ Edit files in `src/content/`. Sections and detail pages import these at build ti
 | --- | --- |
 | `author-metadata.json` | Name, bio, SEO, intro hero, footer, social links |
 | `projects-metadata.json` | Project list + detail page layout (`page.header`, `page.body` containers) |
-| `blogs-metadata.json` | Blog list + `page.intro` + typed `page.body` blocks |
+| `blogs-metadata.json` | Blog list/card fields + `content` path to MD |
+| `blogs/*.md` | Blog intro frontmatter + Markdown body |
 | `brands-metadata.json` | Collaboration / brand logos (marquee) |
 | `skills-metadata.json` | Skills section (`tech.stack`, `tech.tools`) |
 | `experiences-metadata.json` | Work history (`title`, `company`, `start`, `end`) |
@@ -132,11 +133,11 @@ Edit files in `src/content/`. Sections and detail pages import these at build ti
 
 ### Adding a blog post
 
-1. Add an entry to `blogs-metadata.json` (`slug`, `title`, `thumb`, `author`, `date`, `page`).
-2. Author `page.body` with typed blocks (`title`, `subtitle`, `paragraph`, `bullets`, `code`).
+1. Add a list entry to `blogs-metadata.json` (`slug`, `title`, `thumb`, `author`, `date`, `content`).
+2. Create `src/content/blogs/<slug>.md` with intro frontmatter and Markdown body.
 3. Put images under `public/assets/` (or use absolute URLs).
 
-Full block reference: **[docs/blog-authoring.md](./docs/blog-authoring.md)**. Code blocks render via `BlogCodeBlock.astro` (optional `language` for syntax highlighting).
+Full reference: **[docs/blog-authoring.md](./docs/blog-authoring.md)**. Markdown compiles to the typed blocks rendered by `BlogPage.astro` / `BlogCodeBlock.astro`.
 
 ### Adding a project
 
@@ -199,7 +200,7 @@ Motion gap notes / Framer parity: **[MOTION-GAP-PLAN.md](./MOTION-GAP-PLAN.md)**
 
 | Doc | What it’s for |
 | --- | --- |
-| [docs/blog-authoring.md](./docs/blog-authoring.md) | Blog JSON body blocks |
+| [docs/blog-authoring.md](./docs/blog-authoring.md) | Blog catalog + Markdown authoring |
 | [MIGRATION.md](./MIGRATION.md) | Tailwind migration status & leftover CSS |
 | [MOTION-GAP-PLAN.md](./MOTION-GAP-PLAN.md) | Motion / layout parity vs Framer |
 

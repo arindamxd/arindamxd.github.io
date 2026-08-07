@@ -5,18 +5,15 @@ import BlogPage from "../../components/elements/BlogPage.astro";
 import SectionBlogs from "../../components/sections/SectionBlogs.astro";
 import Footer from "../../components/Footer.astro";
 
+import { getBlogs } from "../../utils/blogs";
+
 // props
 const { blog } = Astro.props;
 
-// Generate routes from JSON instead of MD content
 export async function getStaticPaths() {
-    const blogs = (await import("../../content/blogs-metadata.json")).default;
-    return blogs.data.map((blog) => ({
+    return getBlogs().map((blog) => ({
         params: { slug: blog.slug },
-        props: { blog: {
-            ...blog,
-            date: new Date(blog.date),
-        }}
+        props: { blog },
     }));
 }
 ---

@@ -1,8 +1,15 @@
 # Blog authoring
 
-Blogs live in `src/content/blogs-metadata.json`. Each entry has list metadata plus a `page` with `intro` and a typed `body` array.
+Blogs are split across two places:
 
-## Entry shape
+1. **List/card catalog** — [`src/content/blogs-metadata.json`](../src/content/blogs-metadata.json)
+2. **Article body** — Markdown under [`src/content/blogs/`](../src/content/blogs/)
+
+At build time, [`src/utils/blogs.ts`](../src/utils/blogs.ts) merges them into the `Blog` shape used by the site.
+
+## Catalog entry (JSON)
+
+Keep list fields here. Do **not** put article copy in JSON — only a path to the MD file.
 
 ```json
 {
@@ -11,113 +18,103 @@ Blogs live in `src/content/blogs-metadata.json`. Each entry has list metadata pl
   "thumb": "/assets/… or https://…",
   "author": { "name": "…", "avatar": "/assets/…" },
   "date": "2024-03-29",
-  "page": {
-    "intro": {
-      "title": "Lead heading under the meta row",
-      "paragraph": "Short intro copy",
-      "banner": "https://… wide image"
-    },
-    "body": [ /* blocks below */ ]
-  }
+  "content": "blogs/my-post.md"
 }
 ```
 
-## Body blocks
+`content` is relative to `src/content/`.
 
-Every body item **must** include `"type"`. One concern per block.
+## Article file (Markdown)
 
-| `type` | Fields | Renders as |
-|--------|--------|------------|
-| `title` | `text` | Section heading (h2) |
-| `subtitle` | `text` | Sub-heading (h3) |
-| `paragraph` | `text` | Body / description |
-| `bullets` | `items`, optional `style`: `"disc"` (default) or `"number"` | Disc or numbered list |
-| `code` | `code`, optional `language` | Monospace snippet panel |
+Create `src/content/blogs/<slug>.md` with frontmatter for the intro, then normal Markdown for the body.
 
-### Title / subtitle / paragraph
+````md
+---
+title: "Lead heading under the meta row"
+description: "Short intro copy"
+banner: "https://… wide image"
+---
 
-```json
-{ "type": "title", "text": "Section heading" }
-{ "type": "subtitle", "text": "Supporting heading" }
-{ "type": "paragraph", "text": "Body copy…" }
+## Section heading
+
+Body paragraph…
+
+### Supporting heading
+
+- **Label**: Labeled disc list item
+- Plain disc list item
+
+1. Numbered step one
+2. Numbered step two
+
+```swift
+let button = UIButton(type: .system)
+```
+````
+
+### Frontmatter
+
+| Field | Renders as |
+|-------|------------|
+| `title` | Intro lead under the meta row (not the list/h1 title in JSON) |
+| `description` | Intro supporting copy |
+| `banner` | Full-width article banner image |
+
+### Body → blocks
+
+Markdown is compiled into the typed blocks rendered by `BlogPage.astro`:
+
+| Markdown | Block |
+|----------|--------|
+| `##` (or `#`) | Section heading (`title`) |
+| `###`+ | Sub-heading (`subtitle`) |
+| Paragraph | Body copy |
+| `-` list | Disc bullets |
+| `1.` list | Numbered bullets |
+| `- **Label**: text` | Labeled bullet (`{ label, text }`) |
+| Fenced code | Code panel (`BlogCodeBlock`; set language e.g. `swift`) |
+
+Spacing is unchanged from the Framer rhythm in `BlogPage.astro` (~52px before titles/subtitles, ~20px heading → content, ~24px between peers).
+
+### Labeled bullets
+
+```md
+- **Target–Action Mechanism**: Link a tap to a method in your code.
+- **Control States**: normal, highlighted, disabled, …
 ```
 
-Spacing: **~20px** between a title/subtitle and the next paragraph, bullets, or code. Peers (paragraph → paragraph, etc.) get **~24px**. New titles/subtitles open a section with **~52px** top margin.
-
-### Bullets
-
-Default is a **disc** list (small gray dots, `gap-2.5` between items — Framer-style).
-
-Plain strings:
-
-```json
-{
-  "type": "bullets",
-  "items": [
-    "Outline your website structure before designing.",
-    "Gather all your content (images, text) in one place."
-  ]
-}
-```
-
-Numbered (`1.` `2.` `3.`):
-
-```json
-{
-  "type": "bullets",
-  "style": "number",
-  "items": [
-    "First step",
-    "Second step"
-  ]
-}
-```
-
-Labeled items (bold lead-in + muted body) — works with either style:
-
-```json
-{
-  "type": "bullets",
-  "items": [
-    {
-      "label": "Target–Action Mechanism",
-      "text": "Link a tap to a method in your code."
-    },
-    {
-      "label": "Control States",
-      "text": "normal, highlighted, disabled, …"
-    }
-  ]
-}
-```
-
-You can mix strings and `{ label, text }` in the same `items` array. Omit `style` (or set `"disc"`) for dots.
+Mix labeled and plain items in the same list if needed.
 
 ### Code
 
-Use `\n` for newlines inside the JSON string. Set `language` so the block shows a label and Shiki syntax colors (e.g. `swift`, `kotlin`, `ts`, `js`).
+Use a language tag so the panel shows a label and Shiki colors:
 
-```json
-{
-  "type": "code",
-  "language": "swift",
-  "code": "let button = UIButton(type: .system)\nbutton.setTitle(\"Click Me!\", for: .normal)"
-}
+````md
+```swift
+let button = UIButton(type: .system)
+button.setTitle("Click Me!", for: .normal)
 ```
+````
 
-Renders a “SWIFT” header plus highlighted tokens. Omit `language` (or use `plaintext`) for unhighlighted mono text.
+Omit the language (or use `plaintext`) for unhighlighted mono text.
 
 ## Typical section pattern
 
-```json
-[
-  { "type": "title", "text": "…" },
-  { "type": "paragraph", "text": "…" },
-  { "type": "subtitle", "text": "…" },
-  { "type": "bullets", "items": [ … ] },
-  { "type": "paragraph", "text": "…" },
-  { "type": "code", "language": "swift", "code": "…" }
-]
-```
+````md
+## Section heading
 
-Types are defined in `src/types/blog.d.ts`. The renderer is `src/components/elements/BlogPage.astro`.
+Intro paragraph for the section.
+
+### Supporting heading
+
+- **First idea**: Explanation…
+- **Second idea**: Explanation…
+
+More copy…
+
+```kotlin
+fun example() = Unit
+```
+````
+
+Types live in `src/types/blog.d.ts`. The renderer is `src/components/elements/BlogPage.astro`.

@@ -24,6 +24,20 @@ export type BlogBodyBlock =
     | { type: "bullets"; items: BlogBullet[]; style?: "disc" | "number" }
     | { type: "code"; code: string; language?: string }
 
+/** List/card fields stored in blogs-metadata.json (plus a path to the MD page). */
+export interface BlogCatalogEntry {
+    slug: string
+    title: string
+    thumb: string
+    author: {
+        name: string
+        avatar: string
+    }
+    date: string
+    /** Relative path under src/content/, e.g. blogs/my-post.md */
+    content: string
+}
+
 export interface Blog {
     slug: string
     title: string
