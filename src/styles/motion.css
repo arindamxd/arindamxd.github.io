@@ -3,6 +3,164 @@
    See MOTION-GAP-PLAN.md
    =================================================== */
 
+/* ---------- Page loader (pre-reveal hold) ---------- */
+html.is-loading,
+html.is-loading body {
+    overflow: hidden;
+}
+
+.page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    color: var(--color-text);
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: transform;
+}
+
+.page-loader.is-exiting {
+    transform: translate3d(0, -100%, 0);
+    pointer-events: none;
+}
+
+.page-loader-inner {
+    position: relative;
+    display: flex;
+    width: min(100%, 420px);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 28px;
+    padding: 0 28px;
+}
+
+.page-loader-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-loader-dot {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--color-active);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-active) 55%, transparent);
+    animation: page-loader-pulse 1.6s ease-out infinite;
+}
+
+.page-loader-role {
+    margin: 0;
+    font-family: var(--font-manrope);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+    color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+.page-loader-name {
+    margin: 0;
+    font-family: var(--font-manrope);
+    font-size: clamp(48px, 12vw, 88px);
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    line-height: 0.95;
+    color: var(--color-text);
+}
+
+.page-loader-footer {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.page-loader-label {
+    margin: 0;
+    font-family: var(--font-fragment);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+
+.page-loader-count {
+    margin: 0;
+    font-family: var(--font-manrope);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text);
+}
+
+.page-loader-count::after {
+    content: '%';
+    margin-left: 1px;
+    font-size: 0.55em;
+    letter-spacing: -0.04em;
+    color: color-mix(in srgb, var(--color-text) 50%, transparent);
+}
+
+.page-loader-track {
+    width: 100%;
+    height: 2px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-text) 12%, transparent);
+}
+
+.page-loader-bar {
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--color-text);
+    transition: width 0.08s linear;
+}
+
+@keyframes page-loader-pulse {
+    0% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-active) 45%, transparent);
+    }
+    70% {
+        box-shadow: 0 0 0 10px color-mix(in srgb, var(--color-active) 0%, transparent);
+    }
+    100% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-active) 0%, transparent);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-loader {
+        transition: none;
+    }
+
+    .page-loader-dot {
+        animation: none;
+    }
+
+    .page-loader-bar {
+        transition: none;
+    }
+}
+
+/* Hold hero appear until loader unlocks */
+html.js-motion:not(.is-loaded) .appear-hero-card,
+html.js-motion:not(.is-loaded) .appear-hero-tie,
+html.js-motion:not(.is-loaded) .appear-fade-up,
+html.js-motion:not(.is-loaded) .appear-fade-up-sm {
+    opacity: 0;
+    animation: none !important;
+}
+
 /* Allow hinged fly-in to escape the badge clip during appear only */
 html.js-motion .hero-badge:has(.appear-hero-card.is-appearing) {
     overflow: visible;

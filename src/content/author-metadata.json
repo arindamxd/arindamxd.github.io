@@ -32,6 +32,7 @@
                 "icon": "/assets/socials/google-play.svg"
             }
         ],
+        "resumeURL": "/assets/resources/arindam-resume-1.0.pdf",
         "cardLinkText": "LinkedIn",
         "cardLinkURL": "https://www.linkedin.com/in/arindamxd/"
     },

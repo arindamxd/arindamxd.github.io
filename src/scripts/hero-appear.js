@@ -1,7 +1,8 @@
-// Hero appear — Framer badge hinge feel
+// Hero appear — Framer badge hinge feel (after page loader)
 (function () {
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let started = false;
 
     function settle(el) {
         el.classList.remove('is-appearing');
@@ -9,6 +10,9 @@
     }
 
     function run() {
+        if (started) return;
+        started = true;
+
         const targets = [
             ...document.querySelectorAll(
                 '.appear-hero-card, .appear-hero-tie, .appear-fade-up, .appear-fade-up-sm',
@@ -22,8 +26,7 @@
             return;
         }
 
-        // Start immediately — animation fill-mode:both applies the from-keyframe
-        // (no appear-prep hide that can stick if the module loads late).
+        // Start after loader unlock — fill-mode:both applies the from-keyframe.
         targets.forEach((el) => {
             el.classList.add('is-appearing');
             const onEnd = (ev) => {
@@ -41,9 +44,24 @@
         }, 1500);
     }
 
+    function arm() {
+        document.documentElement.classList.add('js-motion');
+
+        if (
+            window.__pageLoaderDone ||
+            document.documentElement.classList.contains('is-loaded') ||
+            !document.getElementById('page-loader')
+        ) {
+            run();
+            return;
+        }
+
+        window.addEventListener('pageloader:done', run, { once: true });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', run);
+        document.addEventListener('DOMContentLoaded', arm);
     } else {
-        run();
+        arm();
     }
 })();

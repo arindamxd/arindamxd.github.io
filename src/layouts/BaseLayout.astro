@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import PageLoader from "../components/PageLoader.astro";
 
 const author = (await import("../content/author-metadata.json")).default;
 
@@ -8,7 +9,7 @@ const { home = false, title = author.name } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="dark" data-theme="dark">
+<html lang="en" class="dark is-loading" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -43,8 +44,20 @@ const { home = false, title = author.name } = Astro.props;
                     document.documentElement.classList.add('dark');
                     document.documentElement.setAttribute('data-theme', 'dark');
                 }
+                document.documentElement.classList.add('is-loading');
             })();
         </script>
+
+        <!-- Critical loader shell (before CSS) -->
+        <style is:inline>
+            html.is-loading, html.is-loading body { overflow: hidden; }
+            .page-loader {
+                position: fixed; inset: 0; z-index: 9999;
+                display: flex; align-items: center; justify-content: center;
+                background: #222222; color: #f5f5f5;
+            }
+            html:not(.dark) .page-loader { background: #ffffff; color: #171717; }
+        </style>
 
         <!-- Facebook Open Graph -->
         <meta property="og:title" content={home ? author.name : `${author.name} | ${title}`} />
@@ -97,6 +110,7 @@ const { home = false, title = author.name } = Astro.props;
     </head>
 
     <body oncontextmenu="return false;">
+        <PageLoader />
         <slot />
     </body>
 </html>

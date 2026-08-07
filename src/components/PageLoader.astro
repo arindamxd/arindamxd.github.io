@@ -1,0 +1,154 @@
+---
+const author = (await import("../content/author-metadata.json")).default;
+const firstName = author.name.split(/\s+/)[0] ?? author.name;
+---
+
+<div
+    id="page-loader"
+    class="page-loader"
+    role="status"
+    aria-live="polite"
+    aria-busy="true"
+    aria-label="Loading"
+>
+    <div class="page-loader-inner">
+        <div class="page-loader-meta">
+            <span class="page-loader-dot" aria-hidden="true"></span>
+            <p class="page-loader-role">{author.role}</p>
+        </div>
+
+        <p class="page-loader-name">{firstName}</p>
+
+        <div class="page-loader-footer">
+            <p class="page-loader-label">Loading</p>
+            <p class="page-loader-count" data-page-loader-count>0</p>
+        </div>
+
+        <div class="page-loader-track" aria-hidden="true">
+            <div class="page-loader-bar" data-page-loader-bar></div>
+        </div>
+    </div>
+</div>
+
+<!-- Inline: must run immediately (Astro module scripts were not loading this file) -->
+<script is:inline>
+    (function () {
+        var loader = document.getElementById('page-loader');
+        if (!loader) {
+            document.documentElement.classList.remove('is-loading');
+            document.documentElement.classList.add('is-loaded');
+            window.__pageLoaderDone = true;
+            window.dispatchEvent(new CustomEvent('pageloader:done'));
+            return;
+        }
+
+        var reduced =
+            window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var countEl = loader.querySelector('[data-page-loader-count]');
+        var barEl = loader.querySelector('[data-page-loader-bar]');
+
+        var MIN_MS = reduced ? 0 : 1100;
+        var MAX_MS = 4200;
+        var startedAt = performance.now();
+        var progress = 0;
+        var raf = 0;
+        var finished = false;
+
+        document.documentElement.classList.add('is-loading');
+        document.documentElement.classList.remove('is-loaded');
+
+        function setProgress(value) {
+            progress = Math.max(progress, Math.min(100, value));
+            if (countEl) countEl.textContent = String(Math.round(progress));
+            if (barEl) barEl.style.width = progress + '%';
+        }
+
+        function tick() {
+            if (finished) return;
+            var elapsed = performance.now() - startedAt;
+            var target = Math.min(90, (elapsed / Math.max(MIN_MS, 1)) * 90);
+            setProgress(progress + (target - progress) * 0.12);
+            raf = requestAnimationFrame(tick);
+        }
+
+        function unlockMotion() {
+            document.documentElement.classList.remove('is-loading');
+            document.documentElement.classList.add('is-loaded');
+            window.__pageLoaderDone = true;
+            window.dispatchEvent(new CustomEvent('pageloader:done'));
+        }
+
+        function dismiss() {
+            if (finished) return;
+            finished = true;
+            cancelAnimationFrame(raf);
+            setProgress(100);
+            loader.setAttribute('aria-busy', 'false');
+
+            if (reduced) {
+                loader.remove();
+                unlockMotion();
+                return;
+            }
+
+            loader.classList.add('is-exiting');
+            window.setTimeout(unlockMotion, 80);
+
+            var cleaned = false;
+            function cleanup() {
+                if (cleaned) return;
+                cleaned = true;
+                loader.removeEventListener('transitionend', onEnd);
+                if (loader.parentNode) loader.remove();
+            }
+            function onEnd(ev) {
+                if (ev.target !== loader) return;
+                cleanup();
+            }
+            loader.addEventListener('transitionend', onEnd);
+            window.setTimeout(cleanup, 900);
+        }
+
+        function whenReady() {
+            var loadDone = document.readyState === 'complete';
+            var minDone = MIN_MS <= 0;
+            var settled = false;
+
+            function tryDismiss() {
+                if (settled) return;
+                if (loadDone && minDone) {
+                    settled = true;
+                    dismiss();
+                }
+            }
+
+            if (!loadDone) {
+                window.addEventListener(
+                    'load',
+                    function () {
+                        loadDone = true;
+                        tryDismiss();
+                    },
+                    { once: true },
+                );
+            }
+
+            window.setTimeout(function () {
+                minDone = true;
+                tryDismiss();
+            }, MIN_MS);
+
+            // Hard cap so a hung asset can't trap the overlay forever
+            window.setTimeout(function () {
+                loadDone = true;
+                minDone = true;
+                tryDismiss();
+            }, MAX_MS);
+        }
+
+        if (!reduced) raf = requestAnimationFrame(tick);
+        else setProgress(100);
+
+        whenReady();
+    })();
+</script>
