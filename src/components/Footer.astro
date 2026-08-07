@@ -6,87 +6,108 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer
-    class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible bg-bg py-[100px] max-framer:px-2.5 max-framer:pt-[60px] max-framer:pb-[50px]"
+    id="contact"
+    class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible bg-bg pt-20 pb-[100px] max-framer:px-2.5 max-framer:pt-[60px] max-framer:pb-[100px]"
 >
+    <!-- Framer Contact chrome: surface shell + white form -->
     <div
-        class="relative flex h-min w-full max-w-[550px] flex-col flex-nowrap items-center justify-start gap-0 rounded-[46px] border border-[#e8e8e8] bg-surface px-2.5 pt-2.5 pb-0"
+        class="relative flex h-min w-full max-w-[550px] flex-col flex-nowrap items-center justify-start gap-[18px] rounded-[46px] border border-[#e8e8e8] bg-surface px-[9px] pt-[9px] pb-[18px] max-framer:gap-5 max-framer:rounded-[36px] max-framer:px-1.5 max-framer:pt-1.5 max-framer:pb-[18px]"
     >
         <div
-            class="relative flex h-min w-full flex-col flex-nowrap items-center justify-center gap-10 overflow-visible rounded-[40px] bg-bg p-[45px] max-framer:gap-[30px] max-framer:p-10"
+            class="relative flex h-min w-full flex-col flex-nowrap items-center justify-center gap-[35px] overflow-visible rounded-[40px] bg-bg px-[60px] py-[50px] max-framer:gap-7 max-framer:rounded-[32px] max-framer:px-[30px] max-framer:pt-10 max-framer:pb-[30px]"
         >
+            <!-- Heading -->
             <div
-                class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-7 overflow-visible p-0"
+                class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-7 overflow-visible p-0 max-framer:gap-[18px]"
             >
-                <div
-                    class="relative flex h-auto w-full flex-none shrink-0 flex-col justify-start wrap-break-word whitespace-pre-wrap outline-none"
-                    style="--proton-paragraph-spacing: 0px"
-                >
-                    <h2 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-center text-text no-underline max-framer:text-[34px]">{author.footer.title}</h2>
+                <div class="relative flex h-auto w-full flex-none shrink-0 flex-col justify-start">
+                    <h2 class="m-0 p-0 text-center font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.03em] text-text no-underline max-framer:text-[34px]">
+                        {author.footer.title}
+                    </h2>
                 </div>
-                <div
-                    class="relative flex h-auto w-full max-w-[277px] flex-none shrink-0 flex-col justify-start wrap-break-word whitespace-pre-wrap opacity-60 outline-none"
-                    style="--proton-paragraph-spacing: 0px"
-                >
-                    <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px] text-center">
+                <div class="relative flex h-auto w-full max-w-[277px] flex-none shrink-0 flex-col justify-start opacity-60">
+                    <p class="m-0 p-0 text-center font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.02em] text-text no-underline max-framer:text-[15px]">
                         {author.footer.description}
                     </p>
                 </div>
             </div>
 
+            <!-- Person: avatar + name/role + socials -->
             <div
-                class="relative flex h-min w-[77%] flex-row flex-nowrap items-center justify-center gap-2.5 overflow-visible p-0"
+                class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-4 overflow-visible p-0"
             >
-                {
-                    author.footer.social.map((link) => (
-                        <div class="relative size-10 flex-none">
-                            <a
-                                aria-label={link.name}
-                                class="group/social relative flex size-full cursor-pointer flex-col content-center items-center justify-center rounded-full bg-surface p-2 no-underline"
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                <div class="relative h-px w-full flex-1 opacity-40 transition-opacity duration-500 group-hover/social:opacity-100">
-                                    <div class="absolute inset-0 rounded-[inherit]">
-                                        <img
-                                            decoding="async"
-                                            width="18"
-                                            height="18"
-                                            src={link.icon}
-                                            alt=""
-                                            class="block size-full rounded-[inherit] object-cover object-center"
-                                        />
-                                    </div>
+                <div class="relative size-[70px] flex-none overflow-hidden rounded-full max-framer:size-14">
+                    <img
+                        decoding="async"
+                        loading="lazy"
+                        src={author.footer.avatar}
+                        alt=""
+                        class="absolute inset-0 size-full object-cover object-center"
+                    />
+                </div>
+
+                <div
+                    class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-5 overflow-visible p-0"
+                >
+                    <div
+                        class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-1 overflow-visible px-[30px] max-framer:px-4"
+                    >
+                        <p class="m-0 p-0 text-center font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-text no-underline max-framer:text-[19px]">
+                            {author.name}
+                        </p>
+                        <p class="m-0 p-0 text-center font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text opacity-60 no-underline max-framer:text-[13px]">
+                            {author.footer.role}
+                        </p>
+                    </div>
+
+                    <!-- Keep local social icons; match Framer button chrome (34px / 6px gap) -->
+                    <div
+                        class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-1.5 overflow-visible px-[30px] max-framer:px-4"
+                    >
+                        {
+                            author.footer.social.map((link) => (
+                                <div class="relative size-[34px] flex-none">
+                                    <a
+                                        aria-label={link.name}
+                                        class="group/social relative flex size-full cursor-pointer flex-col content-center items-center justify-center rounded-full bg-surface p-2 no-underline"
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener"
+                                    >
+                                        <div class="relative size-[18px] opacity-40 transition-opacity duration-500 group-hover/social:opacity-100">
+                                            <img
+                                                decoding="async"
+                                                width="18"
+                                                height="18"
+                                                src={link.icon}
+                                                alt=""
+                                                class="block size-full object-cover object-center"
+                                            />
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                    ))
-                }
+                            ))
+                        }
+                    </div>
+                </div>
             </div>
 
-            <div
-                class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-[22px] overflow-visible p-0"
-            >
-                <div
-                    class="relative flex h-auto w-full flex-none shrink-0 flex-col justify-start wrap-break-word whitespace-pre-wrap opacity-60 outline-none"
-                    style="--proton-paragraph-spacing: 0px"
-                >
-                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px] text-center">
-                        &copy; <b>{currentYear}</b> / All rights Reserved.
-                    </p>
-                </div>
+            <!-- Copyright -->
+            <div class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start overflow-visible p-0">
+                <p class="m-0 p-0 text-center font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text opacity-60 no-underline max-framer:text-[13px]">
+                    &copy; <b>{currentYear}</b> / All rights Reserved.
+                </p>
             </div>
         </div>
 
-        <div class="relative flex h-[64px] w-full flex-none items-center justify-center">
+        <!-- Created by -->
+        <div class="relative flex h-7 w-full flex-none items-center justify-center">
             <a
                 class="relative inline-flex items-center gap-1.5 no-underline"
                 href="/"
                 rel="noopener"
             >
-                <span
-                    class="font-manrope text-[13px] font-semibold leading-[1.4] tracking-[-0.04em] text-text opacity-60"
-                >
+                <span class="font-manrope text-[13px] font-semibold leading-[1.4] tracking-[-0.04em] text-text opacity-60">
                     Created by
                 </span>
                 <img
@@ -96,9 +117,7 @@ const currentYear = new Date().getFullYear();
                     alt=""
                     class="size-7 rounded-full object-cover object-center"
                 />
-                <span
-                    class="font-manrope text-[13px] font-semibold leading-[1.4] tracking-[-0.04em] text-text"
-                >
+                <span class="font-manrope text-[13px] font-semibold leading-[1.4] tracking-[-0.04em] text-text">
                     {author.name}
                 </span>
             </a>

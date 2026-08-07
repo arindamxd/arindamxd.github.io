@@ -34,13 +34,16 @@ const sorted = [...experienceList].sort((a, b) =>
 const items = sorted.slice(0, 4);
 ---
 
-<section id="experiences" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5" style="will-change: transform;">
+<section id="experiences" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[120px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5" style="will-change: transform;">
 
     <!-- Header: YoE badge + ladder art -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 rounded-[40px] bg-primary px-[50px] py-[55px] max-framer:rounded-[32px] max-framer:px-10 max-framer:py-[45px]">
+    <div data-reveal class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 rounded-[40px] bg-primary px-[50px] py-[60px] max-framer:rounded-[32px] max-framer:px-10 max-framer:py-[45px]">
         <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-end items-end justify-start gap-5 overflow-visible p-0">
             <div class="relative h-auto w-[75px] flex-none whitespace-pre-wrap break-words max-framer:w-[58px]" style="outline:none;display:flex;flex-direction:column;justify-content:flex-end;flex-shrink:0;transform:none">
-                <p class="m-0 p-0 font-manrope text-[65px] font-semibold leading-[80%] tracking-[-0.06em] text-right text-bg whitespace-pre max-framer:text-[48px]">{yearsOfExperience}</p>
+                <p
+                    class="m-0 p-0 font-manrope text-[65px] font-semibold leading-[80%] tracking-[-0.06em] text-right text-bg whitespace-pre max-framer:text-[48px]"
+                    data-count-to={yearsOfExperience}
+                >0</p>
             </div>
             <div class="absolute left-[72px] top-[-15px] z-[1] flex h-min w-min flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:left-14 max-framer:top-[-16px]">
                 <div class="relative h-[22px] w-[22px] flex-none max-framer:h-5 max-framer:w-5" style="image-rendering:pixelated;flex-shrink:0" aria-hidden="true">
@@ -63,7 +66,7 @@ const items = sorted.slice(0, 4);
         </div>
     </div>
     
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-start gap-[50px] overflow-visible px-[50px] pt-[5px] pb-0 max-framer:gap-[35px] max-framer:px-[15px]">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-start gap-[70px] overflow-visible px-[50px] pt-[5px] pb-0 max-framer:gap-[35px] max-framer:px-[15px]">
         <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5">
             <!-- Timeline -->
             <div
@@ -98,7 +101,7 @@ const items = sorted.slice(0, 4);
             </div>
 
             <!-- Title + description -->
-            <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-4 overflow-visible p-0">
+            <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-4 overflow-visible p-0">
                 <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
                     <h3 class="m-0 p-0 font-manrope text-[24px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text whitespace-pre max-framer:text-[22px]">{metadata.title}</h3>
                 </div>
@@ -109,7 +112,7 @@ const items = sorted.slice(0, 4);
         </div>
 
         <!-- Experience rows -->
-        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-7 overflow-visible p-0 max-framer:gap-[25px]">
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-9 overflow-visible p-0 max-framer:gap-[25px]">
             {items.map(experience => (
                 <div class="relative h-auto w-full flex-none">
                     <div

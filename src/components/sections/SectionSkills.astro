@@ -3,12 +3,15 @@ import ElementSkill from "./../elements/SkillElement.astro";
 
 // data
 const metadata = (await import("../../content/skills-metadata.json")).default;
+
+const stack = metadata.tech.stack || [];
+const tools = metadata.tech.tools || [];
 ---
 
 <section id="skills" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5">
 
     <!-- Heading -->
-    <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-6 overflow-visible p-0 max-framer:gap-4">
+    <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-6 overflow-visible p-0 max-framer:gap-4">
         <div class="relative h-auto w-full flex-none text-balance">
             <h2 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-center text-text no-underline max-framer:text-[34px]">{metadata.title}</h2>
         </div>
@@ -17,21 +20,25 @@ const metadata = (await import("../../content/skills-metadata.json")).default;
         </div>
     </div>
 
-    <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-3 overflow-hidden">
-        {metadata.tech.stack.length > 0 && (
+    <div
+        data-reveal
+        data-reveal-stagger
+        class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-3 overflow-visible"
+    >
+        {stack.length > 0 && (
             <div class="relative h-full w-full flex-none">
-                <div class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-3 overflow-hidden">
-                    {metadata.tech.stack.map((item) => (
-                        <ElementSkill icon={item.icon} label={item.label} />
+                <div class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-3 overflow-visible">
+                    {stack.map((item, i) => (
+                        <ElementSkill icon={item.icon} label={item.label} index={i} />
                     ))}
                 </div>
             </div>
         )}
-        {metadata.tech.tools.length > 0 && (
+        {tools.length > 0 && (
             <div class="relative h-full w-full flex-none">
-                <div class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-3 overflow-hidden">
-                    {metadata.tech.tools.map((item) => (
-                        <ElementSkill icon={item.icon} label={item.label} />
+                <div class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-3 overflow-visible">
+                    {tools.map((item, i) => (
+                        <ElementSkill icon={item.icon} label={item.label} index={stack.length + i} />
                     ))}
                 </div>
             </div>

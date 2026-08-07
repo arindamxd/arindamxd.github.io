@@ -32,7 +32,7 @@
     width: 100%;
     height: min-content;
     position: relative;
-    padding: 120px 0 0;
+    padding: 80px 0 0;
     overflow: hidden;
 }
 
@@ -49,13 +49,13 @@
     flex-wrap: nowrap;
     align-items: center;
     align-content: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex: 1 0 0px;
     gap: 10px;
     width: 1px;
     height: min-content;
     position: relative;
-    padding: 12px 10px 10px;
+    padding: 12px 9px 22px;
     border-radius: 46px;
     background-color: var(--color-surface);
 }
@@ -73,7 +73,7 @@
     width: 63px;
     height: var(--proton-aspect-ratio-supported, 19px);
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     border-radius: 46px;
     background-color: var(--color-bg);
 }
@@ -86,11 +86,11 @@
     align-content: flex-start;
     justify-content: center;
     flex: none;
-    gap: 50px;
+    gap: 40px;
     width: 100%;
     height: min-content;
     position: relative;
-    padding: var(--padding, 30px 50px 50px);
+    padding: var(--padding, 30px 40px 40px);
     overflow: hidden;
     border-radius: 36px;
     background-color: var(--color-bg);
@@ -105,6 +105,20 @@
     position: relative;
 }
 
+.proton-root .hero-card-content-identity {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 36px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+}
+
 .proton-root .hero-card-content-top {
     display: flex;
     flex-direction: row;
@@ -114,6 +128,7 @@
     justify-content: flex-start;
     flex: none;
     gap: 20px;
+    width: 100%;
     width: 100%;
     height: min-content;
     position: relative;
@@ -362,7 +377,6 @@
     position: relative;
     padding: 0;
     overflow: hidden;
-    will-change: var(--proton-will-change-effect-override, transform);
 }
 
 /* Intro/project card footer — mobile-first compact stack */
@@ -416,14 +430,16 @@
     letter-spacing: -0.02em;
 }
 
-/* Web: horizontal bar */
+/* Web: horizontal bar — Framer Bottom: pad 12px 50px 0, ~30px tall */
 @media (min-width: 610px) {
     .proton-root .hero-card-bottom {
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
         gap: 0;
-        height: 48px;
-        padding: 0 50px;
+        height: auto;
+        min-height: 30px;
+        padding: 12px 50px 0;
         overflow: hidden;
     }
 
@@ -520,7 +536,7 @@
 .hero-tie .hero-tie-stripe {
     flex: none;
     width: 53px;
-    height: 70px;
+    height: 30px;
     position: relative;
     background-color: var(--color-primary);
     opacity: 1;
@@ -1298,35 +1314,44 @@
 
 @media (max-width: 609.98px) {
     .proton-root .hero-tie-container {
-        top: 0px;
+        top: -14px;
         will-change: unset;
     }
 
+    /* Framer mobile Badge: pad-top 117px so lanyard shows under nav */
     .proton-root .hero-badge {
-        padding: 121px 0 0;
+        padding: 117px 0 0;
+        overflow: hidden;
     }
 
+    /* Framer mobile Card: 7px 6px 18px */
     .proton-root .hero-card {
         border-radius: 36px;
         gap: 9px;
-        padding: 7px 10px 2px;
+        padding: 7px 6px 18px;
     }
 
     .proton-root .hero-card-hole {
         width: 46px;
         height: var(--proton-aspect-ratio-supported, 14px);
-        margin-bottom: 9px;
+        margin-bottom: 0;
     }
 
+    /* Framer mobile White: pad 18×30×30, gap 26 */
     .proton-root .hero-card-content {
         border-radius: 30px;
+        gap: 26px;
+        padding: 18px 30px 30px;
+    }
+
+    /* Framer mobile Identity (Top + slogan): gap 24 */
+    .proton-root .hero-card-content-identity {
         gap: 24px;
-        padding: 30px;
     }
 
     .proton-root .hero-card-content-top {
         flex-direction: column;
-        gap: 24px;
+        gap: 22px;
         justify-content: center;
         will-change: unset;
     }
@@ -1371,6 +1396,16 @@
         display: none !important;
     }
 
+    /* Framer mobile Bottom: pad 10×50×0, gap 9, stacked */
+    .proton-root .hero-card-bottom {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 10px 50px 0;
+        overflow: hidden;
+    }
+
     .proton-root .projects-list-item {
         height: 280px;
     }
@@ -1381,9 +1416,10 @@
         display: none;
     }
 
+    /* Framer mobile lanyard: stripe 46×90, clip at ~76px (not full 117 pad) */
     .hero-tie .hero-tie-stripe {
         width: 46px;
-        height: 80px;
+        height: 90px;
     }
 
     .hero-tie .hero-tie-holder {

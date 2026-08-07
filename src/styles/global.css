@@ -2,6 +2,7 @@
 @import './shell.css';
 @import './sections.css';
 @import './pages.css';
+@import './motion.css';
 
 /* ===================================================
    Migration: proton.css → Tailwind
@@ -231,7 +232,7 @@
 
 @media (max-width: 609.98px) {
     .nav-bar-container {
-        top: calc(100% - min(var(--proton-viewport-height, 100%), 100%) + 10px);
+        top: calc(100% - min(var(--proton-viewport-height, 100%), 100%) + 8px);
         bottom: unset;
     }
 }
