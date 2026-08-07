@@ -62,7 +62,7 @@
                     <div class="progress-bar-row main-flex" style="background-color: rgba(255, 255, 255, 0.33); height: 100%; width: 100%; border-radius: 10px; will-change: auto;">
                         <div class="overlay-container">
                             <div style="width: 100%; height: 100%; position: relative; overflow: hidden;">
-                                <div class="progress-bar-fill" style="position: absolute; top: 0px; left: 0px; height: 5px; width: 0%; background-color: var(--color-bg);"></div>
+                                <div class="progress-bar-fill" style="position: absolute; top: 0px; left: 0px; height: 5px; width: 0%; background-color: #ffffff;"></div>
                             </div>
                         </div>
                     </div>

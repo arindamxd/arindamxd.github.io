@@ -32,7 +32,7 @@ const avatars = [
                 <div class="absolute top-[3px] left-[3px] h-10 w-[132px]">
                     {avatars.map((src, i) => (
                         <div
-                            class="absolute top-0 flex size-10 items-center justify-center overflow-hidden rounded-full bg-bg"
+                            class="absolute top-0 flex size-10 items-center justify-center overflow-hidden rounded-full bg-white"
                             style={`left: ${i * 23}px; z-index: ${i + 1}`}
                         >
                             <div class="relative size-[34px] overflow-hidden rounded-full">
@@ -47,7 +47,7 @@ const avatars = [
                         </div>
                     ))}
                     <div
-                        class="absolute top-0 flex size-10 items-center justify-center overflow-hidden rounded-full bg-bg"
+                        class="absolute top-0 flex size-10 items-center justify-center overflow-hidden rounded-full bg-white"
                         style={`left: ${avatars.length * 23}px; z-index: ${avatars.length + 1}`}
                     >
                         <div class="relative flex size-[34px] items-center justify-center overflow-hidden rounded-full bg-accent">
@@ -78,7 +78,7 @@ const avatars = [
         <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-8 overflow-visible p-0">
 
             <!-- Left Screen Art -->
-            <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#f3f3f3,#fff)] max-framer:hidden"></div>
+            <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#f3f3f3,#fff)] dark:bg-[linear-gradient(270deg,var(--color-surface),var(--color-bg))] max-framer:hidden"></div>
 
             <!-- Mobile Phone with Testimonial -->
             <div class="relative z-[1] h-auto w-auto flex-none">
@@ -121,10 +121,10 @@ const avatars = [
                                 </div>
                                 <div class="vertical-stack-top-person-info">
                                     <div class="vertical-stack-top-person-info-name" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; transform: none; opacity: 1;">
-                                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-bg">{author.name}</p>
+                                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-white">{author.name}</p>
                                     </div>
                                     <div class="vertical-stack-top-person-info-role" style="outline:none;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;opacity:0.6;transform:none;padding-bottom:2px;">
-                                        <p class="m-0 p-0 font-manrope text-[12px] font-semibold leading-none tracking-[-0.04em] text-left text-bg">{author.role}</p>
+                                        <p class="m-0 p-0 font-manrope text-[12px] font-semibold leading-none tracking-[-0.04em] text-left text-white">{author.role}</p>
                                     </div>
                                 </div>
                             </div>
@@ -140,15 +140,15 @@ const avatars = [
                                     </div>
                                 </div>
                                 <div class="vertical-stack-info-recommendation-text" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; transform: none; transform-origin: 50% 50% 0px;">
-                                    <p id="testimonialText" class="m-0 p-0 font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-bg"></p>
+                                    <p id="testimonialText" class="m-0 p-0 font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-white"></p>
                                 </div>
                             </div>
                             <div class="vertical-stack-info-recommendation-author" style="transform: none; transform-origin: 50% 50% 0px;">
                                 <div class="vertical-stack-info-recommendation-author-name" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; transform: none; transform-origin: 50% 50% 0px;">
-                                    <p id="testimonialAuthor" class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-bg"></p>
+                                    <p id="testimonialAuthor" class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-white"></p>
                                 </div>
                                 <div class="vertical-stack-info-recommendation-author-role" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; opacity: 0.6; transform: none; transform-origin: 50% 50% 0px;">
-                                    <p id="testimonialPosition" class="m-0 p-0 font-manrope text-[12px] font-semibold leading-none tracking-[-0.04em] text-left text-bg"></p>
+                                    <p id="testimonialPosition" class="m-0 p-0 font-manrope text-[12px] font-semibold leading-none tracking-[-0.04em] text-left text-white"></p>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,7 @@ const avatars = [
             </div>
 
             <!-- Right Screen Art -->
-            <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#fff,#f3f3f3)] max-framer:hidden"></div>
+            <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#fff,#f3f3f3)] dark:bg-[linear-gradient(270deg,var(--color-bg),var(--color-surface))] max-framer:hidden"></div>
 
             <!-- Hand Art -->
             <div class="hand-art">

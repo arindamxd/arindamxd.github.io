@@ -47,11 +47,7 @@
     --color-inactive: #333333;
 }
 
-/* Brand logos are dark SVGs — invert in dark mode */
-.dark #logo-track img {
-    filter: brightness(0) invert(1);
-    opacity: 0.75;
-}
+/* Brand logos are monochrome via Tailwind on imgs (brightness-0 / dark:invert) */
 
 /* ---------- Optimized Fonts ---------- */
 
