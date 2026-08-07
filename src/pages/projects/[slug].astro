@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 <BaseLayout home={false} title={project.title}>
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
-        <div class="nav-bar-container">
+        <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">
             <NavBar />
         </div>
         <div class="proton-root contents min-h-screen w-auto">

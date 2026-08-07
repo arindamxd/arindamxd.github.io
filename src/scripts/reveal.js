@@ -1,11 +1,19 @@
-// Scroll reveal for section blocks (IntersectionObserver)
+// Scroll reveal for section blocks + CMS stagger parents (IntersectionObserver)
 (function () {
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let io = null;
 
     function run() {
+        if (io) {
+            io.disconnect();
+            io = null;
+        }
+
         const nodes = document.querySelectorAll('[data-reveal]');
         if (!nodes.length) return;
+
+        document.documentElement.classList.add('js-motion');
 
         if (reduced || !('IntersectionObserver' in window)) {
             nodes.forEach((el) => {
@@ -15,9 +23,12 @@
             return;
         }
 
-        nodes.forEach((el) => el.classList.add('reveal-prep'));
+        nodes.forEach((el) => {
+            el.classList.remove('is-revealed');
+            el.classList.add('reveal-prep');
+        });
 
-        const io = new IntersectionObserver(
+        io = new IntersectionObserver(
             (entries) => {
                 for (const entry of entries) {
                     if (!entry.isIntersecting) continue;
@@ -31,6 +42,7 @@
         nodes.forEach((el) => io.observe(el));
     }
 
+    document.addEventListener('astro:page-load', run);
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', run);
     } else {

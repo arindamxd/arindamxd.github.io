@@ -3,6 +3,7 @@
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let started = false;
+    let waitingForLoader = false;
 
     function settle(el) {
         el.classList.remove('is-appearing');
@@ -21,13 +22,15 @@
 
         document.documentElement.classList.add('js-motion');
 
+        if (!targets.length) return;
+
         if (reduced) {
             targets.forEach(settle);
             return;
         }
 
-        // Start after loader unlock — fill-mode:both applies the from-keyframe.
         targets.forEach((el) => {
+            el.classList.remove('is-settled');
             el.classList.add('is-appearing');
             const onEnd = (ev) => {
                 if (ev.target !== el) return;
@@ -45,6 +48,7 @@
     }
 
     function arm() {
+        started = false;
         document.documentElement.classList.add('js-motion');
 
         if (
@@ -56,9 +60,21 @@
             return;
         }
 
-        window.addEventListener('pageloader:done', run, { once: true });
+        if (!waitingForLoader) {
+            waitingForLoader = true;
+            window.addEventListener(
+                'pageloader:done',
+                () => {
+                    waitingForLoader = false;
+                    started = false;
+                    run();
+                },
+                { once: true },
+            );
+        }
     }
 
+    document.addEventListener('astro:page-load', arm);
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', arm);
     } else {

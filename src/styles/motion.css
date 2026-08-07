@@ -313,13 +313,45 @@ html.js-motion .reveal-prep.is-revealed {
     transform: translate3d(0, 0, 0);
 }
 
-/* Skill chips: stagger-in under a reveal parent */
+/* ---------- Page transitions (Framer 1.11 / 1.2) ---------- */
+@keyframes page-fade-out {
+    to {
+        opacity: 0;
+        transform: translate3d(0, -10px, 0);
+    }
+}
+
+@keyframes page-fade-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 14px, 0);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root) {
+        animation: page-fade-out 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    ::view-transition-new(root) {
+        animation: page-fade-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* Bottom nav stays put (Layout Template “exclude from page effect”) */
+    ::view-transition-old(site-nav),
+    ::view-transition-new(site-nav) {
+        animation: none;
+        mix-blend-mode: normal;
+    }
+}
+
+/* Stagger-in under a reveal parent (skills + CMS lists — Framer 1.21) */
 html.js-motion [data-reveal-stagger].reveal-prep {
     opacity: 1;
     transform: none;
 }
 
-@keyframes skill-chip-in {
+@keyframes cms-stagger-in {
     from {
         opacity: 0;
         transform: translate3d(0, 14px, 0);
@@ -330,13 +362,15 @@ html.js-motion [data-reveal-stagger].reveal-prep {
     }
 }
 
-html.js-motion [data-reveal-stagger] .skill-chip {
+html.js-motion [data-reveal-stagger] .skill-chip,
+html.js-motion [data-reveal-stagger] .cms-item {
     opacity: 0;
 }
 
-html.js-motion [data-reveal-stagger].is-revealed .skill-chip {
-    animation: skill-chip-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: var(--skill-delay, 0ms);
+html.js-motion [data-reveal-stagger].is-revealed .skill-chip,
+html.js-motion [data-reveal-stagger].is-revealed .cms-item {
+    animation: cms-stagger-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--stagger-delay, var(--skill-delay, 0ms));
 }
 
 /* Soften on small screens */
@@ -366,11 +400,17 @@ html.js-motion [data-reveal-stagger].is-revealed .skill-chip {
         transition: none !important;
     }
 
-    html.js-motion [data-reveal-stagger] .skill-chip {
+    html.js-motion [data-reveal-stagger] .skill-chip,
+    html.js-motion [data-reveal-stagger] .cms-item {
         opacity: 1 !important;
         transform: none !important;
         animation: none !important;
         transition: none !important;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
     }
 
     html.js-motion .appear-hero-card.is-appearing,

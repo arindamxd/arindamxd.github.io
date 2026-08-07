@@ -111,6 +111,10 @@ function updateAvailableText() {
 }
 
 function init() {
+    if (!document.querySelector('.available-text-container')) {
+        stopCycle();
+        return;
+    }
     updateAvailableText();
 }
 
@@ -119,6 +123,8 @@ if (document.readyState === 'loading') {
 } else {
     init();
 }
+
+document.addEventListener('astro:page-load', init);
 
 window.addEventListener('resize', updateAvailableText);
 

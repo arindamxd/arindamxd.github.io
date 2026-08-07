@@ -49,14 +49,20 @@ const description = slug ? (items.length < 1 ? "Coming soon ..." : "Check out so
 
     <!-- Projects List -->
     {items.length > 0 && (
-        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-visible p-0">
-            {items.map((project) => (
-                <ProjectElement project={project} />
+        <div
+            data-reveal
+            data-reveal-stagger
+            class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-visible p-0"
+        >
+            {items.map((project, i) => (
+                <ProjectElement project={project} index={i} />
             ))}
 
             <!-- View All -->
             {home && projects.length > 2 && (
-                <ProjectViewAll />
+                <div class="cms-item relative h-auto w-full flex-none" style={`--stagger-delay: ${Math.min(items.length * 70, 420)}ms`}>
+                    <ProjectViewAll />
+                </div>
             )}
         </div>
     )}

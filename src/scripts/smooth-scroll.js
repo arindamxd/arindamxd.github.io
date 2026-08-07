@@ -33,4 +33,10 @@ if (!reduced) {
         },
         true,
     );
+
+    // Keep Lenis in sync after Astro view transitions
+    document.addEventListener('astro:after-swap', () => {
+        lenis.resize();
+        lenis.scrollTo(0, { immediate: true });
+    });
 }

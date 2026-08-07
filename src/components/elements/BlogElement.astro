@@ -2,10 +2,11 @@
 import { formatDate } from "../../utils/date";
 
 // props
-const { blog } = Astro.props;
+const { blog, index = 0 } = Astro.props;
+const delayMs = Math.min(Number(index) * 55, 360);
 ---
 
-<div class="relative h-auto w-full flex-none">
+<div class="cms-item relative h-auto w-full flex-none" style={`--stagger-delay: ${delayMs}ms`}>
     <a
         class="group relative flex h-min w-full cursor-pointer flex-row flex-nowrap items-center justify-start gap-[15px] rounded-[41px] bg-bg py-2.5 pr-5 pl-2.5 no-underline"
         href={`/blogs/${blog.slug}/`}

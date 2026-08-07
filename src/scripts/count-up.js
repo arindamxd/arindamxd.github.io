@@ -70,4 +70,5 @@
     } else {
         run();
     }
+    document.addEventListener('astro:page-load', run);
 })();

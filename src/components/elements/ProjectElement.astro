@@ -1,10 +1,12 @@
 ---
 // props
-const { project } = Astro.props;
+const { project, index = 0 } = Astro.props;
+const delayMs = Math.min(Number(index) * 70, 420);
 ---
 
 <a
-    class="sticky top-[110px] z-[1] flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0 no-underline"
+    class="cms-item sticky top-[110px] z-[1] flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0 no-underline"
+    style={`--stagger-delay: ${delayMs}ms`}
     href={`/projects/${project.slug}`}
 >
     <div class="relative h-[400px] w-px flex-1 max-framer:h-[280px]">

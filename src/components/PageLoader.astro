@@ -34,11 +34,35 @@ const firstName = author.name.split(/\s+/)[0] ?? author.name;
 <script is:inline>
     (function () {
         var loader = document.getElementById('page-loader');
-        if (!loader) {
+
+        function markSeen() {
+            try {
+                sessionStorage.setItem('page-loader-seen', '1');
+            } catch (e) {}
+        }
+
+        function unlockMotion() {
             document.documentElement.classList.remove('is-loading');
             document.documentElement.classList.add('is-loaded');
             window.__pageLoaderDone = true;
             window.dispatchEvent(new CustomEvent('pageloader:done'));
+        }
+
+        // Already shown this session — skip immediately (no flash; head set loader-skip)
+        var seen = false;
+        try {
+            seen = sessionStorage.getItem('page-loader-seen') === '1';
+        } catch (e) {}
+
+        if (seen || document.documentElement.classList.contains('loader-skip')) {
+            if (loader && loader.parentNode) loader.remove();
+            unlockMotion();
+            return;
+        }
+
+        if (!loader) {
+            markSeen();
+            unlockMotion();
             return;
         }
 
@@ -71,18 +95,12 @@ const firstName = author.name.split(/\s+/)[0] ?? author.name;
             raf = requestAnimationFrame(tick);
         }
 
-        function unlockMotion() {
-            document.documentElement.classList.remove('is-loading');
-            document.documentElement.classList.add('is-loaded');
-            window.__pageLoaderDone = true;
-            window.dispatchEvent(new CustomEvent('pageloader:done'));
-        }
-
         function dismiss() {
             if (finished) return;
             finished = true;
             cancelAnimationFrame(raf);
             setProgress(100);
+            markSeen();
             loader.setAttribute('aria-busy', 'false');
 
             if (reduced) {

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 import PageLoader from "../components/PageLoader.astro";
 
 const author = (await import("../content/author-metadata.json")).default;
@@ -9,7 +10,7 @@ const { home = false, title = author.name } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="dark is-loading" data-theme="dark">
+<html lang="en" class="dark" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,7 +31,7 @@ const { home = false, title = author.name } = Astro.props;
         <meta name="theme-color" content="#171717" />
         <meta name="color-scheme" content="light dark" />
 
-        <!-- Apply saved theme before paint to avoid flash (default: dark) -->
+        <!-- Apply saved theme + skip loader after first visit this session -->
         <script is:inline>
             (function () {
                 try {
@@ -44,7 +45,38 @@ const { home = false, title = author.name } = Astro.props;
                     document.documentElement.classList.add('dark');
                     document.documentElement.setAttribute('data-theme', 'dark');
                 }
-                document.documentElement.classList.add('is-loading');
+
+                var seen = false;
+                try {
+                    seen = sessionStorage.getItem('page-loader-seen') === '1';
+                } catch (e) {}
+
+                if (seen) {
+                    document.documentElement.classList.remove('is-loading');
+                    document.documentElement.classList.add('is-loaded', 'loader-skip');
+                    window.__pageLoaderDone = true;
+                } else {
+                    document.documentElement.classList.add('is-loading');
+                }
+
+                // Keep loader skipped + theme intact across Astro client navigations
+                document.addEventListener('astro:before-swap', function (e) {
+                    var again = false;
+                    try {
+                        again = sessionStorage.getItem('page-loader-seen') === '1';
+                    } catch (err) {}
+                    var theme =
+                        document.documentElement.getAttribute('data-theme') === 'light'
+                            ? 'light'
+                            : 'dark';
+                    var docEl = e.newDocument.documentElement;
+                    docEl.setAttribute('data-theme', theme);
+                    docEl.classList.toggle('dark', theme === 'dark');
+                    if (again) {
+                        docEl.classList.remove('is-loading');
+                        docEl.classList.add('is-loaded', 'loader-skip');
+                    }
+                });
             })();
         </script>
 
@@ -57,6 +89,7 @@ const { home = false, title = author.name } = Astro.props;
                 background: #222222; color: #f5f5f5;
             }
             html:not(.dark) .page-loader { background: #ffffff; color: #171717; }
+            html.loader-skip .page-loader { display: none !important; }
         </style>
 
         <!-- Facebook Open Graph -->
@@ -91,6 +124,9 @@ const { home = false, title = author.name } = Astro.props;
                 "jobTitle": "Mobile App Developer"
             }
         </script>
+
+        <!-- Soft page transitions (Framer 1.11 / 1.2); bottom nav persists via transition:persist -->
+        <ClientRouter />
 
         <!-- Theme toggle -->
         <script src="../scripts/theme.js" />

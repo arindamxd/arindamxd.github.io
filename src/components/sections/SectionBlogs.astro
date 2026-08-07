@@ -50,17 +50,21 @@ const description = slug ? (items.length < 1 ? "Coming soon ..." : "Check out so
     <!-- Articles Container -->
     {items.length > 0 && (
         <div
+            data-reveal
+            data-reveal-stagger
             class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 rounded-[45px] bg-surface p-2.5 shadow-[inset_0_0_0_1px_var(--color-border)]"
         >
 
             <!-- Articles -->
-            {items.map((blog) => (
-                <BlogElement blog={blog} />
+            {items.map((blog, i) => (
+                <BlogElement blog={blog} index={i} />
             ))}
 
             <!-- View All -->
             {home && blogs.length > 3 && (
-                <BlogViewAll />
+                <div class="cms-item relative h-auto w-full flex-none" style={`--stagger-delay: ${Math.min(items.length * 55, 360)}ms`}>
+                    <BlogViewAll />
+                </div>
             )}
 
         </div>

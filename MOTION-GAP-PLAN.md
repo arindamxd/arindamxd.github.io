@@ -196,6 +196,22 @@ Same motion gaps. Hero/card padding and H1 `50px` already exist via `max-framer:
 
 ---
 
+### Phase D — Template changelog 1.11 → 1.21 (2026-08-08)
+
+Mapped from White/Framer template changelog onto Astro:
+
+| Template | Local |
+|---|---|
+| 1.11 Page transitions revamped + bottom nav | Astro `ClientRouter` + fade page transitions; nav `transition:persist="site-nav"` (already bottom) |
+| 1.2 Polished / consistent animations | Shared reveal + hero curves; scripts re-bind on `astro:page-load` |
+| 1.2 Phosphor icons | N/A — site uses custom / brand SVGs (not Phosphor) |
+| 1.21 CMS stagger | Projects + blogs lists use `data-reveal-stagger` + `.cms-item` (skills already had this) |
+| 1.1 Layout Templates | Client-side layout persistence via View Transitions (Framer-only feature otherwise) |
+
+**Files:** `BaseLayout.astro` (`ClientRouter`), `motion.css` (page + cms stagger), `SectionProjects` / `SectionBlogs`, `ProjectElement` / `BlogElement`, motion scripts `astro:page-load` hooks.
+
+---
+
 ## 5. Technical approach (keep Astro-friendly)
 
 - No React / Framer Motion dependency required.  
