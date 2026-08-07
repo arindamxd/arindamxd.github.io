@@ -545,6 +545,48 @@
     white-space: pre;
 }
 
+/* Keel-style scramble — used by Available for… (opt-in elsewhere via JS) */
+.available-scramble {
+    display: inline-flex;
+    cursor: pointer;
+    outline: none;
+}
+
+.available-scramble:focus-visible {
+    outline: 1px solid color-mix(in srgb, var(--color-text) 35%, transparent);
+    outline-offset: 2px;
+}
+
+.scramble-host,
+.scramble-word {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.scramble-char {
+    position: relative;
+}
+
+.scramble-random {
+    z-index: 2;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    background-color: var(--scramble-bg, var(--color-surface));
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scramble-random {
+        display: none;
+    }
+}
+
 .proton-root .hero-card-content-slogan {
     --proton-paragraph-spacing: 0px;
     flex: none;
