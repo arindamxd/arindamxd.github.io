@@ -66,19 +66,19 @@ const currentYear = new Date().getFullYear();
                     >
                         {
                             author.footer.social.map((link) => (
-                                <div class="relative size-[34px] flex-none">
+                                <div class="relative size-9 flex-none">
                                     <a
                                         aria-label={link.name}
-                                        class="group/social relative flex size-full cursor-pointer flex-col content-center items-center justify-center rounded-full bg-surface p-2 no-underline"
+                                        class="group/social relative flex size-full cursor-pointer flex-col content-center items-center justify-center rounded-full bg-surface p-1.5 no-underline"
                                         href={link.url}
                                         target="_blank"
                                         rel="noopener"
                                     >
-                                        <div class="relative size-[18px] opacity-40 transition-opacity duration-500 group-hover/social:opacity-100">
+                                        <div class="relative size-[22px] opacity-40 transition-opacity duration-500 group-hover/social:opacity-100">
                                             <img
                                                 decoding="async"
-                                                width="18"
-                                                height="18"
+                                                width="22"
+                                                height="22"
                                                 src={link.icon}
                                                 alt=""
                                                 class="block size-full object-cover object-center brightness-0 dark:invert"

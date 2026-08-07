@@ -1,0 +1,173 @@
+---
+import { Code } from "astro:components";
+
+interface Props {
+    code: string;
+    language?: string;
+}
+
+const { code, language = "plaintext" } = Astro.props;
+
+const labels: Record<string, string> = {
+    swift: "Swift",
+    kotlin: "Kotlin",
+    java: "Java",
+    js: "JavaScript",
+    javascript: "JavaScript",
+    ts: "TypeScript",
+    typescript: "TypeScript",
+    tsx: "TSX",
+    jsx: "JSX",
+    css: "CSS",
+    html: "HTML",
+    json: "JSON",
+    bash: "Bash",
+    shell: "Shell",
+    sh: "Shell",
+    python: "Python",
+    py: "Python",
+    rust: "Rust",
+    go: "Go",
+    sql: "SQL",
+    xml: "XML",
+    yaml: "YAML",
+    yml: "YAML",
+    markdown: "Markdown",
+    md: "Markdown",
+};
+
+const langKey = language.toLowerCase();
+const label =
+    langKey === "plaintext" || langKey === "text"
+        ? null
+        : labels[langKey] ?? language.charAt(0).toUpperCase() + language.slice(1);
+
+const source = code.replace(/^\n+/, "").replace(/\n+$/, "");
+---
+
+<figure class="article-code m-0 overflow-hidden rounded-[20px] bg-surface shadow-[inset_0_0_0_1px_var(--color-border)] max-framer:rounded-[16px]">
+    {label && (
+        <figcaption class="article-code__label flex items-center border-b border-border">
+            <span class="article-code__label-text font-mono text-[11px] font-semibold tracking-[0.06em] text-text/45 uppercase">
+                {label}
+            </span>
+        </figcaption>
+    )}
+    <div class="article-code__body">
+        <Code
+            code={source}
+            lang={langKey}
+            themes={{ light: "github-light", dark: "github-dark" }}
+            defaultColor={false}
+        />
+    </div>
+</figure>
+
+<style is:global>
+    .article-code__label {
+        height: 36px;
+        padding: 0 18px;
+        box-sizing: border-box;
+    }
+
+    .article-code__label-text {
+        line-height: 1;
+        /* Caps sit high in the em-square — nudge down for true optical center */
+        transform: translateY(0.06em);
+    }
+
+    /*
+      Equal top/bottom padding is owned by the wrapper.
+      pre/code get line-height:0 + white-space:normal so Shiki's
+      newline text nodes and the pre strut cannot add asymmetric space.
+      Each .line restores its own font metrics.
+    */
+    .article-code__body {
+        padding: 16px 18px;
+        box-sizing: border-box;
+        overflow-x: auto;
+    }
+
+    .article-code__body .astro-code,
+    .article-code__body .shiki {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        overflow: visible !important;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 0 !important;
+        white-space: normal !important;
+        tab-size: 2;
+        box-sizing: border-box;
+    }
+
+    .article-code__body .astro-code code,
+    .article-code__body .shiki code {
+        display: block;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: 0 !important;
+        white-space: normal !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+    }
+
+    .article-code__body .astro-code .line,
+    .article-code__body .shiki .line {
+        display: block;
+        margin: 0;
+        padding: 0;
+        min-height: 1.55em;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.55;
+        white-space: pre;
+    }
+
+    .article-code__body .astro-code .line:last-child:empty,
+    .article-code__body .shiki .line:last-child:empty {
+        display: none;
+    }
+
+    html:not(.dark) .article-code__body .astro-code,
+    html:not(.dark) .article-code__body .astro-code span,
+    html:not(.dark) .article-code__body .shiki,
+    html:not(.dark) .article-code__body .shiki span {
+        color: var(--shiki-light) !important;
+        background-color: transparent !important;
+    }
+
+    html.dark .article-code__body .astro-code,
+    html.dark .article-code__body .astro-code span,
+    html.dark .article-code__body .shiki,
+    html.dark .article-code__body .shiki span,
+    html[data-theme="dark"] .article-code__body .astro-code,
+    html[data-theme="dark"] .article-code__body .astro-code span,
+    html[data-theme="dark"] .article-code__body .shiki,
+    html[data-theme="dark"] .article-code__body .shiki span {
+        color: var(--shiki-dark) !important;
+        background-color: transparent !important;
+    }
+
+    @media (max-width: 809px) {
+        .article-code__label {
+            height: 32px;
+            padding: 0 14px;
+        }
+
+        .article-code__body {
+            padding: 14px;
+        }
+
+        .article-code__body .astro-code .line,
+        .article-code__body .shiki .line {
+            font-size: 12px;
+        }
+    }
+</style>

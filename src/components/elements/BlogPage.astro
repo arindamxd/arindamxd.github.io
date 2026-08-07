@@ -1,14 +1,21 @@
 ---
 import { formatDate } from "../../utils/date";
+import type { BlogBodyBlock, BlogBullet } from "../../types/blog";
+import BlogCodeBlock from "./BlogCodeBlock.astro";
 
 // props
 const { blog } = Astro.props;
+
+function bulletParts(item: BlogBullet): { label?: string; text: string } {
+    if (typeof item === "string") return { text: item };
+    return { label: item.label, text: item.text };
+}
 ---
 
-<article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-12 overflow-hidden p-0 pt-[110px] pb-[120px] max-framer:gap-8">
+<article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-hidden p-0 pt-[110px] pb-0">
 
     <!-- Article Top -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-[34px] overflow-hidden p-0 max-framer:gap-[30px] max-framer:px-5">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-0 overflow-hidden p-0 max-framer:px-5">
         
         <!-- Article Header -->
         <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-10 overflow-hidden p-0 max-framer:gap-[30px]">
@@ -30,11 +37,9 @@ const { blog } = Astro.props;
             </div>
 
             <!-- Article Info -->
-            <div
-                class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-7 overflow-visible pt-0 pr-0 pb-8 pl-0 shadow-[inset_0_-1px_0_0_var(--color-border)]"
-            >
+            <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-5 overflow-visible p-0">
                 <div class="relative h-auto w-full flex-none text-balance">
-                    <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-none tracking-[-0.05em] text-left text-text max-framer:text-[34px]">{blog.title}</h1>
+                    <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-left text-text max-framer:text-[34px]">{blog.title}</h1>
                 </div>
                 <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-start gap-[22px] overflow-visible p-0 max-framer:gap-[26px]">
                     <div class="relative flex h-min w-min flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0">
@@ -55,20 +60,21 @@ const { blog } = Astro.props;
 
         </div>
 
+        <!-- Even space above & below the rule -->
+        <div class="relative flex w-full flex-none items-center py-5" aria-hidden="true">
+            <div class="h-px w-full bg-border"></div>
+        </div>
+
         <!-- Article Intro -->
-        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-1 overflow-hidden p-0">
-            <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words">
-                <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[125%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{blog.page.intro.title}</p>
-            </div>
-            <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words opacity-60">
-                <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{blog.page.intro.paragraph}</p>
-            </div>
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-5 overflow-hidden pt-8 pb-16">
+            <p class="m-0 w-full p-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{blog.page.intro.title}</p>
+            <p class="m-0 w-full p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/60 max-framer:text-[16px]">{blog.page.intro.paragraph}</p>
         </div>
 
     </div>
 
     <!-- Article Image -->
-    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
+    <div class="relative my-[5px] flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-0 overflow-hidden px-[30px] py-0 max-framer:px-1">
         <div class="relative aspect-[1.6290322580645162] h-auto max-h-none w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-framer:rounded-[20px]">
             <div class="absolute inset-0" style="border-radius:inherit;">
                 <img decoding="auto" loading="lazy" src={blog.page.intro.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
@@ -77,31 +83,98 @@ const { blog } = Astro.props;
     </div>
 
     <!-- Article Content -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:gap-[30px] max-framer:px-5">
-        <div class="article-content relative h-auto w-px max-w-[550px] flex-1 whitespace-pre-wrap break-words">
-            {blog.page.body.map((block: { title: string; subtitle: string; paragraph: string; bullets: string[]; }) => (
-                <>
-                    {block.title && (
-                        <h2 class="mt-10 mb-0 p-0 font-manrope text-[38px] font-semibold leading-[125%] tracking-[-0.05em] text-left text-text first:mt-0 max-framer:text-[30px]">{block.title}</h2>
-                    )}
-                    {block.subtitle && (
-                        <h3 class="mt-10 mb-0 p-0 font-manrope text-[22px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text first:mt-0 max-framer:mt-6 max-framer:text-[20px]">{block.subtitle}</h3>
-                    )}
-                    {block.paragraph && (
-                        <p class="mt-1 mb-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 first:mt-0 max-framer:mt-1 max-framer:text-[16px]">{block.paragraph}</p>
-                    )}
-                    {block.bullets && (
-                        <ul class="mt-1 mb-0 flex flex-col gap-5 pl-[1.35em] first:mt-0 max-framer:mt-1 max-framer:gap-3.5">
-                            {block.bullets.map((bullet: string) => (
-                                <li class="m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-framer:text-[16px]">
-                                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-framer:text-[16px]">{bullet}</p>
-                                </li>
-                            ))}
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-1 overflow-hidden pt-5 max-framer:px-5">
+        <div class="article-content relative flex h-auto w-px max-w-[550px] flex-1 flex-col break-words">
+            {blog.page.body.map((block: BlogBodyBlock) => {
+                if (block.type === "title") {
+                    return (
+                        <h2 class="article-title m-0 p-0 font-manrope text-[38px] font-semibold leading-[125%] tracking-[-0.05em] text-left text-text max-framer:text-[30px]">{block.text}</h2>
+                    );
+                }
+                if (block.type === "subtitle") {
+                    return (
+                        <h3 class="article-subtitle m-0 p-0 font-manrope text-[22px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text max-framer:text-[20px]">{block.text}</h3>
+                    );
+                }
+                if (block.type === "paragraph") {
+                    return (
+                        <p class="article-paragraph m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-framer:text-[16px]">{block.text}</p>
+                    );
+                }
+                if (block.type === "bullets") {
+                    const numbered = block.style === "number";
+                    return (
+                        <ul class:list={["article-bullets m-0 flex list-none flex-col gap-2.5 p-0", numbered && "article-bullets--number"]}>
+                            {block.items.map((item, index) => {
+                                const { label, text } = bulletParts(item);
+                                return (
+                                    <li class="m-0 flex flex-row flex-nowrap items-start gap-3">
+                                        {numbered ? (
+                                            <span
+                                                class="w-5 shrink-0 pt-px font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/40 tabular-nums max-framer:text-[16px]"
+                                                aria-hidden="true"
+                                            >
+                                                {index + 1}.
+                                            </span>
+                                        ) : (
+                                            <span
+                                                class="mt-[0.65em] size-[5px] shrink-0 rounded-full bg-text/40"
+                                                aria-hidden="true"
+                                            />
+                                        )}
+                                        <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-framer:text-[16px]">
+                                            {label ? (
+                                                <>
+                                                    <span class="text-text">{label}:</span>
+                                                    {" "}
+                                                    {text}
+                                                </>
+                                            ) : (
+                                                text
+                                            )}
+                                        </p>
+                                    </li>
+                                );
+                            })}
                         </ul>
-                    )}
-                </>
-            ))}
+                    );
+                }
+                if (block.type === "code") {
+                    return (
+                        <div class="pt-8 pb-3">
+                            <BlogCodeBlock code={block.code} language={block.language} />
+                        </div>
+                    );
+                }
+                return null;
+            })}
         </div>
     </div>
 
 </article>
+
+<style>
+    /* Framer blog rhythm: airy section breaks, tighter heading → content */
+    .article-content > :first-child {
+        margin-top: 0;
+    }
+    .article-content > .article-title {
+        margin-top: 3.25rem; /* ~52px before new section */
+    }
+    .article-content > .article-subtitle {
+        margin-top: 3.25rem;
+    }
+    .article-content > .article-paragraph,
+    .article-content > .article-bullets,
+    .article-content > .article-code {
+        margin-top: 1.5rem; /* ~24px between peers */
+    }
+    .article-content > .article-title + .article-paragraph,
+    .article-content > .article-subtitle + .article-paragraph,
+    .article-content > .article-title + .article-bullets,
+    .article-content > .article-subtitle + .article-bullets,
+    .article-content > .article-title + .article-code,
+    .article-content > .article-subtitle + .article-code {
+        margin-top: 1.25rem; /* ~20px under heading */
+    }
+</style>
