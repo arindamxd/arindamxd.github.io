@@ -1,4 +1,4 @@
-// Light / dark theme toggle
+// Theme toggle — light ↔ dark slide in circular button
 (function () {
     const STORAGE_KEY = 'theme';
 
@@ -11,6 +11,8 @@
         if (meta) {
             meta.setAttribute('content', theme === 'dark' ? '#222222' : '#171717');
         }
+
+        document.documentElement.setAttribute('data-theme', theme);
 
         document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
             btn.setAttribute(

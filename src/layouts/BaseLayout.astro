@@ -8,7 +8,7 @@ const { home = false, title = author.name } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,21 +29,20 @@ const { home = false, title = author.name } = Astro.props;
         <meta name="theme-color" content="#171717" />
         <meta name="color-scheme" content="light dark" />
 
-        <!-- Apply saved / system theme before paint to avoid flash -->
+        <!-- Apply saved theme before paint to avoid flash (default: dark) -->
         <script is:inline>
             (function () {
                 try {
                     var stored = localStorage.getItem('theme');
-                    var theme =
-                        stored === 'light' || stored === 'dark'
-                            ? stored
-                            : window.matchMedia('(prefers-color-scheme: dark)').matches
-                              ? 'dark'
-                              : 'light';
-                    if (theme === 'dark') document.documentElement.classList.add('dark');
+                    var theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
+                    document.documentElement.classList.toggle('dark', theme === 'dark');
+                    document.documentElement.setAttribute('data-theme', theme);
                     var meta = document.querySelector('meta[name="theme-color"]');
                     if (meta) meta.setAttribute('content', theme === 'dark' ? '#222222' : '#171717');
-                } catch (e) {}
+                } catch (e) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
             })();
         </script>
 
