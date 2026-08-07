@@ -7,26 +7,27 @@ const currentYear = new Date().getFullYear();
 
 <footer
     id="contact"
-    class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible bg-bg pt-20 pb-[100px] max-framer:px-2.5 max-framer:pt-[60px] max-framer:pb-[100px]"
+    class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible bg-bg pt-20 pb-[100px] max-narrow:px-2.5 max-narrow:pt-[60px] max-narrow:pb-[100px]"
 >
-    <!-- Framer Contact chrome: surface shell + white form -->
+    <!-- Contact chrome: surface shell + white form -->
     <div
-        class="relative flex h-min w-full max-w-[550px] flex-col flex-nowrap items-center justify-start gap-[18px] rounded-[46px] border border-border bg-surface px-[9px] pt-[9px] pb-[18px] max-framer:gap-5 max-framer:rounded-[36px] max-framer:px-1.5 max-framer:pt-1.5 max-framer:pb-[18px]"
+        data-reveal
+        class="relative flex h-min w-full max-w-[550px] flex-col flex-nowrap items-center justify-start gap-[18px] rounded-[46px] border border-border bg-surface px-[9px] pt-[9px] pb-[18px] max-narrow:gap-5 max-narrow:rounded-[36px] max-narrow:px-1.5 max-narrow:pt-1.5 max-narrow:pb-[18px]"
     >
         <div
-            class="relative flex h-min w-full flex-col flex-nowrap items-center justify-center gap-[35px] overflow-visible rounded-[40px] bg-bg px-[60px] py-[50px] max-framer:gap-7 max-framer:rounded-[32px] max-framer:px-[30px] max-framer:pt-10 max-framer:pb-[30px]"
+            class="relative flex h-min w-full flex-col flex-nowrap items-center justify-center gap-[35px] overflow-visible rounded-[40px] bg-bg px-[60px] py-[50px] max-narrow:gap-7 max-narrow:rounded-[32px] max-narrow:px-[30px] max-narrow:pt-10 max-narrow:pb-[30px]"
         >
             <!-- Heading -->
             <div
-                class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-7 overflow-visible p-0 max-framer:gap-[18px]"
+                class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-7 overflow-visible p-0 max-narrow:gap-[18px]"
             >
                 <div class="relative flex h-auto w-full flex-none shrink-0 flex-col justify-start">
-                    <h2 class="m-0 p-0 text-center font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.03em] text-text no-underline max-framer:text-[34px]">
+                    <h2 class="m-0 p-0 text-center font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.03em] text-text no-underline max-narrow:text-[34px]">
                         {author.footer.title}
                     </h2>
                 </div>
                 <div class="relative flex h-auto w-full max-w-[277px] flex-none shrink-0 flex-col justify-start opacity-60">
-                    <p class="m-0 p-0 text-center font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.02em] text-text no-underline max-framer:text-[15px]">
+                    <p class="m-0 p-0 text-center font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.02em] text-text no-underline max-narrow:text-[15px]">
                         {author.footer.description}
                     </p>
                 </div>
@@ -36,7 +37,7 @@ const currentYear = new Date().getFullYear();
             <div
                 class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-4 overflow-visible p-0"
             >
-                <div class="relative size-[70px] flex-none overflow-hidden rounded-full max-framer:size-14">
+                <div class="relative size-[70px] flex-none overflow-hidden rounded-full max-narrow:size-14">
                     <img
                         decoding="async"
                         loading="lazy"
@@ -50,19 +51,19 @@ const currentYear = new Date().getFullYear();
                     class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-5 overflow-visible p-0"
                 >
                     <div
-                        class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-1 overflow-visible px-[30px] max-framer:px-4"
+                        class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start gap-1 overflow-visible px-[30px] max-narrow:px-4"
                     >
-                        <p class="m-0 p-0 text-center font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-text no-underline max-framer:text-[19px]">
+                        <p class="m-0 p-0 text-center font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-text no-underline max-narrow:text-[19px]">
                             {author.name}
                         </p>
-                        <p class="m-0 p-0 text-center font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text opacity-60 no-underline max-framer:text-[13px]">
+                        <p class="m-0 p-0 text-center font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text opacity-60 no-underline max-narrow:text-[13px]">
                             {author.footer.role}
                         </p>
                     </div>
 
-                    <!-- Keep local social icons; match Framer button chrome (34px / 6px gap) -->
+                    <!-- Keep local social icons; button chrome 34px / 6px gap -->
                     <div
-                        class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-1.5 overflow-visible px-[30px] max-framer:px-4"
+                        class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-1.5 overflow-visible px-[30px] max-narrow:px-4"
                     >
                         {
                             author.footer.social.map((link) => (
@@ -94,7 +95,7 @@ const currentYear = new Date().getFullYear();
 
             <!-- Copyright -->
             <div class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start overflow-visible p-0">
-                <p class="m-0 p-0 text-center font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text opacity-60 no-underline max-framer:text-[13px]">
+                <p class="m-0 p-0 text-center font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text opacity-60 no-underline max-narrow:text-[13px]">
                     &copy; <b>{currentYear}</b> / All rights Reserved.
                 </p>
             </div>

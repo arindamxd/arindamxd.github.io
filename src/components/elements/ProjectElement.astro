@@ -9,7 +9,7 @@ const delayMs = Math.min(Number(index) * 70, 420);
     style={`--stagger-delay: ${delayMs}ms`}
     href={`/projects/${project.slug}`}
 >
-    <div class="relative h-[400px] w-px flex-1 max-framer:h-[280px]">
+    <div class="relative h-[400px] w-px flex-1 max-narrow:h-[280px]">
         <div class="projects-card group relative flex h-full w-full cursor-pointer flex-col flex-nowrap content-center items-center justify-end gap-2.5 overflow-hidden rounded-[45px] p-2.5">
             <div class="caption-info rounded-[50px] bg-bg">
                 <div class="caption-info-content">
@@ -20,10 +20,10 @@ const delayMs = Math.min(Number(index) * 70, 420);
                     </div>
                     <div class="caption-info-text">
                         <div class="caption-info-text-title" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; transform: none;">
-                            <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text whitespace-pre max-framer:text-[14px]">{project.title}</p>
+                            <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text whitespace-pre max-narrow:text-[14px]">{project.title}</p>
                         </div>
                         <div class="caption-info-text-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;opacity:0.6;transform:none">
-                            <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">{project.desc.short}</p>
+                            <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">{project.desc.short}</p>
                         </div>
                     </div>
                 </div>

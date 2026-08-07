@@ -77,12 +77,121 @@ const { home = false, title = author.name } = Astro.props;
                         docEl.classList.add('is-loaded', 'loader-skip');
                     }
                 });
+
+                // Manual scroll restore — hide page content until mid-page offset is applied
+                // (avoids intro flash). Nav stays visible. Content is NOT opacity-stuck via reveal.
+                if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+                try {
+                    var raw = sessionStorage.getItem('__restoreScroll');
+                    if (raw) {
+                        var data = JSON.parse(raw);
+                        var path = location.pathname + location.search;
+                        if (data && data.path === path && typeof data.y === 'number' && data.y > 0) {
+                            window.__restoreScrollY = data.y;
+                            document.documentElement.classList.add('scroll-pending');
+                        }
+                    }
+                } catch (err) {}
+
+                function saveScroll() {
+                    try {
+                        var y = window.scrollY || window.pageYOffset || 0;
+                        if (window.__lenis && typeof window.__lenis.scroll === 'number') {
+                            y = window.__lenis.scroll;
+                        }
+                        sessionStorage.setItem(
+                            '__restoreScroll',
+                            JSON.stringify({
+                                path: location.pathname + location.search,
+                                y: y,
+                            }),
+                        );
+                    } catch (err) {}
+                }
+                window.addEventListener('pagehide', saveScroll);
+                window.addEventListener('visibilitychange', function () {
+                    if (document.visibilityState === 'hidden') saveScroll();
+                });
+                document.addEventListener('astro:before-preparation', saveScroll);
+
+                var scrollSaveTimer = 0;
+                window.addEventListener(
+                    'scroll',
+                    function () {
+                        window.clearTimeout(scrollSaveTimer);
+                        scrollSaveTimer = window.setTimeout(saveScroll, 120);
+                    },
+                    { passive: true },
+                );
+
+                window.__applyScrollRestore = function (show) {
+                    var y = window.__restoreScrollY;
+                    if (typeof y === 'number' && y > 0) {
+                        window.scrollTo(0, y);
+                        if (window.__lenis) {
+                            try {
+                                window.__lenis.scrollTo(y, { immediate: true });
+                            } catch (e) {}
+                        }
+                    }
+                    // Only uncover content when asked (Lenis ready / load / timeout)
+                    // Early calls just position scroll while still hidden.
+                    if (show || !(typeof y === 'number' && y > 0)) {
+                        document.documentElement.classList.remove('scroll-pending');
+                        if (!window.__scrollRestoreDone) {
+                            window.__scrollRestoreDone = true;
+                            window.dispatchEvent(new CustomEvent('scrollrestore:done'));
+                        }
+                    }
+                };
+
+                function whenReady(fn) {
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', fn, { once: true });
+                    } else {
+                        fn();
+                    }
+                }
+                whenReady(function () {
+                    // Position scroll while still hidden
+                    window.__applyScrollRestore(false);
+                    requestAnimationFrame(function () {
+                        window.__applyScrollRestore(false);
+                    });
+                });
+
+                window.addEventListener(
+                    'load',
+                    function () {
+                        window.__applyScrollRestore(true);
+                    },
+                    { once: true },
+                );
+
+                // Safety: never leave the page blank
+                window.setTimeout(function () {
+                    window.__applyScrollRestore(true);
+                }, 350);
+
+                document.addEventListener('astro:after-swap', function () {
+                    try {
+                        sessionStorage.removeItem('__restoreScroll');
+                    } catch (err) {}
+                    window.__restoreScrollY = 0;
+                    window.__scrollRestoreDone = true;
+                    document.documentElement.classList.remove('scroll-pending');
+                });
             })();
         </script>
 
         <!-- Critical loader shell (before CSS) -->
         <style is:inline>
             html.is-loading, html.is-loading body { overflow: hidden; }
+            /* Mid-page reload: keep nav, hide page until scrollY is restored (no intro flash) */
+            html.scroll-pending .proton-root,
+            html.scroll-pending footer {
+                visibility: hidden !important;
+            }
             .page-loader {
                 position: fixed; inset: 0; z-index: 9999;
                 display: flex; align-items: center; justify-content: center;
@@ -125,7 +234,7 @@ const { home = false, title = author.name } = Astro.props;
             }
         </script>
 
-        <!-- Soft page transitions (Framer 1.11 / 1.2); bottom nav persists via transition:persist -->
+        <!-- Soft page transitions; bottom nav persists via transition:persist -->
         <ClientRouter />
 
         <!-- Theme toggle -->
@@ -146,6 +255,17 @@ const { home = false, title = author.name } = Astro.props;
     </head>
 
     <body oncontextmenu="return false;">
+        <!-- Apply restored scroll before content paints (pairs with html.scroll-pending) -->
+        <script is:inline>
+            (function () {
+                // Position only — keep scroll-pending until Lenis/load reveals
+                if (typeof window.__applyScrollRestore === 'function') {
+                    window.__applyScrollRestore(false);
+                } else if (typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 0) {
+                    window.scrollTo(0, window.__restoreScrollY);
+                }
+            })();
+        </script>
         <PageLoader />
         <slot />
     </body>

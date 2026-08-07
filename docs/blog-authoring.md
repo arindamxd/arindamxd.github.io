@@ -74,7 +74,7 @@ Markdown is compiled into the typed blocks rendered by `BlogPage.astro`:
 | `- **Label**: text` | Labeled bullet (`{ label, text }`) |
 | Fenced code | Code panel (`BlogCodeBlock`; set language e.g. `swift`) |
 
-Spacing is unchanged from the Framer rhythm in `BlogPage.astro` (~52px before titles/subtitles, ~20px heading → content, ~24px between peers).
+Spacing follows the rhythm in `BlogPage.astro` (~52px before titles/subtitles, ~20px heading → content, ~24px between peers).
 
 ### Labeled bullets
 

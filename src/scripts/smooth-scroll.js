@@ -7,18 +7,49 @@ const reduced =
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (!reduced) {
+    const restoreY =
+        typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 0
+            ? window.__restoreScrollY
+            : 0;
+
     const lenis = new Lenis({
         autoRaf: true,
         smoothWheel: true,
         lerp: 0.1,
         wheelMultiplier: 1,
         touchMultiplier: 1.2,
+        // Start at restored offset so Lenis doesn't paint from 0
+        ...(restoreY > 0 ? { syncTouch: true } : {}),
     });
 
-    // Expose for debugging / future anchor hooks
     window.__lenis = lenis;
 
-    // Smooth in-page anchors
+    if (restoreY > 0) {
+        lenis.scrollTo(restoreY, { immediate: true });
+    }
+
+    // Uncover page only after Lenis is at the restored offset
+    if (typeof window.__applyScrollRestore === 'function') {
+        window.__applyScrollRestore(true);
+    } else {
+        document.documentElement.classList.remove('scroll-pending');
+        window.__scrollRestoreDone = true;
+        window.dispatchEvent(new CustomEvent('scrollrestore:done'));
+    }
+
+    // Persist scroll while Lenis is driving it
+    lenis.on('scroll', () => {
+        try {
+            sessionStorage.setItem(
+                '__restoreScroll',
+                JSON.stringify({
+                    path: location.pathname + location.search,
+                    y: lenis.scroll,
+                }),
+            );
+        } catch (e) {}
+    });
+
     document.addEventListener(
         'click',
         (e) => {
@@ -34,7 +65,6 @@ if (!reduced) {
         true,
     );
 
-    // Keep Lenis in sync after Astro view transitions
     document.addEventListener('astro:after-swap', () => {
         lenis.resize();
         lenis.scrollTo(0, { immediate: true });

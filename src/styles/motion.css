@@ -1,6 +1,5 @@
 /* ===================================================
-   Motion — Framer-parity appear + Lenis helpers
-   See MOTION-GAP-PLAN.md
+   Motion — appear + Lenis helpers
    =================================================== */
 
 /* ---------- Page loader (pre-reveal hold) ---------- */
@@ -175,7 +174,7 @@ html.js-motion .hero-badge:has(.appear-hero-card.is-appearing) {
 
 /*
   Hero card: hinged drop from the lanyard clip (transform-origin top center).
-  Framer springs the badge in — NOT a free mid-air tumble.
+  Springs the badge in — NOT a free mid-air tumble.
 */
 @keyframes hero-card-appear {
     0% {
@@ -298,8 +297,8 @@ html.js-motion .appear-delay-5.is-appearing {
     animation-delay: 0.7s;
 }
 
-/* Scroll reveal (section headers / blocks) */
-html.js-motion .reveal-prep {
+/* Scroll reveal — only hidden when JS adds .reveal-prep (safe default: visible) */
+html.js-motion .reveal-prep:not(.is-revealed) {
     opacity: 0;
     transform: translate3d(0, 28px, 0);
     transition:
@@ -308,12 +307,31 @@ html.js-motion .reveal-prep {
     will-change: transform, opacity;
 }
 
-html.js-motion .reveal-prep.is-revealed {
+html.js-motion .reveal-prep.is-revealed,
+html.js-motion [data-reveal].is-revealed {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+    transition:
+        opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ---------- Page transitions (Framer 1.11 / 1.2) ---------- */
+/* Boot frame: apply prep without fading visible → hidden */
+html.js-motion.reveal-boot .reveal-prep {
+    transition: none !important;
+}
+
+/* Already scrolled past / failsafe settle */
+html.js-motion .reveal-instant,
+html.js-motion [data-reveal].reveal-instant {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    will-change: auto;
+}
+
+/* ---------- Page transitions ---------- */
 @keyframes page-fade-out {
     to {
         opacity: 0;
@@ -345,8 +363,8 @@ html.js-motion .reveal-prep.is-revealed {
     }
 }
 
-/* Stagger-in under a reveal parent (skills + CMS lists — Framer 1.21) */
-html.js-motion [data-reveal-stagger].reveal-prep {
+/* Stagger-in under a reveal parent (skills + CMS lists) */
+html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) {
     opacity: 1;
     transform: none;
 }
@@ -362,15 +380,23 @@ html.js-motion [data-reveal-stagger].reveal-prep {
     }
 }
 
-html.js-motion [data-reveal-stagger] .skill-chip,
-html.js-motion [data-reveal-stagger] .cms-item {
+html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) .skill-chip,
+html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) .cms-item {
     opacity: 0;
 }
 
 html.js-motion [data-reveal-stagger].is-revealed .skill-chip,
 html.js-motion [data-reveal-stagger].is-revealed .cms-item {
+    opacity: 1;
     animation: cms-stagger-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: var(--stagger-delay, var(--skill-delay, 0ms));
+}
+
+html.js-motion [data-reveal-stagger].reveal-instant .skill-chip,
+html.js-motion [data-reveal-stagger].reveal-instant .cms-item {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
 }
 
 /* Soften on small screens */
@@ -393,6 +419,7 @@ html.js-motion [data-reveal-stagger].is-revealed .cms-item {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    html.js-motion [data-reveal],
     html.js-motion .reveal-prep {
         opacity: 1 !important;
         transform: none !important;

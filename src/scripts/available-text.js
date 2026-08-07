@@ -9,7 +9,7 @@ import {
     resolveScrambleBg,
 } from './scramble-text.js';
 
-const SMALL_TEXT ='m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-text max-framer:text-[12px]';
+const SMALL_TEXT ='m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-text max-narrow:text-[12px]';
 const MUTED = 'text-text/60';
 const WORDS = ['opportunities', 'discussion', 'collaborate', 'meetups', 'projects'];
 /** Time between word changes (scramble itself is ~0.8–1.2s). */

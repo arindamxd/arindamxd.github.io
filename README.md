@@ -1,6 +1,6 @@
 # arindamxd.github.io
 
-Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** — Mobile App Developer (iOS / Android). Static Astro site with JSON-driven content, dark/light theme, and Framer-inspired motion.
+Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** — Mobile App Developer (iOS / Android). Static Astro site with JSON-driven content, dark/light theme, and intentional motion.
 
 **Live:** [https://arindamxd.github.io](https://arindamxd.github.io)  
 **Repo:** [github.com/arindamxd/arindamxd.github.io](https://github.com/arindamxd/arindamxd.github.io)
@@ -84,12 +84,10 @@ npm run preview  # preview production build
 │   │   └── blogs/[slug].astro
 │   ├── scripts/                   # Client JS (theme, motion, slider, …)
 │   ├── styles/
-│   │   ├── global.css             # Tailwind + design tokens + Framer leftovers
+│   │   ├── global.css             # Tailwind + design tokens + layout CSS
 │   │   └── motion.css             # Appear / reveal / Lenis helpers
 │   ├── types/                     # blog / project / experience TS types
 │   └── utils/                     # date helpers, blog/project MD loaders
-├── MIGRATION.md                   # Proton → Tailwind migration notes
-├── MOTION-GAP-PLAN.md             # Framer vs local motion checklist
 ├── astro.config.mjs
 └── package.json
 ```
@@ -105,6 +103,7 @@ npm run preview  # preview production build
 | `/projects/[slug]` | `pages/projects/[slug].astro` | Catalog + `content/projects/*.md` |
 | `/blogs` | `pages/blogs.astro` | Blog list |
 | `/blogs/[slug]` | `pages/blogs/[slug].astro` | Catalog + `content/blogs/*.md` |
+| `/tools` | `pages/tools.astro` | Author blog/project MD (+ catalog JSON) and download |
 | `/404` | `pages/404.astro` | Custom not-found |
 
 Keep **one metadata entry per slug** so static routes stay unique.
@@ -155,18 +154,16 @@ Full reference: **[docs/project-authoring.md](./docs/project-authoring.md)**. Ma
 
 Entry stylesheets (only these two):
 
-- `src/styles/global.css` — Tailwind import, `@theme` tokens, fonts, dark overrides, intentional Framer CSS
+- `src/styles/global.css` — Tailwind import, `@theme` tokens, fonts, dark overrides, layout CSS
 - `src/styles/motion.css` — hero appear, reveal, Lenis-related helpers
 
 **Tokens** (semantic colors, fonts, breakpoint) live in `@theme` inside `global.css`:
 
 - Colors: `bg`, `accent` (`#29ffff`), `primary` (`#2a29ff`), `text`, `surface`, `border`, `active`, …
 - Fonts: **Manrope** (600/700 only — avoid `font-medium` / 500), **Inter**, **Fragment Mono** (self-hosted under `/assets/fonts/`)
-- Breakpoint: `--breakpoint-framer: 610px` → use `max-framer:` for ≤609px mobile styles
+- Breakpoint: `--breakpoint-narrow: 610px` → use `max-narrow:` for ≤609px mobile styles
 
 Dark mode is **class-based** (`html.dark`), not `prefers-color-scheme`.
-
-Some high-risk Framer pieces remain in CSS on purpose (hero shell, testimonial phone UI, brands marquee keyframes, project logo zoom, fixed nav formula). See **[MIGRATION.md](./MIGRATION.md)**.
 
 ---
 
@@ -183,8 +180,6 @@ Loaded from `BaseLayout.astro`:
 | `reveal.js` | Scroll-in sections via `[data-reveal]` |
 | `smooth-scroll.js` | Lenis (skipped when reduced motion) |
 | `count-up.js` | Viewport count-up for `data-count-to` |
-
-Motion gap notes / Framer parity: **[MOTION-GAP-PLAN.md](./MOTION-GAP-PLAN.md)**.
 
 ---
 
@@ -206,8 +201,6 @@ Motion gap notes / Framer parity: **[MOTION-GAP-PLAN.md](./MOTION-GAP-PLAN.md)**
 | --- | --- |
 | [docs/blog-authoring.md](./docs/blog-authoring.md) | Blog catalog + Markdown authoring |
 | [docs/project-authoring.md](./docs/project-authoring.md) | Project catalog + Markdown body |
-| [MIGRATION.md](./MIGRATION.md) | Tailwind migration status & leftover CSS |
-| [MOTION-GAP-PLAN.md](./MOTION-GAP-PLAN.md) | Motion / layout parity vs Framer |
 
 ---
 

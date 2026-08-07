@@ -15,10 +15,10 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
 <article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-hidden p-0 pt-[110px] pb-0">
 
     <!-- Article Top -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-0 overflow-hidden p-0 max-framer:px-5">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-0 overflow-hidden p-0 max-narrow:px-5">
         
         <!-- Article Header -->
-        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-10 overflow-hidden p-0 max-framer:gap-[30px]">
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-10 overflow-hidden p-0 max-narrow:gap-[30px]">
 
             <!-- Back Button -->
             <div class="relative h-auto w-auto flex-none">
@@ -31,7 +31,7 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
                         </div>
                     </div>
                     <div class="relative h-auto w-auto flex-none whitespace-pre">
-                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Back to articles</p>
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[13px]">Back to articles</p>
                     </div>
                 </a>
             </div>
@@ -39,9 +39,9 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
             <!-- Article Info -->
             <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-5 overflow-visible p-0">
                 <div class="relative h-auto w-full flex-none text-balance">
-                    <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-left text-text max-framer:text-[34px]">{blog.title}</h1>
+                    <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-left text-text max-narrow:text-[34px]">{blog.title}</h1>
                 </div>
-                <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-start gap-[22px] overflow-visible p-0 max-framer:gap-[26px]">
+                <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-start gap-[22px] overflow-visible p-0 max-narrow:gap-[26px]">
                     <div class="relative flex h-min w-min flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0">
                         <div class="relative aspect-square h-7 w-7 flex-none rounded-full">
                             <div class="absolute inset-0" style="border-radius:inherit;">
@@ -49,11 +49,11 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
                             </div>
                         </div>
                         <div class="relative h-auto w-auto flex-none whitespace-pre">
-                            <p class="m-0 p-0 font-manrope text-[15px] font-semibold leading-none tracking-[-0.05em] text-left text-text whitespace-pre max-framer:text-[14px]">{blog.author.name}</p>
+                            <p class="m-0 p-0 font-manrope text-[15px] font-semibold leading-none tracking-[-0.05em] text-left text-text whitespace-pre max-narrow:text-[14px]">{blog.author.name}</p>
                         </div>
                     </div>
-                    <div class="relative h-auto w-auto flex-none whitespace-pre opacity-50 max-framer:order-1">
-                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">{formatDate(blog.date, "long")}</p>
+                    <div class="relative h-auto w-auto flex-none whitespace-pre opacity-50 max-narrow:order-1">
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">{formatDate(blog.date, "long")}</p>
                     </div>
                 </div>
             </div>
@@ -67,15 +67,15 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
 
         <!-- Article Intro -->
         <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-5 overflow-hidden pt-8 pb-16">
-            <p class="m-0 w-full p-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{blog.page.intro.title}</p>
-            <p class="m-0 w-full p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/60 max-framer:text-[16px]">{blog.page.intro.paragraph}</p>
+            <p class="m-0 w-full p-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[24px]">{blog.page.intro.title}</p>
+            <p class="m-0 w-full p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/60 max-narrow:text-[16px]">{blog.page.intro.paragraph}</p>
         </div>
 
     </div>
 
     <!-- Article Image -->
-    <div class="relative my-[5px] flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-0 overflow-hidden px-[30px] py-0 max-framer:px-1">
-        <div class="relative aspect-[1.6290322580645162] h-auto max-h-none w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-framer:rounded-[20px]">
+    <div class="relative my-[5px] flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-0 overflow-hidden px-[30px] py-0 max-narrow:px-1">
+        <div class="relative aspect-[1.6290322580645162] h-auto max-h-none w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-narrow:rounded-[20px]">
             <div class="absolute inset-0" style="border-radius:inherit;">
                 <img decoding="auto" loading="lazy" src={blog.page.intro.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
             </div>
@@ -83,22 +83,22 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
     </div>
 
     <!-- Article Content -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-1 overflow-hidden pt-5 max-framer:px-5">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-1 overflow-hidden pt-5 max-narrow:px-5">
         <div class="article-content relative flex h-auto w-px max-w-[550px] flex-1 flex-col break-words">
             {blog.page.body.map((block: BlogBodyBlock) => {
                 if (block.type === "title") {
                     return (
-                        <h2 class="article-title m-0 p-0 font-manrope text-[38px] font-semibold leading-[125%] tracking-[-0.05em] text-left text-text max-framer:text-[30px]">{block.text}</h2>
+                        <h2 class="article-title m-0 p-0 font-manrope text-[38px] font-semibold leading-[125%] tracking-[-0.05em] text-left text-text max-narrow:text-[30px]">{block.text}</h2>
                     );
                 }
                 if (block.type === "subtitle") {
                     return (
-                        <h3 class="article-subtitle m-0 p-0 font-manrope text-[22px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text max-framer:text-[20px]">{block.text}</h3>
+                        <h3 class="article-subtitle m-0 p-0 font-manrope text-[22px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text max-narrow:text-[20px]">{block.text}</h3>
                     );
                 }
                 if (block.type === "paragraph") {
                     return (
-                        <p class="article-paragraph m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-framer:text-[16px]">{block.text}</p>
+                        <p class="article-paragraph m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-narrow:text-[16px]">{block.text}</p>
                     );
                 }
                 if (block.type === "bullets") {
@@ -111,7 +111,7 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
                                     <li class="m-0 flex flex-row flex-nowrap items-start gap-3">
                                         {numbered ? (
                                             <span
-                                                class="w-5 shrink-0 pt-px font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/40 tabular-nums max-framer:text-[16px]"
+                                                class="w-5 shrink-0 pt-px font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/40 tabular-nums max-narrow:text-[16px]"
                                                 aria-hidden="true"
                                             >
                                                 {index + 1}.
@@ -122,7 +122,7 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
                                                 aria-hidden="true"
                                             />
                                         )}
-                                        <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-framer:text-[16px]">
+                                        <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-narrow:text-[16px]">
                                             {label ? (
                                                 <>
                                                     <span class="text-text">{label}:</span>
@@ -154,7 +154,7 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
 </article>
 
 <style>
-    /* Framer blog rhythm: airy section breaks, tighter heading → content */
+    /* Blog rhythm: airy section breaks, tighter heading → content */
     .article-content > :first-child {
         margin-top: 0;
     }

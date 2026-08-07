@@ -1,4 +1,4 @@
-// Hero appear — Framer badge hinge feel (after page loader)
+// Hero appear — badge hinge feel (after page loader)
 (function () {
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -24,7 +24,11 @@
 
         if (!targets.length) return;
 
-        if (reduced) {
+        // Mid-page reload — skip hero entrance (user isn't at the top)
+        const midRestore =
+            typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 80;
+
+        if (reduced || midRestore) {
             targets.forEach(settle);
             return;
         }

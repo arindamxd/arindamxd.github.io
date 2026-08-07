@@ -10,8 +10,8 @@ const { header } = project;
 const body = project.page.body as ProjectBodyBlock[];
 ---
 
-<article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-12 p-0 max-framer:gap-8">
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-12 overflow-visible p-0 max-framer:gap-10 max-framer:px-5">
+<article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-12 p-0 max-narrow:gap-8">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-12 overflow-visible p-0 max-narrow:gap-10 max-narrow:px-5">
 
         <div class="hero-tie-container" style="opacity: 1; transform: translateX(-50%); will-change: transform;">
             <div class="hero-tie hero-tie-centered">
@@ -26,8 +26,8 @@ const body = project.page.body as ProjectBodyBlock[];
                 <div class="hero-card-hole shadow-[inset_0_0_0_1px_var(--color-border)]"></div>
 
                 <!-- Project Image -->
-                <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden rounded-[40px] p-0 will-change-transform max-framer:rounded-[30px]">
-                    <div class="relative aspect-[1.4627659574468086] h-auto w-px flex-1 overflow-hidden max-framer:rounded-[30px]">
+                <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden rounded-[40px] p-0 will-change-transform max-narrow:rounded-[30px]">
+                    <div class="relative aspect-[1.4627659574468086] h-auto w-px flex-1 overflow-hidden max-narrow:rounded-[30px]">
                         <div class="absolute inset-0" style="border-radius:inherit;">
                             <img decoding="auto" loading="lazy" src={project.images.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                         </div>
@@ -47,11 +47,11 @@ const body = project.page.body as ProjectBodyBlock[];
                                     </div>
                                 </div>
                                 <div class="relative min-w-0 flex-1 opacity-50">
-                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Organization</p>
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[13px]">Organization</p>
                                 </div>
                             </div>
                             <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-end overflow-hidden p-0">
-                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-framer:text-[14px]">{header.organization}</p>
+                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-narrow:text-[14px]">{header.organization}</p>
                             </div>
                         </div>
                     </div>
@@ -70,11 +70,11 @@ const body = project.page.body as ProjectBodyBlock[];
                                     </div>
                                 </div>
                                 <div class="relative min-w-0 flex-1 opacity-50">
-                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Category</p>
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[13px]">Category</p>
                                 </div>
                             </div>
                             <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-end overflow-hidden p-0">
-                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-framer:text-[14px]">{header.category}</p>
+                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-narrow:text-[14px]">{header.category}</p>
                             </div>
                         </div>
                     </div>
@@ -93,11 +93,11 @@ const body = project.page.body as ProjectBodyBlock[];
                                     </div>
                                 </div>
                                 <div class="relative min-w-0 flex-1 opacity-50">
-                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Released on</p>
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[13px]">Released on</p>
                                 </div>
                             </div>
                             <div class="relative flex h-full w-px min-w-0 flex-1 flex-row flex-nowrap items-center justify-end overflow-hidden p-0">
-                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-framer:text-[14px]">{formatDate(header.released_date, 'long')}</p>
+                                <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] break-words text-right text-text max-narrow:text-[14px]">{formatDate(header.released_date, 'long')}</p>
                             </div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@ const body = project.page.body as ProjectBodyBlock[];
                         <div class="relative h-auto w-auto flex-none">
                             <a data-scramble class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline" href={header.link} target="_blank" rel="noopener">
                                 <div class="relative h-auto w-auto flex-none whitespace-pre">
-                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">Source Code / Live Preview</p>
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">Source Code / Live Preview</p>
                                 </div>
                                 <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
                                     <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
@@ -123,16 +123,16 @@ const body = project.page.body as ProjectBodyBlock[];
         </div>
 
         <!-- Project Header Info -->
-        <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-12 overflow-hidden p-0 max-framer:gap-8">
+        <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-12 overflow-hidden p-0 max-narrow:gap-8">
             <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-5 overflow-hidden p-0">
-                <div class="relative h-auto w-full flex-none break-words max-framer:order-0">
-                    <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-left text-text max-framer:text-[34px]">{project.title}</h1>
+                <div class="relative h-auto w-full flex-none break-words max-narrow:order-0">
+                    <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-left text-text max-narrow:text-[34px]">{project.title}</h1>
                 </div>
-                <div class="relative h-auto w-full flex-none break-words opacity-60 max-framer:order-1">
-                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{project.desc.long}</p>
+                <div class="relative h-auto w-full flex-none break-words opacity-60 max-narrow:order-1">
+                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-narrow:text-[16px]">{project.desc.long}</p>
                 </div>
             </div>
-            <div class="relative h-auto w-auto flex-none max-framer:order-2">
+            <div class="relative h-auto w-auto flex-none max-narrow:order-2">
                 <a data-scramble class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-[14px] overflow-visible no-underline" href="/projects">
                     <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_var(--color-border)] transition-colors duration-200 ease-in-out group-hover:bg-primary">
                         <div class="relative h-[14px] w-[15px] flex-none transition-[filter] duration-200 ease-in-out group-hover:brightness-0 group-hover:invert" style="image-rendering: pixelated;" aria-hidden="true">
@@ -142,7 +142,7 @@ const body = project.page.body as ProjectBodyBlock[];
                         </div>
                     </div>
                     <div class="relative h-auto w-auto flex-none whitespace-pre">
-                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-framer:text-[13px]">Back to projects</p>
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[13px]">Back to projects</p>
                     </div>
                 </a>
             </div>
@@ -155,14 +155,14 @@ const body = project.page.body as ProjectBodyBlock[];
     {body.map((block) => {
         if (block.type === "images-pair") {
             return (
-                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
-                    <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:flex-col">
-                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-narrow:px-2.5">
+                    <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-narrow:flex-col">
+                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
                             <div class="absolute inset-0" style="border-radius:inherit;">
                                 <img decoding="auto" loading="lazy" src={block.left.src} alt={block.left.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                             </div>
                         </div>
-                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
                             <div class="absolute inset-0" style="border-radius:inherit;">
                                 <img decoding="auto" loading="lazy" src={block.right.src} alt={block.right.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                             </div>
@@ -174,12 +174,12 @@ const body = project.page.body as ProjectBodyBlock[];
 
         if (block.type === "content") {
             return (
-                <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-5 overflow-hidden p-0 max-framer:px-5">
+                <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-5 overflow-hidden p-0 max-narrow:px-5">
                     <div class="relative h-auto w-full flex-none break-words">
-                        <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[115%] tracking-[-0.04em] text-left text-text max-framer:text-[24px]">{block.title}</p>
+                        <p class="m-0 p-0 font-manrope text-[26px] font-semibold leading-[115%] tracking-[-0.04em] text-left text-text max-narrow:text-[24px]">{block.title}</p>
                     </div>
                     <div class="relative h-auto w-full flex-none break-words opacity-60">
-                        <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{block.description}</p>
+                        <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-narrow:text-[16px]">{block.description}</p>
                     </div>
                 </div>
             );
@@ -187,8 +187,8 @@ const body = project.page.body as ProjectBodyBlock[];
 
         if (block.type === "image-large") {
             return (
-                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
-                    <div class="relative aspect-[1.463768115942029] h-auto w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-narrow:px-2.5">
+                    <div class="relative aspect-[1.463768115942029] h-auto w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
                         <div class="absolute inset-0" style="border-radius:inherit;">
                             <img decoding="auto" loading="lazy" src={block.image.src} alt={block.image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                         </div>
@@ -199,20 +199,20 @@ const body = project.page.body as ProjectBodyBlock[];
 
         if (block.type === "images-pair-then-large") {
             return (
-                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-framer:px-2.5">
-                    <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:flex-col">
-                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-narrow:px-2.5">
+                    <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-narrow:flex-col">
+                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
                             <div class="absolute inset-0" style="border-radius:inherit;">
                                 <img decoding="auto" loading="lazy" src={block.left.src} alt={block.left.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                             </div>
                         </div>
-                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:w-full max-framer:flex-none max-framer:aspect-[1.3295454545454546]">
+                        <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
                             <div class="absolute inset-0" style="border-radius:inherit;">
                                 <img decoding="auto" loading="lazy" src={block.right.src} alt={block.right.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                             </div>
                         </div>
                     </div>
-                    <div class="relative aspect-[1.463768115942029] h-[376px] w-full max-w-[1180px] flex-none overflow-hidden rounded-[30px] max-framer:h-[278px] max-framer:aspect-[1.3295454545454546]">
+                    <div class="relative aspect-[1.463768115942029] h-[376px] w-full max-w-[1180px] flex-none overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:aspect-[1.3295454545454546]">
                         <div class="absolute inset-0" style="border-radius:inherit;">
                             <img decoding="auto" loading="lazy" src={block.large.src} alt={block.large.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                         </div>

@@ -18,7 +18,7 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
 }
 ---
 
-<section class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 overflow-hidden p-0 max-framer:gap-[50px] max-framer:px-2.5">
+<section class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 overflow-hidden p-0 max-narrow:gap-[50px] max-narrow:px-2.5">
 
     <div class="hero-tie-container appear-hero-tie" style="transform: translateX(-50%);">
         <div class="hero-tie hero-tie-centered">
@@ -41,7 +41,7 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                     </div>
                 </div>
 
-                <!-- Framer groups identity + slogan with 36px gap (not the White 40px rhythm) -->
+                <!-- Groups identity + slogan with 36px gap (not the White 40px rhythm) -->
                 <div class="hero-card-content-identity appear-fade-up appear-delay-1">
                     <div class="hero-card-content-top">
                         <div class="hero-card-content-top-left">
@@ -53,10 +53,10 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                             <div class="hero-card-content-main">
                                 <div class="hero-card-content-main-text">
                                     <div class="hero-card-content-main-text-name" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                                        <p class="m-0 p-0 font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-text no-underline max-framer:text-[19px]">{author.name}</p>
+                                        <p class="m-0 p-0 font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-text no-underline max-narrow:text-[19px]">{author.name}</p>
                                     </div>
                                     <div class="hero-card-content-main-text-role" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">{author.role}<br>{author.subRole}</p>
+                                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">{author.role}<br>{author.subRole}</p>
                                     </div>
                                 </div>
                                 <div class="relative flex h-min w-min flex-none flex-row flex-nowrap items-center justify-center gap-2.5 overflow-visible p-0">
@@ -84,7 +84,7 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                         </div>
                     </div>
                     <div class="hero-card-content-slogan" style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0;">
-                        <h1 class="m-0 p-0 font-manrope text-[70px] font-semibold leading-[90%] tracking-[-0.04em] text-text no-underline max-framer:text-[48px]">{author.intro.title}</h1>
+                        <h1 class="m-0 p-0 font-manrope text-[70px] font-semibold leading-[90%] tracking-[-0.04em] text-text no-underline max-narrow:text-[48px]">{author.intro.title}</h1>
                     </div>
                 </div>
                 <div class="hero-card-content-others appear-fade-up appear-delay-2">
@@ -94,14 +94,14 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                         </div>
                     </div>
                     <div class="hero-card-content-description" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                        <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px]">{author.intro.subTitle}</p>
+                        <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-narrow:text-[15px]">{author.intro.subTitle}</p>
                     </div>
                 </div>
                 <div class="hero-card-content-buttons appear-fade-up-sm appear-delay-3">
                     <div class="relative h-auto w-auto flex-none">
                         <a data-scramble class="group relative flex h-[58px] w-min cursor-pointer flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-hidden rounded-full py-[3px] pr-[74px] pl-7 no-underline" href={author.intro.resumeURL} target="_blank" rel="noopener">
                             <div class="relative z-[2] h-auto w-auto flex-none whitespace-pre">
-                                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-white no-underline max-framer:text-[15px]">Resume</p>
+                                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-white no-underline max-narrow:text-[15px]">Resume</p>
                             </div>
                             <div class="absolute top-[3px] right-[3px] z-[2] flex h-[52px] w-[52px] flex-col flex-nowrap content-center items-center justify-center rounded-full bg-white p-0">
                                 <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45" style="image-rendering: pixelated;">
@@ -116,7 +116,7 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                     <div class="relative h-[58px] w-auto flex-none">
                         <a data-scramble class="group relative flex h-[58px] w-min cursor-pointer flex-row flex-nowrap content-center items-center justify-center gap-4 overflow-visible rounded-full bg-surface px-7 py-5 no-underline transition-colors duration-200 ease-in-out hover:bg-inactive" href="#projects">
                             <div class="relative z-[1] h-auto w-auto flex-none whitespace-pre">
-                                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px]">My work</p>
+                                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-narrow:text-[15px]">My work</p>
                             </div>
                         </a>
                     </div>
@@ -131,12 +131,12 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                         </div>
                     </div>
                     <div class="location-text-container" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                        <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-left text-text max-framer:text-[12px] max-framer:tracking-[-0.02em]"><span class="text-text/60">Located in&nbsp;</span>{author.location}<span class="text-text/60">,&nbsp;available worldwide.</span></p>
+                        <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-left text-text max-narrow:text-[12px] max-narrow:tracking-[-0.02em]"><span class="text-text/60">Located in&nbsp;</span>{author.location}<span class="text-text/60">,&nbsp;available worldwide.</span></p>
                     </div>
                 </div>
                 <div class="relative flex h-auto w-auto flex-none items-center">
                     <a data-scramble class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline" href={author.intro.cardLinkURL} target="_blank" rel="noopener">
-                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">{author.intro.cardLinkText}</p>
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">{author.intro.cardLinkText}</p>
                         <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
                             <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
                         </div>

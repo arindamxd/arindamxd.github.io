@@ -34,30 +34,30 @@ const sorted = [...experienceList].sort((a, b) =>
 const items = sorted.slice(0, 4);
 ---
 
-<section id="experiences" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[80px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5" style="will-change: transform;">
+<section id="experiences" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[80px] overflow-visible p-0 max-narrow:gap-[30px] max-narrow:px-2.5" style="will-change: transform;">
 
     <!-- Header: YoE badge + ladder art -->
-    <div data-reveal class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 rounded-[40px] bg-primary px-[50px] py-[60px] max-framer:rounded-[32px] max-framer:px-10 max-framer:py-[45px]">
+    <div data-reveal class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 rounded-[40px] bg-primary px-[50px] py-[60px] max-narrow:rounded-[32px] max-narrow:px-10 max-narrow:py-[45px]">
         <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-end items-end justify-start gap-5 overflow-visible p-0">
-            <div class="relative h-auto w-[75px] flex-none whitespace-pre-wrap break-words max-framer:w-[58px]" style="outline:none;display:flex;flex-direction:column;justify-content:flex-end;flex-shrink:0;transform:none">
+            <div class="relative h-auto w-[75px] flex-none whitespace-pre-wrap break-words max-narrow:w-[58px]" style="outline:none;display:flex;flex-direction:column;justify-content:flex-end;flex-shrink:0;transform:none">
                 <p
-                    class="m-0 p-0 font-manrope text-[65px] font-semibold leading-[80%] tracking-[-0.06em] text-right text-white whitespace-pre max-framer:text-[48px]"
+                    class="m-0 p-0 font-manrope text-[65px] font-semibold leading-[80%] tracking-[-0.06em] text-right text-white whitespace-pre max-narrow:text-[48px]"
                     data-count-to={yearsOfExperience}
                 >0</p>
             </div>
-            <div class="absolute left-[72px] top-[-15px] z-[1] flex h-min w-min flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:left-14 max-framer:top-[-16px]">
-                <div class="relative h-[22px] w-[22px] flex-none max-framer:h-5 max-framer:w-5" style="image-rendering:pixelated;flex-shrink:0" aria-hidden="true">
+            <div class="absolute left-[72px] top-[-15px] z-[1] flex h-min w-min flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-narrow:left-14 max-narrow:top-[-16px]">
+                <div class="relative h-[22px] w-[22px] flex-none max-narrow:h-5 max-narrow:w-5" style="image-rendering:pixelated;flex-shrink:0" aria-hidden="true">
                     <div class="h-full w-full" style="aspect-ratio:inherit">
                         <img decoding="auto" loading="lazy" src="/assets/resources/plus.svg" alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
                     </div>
                 </div>
             </div>
             <div class="relative h-auto w-auto flex-none whitespace-pre" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-white/60 no-underline max-framer:text-[13px]">Years of experience</p>
-                <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-white/90 no-underline max-framer:text-[13px]">in product development</p>
+                <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-white/60 no-underline max-narrow:text-[13px]">Years of experience</p>
+                <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-white/90 no-underline max-narrow:text-[13px]">in product development</p>
             </div>
         </div>
-        <div class="absolute left-[360px] top-1/2 z-[1] flex h-full w-min flex-none -translate-y-1/2 flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-framer:left-[265px] max-framer:z-0">
+        <div class="absolute left-[360px] top-1/2 z-[1] flex h-full w-min flex-none -translate-y-1/2 flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-narrow:left-[265px] max-narrow:z-0">
             <div class="relative h-[164px] w-[124px] flex-none" style="image-rendering:pixelated;flex-shrink:0" aria-hidden="true">
                 <div class="h-full w-full" style="aspect-ratio:inherit">
                     <svg style="width:100%;height:100%;"><use href="#svg12488493370"></use></svg>
@@ -66,10 +66,11 @@ const items = sorted.slice(0, 4);
         </div>
     </div>
     
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-start gap-[50px] overflow-visible px-8 pt-[5px] pb-0 max-framer:gap-[35px] max-framer:px-[15px]">
-        <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-start gap-[50px] overflow-visible px-8 pt-[5px] pb-0 max-narrow:gap-[35px] max-narrow:px-[15px]">
+        <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-narrow:gap-[30px] max-narrow:px-2.5">
             <!-- Timeline -->
             <div
+                data-reveal
                 class="relative flex h-min w-full flex-none flex-row flex-nowrap content-start items-start justify-start gap-[27px] overflow-visible p-0 shadow-[inset_0_1px_0_0_#eeeeee] dark:shadow-[inset_0_1px_0_0_var(--color-border)]"
             >
                 <div class="pointer-events-none absolute top-[-5px] right-0 z-[2] h-full w-[130px] flex-none overflow-hidden bg-[linear-gradient(90deg,#fff0_-35%,#fff)] dark:bg-[linear-gradient(90deg,transparent_-35%,var(--color-bg))]" />
@@ -85,12 +86,12 @@ const items = sorted.slice(0, 4);
                     {yearList.map((year, index) => (
                         <div class:list={[
                             "relative flex h-min w-px flex-1 flex-col flex-nowrap content-start items-start justify-start gap-2.5 overflow-visible pt-[19px] pb-0",
-                            index >= 3 && "max-framer:hidden",
+                            index >= 3 && "max-narrow:hidden",
                         ]}>
                             <div class="absolute top-[-5px] left-0 z-[1] aspect-square h-2.5 w-2.5 flex-none rounded-full bg-[#cacaca]" />
                             <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0">
                                 <div class="relative h-auto w-auto flex-none whitespace-pre opacity-40" style="outline: none; display: flex; flex-direction: column; justify-content: flex-end; flex-shrink: 0; will-change: transform; transform: none;">
-                                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text whitespace-pre max-framer:text-[16px]">{year}</p>
+                                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text whitespace-pre max-narrow:text-[16px]">{year}</p>
                                 </div>
                             </div>
                         </div>
@@ -99,26 +100,26 @@ const items = sorted.slice(0, 4);
             </div>
 
             <!-- Title + description -->
-            <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-3 overflow-visible p-0 max-framer:gap-2.5">
+            <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-3 overflow-visible p-0 max-narrow:gap-2.5">
                 <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                    <h3 class="m-0 p-0 font-manrope text-[24px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text whitespace-pre max-framer:text-[22px]">{metadata.title}</h3>
+                    <h3 class="m-0 p-0 font-manrope text-[24px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text whitespace-pre max-narrow:text-[22px]">{metadata.title}</h3>
                 </div>
                 <div class="relative h-auto w-full max-w-[480px] flex-none whitespace-pre-wrap break-words opacity-50" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                    <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px]">{metadata.description}</p>
+                    <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-narrow:text-[15px]">{metadata.description}</p>
                 </div>
             </div>
         </div>
 
         <!-- Experience rows -->
-        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-7 overflow-visible p-0 max-framer:gap-[25px]">
+        <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-7 overflow-visible p-0 max-narrow:gap-[25px]">
             {items.map(experience => (
                 <div class="relative h-auto w-full flex-none">
                     <div
-                        class="relative grid w-full grid-cols-[minmax(0,1fr)_6.75rem_6.5rem] items-start gap-x-3 overflow-visible pt-[30px] pb-0 shadow-[inset_0_1px_0_0_var(--color-border)] max-framer:grid-cols-[minmax(0,1fr)_5.75rem_5.5rem] max-framer:gap-x-2.5 max-framer:pt-[26px]"
+                        class="relative grid w-full grid-cols-[minmax(0,1fr)_6.75rem_6.5rem] items-start gap-x-3 overflow-visible pt-[30px] pb-0 shadow-[inset_0_1px_0_0_var(--color-border)] max-narrow:grid-cols-[minmax(0,1fr)_5.75rem_5.5rem] max-narrow:gap-x-2.5 max-narrow:pt-[26px]"
                     >
-                        <p class="m-0 min-w-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text whitespace-normal max-framer:text-[14px]">{experience.title}</p>
-                        <p class="m-0 w-full p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text no-underline whitespace-nowrap max-framer:text-[13px]">{experience.company}</p>
-                        <p class="m-0 w-full p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text no-underline opacity-60 whitespace-nowrap max-framer:text-[13px]">{formatDateByYear(experience.start)} - {formatDateByYear(experience.end)}</p>
+                        <p class="m-0 min-w-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text whitespace-normal max-narrow:text-[14px]">{experience.title}</p>
+                        <p class="m-0 w-full p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text no-underline whitespace-nowrap max-narrow:text-[13px]">{experience.company}</p>
+                        <p class="m-0 w-full p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text no-underline opacity-60 whitespace-nowrap max-narrow:text-[13px]">{formatDateByYear(experience.start)} - {formatDateByYear(experience.end)}</p>
                     </div>
                 </div>
             ))}

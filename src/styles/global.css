@@ -7,9 +7,8 @@
 /* ===================================================
    Migration: proton.css → Tailwind (consolidated)
    Entry: global.css + motion.css only.
-   Remaining Framer CSS (hero shell, testimonial phone,
+   Remaining layout CSS (hero shell, testimonial phone,
    brands scroll, project logo zoom) lives below.
-   See docs/migration/ for section-by-section notes.
    =================================================== */
 
 /* ---------- Design tokens (@theme) ---------- */
@@ -30,11 +29,11 @@
     --font-fragment: 'Fragment Mono', monospace;
 
     /*
-     * Framer mobile breakpoint was max-width: 609px.
-     * Tailwind screens are min-width, so `framer:` = 610px and up
-     * (desktop). Use `max-framer:` for the old mobile styles.
+     * Narrow layout breakpoint: max-width 609px.
+     * Tailwind screens are min-width, so `narrow:` = 610px and up
+     * (desktop). Use `max-narrow:` for ≤609px styles.
      */
-    --breakpoint-framer: 610px;
+    --breakpoint-narrow: 610px;
 }
 
 /* Dark theme: flip semantic tokens (outside @layer so they beat @theme :root) */
@@ -216,7 +215,7 @@
     }
 }
 
-/* ---------- Floating nav position (Framer canvas formula) ---------- */
+/* ---------- Floating nav position ---------- */
 .nav-bar-container {
     position: var(--proton-canvas-fixed-position, fixed);
     left: 50%;
@@ -281,7 +280,7 @@
     }
 }
 
-/* ---------- Remaining Framer layout (hero / projects logo / testimonials / brands) ---------- */
+/* ---------- Remaining layout (hero / projects logo / testimonials / brands) ---------- */
 .proton-root .hero-tie-container {
     flex: none;
     width: auto;
@@ -546,7 +545,7 @@
     white-space: pre;
 }
 
-/* Keep both lines left-aligned (Framer); reserve width so cycle doesn’t shift the block */
+/* Keep both lines left-aligned; reserve width so cycle doesn’t shift the block */
 .proton-root .available-text-container {
     display: flex;
     flex-direction: column;
@@ -735,7 +734,7 @@
     letter-spacing: -0.02em;
 }
 
-/* Web: horizontal bar — Framer Bottom: pad 12px 50px 0, ~30px tall */
+/* Web: horizontal bar — Bottom: pad 12px 50px 0, ~30px tall */
 @media (min-width: 610px) {
     .proton-root .hero-card-bottom {
         flex-direction: row;
@@ -879,7 +878,7 @@
     }
 }
 
-/* Project card caption + logo zoom (Framer spacing) */
+/* Project card caption + logo zoom */
 .projects-card .caption-info {
     display: flex;
     flex-direction: row;
@@ -1425,13 +1424,13 @@
         will-change: unset;
     }
 
-    /* Framer mobile Badge: pad-top 117px so lanyard shows under nav */
+    /* Mobile Badge: pad-top 117px so lanyard shows under nav */
     .proton-root .hero-badge {
         padding: 117px 0 0;
         overflow: hidden;
     }
 
-    /* Framer mobile Card: 7px 6px 18px */
+    /* Mobile Card: 7px 6px 18px */
     .proton-root .hero-card {
         border-radius: 36px;
         gap: 9px;
@@ -1444,14 +1443,14 @@
         margin-bottom: 0;
     }
 
-    /* Framer mobile White: pad 18×30×30, gap 26 */
+    /* Mobile White: pad 18×30×30, gap 26 */
     .proton-root .hero-card-content {
         border-radius: 30px;
         gap: 26px;
         padding: 18px 30px 30px;
     }
 
-    /* Framer mobile Identity (Top + slogan): gap 24 */
+    /* Mobile Identity (Top + slogan): gap 24 */
     .proton-root .hero-card-content-identity {
         gap: 24px;
     }
@@ -1512,7 +1511,7 @@
         display: none !important;
     }
 
-    /* Framer mobile Bottom: pad 10×50×0, gap 9, stacked */
+    /* Mobile Bottom: pad 10×50×0, gap 9, stacked */
     .proton-root .hero-card-bottom {
         flex-direction: column;
         align-items: center;
@@ -1540,7 +1539,7 @@
         display: none;
     }
 
-    /* Framer mobile lanyard: stripe 46×90, clip at ~76px (not full 117 pad) */
+    /* Mobile lanyard: stripe 46×90, clip at ~76px (not full 117 pad) */
     .hero-tie .hero-tie-stripe {
         width: 46px;
         height: 90px;

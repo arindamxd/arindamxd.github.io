@@ -11,16 +11,16 @@ const avatars = [
 ];
 ---
 
-<section id="testimonials" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5">
+<section id="testimonials" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-narrow:gap-[30px] max-narrow:px-2.5">
 
     <!-- Heading -->
-    <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-5 overflow-visible p-0 max-framer:gap-3">
+    <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-5 overflow-visible p-0 max-narrow:gap-3">
         <div class="relative h-auto w-full flex-none text-balance">
-            <h2 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-center text-text no-underline max-framer:text-[34px]">{metadata.title}</h2>
+            <h2 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-center text-text no-underline max-narrow:text-[34px]">{metadata.title}</h2>
         </div>
 
         <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-3 overflow-visible p-0">
-            <!-- Framer facepile: 138×46 pill (::after 1px #e8e8e8) + 132×40 stack at 3px inset; items use 3px white ring -->
+            <!-- Facepile: 138×46 pill (::after 1px #e8e8e8) + 132×40 stack at 3px inset; items use 3px white ring -->
             <div
                 class="relative h-[46px] w-[138px] flex-none overflow-visible rounded-full"
                 aria-hidden="true"
@@ -68,17 +68,17 @@ const avatars = [
             </div>
 
             <div class="relative h-auto w-full max-w-[350px] flex-none whitespace-pre-wrap break-words text-balance opacity-60">
-                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px] text-center">{metadata.description}</p>
+                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-narrow:text-[15px] text-center">{metadata.description}</p>
             </div>
         </div>
     </div>
 
     <!-- Phone stage: hand art + slider CSS in global.css; side art → Tailwind -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[60px] overflow-visible px-0 pt-0 pb-[210px] max-framer:gap-10 max-framer:px-2.5 max-framer:pb-0">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[60px] overflow-visible px-0 pt-0 pb-[210px] max-narrow:gap-10 max-narrow:px-2.5 max-narrow:pb-0">
         <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-8 overflow-visible p-0">
 
             <!-- Left Screen Art -->
-            <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#f3f3f3,#fff)] dark:bg-[linear-gradient(270deg,var(--color-surface),var(--color-bg))] max-framer:hidden"></div>
+            <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#f3f3f3,#fff)] dark:bg-[linear-gradient(270deg,var(--color-surface),var(--color-bg))] max-narrow:hidden"></div>
 
             <!-- Mobile Phone with Testimonial -->
             <div class="relative z-[1] h-auto w-auto flex-none">
@@ -168,7 +168,7 @@ const avatars = [
             </div>
 
             <!-- Right Screen Art -->
-            <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#fff,#f3f3f3)] dark:bg-[linear-gradient(270deg,var(--color-bg),var(--color-surface))] max-framer:hidden"></div>
+            <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#fff,#f3f3f3)] dark:bg-[linear-gradient(270deg,var(--color-bg),var(--color-surface))] max-narrow:hidden"></div>
 
             <!-- Hand Art -->
             <div class="hand-art">
