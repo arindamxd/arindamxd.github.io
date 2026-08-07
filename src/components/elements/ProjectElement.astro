@@ -3,12 +3,15 @@
 const { project } = Astro.props;
 ---
 
-<a class="projects-list-item-link block" href={`/projects/${project.slug}`}>
-    <div class="projects-list-item">
-        <div class="projects-card projects-card-container card-hover" style="border-radius: 45px; height: 100%; width: 100%;">
-            <div class="caption-info" style="background-color: var(--color-bg); border-radius: 50px;">
+<a
+    class="sticky top-[110px] z-[1] flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0 no-underline"
+    href={`/projects/${project.slug}`}
+>
+    <div class="relative h-[400px] w-px flex-1 max-framer:h-[280px]">
+        <div class="projects-card group relative flex h-full w-full cursor-pointer flex-col flex-nowrap content-center items-center justify-end gap-2.5 overflow-hidden rounded-[45px] p-2.5">
+            <div class="caption-info rounded-[50px] bg-bg">
                 <div class="caption-info-content">
-                    <div class="caption-info-logo" style={`background-color: ${project.images.thumb_bg_color}; border-radius: 50px;`}>
+                    <div class="caption-info-logo rounded-[50px]" style={`background-color: ${project.images.thumb_bg_color}`}>
                         <div class="project-logo">
                             <img decoding="async" loading="lazy" src={project.images.thumb} alt="" />
                         </div>
@@ -22,7 +25,7 @@ const { project } = Astro.props;
                         </div>
                     </div>
                 </div>
-                <div class="caption-info-arrow" style="background-color: var(--color-surface, rgb(246, 246, 246)); border-radius: 100%; transform: none; will-change: transform;">
+                <div class="caption-info-arrow rounded-full bg-surface">
                     <div class="link-icon-circle-bg" style="image-rendering: pixelated; flex-shrink: 0;" aria-hidden="true">
                         <div class="svg-container" style="width:100%;height:100%;aspect-ratio:inherit">
                             <svg style="width:100%;height:100%;"><use href="#svg12157825541"></use></svg>
@@ -30,7 +33,7 @@ const { project } = Astro.props;
                     </div>
                 </div>
             </div>
-            <div class="project-background-image" style="will-change: transform;">
+            <div class="project-background-image">
                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0;">
                     <img decoding="auto" loading="lazy" src={project.images.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                 </div>

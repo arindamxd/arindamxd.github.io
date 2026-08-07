@@ -34,7 +34,7 @@ const sorted = [...experienceList].sort((a, b) =>
 const items = sorted.slice(0, 4);
 ---
 
-<section id="experiences" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[120px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5" style="will-change: transform;">
+<section id="experiences" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[80px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5" style="will-change: transform;">
 
     <!-- Header: YoE badge + ladder art -->
     <div data-reveal class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 rounded-[40px] bg-primary px-[50px] py-[60px] max-framer:rounded-[32px] max-framer:px-10 max-framer:py-[45px]">
@@ -66,13 +66,11 @@ const items = sorted.slice(0, 4);
         </div>
     </div>
     
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-start gap-[70px] overflow-visible px-[50px] pt-[5px] pb-0 max-framer:gap-[35px] max-framer:px-[15px]">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-start gap-[50px] overflow-visible px-8 pt-[5px] pb-0 max-framer:gap-[35px] max-framer:px-[15px]">
         <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-framer:gap-[30px] max-framer:px-2.5">
             <!-- Timeline -->
             <div
-                class="relative flex h-min w-full flex-none flex-row flex-nowrap content-start items-start justify-start gap-[27px] overflow-visible p-0"
-                data-border="true"
-                style="--border-bottom-width: 0px; --border-color: #eeeeee; --border-left-width: 0px; --border-right-width: 0px; --border-style: solid; --border-top-width: 1px;"
+                class="relative flex h-min w-full flex-none flex-row flex-nowrap content-start items-start justify-start gap-[27px] overflow-visible p-0 shadow-[inset_0_1px_0_0_#eeeeee]"
             >
                 <div class="pointer-events-none absolute top-[-5px] right-0 z-[2] h-full w-[130px] flex-none overflow-hidden bg-[linear-gradient(90deg,#fff0_-35%,#fff)]" />
                 <div class="relative flex h-min w-min flex-none flex-col flex-nowrap content-start items-start justify-start gap-2.5 overflow-visible pt-[17px] pb-0">
@@ -101,32 +99,26 @@ const items = sorted.slice(0, 4);
             </div>
 
             <!-- Title + description -->
-            <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-4 overflow-visible p-0">
+            <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-3 overflow-visible p-0 max-framer:gap-2.5">
                 <div class="relative h-auto w-full flex-none whitespace-pre-wrap break-words" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
                     <h3 class="m-0 p-0 font-manrope text-[24px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text whitespace-pre max-framer:text-[22px]">{metadata.title}</h3>
                 </div>
-                <div class="relative h-auto w-full max-w-[342px] flex-none whitespace-pre-wrap break-words opacity-50" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
+                <div class="relative h-auto w-full max-w-[480px] flex-none whitespace-pre-wrap break-words opacity-50" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
                     <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px]">{metadata.description}</p>
                 </div>
             </div>
         </div>
 
         <!-- Experience rows -->
-        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-9 overflow-visible p-0 max-framer:gap-[25px]">
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-7 overflow-visible p-0 max-framer:gap-[25px]">
             {items.map(experience => (
                 <div class="relative h-auto w-full flex-none">
                     <div
-                        class="relative flex h-min w-full flex-row flex-nowrap content-start items-start justify-start gap-2.5 overflow-visible pt-[30px] pb-0 max-framer:gap-[5px] max-framer:pt-[26px]"
-                        data-border="true"
-                        style="--border-bottom-width: 0px; --border-color: var(--color-border); --border-left-width: 0px; --border-right-width: 0px; --border-style: solid; --border-top-width: 1px;"
+                        class="relative grid w-full grid-cols-[minmax(0,1fr)_6.75rem_6.5rem] items-start gap-x-3 overflow-visible pt-[30px] pb-0 shadow-[inset_0_1px_0_0_var(--color-border)] max-framer:grid-cols-[minmax(0,1fr)_5.75rem_5.5rem] max-framer:gap-x-2.5 max-framer:pt-[26px]"
                     >
-                        <div class="relative min-w-0 flex-1 overflow-visible">
-                            <p class="m-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text whitespace-normal max-framer:text-[14px]">{experience.title}</p>
-                        </div>
-                        <div class="relative flex shrink-0 flex-row flex-nowrap items-center justify-end gap-2.5 overflow-visible max-framer:gap-[5px]">
-                            <p class="m-0 shrink-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px] text-right">{experience.company}</p>
-                            <p class="m-0 shrink-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline opacity-60 max-framer:text-[13px] text-right">{formatDateByYear(experience.start)} - {formatDateByYear(experience.end)}</p>
-                        </div>
+                        <p class="m-0 min-w-0 p-0 font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text whitespace-normal max-framer:text-[14px]">{experience.title}</p>
+                        <p class="m-0 w-full p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text no-underline whitespace-nowrap max-framer:text-[13px]">{experience.company}</p>
+                        <p class="m-0 w-full p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-right text-text no-underline opacity-60 whitespace-nowrap max-framer:text-[13px]">{formatDateByYear(experience.start)} - {formatDateByYear(experience.end)}</p>
                     </div>
                 </div>
             ))}

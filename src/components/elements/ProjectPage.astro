@@ -20,8 +20,8 @@ const { header, body } = project.page;
         </div>
 
         <div class="hero-badge">
-            <div class="hero-card" data-border=true id="hero">
-                <div class="hero-card-hole" data-border=true></div>
+            <div class="hero-card shadow-[inset_0_0_0_1px_#e9e9e9]" id="hero">
+                <div class="hero-card-hole shadow-[inset_0_0_0_1px_#e9e9e9]"></div>
 
                 <!-- Project Image -->
                 <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden rounded-[40px] p-0 will-change-transform max-framer:rounded-[30px]">
@@ -103,11 +103,11 @@ const { header, body } = project.page;
 
                 <!-- Website Link -->
                 {header.link && (
-                    <div class="hero-card-bottom" style="justify-content: center;">
+                    <div class="hero-card-bottom hero-card-bottom--project">
                         <div class="relative h-auto w-auto flex-none">
                             <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline" href={header.link} target="_blank" rel="noopener">
                                 <div class="relative h-auto w-auto flex-none whitespace-pre">
-                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">Visit website</p>
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">Source Code / Live Preview</p>
                                 </div>
                                 <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
                                     <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
@@ -129,11 +129,11 @@ const { header, body } = project.page;
                 <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text max-framer:text-[16px]">{project.desc.long}</p>
             </div>
             <div class="relative h-auto w-auto flex-none max-framer:order-2">
-                <a class="back-button-link back-button-link-text" href="/projects">
-                    <div class="back-arrow" data-border="true" style="--border-bottom-width: 1px; --border-color: rgb(233, 233, 233); --border-left-width: 1px; --border-right-width: 1px; --border-style: solid; --border-top-width: 1px; background-color: rgb(255, 255, 255); border-radius: 100%; opacity: 1;">
-                        <div class="back-arrow-vector" style="image-rendering: pixelated; flex-shrink: 0; opacity: 1;" aria-hidden="true">
-                            <div style="width:100%;height:100%;aspect-ratio:inherit">
-                                <svg style="width:100%;height:100%;"><use href="#svg12261373696"></use></svg>
+                <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-4 overflow-visible no-underline" href="/projects">
+                    <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_#e9e9e9] transition-colors duration-200 ease-in-out group-hover:bg-primary">
+                        <div class="relative h-[14px] w-[15px] flex-none transition-[filter] duration-200 ease-in-out group-hover:brightness-0 group-hover:invert" style="image-rendering: pixelated;" aria-hidden="true">
+                            <div class="aspect-square size-full">
+                                <svg class="size-full"><use href="#svg12261373696"></use></svg>
                             </div>
                         </div>
                     </div>

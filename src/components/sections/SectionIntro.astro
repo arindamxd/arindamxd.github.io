@@ -29,8 +29,8 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
     </div>
 
     <div class="hero-badge">
-        <div id="hero" class="hero-card appear-hero-card" data-border=true>
-            <div class="hero-card-hole" data-border=true></div>
+        <div id="hero" class="hero-card appear-hero-card shadow-[inset_0_0_0_1px_#e9e9e9]">
+            <div class="hero-card-hole shadow-[inset_0_0_0_1px_#e9e9e9]"></div>
 
             <div class="hero-card-content">
                 <div class="hero-card-slot-container">
@@ -59,13 +59,13 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                                         <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-framer:text-[13px]">{author.role}<br>{author.subRole}</p>
                                     </div>
                                 </div>
-                                <div class="hero-card-content-main-social">
+                                <div class="relative flex h-min w-min flex-none flex-row flex-nowrap items-center justify-center gap-2.5 overflow-visible p-0">
                                     {author.intro.social.map((link) => (
-                                        <div class="social-link-normal">
-                                            <a aria-label={`Link to ${link.name}`} class="social-circle-flex social-icons block" style="--icon-padding: 0px; background-color: rgb(255, 255, 255); border-radius: 50px; height: 100%; width: 100%; opacity: 1;" href={link.url} target="_blank" rel="noopener">
-                                                <div class="social-link-icon">
-                                                    <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
-                                                        <img decoding="auto" src={link.icon} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                                        <div class="relative aspect-square size-[22px] flex-none">
+                                            <a aria-label={`Link to ${link.name}`} class="group relative flex size-full cursor-pointer flex-col items-center justify-center overflow-visible rounded-full bg-bg no-underline" href={link.url} target="_blank" rel="noopener">
+                                                <div class="relative size-full flex-1 opacity-40 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
+                                                    <div class="absolute inset-0" style="border-radius:inherit">
+                                                        <img decoding="auto" src={link.icon} alt="" class="block size-full rounded-[inherit] object-cover object-center" />
                                                     </div>
                                                 </div>
                                             </a>

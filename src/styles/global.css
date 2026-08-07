@@ -1,30 +1,12 @@
 @import 'tailwindcss';
-@import './shell.css';
-@import './sections.css';
-@import './pages.css';
 @import './motion.css';
 
 /* ===================================================
-   Migration: proton.css → Tailwind
-   Phase 1: tokens + fonts
-   Phase 2: base reset + body shell
-   Phase 3: typography → Tailwind utilities (C1–C5)
-   Phase 4: nav + footer (shell.css social hover kept)
-   Phase 5: homepage sections (sections.css)
-   Phase 6: detail pages (pages.css) + shared utils
-   Pass A2+B1: page shells + NavBar → Tailwind utilities
-   Pass B3: Footer → Tailwind utilities
-   Pass C1–C5: typography presets → Tailwind; proton-text removed
-   Pass D1: Hero layout kept Framer CSS (badge/tie/card — same risk class as project cards)
-   Pass D2: Brands marquee layout → Tailwind (scroll keyframes kept)
-   Pass D3: Projects — header Tailwind; card layout Framer CSS (match design); typography Tailwind
-   Pass D4: Skills layout → Tailwind
-   Pass D5: Experiences layout → Tailwind (data-border kept)
-   Pass D6: Testimonials — header/stage Tailwind; phone slider CSS kept
-   Pass D7: Blogs / journal layout → Tailwind (data-border kept)
-   Pass E: Detail pages (blog/project/404) → Tailwind; back-button CSS kept
-   Pass F: Cleanup — pages.css slimmed; migration notes finalized
-   Pass G: Shared buttons + link-icons + View All → Tailwind
+   Migration: proton.css → Tailwind (consolidated)
+   Entry: global.css + motion.css only.
+   Remaining Framer CSS (hero shell, testimonial phone,
+   brands scroll, project logo zoom) lives below.
+   See docs/migration/ for section-by-section notes.
    =================================================== */
 
 /* ---------- Design tokens (@theme) ---------- */
@@ -279,5 +261,1234 @@
 @supports not (overflow: clip) {
     :root {
         --overflow-clip-fallback: hidden;
+    }
+}
+
+/* ---------- Remaining Framer layout (hero / projects logo / testimonials / brands) ---------- */
+.proton-root .hero-tie-container {
+    flex: none;
+    width: auto;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%);
+    z-index: 1;
+    will-change: var(--proton-will-change-effect-override, transform);
+}
+
+.proton-root .hero-badge {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 80px 0 0;
+    overflow: hidden;
+}
+
+.proton-root .hero-card {
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    flex: 1 0 0px;
+    gap: 10px;
+    width: 1px;
+    height: min-content;
+    position: relative;
+    padding: 12px 9px 22px;
+    border-radius: 46px;
+    background-color: var(--color-surface);
+}
+
+.proton-root .hero-card-hole {
+
+    aspect-ratio: 3.3157894736842106 / 1;
+    flex: none;
+    width: 63px;
+    height: var(--proton-aspect-ratio-supported, 19px);
+    position: relative;
+    margin-bottom: 0;
+    border-radius: 46px;
+    background-color: var(--color-bg);
+}
+
+.proton-root .hero-card-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: center;
+    flex: none;
+    gap: 40px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: var(--padding, 30px 40px 40px);
+    overflow: hidden;
+    border-radius: 36px;
+    background-color: var(--color-bg);
+    box-shadow: 0 7px 26.5px #00000008;
+    will-change: var(--proton-will-change-override, transform);
+}
+
+.proton-root .hero-card-slot-container {
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.proton-root .hero-card-content-identity {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 36px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+}
+
+.proton-root .hero-card-content-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 20px;
+    width: 100%;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    will-change: var(--proton-will-change-effect-override, transform);
+}
+
+.proton-root .hero-card-content-top-left {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: 1 0 0px;
+    gap: 18px;
+    width: 1px;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+.proton-root .hero-card-content-avatar {
+    aspect-ratio: 1 / 1;
+    flex: none;
+    width: 70px;
+    height: var(--proton-aspect-ratio-supported, 70px);
+    position: relative;
+    border-radius: 100px;
+}
+
+.proton-root .hero-card-content-main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: 1 0 0px;
+    gap: 12px;
+    width: 1px;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+.proton-root .hero-card-content-main-text {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 7px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+.proton-root .hero-card-content-main-text-name {
+    --proton-paragraph-spacing: 0px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.proton-root .hero-card-content-main-text-role {
+    --proton-paragraph-spacing: 0px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    opacity: 0.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+
+
+.proton-root .hero-card-content-top-available {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 7px;
+    width: min-content;
+    height: min-content;
+    position: relative;
+    padding: 4px 0 0;
+    overflow: visible;
+}
+
+.proton-root .available-dot-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex: none;
+    gap: 10px;
+    width: min-content;
+    height: min-content;
+    position: relative;
+    padding: 3px 0 0;
+    overflow: visible;
+}
+
+.proton-root .available-pulse {
+    aspect-ratio: 1 / 1;
+    flex: none;
+    width: 8px;
+    height: var(--proton-aspect-ratio-supported, 8px);
+    position: relative;
+    border-radius: 100%;
+    background-color: var(--color-active);
+
+    /* Add animation */
+    animation: pulseOpacity 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulseOpacity {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.4;
+    }
+}
+
+.proton-root .available-text-container,
+.proton-root .hero-card-content-badge-text-container,
+.proton-root .location-text-container {
+    --proton-paragraph-spacing: 0px;
+    flex: none;
+    width: auto;
+    height: auto;
+    position: relative;
+    white-space: pre;
+}
+
+.proton-root .hero-card-content-slogan {
+    --proton-paragraph-spacing: 0px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+    will-change: var(--proton-will-change-effect-override, transform);
+}
+
+.proton-root .hero-card-content-others {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 22px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+    will-change: var(--proton-will-change-effect-override, transform);
+}
+
+.hero-card-content-badge {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 10px;
+    width: min-content;
+    height: min-content;
+    position: relative;
+    padding: 6px 8px 6px 6px;
+    overflow: visible;
+    border-radius: 50px;
+    background-color: var(--color-surface);
+}
+
+.hero-card-content-description {
+    --proton-paragraph-spacing: 0px;
+    --proton-text-wrap-override: balance;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    opacity: 0.5;
+}
+
+.proton-root .hero-card-content-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    flex: none;
+    gap: 10px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Intro/project card footer — mobile-first compact stack */
+.proton-root .hero-card-bottom {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 8px 16px 0;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+.proton-root .hero-card-bottom > * {
+    flex: 0 0 auto;
+}
+
+.proton-root .hero-card-bottom-location {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    gap: 5px;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    padding: 0;
+}
+
+/* Project detail: 64px gray strip — same as footer “Created by” / View all bars */
+.proton-root .hero-card-bottom.hero-card-bottom--project {
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    min-height: 64px;
+    margin-top: -10px; /* cancel hero-card gap so total gray = 64px */
+    padding: 0 50px;
+    overflow: hidden;
+}
+
+.proton-root .hero-card:has(.hero-card-bottom--project) {
+    padding-bottom: 0;
+}
+
+.proton-root .location-icon {
+    flex: none;
+    width: 13px;
+    height: 14px;
+    position: relative;
+}
+
+.proton-root .location-text-container {
+    white-space: nowrap;
+}
+
+.proton-root .location-text-container p {
+    letter-spacing: -0.02em;
+}
+
+/* Web: horizontal bar — Framer Bottom: pad 12px 50px 0, ~30px tall */
+@media (min-width: 610px) {
+    .proton-root .hero-card-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
+        height: auto;
+        min-height: 30px;
+        padding: 12px 50px 0;
+        overflow: hidden;
+    }
+
+    .proton-root .hero-card-bottom-location {
+        justify-content: flex-start;
+        width: min-content;
+    }
+
+    .proton-root .location-text-container p {
+        letter-spacing: -0.04em;
+        text-align: left;
+    }
+}
+
+/* ======================================================
+   .hero-card-slot-dev — Horizontal Bar Group
+   ====================================================== */
+
+/* Main container */
+.hero-card-slot-div.hero-card-slot-centered {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+
+    width: 432px;
+    height: min-content;
+    gap: 10px;
+
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+/* Bars */
+.hero-card-slot-div .hero-card-slot-bar-active,
+.hero-card-slot-div .hero-card-slot-bar-inactive {
+    flex: 1 0 0;
+    width: 1px;
+    height: 4px;
+    position: relative;
+    border-radius: 50px;
+    opacity: 1;
+}
+
+.hero-card-slot-bar-active {
+    background-color: var(--color-active);
+}
+.hero-card-slot-bar-inactive {
+    background-color: var(--color-inactive);
+}
+
+/* Safari/WebKit fallback */
+@supports (background: -webkit-named-image(i)) and (not (font-palette: dark)) {
+    .hero-card-slot-div.hero-card-slot-centered {
+        gap: 0;
+    }
+    .hero-card-slot-div.hero-card-slot-centered > * {
+        margin: 0 5px;
+    }
+    .hero-card-slot-div.hero-card-slot-centered > :first-child {
+        margin-left: 0;
+    }
+    .hero-card-slot-div.hero-card-slot-centered > :last-child {
+        margin-right: 0;
+    }
+}
+
+/* ======================================================
+   .hero-tie — Logo/Icon Stack
+   ====================================================== */
+
+/* Main container */
+.hero-tie.hero-tie-centered {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+
+    width: 63px;
+    height: min-content;
+    gap: 0;
+
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+/* Child elements */
+.hero-tie .hero-tie-stripe {
+    flex: none;
+    width: 53px;
+    height: 30px;
+    position: relative;
+    background-color: var(--color-primary);
+    opacity: 1;
+}
+
+.hero-tie .hero-tie-holder {
+    flex: none;
+    width: 63px;
+    height: var(--proton-aspect-ratio-supported, 44px);
+    aspect-ratio: 1.4318 / 1;
+    position: relative;
+}
+
+.hero-tie .hero-tie-box {
+    flex: none;
+    width: 31px;
+    height: var(--proton-aspect-ratio-supported, 26px);
+    aspect-ratio: 1.1923 / 1;
+    position: relative;
+}
+
+/* Safari/WebKit fallback */
+@supports (background: -webkit-named-image(i)) and (not (font-palette: dark)) {
+    .hero-tie.hero-tie-centered {
+        gap: 0;
+    }
+    .hero-tie.hero-tie-centered > * {
+        margin: 0;
+    }
+    .hero-tie.hero-tie-centered > :first-child {
+        margin-top: 0;
+    }
+    .hero-tie.hero-tie-centered > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Project card caption + logo zoom (Framer spacing) */
+.projects-card .caption-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    width: 100%;
+    height: min-content;
+    padding: 10px;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+.projects-card .caption-info-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    flex: 1 0 0;
+    width: 1px;
+    height: min-content;
+    gap: 14px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.projects-card .caption-info-logo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    gap: 10px;
+    padding: 0;
+    position: relative;
+}
+
+.projects-card .project-logo {
+    aspect-ratio: 1 / 1;
+    width: 22px;
+    height: var(--proton-aspect-ratio-supported, 22px);
+    flex: none;
+    position: relative;
+    overflow: visible;
+}
+
+.projects-card .project-logo img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    max-width: none;
+    margin: -22px 0 0 -22px;
+    border-radius: inherit;
+    object-fit: contain;
+    object-position: center;
+    transform: translateZ(0) scale(0.5);
+    transform-origin: center;
+    backface-visibility: hidden;
+    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projects-card .caption-info-text {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: 1 0 0;
+    width: 1px;
+    height: min-content;
+    gap: 1px;
+    padding: 0 20px 0 0;
+    position: relative;
+    overflow: visible;
+}
+
+.projects-card .caption-info-text-title,
+.projects-card .caption-info-text-description {
+    width: 100%;
+    height: auto;
+    flex: none;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.projects-card .caption-info-text-description {
+    --proton-text-wrap-override: balance;
+}
+
+.projects-card .caption-info-arrow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    width: 54px;
+    height: var(--proton-aspect-ratio-supported, 54px);
+    gap: 10px;
+    padding: 0;
+    position: relative;
+}
+
+.projects-card .link-icon-circle-bg {
+    width: 12px;
+    height: 12px;
+    flex: none;
+    position: relative;
+    transition: transform 0.3s ease-out;
+}
+
+.projects-card:hover .project-logo img {
+    transform: translateZ(0) scale(0.575);
+}
+
+.projects-card:hover .link-icon-circle-bg {
+    transform: rotate(45deg);
+}
+
+.projects-card .project-background-image {
+    inset: 0;
+    position: absolute;
+    z-index: 0;
+    flex: none;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.projects-card:hover .project-background-image {
+    transform: scale(1.05);
+}
+.proton-root .hand-art {
+    -webkit-mask: linear-gradient(180deg, #000000 75%, rgba(0, 0, 0, 0) 100%) add;
+    flex: none;
+    inset: -30px -188px -188px 7px;
+    mask: linear-gradient(180deg, rgb(0, 0, 0) 75%, rgba(0, 0, 0, 0) 100%) add;
+    overflow: visible;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+}
+
+/* ======================================================
+   .testimonials — Tall Flex Section (360px × 750px)
+   ====================================================== */
+
+/* Main wrapper */
+.testimonials.main-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+    width: 360px;
+    height: 750px;
+    gap: 20px;
+    padding: 0;
+
+    position: relative;
+    overflow: visible;
+}
+
+/* Background overlay */
+.testimonials .mobile-border {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    left: -10px;
+
+    height: 771px;
+    flex: none;
+    overflow: visible;
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+/* Foreground centered flex */
+.testimonials .gestures {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    min-height: 750px;
+    width: auto;
+    gap: 10px;
+    padding: 0;
+
+    overflow: hidden;
+    will-change: var(--proton-will-change-override, transform);
+    z-index: 10;
+}
+
+/* Split left & right absolute containers */
+.testimonials .gesture-left-container,
+.testimonials .gesture-right-container {
+    position: absolute;
+    top: 50%;
+    height: 100%;
+    width: 50%;
+    flex: none;
+    z-index: 1;
+
+    transform: translateY(-50%);
+}
+.testimonials .gesture-left-container {
+    left: 0;
+}
+.testimonials .gesture-right-container {
+    right: 0;
+}
+
+/* Main vertical stack */
+.testimonials .vertical-stack {
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    width: 1px;
+    height: 100%;
+    padding: 70px 50px 50px;
+
+    position: relative;
+    overflow: visible;
+    z-index: 2;
+}
+
+/* Sections */
+.testimonials .vertical-stack-top,
+.testimonials .vertical-stack-info,
+.testimonials .vertical-stack-info-data,
+.testimonials .vertical-stack-info-recommendation-author {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    width: 100%;
+    height: min-content;
+    padding: 0;
+    position: relative;
+    overflow: visible;
+    gap: var(--proton-gap, 20px);
+}
+
+/* Individual gaps */
+.testimonials .vertical-stack-top {
+    gap: 25px;
+}
+.testimonials .vertical-stack-info {
+    gap: 40px;
+    z-index: 2;
+}
+.testimonials .vertical-stack-info-data {
+    gap: 20px;
+}
+.testimonials .vertical-stack-info-recommendation-author {
+    gap: 6px;
+}
+
+/* Inline row groups */
+.testimonials .progress-bar,
+.testimonials .vertical-stack-top-person {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    width: 100%;
+    height: min-content;
+    gap: 10px;
+    padding: 0;
+    position: relative;
+    overflow: visible;
+}
+
+/* Row flexed bars */
+.testimonials .progress-bar-segment {
+    flex: 1 0 0;
+    width: 1px;
+    height: 3px;
+    position: relative;
+}
+
+/* Icon + text row */
+.testimonials .vertical-stack-top-person-avatar {
+    flex: none;
+    width: 33px;
+    height: var(--proton-aspect-ratio-supported, 33px);
+    aspect-ratio: 1 / 1;
+    position: relative;
+}
+.testimonials .vertical-stack-top-person-info {
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    gap: 2px;
+
+    width: 1px;
+    height: min-content;
+    position: relative;
+}
+
+/* Text blocks */
+.testimonials .vertical-stack-top-person-info-name,
+.testimonials .vertical-stack-top-person-info-role,
+.testimonials .vertical-stack-info-recommendation-text,
+.testimonials .vertical-stack-info-recommendation-author-name,
+.testimonials .vertical-stack-info-recommendation-author-role {
+    width: 100%;
+    height: auto;
+
+    flex: none;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+/* Small decorative */
+.testimonials .stars-icon {
+    width: 69px;
+    height: 13px;
+    flex: none;
+    position: relative;
+}
+
+/* Full overlay row */
+.testimonials .vertical-stack-image {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    gap: 10px;
+    padding: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Absolute background */
+.testimonials .vertical-stack-image-background {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* Safari fallback adjustments */
+@supports (background: -webkit-named-image(i)) and (not (font-palette: dark)) {
+    .testimonials.main-wrapper,
+    .testimonials .gestures,
+    .testimonials .vertical-stack-top,
+    .testimonials .progress-bar,
+    .testimonials .vertical-stack-top-person,
+    .testimonials .vertical-stack-top-person-info,
+    .testimonials .vertical-stack-info,
+    .testimonials .vertical-stack-info-data,
+    .testimonials .vertical-stack-info-recommendation-author,
+    .testimonials .vertical-stack-image {
+        gap: 0;
+    }
+
+    /* margin simulation */
+    .testimonials.main-wrapper > * {
+        margin: 0 10px;
+    }
+    .testimonials .gestures > *,
+    .testimonials .progress-bar > *,
+    .testimonials .vertical-stack-top-person > *,
+    .testimonials .vertical-stack-image > * {
+        margin: 0 5px;
+    }
+    .testimonials .vertical-stack-top > * {
+        margin: 14px 0;
+    }
+    .testimonials .vertical-stack-top-person-info > * {
+        margin: 1px 0;
+    }
+    .testimonials .vertical-stack-info > * {
+        margin: 20px 0;
+    }
+    .testimonials .vertical-stack-info-data > * {
+        margin: 10px 0;
+    }
+    .testimonials .vertical-stack-info-recommendation-author > * {
+        margin: 3px 0;
+    }
+}
+
+/* ======================================================
+   .gesture-item — Narrow Clickable Container (180 × 760)
+   ====================================================== */
+
+/* Main interactive wrapper */
+.gesture-item.gesture-wrapper {
+    position: relative;
+    cursor: pointer;
+    overflow: visible;
+}
+
+/* Full absolute child (covers parent) */
+.gesture-item .gesture-item-full {
+    position: absolute;
+    inset: 0;
+
+    flex: none;
+    overflow: visible;
+    opacity: 0;
+
+    will-change: var(--proton-will-change-override, opacity);
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Hover state: reveal full overlay */
+.gesture-item:hover .gesture-item-full {
+    opacity: 1;
+}
+
+/* ==============================================
+   .progress-bar-row — Interactive Thin Row (360 × 3)
+   ============================================== */
+
+/* Main clickable flex row */
+.progress-bar-row.main-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    position: relative;
+    will-change: var(--proton-will-change-override, transform);
+
+    width: 360px;
+    height: 3px;
+
+    gap: 20px;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Full overlay container */
+.progress-bar-row .overlay-container {
+    flex: none;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* Safari/WebKit fallback adjustments */
+@supports (background: -webkit-named-image(i)) and (not (font-palette: dark)) {
+    .progress-bar-row.main-flex {
+        gap: 0;
+    }
+
+    .progress-bar-row.main-flex > * {
+        margin: 0 10px;
+    }
+
+    .progress-bar-row.main-flex > :first-child {
+        margin-left: 0;
+    }
+
+    .progress-bar-row.main-flex > :last-child {
+        margin-right: 0;
+    }
+}
+/* Brands marquee — animation only (layout → Tailwind D2) */
+
+/* The scrolling container */
+.logo-track {
+    display: flex;
+    /* Calculate the total width for both sets of logos */
+    width: calc(var(--logo-width) * var(--logo-count) * 2);
+    /* Apply the animation */
+    animation: scroll var(--animation-duration) linear infinite;
+}
+
+/* The keyframes for the scrolling animation */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Move the track to the left by the width of one full set of logos */
+        transform: translateX(calc(var(--logo-width) * var(--logo-count) * -1));
+    }
+}
+
+.logo-item {
+    flex-shrink: 0;
+    width: var(--logo-width);
+    display: flex; /* make each item a flexbox */
+    justify-content: center; /* center horizontally */
+    align-items: center; /* center vertically */
+}
+@media (max-width: 609.98px) {
+    .proton-root .hero-tie-container {
+        top: -14px;
+        will-change: unset;
+    }
+
+    /* Framer mobile Badge: pad-top 117px so lanyard shows under nav */
+    .proton-root .hero-badge {
+        padding: 117px 0 0;
+        overflow: hidden;
+    }
+
+    /* Framer mobile Card: 7px 6px 18px */
+    .proton-root .hero-card {
+        border-radius: 36px;
+        gap: 9px;
+        padding: 7px 6px 18px;
+    }
+
+    .proton-root .hero-card-hole {
+        width: 46px;
+        height: var(--proton-aspect-ratio-supported, 14px);
+        margin-bottom: 0;
+    }
+
+    /* Framer mobile White: pad 18×30×30, gap 26 */
+    .proton-root .hero-card-content {
+        border-radius: 30px;
+        gap: 26px;
+        padding: 18px 30px 30px;
+    }
+
+    /* Framer mobile Identity (Top + slogan): gap 24 */
+    .proton-root .hero-card-content-identity {
+        gap: 24px;
+    }
+
+    .proton-root .hero-card-content-top {
+        flex-direction: column;
+        gap: 22px;
+        justify-content: center;
+        will-change: unset;
+    }
+
+    .proton-root .hero-card-content-top-left {
+        flex: none;
+        order: 1;
+        width: 100%;
+    }
+
+    .proton-root .hero-card-content-avatar {
+        width: 60px;
+        height: var(--proton-aspect-ratio-supported, 60px);
+    }
+
+    .proton-root .hero-card-content-main-text {
+        gap: 4px;
+    }
+
+    .proton-root .hero-card-content-main-text-name,
+    .proton-root .hero-card-content-top-available {
+        order: 0;
+    }
+
+    .proton-root .hero-card-content-main-text-role {
+        order: 1;
+    }
+
+    .proton-root .hero-card-content-slogan,
+    .proton-root .hero-card-content-others,
+    .proton-root .hero-card-content-buttons {
+        will-change: unset;
+    }
+
+    .proton-root .hero-card-content-buttons {
+        align-items: flex-start;
+        align-content: flex-start;
+        flex-direction: column;
+    }
+
+    .hero-card-content-buttons > div:not(:first-child) {
+        display: none !important;
+    }
+
+    /* Framer mobile Bottom: pad 10×50×0, gap 9, stacked */
+    .proton-root .hero-card-bottom {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 10px 50px 0;
+        overflow: hidden;
+    }
+
+    .proton-root .hero-card-bottom.hero-card-bottom--project {
+        justify-content: center;
+        align-items: center;
+        height: 64px;
+        min-height: 64px;
+        margin-top: -9px; /* cancel mobile hero-card gap */
+        padding: 0 50px;
+    }
+
+    .proton-root .hero-card:has(.hero-card-bottom--project) {
+        padding-bottom: 0;
+    }
+
+
+    .proton-root .hand-art {
+        display: none;
+    }
+
+    /* Framer mobile lanyard: stripe 46×90, clip at ~76px (not full 117 pad) */
+    .hero-tie .hero-tie-stripe {
+        width: 46px;
+        height: 90px;
+    }
+
+    .hero-tie .hero-tie-holder {
+        aspect-ratio: unset;
+        width: 54px;
+        height: 37px;
+    }
+
+    .hero-tie .hero-tie-box {
+        aspect-ratio: unset;
+        width: 24px;
+        height: 17px;
+    }
+
+    .proton-root .hero-card-content-top-available {
+        padding: 0;
+    }
+
+}
+
+@supports (aspect-ratio: 1) {
+    body {
+        --proton-aspect-ratio-supported: auto;
     }
 }
