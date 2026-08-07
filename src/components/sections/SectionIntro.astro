@@ -29,8 +29,8 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
     </div>
 
     <div class="hero-badge">
-        <div id="hero" class="hero-card appear-hero-card shadow-[inset_0_0_0_1px_#e9e9e9]">
-            <div class="hero-card-hole shadow-[inset_0_0_0_1px_#e9e9e9]"></div>
+        <div id="hero" class="hero-card appear-hero-card shadow-[inset_0_0_0_1px_var(--color-border)]">
+            <div class="hero-card-hole shadow-[inset_0_0_0_1px_var(--color-border)]"></div>
 
             <div class="hero-card-content">
                 <div class="hero-card-slot-container">
@@ -101,9 +101,9 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                     <div class="relative h-auto w-auto flex-none">
                         <a class="group relative flex h-[58px] w-min cursor-pointer flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-hidden rounded-full py-[3px] pr-[74px] pl-7 no-underline" href="/404">
                             <div class="relative z-[2] h-auto w-auto flex-none whitespace-pre">
-                                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-bg no-underline max-framer:text-[15px]">Resume</p>
+                                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-white no-underline max-framer:text-[15px]">Resume</p>
                             </div>
-                            <div class="absolute top-[3px] right-[3px] z-[2] flex h-[52px] w-[52px] flex-col flex-nowrap content-center items-center justify-center rounded-full bg-bg p-0">
+                            <div class="absolute top-[3px] right-[3px] z-[2] flex h-[52px] w-[52px] flex-col flex-nowrap content-center items-center justify-center rounded-full bg-white p-0">
                                 <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45" style="image-rendering: pixelated;">
                                     <div class="h-full w-full" style="aspect-ratio:inherit">
                                         <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
@@ -114,7 +114,7 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
                         </a>
                     </div>
                     <div class="relative h-[58px] w-auto flex-none">
-                        <a class="group relative flex h-[58px] w-min cursor-pointer flex-row flex-nowrap content-center items-center justify-center gap-4 overflow-visible rounded-full bg-surface px-7 py-5 no-underline transition-colors duration-200 ease-in-out hover:bg-[#ececec]" href="#projects">
+                        <a class="group relative flex h-[58px] w-min cursor-pointer flex-row flex-nowrap content-center items-center justify-center gap-4 overflow-visible rounded-full bg-surface px-7 py-5 no-underline transition-colors duration-200 ease-in-out hover:bg-inactive" href="#projects">
                             <div class="relative z-[1] h-auto w-auto flex-none whitespace-pre">
                                 <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-framer:text-[15px]">My work</p>
                             </div>
@@ -125,13 +125,13 @@ if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth(
 
             <div class="hero-card-bottom">
                 <div class="hero-card-bottom-location">
-                    <div class="location-icon" style="image-rendering:pixelated;flex-shrink:0;fill:rgba(0,0,0,1);color:rgba(0,0,0,1)">
+                    <div class="location-icon text-text" style="image-rendering:pixelated;flex-shrink:0;fill:currentColor;color:currentColor">
                         <div class="svg-container" style="width:100%;height:100%;aspect-ratio:inherit">
                             <svg style="width:100%;height:100%;" viewBox="0 0 13 14" preserveAspectRatio="none" width="100%" height="100%"><use href="#svg-1885035283_1212"></use></svg>
                         </div>
                     </div>
                     <div class="location-text-container" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                        <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-left text-text max-framer:text-[12px] max-framer:tracking-[-0.02em]"><span class="text-[rgba(23,23,23,0.6)]">Located in&nbsp;</span>{author.location}<span class="text-[rgba(23,23,23,0.6)]">,&nbsp;available worldwide.</span></p>
+                        <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-left text-text max-framer:text-[12px] max-framer:tracking-[-0.02em]"><span class="text-text/60">Located in&nbsp;</span>{author.location}<span class="text-text/60">,&nbsp;available worldwide.</span></p>
                     </div>
                 </div>
                 <div class="relative flex h-auto w-auto flex-none items-center">

@@ -29,6 +29,24 @@ const { home = false, title = author.name } = Astro.props;
         <meta name="theme-color" content="#171717" />
         <meta name="color-scheme" content="light dark" />
 
+        <!-- Apply saved / system theme before paint to avoid flash -->
+        <script is:inline>
+            (function () {
+                try {
+                    var stored = localStorage.getItem('theme');
+                    var theme =
+                        stored === 'light' || stored === 'dark'
+                            ? stored
+                            : window.matchMedia('(prefers-color-scheme: dark)').matches
+                              ? 'dark'
+                              : 'light';
+                    if (theme === 'dark') document.documentElement.classList.add('dark');
+                    var meta = document.querySelector('meta[name="theme-color"]');
+                    if (meta) meta.setAttribute('content', theme === 'dark' ? '#222222' : '#171717');
+                } catch (e) {}
+            })();
+        </script>
+
         <!-- Facebook Open Graph -->
         <meta property="og:title" content={home ? author.name : `${author.name} | ${title}`} />
         <meta property="og:description" content={author.bio} />
@@ -61,6 +79,9 @@ const { home = false, title = author.name } = Astro.props;
                 "jobTitle": "Mobile App Developer"
             }
         </script>
+
+        <!-- Theme toggle -->
+        <script src="../scripts/theme.js" />
 
         <!-- Available text responsive script -->
         <script src="../scripts/available-text.js" />

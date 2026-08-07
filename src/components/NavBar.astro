@@ -1,69 +1,117 @@
 ---
 ---
 
-<header
-    class="relative flex h-[60px] w-min flex-row flex-nowrap items-center justify-start gap-[15px] overflow-visible rounded-full border border-white/[0.04] bg-[rgba(26,26,26,0.7)] py-0 pr-1.5 pl-[13px] shadow-[0_9px_26.6px_0_rgba(0,0,0,0.26)] backdrop-blur-[7px]"
->
-    <a
-        class="relative flex size-[34px] flex-none items-center justify-center rounded-full no-underline"
-        href="/"
-        aria-label="Go to homepage"
+<div class="relative flex flex-row flex-nowrap items-center justify-start gap-3">
+    <header
+        class="relative flex h-[60px] w-min flex-row flex-nowrap items-center justify-start gap-[15px] overflow-visible rounded-full border border-white/[0.04] bg-[rgba(26,26,26,0.7)] py-0 pr-1.5 pl-[13px] shadow-[0_9px_26.6px_0_rgba(0,0,0,0.26)] backdrop-blur-[7px] dark:border-white/10 dark:bg-[rgba(48,48,48,0.82)] dark:shadow-[0_9px_26.6px_0_rgba(0,0,0,0.45)]"
     >
+        <a
+            class="relative flex size-[34px] flex-none items-center justify-center rounded-full no-underline"
+            href="/"
+            aria-label="Go to homepage"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                role="presentation"
+                focusable="false"
+                class="size-5 shrink-0 text-white select-none"
+                fill="none"
+                aria-hidden="true"
+            >
+                <!-- Framer Home icon: rounded mark + bottom opening -->
+                <g
+                    transform="translate(8.25 15)"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M 0 6 L 0 0.75 C 0 0.336 0.336 0 0.75 0 L 6.75 0 C 7.164 0 7.5 0.336 7.5 0.75 L 7.5 6" />
+                </g>
+                <g
+                    transform="translate(2.25 3)"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M 0.683 11.127 C -1.177 14.124 0.979 18 4.508 18 L 14.993 18 C 18.521 18 20.677 14.124 18.817 11.127 L 13.573 2.127 C 11.813 -0.709 7.688 -0.709 5.927 2.127 Z" />
+                </g>
+            </svg>
+        </a>
+
+        <nav class="relative flex h-full flex-none flex-row flex-nowrap items-center justify-center gap-6">
+            <a
+                class="flex items-center font-manrope text-[16px] font-semibold leading-none tracking-[-0.04em] text-white no-underline transition-colors duration-[400ms] ease-[cubic-bezier(0.44,0,0.56,1)] hover:text-white/70 max-framer:text-[14px]"
+                href="/projects"
+            >
+                Projects
+            </a>
+            <a
+                class="flex items-center font-manrope text-[16px] font-semibold leading-none tracking-[-0.04em] text-white no-underline transition-colors duration-[400ms] ease-[cubic-bezier(0.44,0,0.56,1)] hover:text-white/70 max-framer:text-[14px]"
+                href="/blogs"
+            >
+                Blogs
+            </a>
+            <a
+                class="group relative flex h-[46px] flex-none cursor-pointer items-center justify-center rounded-full bg-white px-5 no-underline shadow-[0_1px_6px_0_rgba(0,0,0,0.09)] transition-colors duration-200 ease-in-out hover:bg-primary"
+                href="mailto:arindamxd@gmail.com"
+                target="_blank"
+                rel="noopener"
+            >
+                <span
+                    class="font-manrope text-[15px] font-semibold leading-none tracking-[-0.05em] text-[#171717] transition-colors duration-200 ease-in-out group-hover:text-white max-framer:text-[14px]"
+                >
+                    Contact
+                </span>
+            </a>
+        </nav>
+    </header>
+
+    <button
+        type="button"
+        data-theme-toggle
+        aria-label="Switch to dark mode"
+        class="relative flex size-[60px] flex-none cursor-pointer items-center justify-center overflow-visible rounded-full border border-white/[0.04] bg-[rgba(26,26,26,0.7)] p-0 shadow-[0_9px_26.6px_0_rgba(0,0,0,0.26)] backdrop-blur-[7px] transition-colors duration-200 ease-in-out hover:bg-[rgba(26,26,26,0.85)] dark:border-white/10 dark:bg-[rgba(48,48,48,0.82)] dark:shadow-[0_9px_26.6px_0_rgba(0,0,0,0.45)] dark:hover:bg-[rgba(58,58,58,0.9)]"
+    >
+        <!-- Moon: shown in light mode (click to go dark) -->
         <svg
+            data-theme-icon="moon"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             role="presentation"
             focusable="false"
-            class="size-5 shrink-0 text-bg select-none"
+            class="size-5 shrink-0 text-white select-none dark:hidden"
             fill="none"
             aria-hidden="true"
         >
-            <!-- Framer Home icon: rounded mark + bottom opening -->
-            <g
-                transform="translate(8.25 15)"
+            <path
+                d="M21 14.3A9 9 0 0 1 9.7 3 7.2 7.2 0 1 0 21 14.3Z"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-            >
-                <path d="M 0 6 L 0 0.75 C 0 0.336 0.336 0 0.75 0 L 6.75 0 C 7.164 0 7.5 0.336 7.5 0.75 L 7.5 6" />
-            </g>
-            <g
-                transform="translate(2.25 3)"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <path d="M 0.683 11.127 C -1.177 14.124 0.979 18 4.508 18 L 14.993 18 C 18.521 18 20.677 14.124 18.817 11.127 L 13.573 2.127 C 11.813 -0.709 7.688 -0.709 5.927 2.127 Z" />
-            </g>
+            />
         </svg>
-    </a>
-
-    <nav class="relative flex h-full flex-none flex-row flex-nowrap items-center justify-center gap-6">
-        <a
-            class="flex items-center font-manrope text-[16px] font-semibold leading-none tracking-[-0.04em] text-bg no-underline transition-colors duration-[400ms] ease-[cubic-bezier(0.44,0,0.56,1)] hover:text-white/70 max-framer:text-[14px]"
-            href="/projects"
+        <!-- Sun: shown in dark mode (click to go light) -->
+        <svg
+            data-theme-icon="sun"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            role="presentation"
+            focusable="false"
+            class="hidden size-5 shrink-0 text-white select-none dark:block"
+            fill="none"
+            aria-hidden="true"
         >
-            Projects
-        </a>
-        <a
-            class="flex items-center font-manrope text-[16px] font-semibold leading-none tracking-[-0.04em] text-bg no-underline transition-colors duration-[400ms] ease-[cubic-bezier(0.44,0,0.56,1)] hover:text-white/70 max-framer:text-[14px]"
-            href="/blogs"
-        >
-            Blogs
-        </a>
-        <a
-            class="group relative flex h-[46px] flex-none cursor-pointer items-center justify-center rounded-full bg-white px-5 no-underline shadow-[0_1px_6px_0_rgba(0,0,0,0.09)] transition-colors duration-200 ease-in-out hover:bg-primary"
-            href="mailto:arindamxd@gmail.com"
-            target="_blank"
-            rel="noopener"
-        >
-            <span
-                class="font-manrope text-[15px] font-semibold leading-none tracking-[-0.05em] text-text transition-colors duration-200 ease-in-out group-hover:text-bg max-framer:text-[14px]"
-            >
-                Contact
-            </span>
-        </a>
-    </nav>
-</header>
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5" />
+            <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+            />
+        </svg>
+    </button>
+</div>

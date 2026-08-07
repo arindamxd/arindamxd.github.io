@@ -2,7 +2,7 @@
 (function () {
     const smallText =
         'm-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-text max-framer:text-[12px]';
-    const muted = 'text-[rgba(23,23,23,0.6)]';
+    const muted = 'text-text/60';
 
     function updateAvailableText() {
         const container = document.querySelector('.available-text-container');

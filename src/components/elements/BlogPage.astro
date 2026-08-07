@@ -16,7 +16,7 @@ const { blog } = Astro.props;
             <!-- Back Button -->
             <div class="relative h-auto w-auto flex-none">
                 <a class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-4 overflow-visible no-underline" href="/blogs">
-                    <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_#e9e9e9] transition-colors duration-200 ease-in-out group-hover:bg-primary">
+                    <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_var(--color-border)] transition-colors duration-200 ease-in-out group-hover:bg-primary">
                         <div class="relative h-[14px] w-[15px] flex-none transition-[filter] duration-200 ease-in-out group-hover:brightness-0 group-hover:invert" style="image-rendering: pixelated;" aria-hidden="true">
                             <div class="aspect-square size-full">
                                 <svg class="size-full"><use href="#svg12261373696"></use></svg>
@@ -88,13 +88,13 @@ const { blog } = Astro.props;
                         <h3 class="mt-10 mb-0 p-0 font-manrope text-[22px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-[#171717] first:mt-0 max-framer:mt-6 max-framer:text-[20px]">{block.subtitle}</h3>
                     )}
                     {block.paragraph && (
-                        <p class="mt-5 mb-0 p-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-[rgba(23,23,23,0.5)] first:mt-0 max-framer:mt-3.5 max-framer:text-[16px]">{block.paragraph}</p>
+                        <p class="mt-5 mb-0 p-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-text/50 first:mt-0 max-framer:mt-3.5 max-framer:text-[16px]">{block.paragraph}</p>
                     )}
                     {block.bullets && (
                         <ul class="mt-5 mb-0 flex flex-col gap-5 pl-[1.35em] first:mt-0 max-framer:mt-3.5 max-framer:gap-3.5">
                             {block.bullets.map((bullet: string) => (
-                                <li class="m-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-[rgba(23,23,23,0.5)] max-framer:text-[16px]">
-                                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-[rgba(23,23,23,0.5)] max-framer:text-[16px]">{bullet}</p>
+                                <li class="m-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-text/50 max-framer:text-[16px]">
+                                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[145%] tracking-[-0.04em] text-left text-text/50 max-framer:text-[16px]">{bullet}</p>
                                 </li>
                             ))}
                         </ul>
