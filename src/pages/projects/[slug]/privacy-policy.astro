@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import NavBar from "../../../components/NavBar.astro";
+import Footer from "../../../components/Footer.astro";
+import ProjectPrivacyPage from "../../../components/elements/ProjectPrivacyPage.astro";
+import { getProjectsWithPrivacyPolicy } from "../../../utils/projects";
+
+const { project } = Astro.props;
+
+type PrivacyModule = {
+    frontmatter: {
+        title: string;
+        app: string;
+        lastUpdated: string;
+        contact: string;
+        playPackage?: string;
+        permissions?: string[];
+    };
+    Content: astroHTML.JSX.Element;
+    default: astroHTML.JSX.Element;
+};
+
+const privacyModules = import.meta.glob<PrivacyModule>(
+    "../../../content/privacy-policies/*.md",
+    { eager: true },
+);
+
+function resolvePrivacy(slug: string) {
+    const entry = Object.entries(privacyModules).find(([path]) =>
+        path.endsWith(`/${slug}.md`),
+    );
+    if (!entry) {
+        throw new Error(`Privacy policy markdown not found for slug: ${slug}`);
+    }
+    return entry[1];
+}
+
+const privacy = resolvePrivacy(project.slug);
+const Content = privacy.Content ?? privacy.default;
+
+export async function getStaticPaths() {
+    return getProjectsWithPrivacyPolicy().map((project) => ({
+        params: { slug: project.slug },
+        props: { project },
+    }));
+}
+---
+
+<BaseLayout home={false} title={`${project.title} Privacy Policy`}>
+
+    <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
+        <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">
+            <NavBar />
+        </div>
+        <div class="proton-root contents min-h-screen w-auto">
+            <main class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
+                <ProjectPrivacyPage
+                    projectTitle={project.title}
+                    projectSlug={project.slug}
+                    frontmatter={privacy.frontmatter}
+                >
+                    <Content />
+                </ProjectPrivacyPage>
+            </main>
+        </div>
+        <Footer />
+    </div>
+
+    <div id="svg-templates" style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict" aria-hidden="true">
+        <svg viewBox="0 0 15 14" id="svg12261373696"><path d="M 4.114 6.168 L 14.239 6.168 L 14.239 7.832 L 4.114 7.832 L 8.576 12.294 L 7.399 13.47 L 0.929 7 L 7.399 0.529 L 8.576 1.706 Z" fill="var(--color-text)"></path></svg>
+        <svg viewBox="0 0 10 10" id="link-arrow"><path d="M 8.336 2.84 L 1.176 10 L 0 8.824 L 7.159 1.664 L 0.849 1.664 L 0.849 0 L 10 0 L 10 9.151 L 8.336 9.151 Z" fill="var(--color-primary)"></path></svg>
+    </div>
+
+</BaseLayout>

@@ -166,10 +166,16 @@ function toProject(entry: ProjectCatalogEntry): Project {
             ...(entry.header.downloads ? { downloads: entry.header.downloads } : {}),
             ...(entry.header.link ? { link: entry.header.link } : {}),
         },
+        ...(entry.privacy_policy ? { privacy_policy: true } : {}),
         page: {
             body: loadBody(entry.content),
         },
     };
+}
+
+/** Projects that have a privacy-policy page under /projects/{slug}/privacy-policy */
+export function getProjectsWithPrivacyPolicy(): Project[] {
+    return getProjects().filter((p) => p.privacy_policy);
 }
 
 /** Section title/description from the catalog root. */

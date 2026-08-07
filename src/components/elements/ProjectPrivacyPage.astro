@@ -1,0 +1,189 @@
+---
+interface PrivacyFrontmatter {
+    title: string;
+    app: string;
+    lastUpdated: string;
+    contact: string;
+    playPackage?: string;
+    permissions?: string[];
+}
+
+interface Props {
+    projectTitle: string;
+    projectSlug: string;
+    frontmatter: PrivacyFrontmatter;
+}
+
+const { projectTitle, projectSlug, frontmatter } = Astro.props;
+---
+
+<article class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-hidden p-0 pt-[110px] pb-0">
+
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-0 overflow-hidden p-0 max-narrow:px-5">
+
+        <!-- Back Button -->
+        <div class="relative mb-10 h-auto w-auto flex-none max-narrow:mb-[30px]">
+            <a
+                data-scramble
+                class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-4 overflow-visible no-underline"
+                href={`/projects/${projectSlug}`}
+            >
+                <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_var(--color-border)] transition-colors duration-200 ease-in-out group-hover:bg-primary">
+                    <div class="relative h-[14px] w-[15px] flex-none transition-[filter] duration-200 ease-in-out group-hover:brightness-0 group-hover:invert" style="image-rendering: pixelated;" aria-hidden="true">
+                        <div class="aspect-square size-full">
+                            <svg class="size-full"><use href="#svg12261373696"></use></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative h-auto w-auto flex-none whitespace-pre">
+                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[13px]">Back to {projectTitle}</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Header -->
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-start gap-5 overflow-visible p-0">
+            <div class="relative h-auto w-full flex-none text-balance">
+                <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-left text-text max-narrow:text-[34px]">{frontmatter.title}</h1>
+            </div>
+            <div class="relative flex h-min w-full flex-none flex-col flex-nowrap gap-2 overflow-visible p-0">
+                <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text/60 max-narrow:text-[15px]">
+                    For {frontmatter.app}
+                </p>
+                <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text/40 max-narrow:text-[13px]">
+                    Last updated: {frontmatter.lastUpdated}
+                </p>
+            </div>
+        </div>
+
+        <div class="relative flex w-full flex-none items-center py-5" aria-hidden="true">
+            <div class="h-px w-full bg-border"></div>
+        </div>
+
+        <!-- Body -->
+        <div class="privacy-content relative flex h-auto w-full flex-1 flex-col break-words pb-16 pt-8">
+            <slot />
+        </div>
+
+    </div>
+
+</article>
+
+<style>
+    .privacy-content :global(> :first-child) {
+        margin-top: 0;
+    }
+
+    .privacy-content :global(h2) {
+        margin: 3.25rem 0 0;
+        padding: 0;
+        font-family: var(--font-manrope), Manrope, sans-serif;
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 125%;
+        letter-spacing: -0.05em;
+        color: var(--color-text);
+    }
+
+    .privacy-content :global(h3) {
+        margin: 2rem 0 0;
+        padding: 0;
+        font-family: var(--font-manrope), Manrope, sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 140%;
+        letter-spacing: -0.04em;
+        color: var(--color-text);
+    }
+
+    .privacy-content :global(p),
+    .privacy-content :global(li) {
+        margin: 1.25rem 0 0;
+        padding: 0;
+        font-family: var(--font-manrope), Manrope, sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 155%;
+        letter-spacing: -0.04em;
+        color: color-mix(in srgb, var(--color-text) 50%, transparent);
+    }
+
+    .privacy-content :global(h2 + p),
+    .privacy-content :global(h3 + p),
+    .privacy-content :global(h2 + ul),
+    .privacy-content :global(h3 + ul) {
+        margin-top: 1.25rem;
+    }
+
+    .privacy-content :global(strong) {
+        color: var(--color-text);
+        font-weight: 600;
+    }
+
+    .privacy-content :global(a) {
+        color: var(--color-text);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-color: color-mix(in srgb, var(--color-text) 35%, transparent);
+        transition: text-decoration-color 0.2s ease;
+    }
+
+    .privacy-content :global(a:hover) {
+        text-decoration-color: var(--color-text);
+    }
+
+    .privacy-content :global(ul) {
+        margin: 1.25rem 0 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+    }
+
+    .privacy-content :global(li) {
+        position: relative;
+        margin: 0;
+        padding-left: 1.25rem;
+        display: block;
+    }
+
+    .privacy-content :global(li)::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: calc((1lh - 5px) / 2);
+        width: 5px;
+        height: 5px;
+        border-radius: 9999px;
+        background: color-mix(in srgb, var(--color-text) 40%, transparent);
+    }
+
+    .privacy-content :global(blockquote) {
+        margin: 1.5rem 0 0;
+        padding: 1rem 1.25rem;
+        border-left: 2px solid var(--color-border);
+        background: var(--color-surface);
+        border-radius: 0 12px 12px 0;
+    }
+
+    .privacy-content :global(blockquote p) {
+        margin: 0;
+        color: color-mix(in srgb, var(--color-text) 60%, transparent);
+    }
+
+    @media (max-width: 809px) {
+        .privacy-content :global(h2) {
+            font-size: 24px;
+        }
+
+        .privacy-content :global(h3) {
+            font-size: 18px;
+        }
+
+        .privacy-content :global(p),
+        .privacy-content :global(li) {
+            font-size: 16px;
+        }
+    }
+</style>

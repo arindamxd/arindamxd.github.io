@@ -46,6 +46,8 @@ export interface ProjectCatalogEntry {
         downloads?: string
         link?: string
     }
+    /** When true, project page links to /projects/{slug}/privacy-policy */
+    privacy_policy?: boolean
     /** Relative path under src/content/, e.g. projects/camerax.md */
     content: string
 }
@@ -70,6 +72,7 @@ export interface Project {
         downloads?: string
         link?: string
     }
+    privacy_policy?: boolean
     page: {
         body: ProjectBodyBlock[]
     }
