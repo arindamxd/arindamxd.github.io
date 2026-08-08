@@ -262,9 +262,12 @@ function bootMarked() {
 }
 
 if (typeof document !== 'undefined') {
+    // ClientRouter soft navigations replace page DOM — re-bind [data-scramble]
+    // on every page-load (same pattern as available-text / reveal / count-up).
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', bootMarked);
     } else {
         bootMarked();
     }
+    document.addEventListener('astro:page-load', bootMarked);
 }
