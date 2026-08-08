@@ -120,34 +120,38 @@
     function buildProjectJson(form, root) {
         let slug = slugify(val(form, 'slug'));
         if (!slug) slug = slugify(val(form, 'title')) || 'project';
-        return (
-            JSON.stringify(
-                {
-                    slug,
-                    title: val(form, 'title') || 'Untitled',
-                    desc: {
-                        short: val(form, 'descShort'),
-                        long: val(form, 'descLong'),
-                    },
-                    images: {
-                        thumb: val(form, 'thumb'),
-                        thumb_bg_color: val(form, 'thumbBg') || 'rgb(42, 41, 255)',
-                        banner: val(form, 'banner'),
-                    },
-                    header: {
-                        organization: val(form, 'organization'),
-                        category: val(form, 'category'),
-                        released_date: val(form, 'released') || root.dataset.today || '',
-                        updated_date: val(form, 'updated') || root.dataset.today || '',
-                        downloads: val(form, 'downloads'),
-                        link: val(form, 'link'),
-                    },
-                    content: `projects/${slug}.md`,
-                },
-                null,
-                4
-            ) + '\n'
-        );
+
+        const downloads = val(form, 'downloads');
+        const link = val(form, 'link');
+        const sourceCode = val(form, 'source_code');
+        const privacyPolicy = form.elements.namedItem('privacy_policy')?.checked === true;
+
+        const entry = {
+            slug,
+            title: val(form, 'title') || 'Untitled',
+            desc: {
+                short: val(form, 'descShort'),
+                long: val(form, 'descLong'),
+            },
+            images: {
+                thumb: val(form, 'thumb'),
+                thumb_bg_color: val(form, 'thumbBg') || 'rgb(42, 41, 255)',
+                banner: val(form, 'banner'),
+            },
+            header: {
+                organization: val(form, 'organization'),
+                category: val(form, 'category'),
+                released_date: val(form, 'released') || root.dataset.today || '',
+                updated_date: val(form, 'updated') || root.dataset.today || '',
+                ...(downloads ? { downloads } : {}),
+                ...(link ? { link } : {}),
+            },
+            content: `projects/${slug}.md`,
+            ...(sourceCode ? { source_code: sourceCode } : {}),
+            ...(privacyPolicy ? { privacy_policy: true } : {}),
+        };
+
+        return JSON.stringify(entry, null, 4) + '\n';
     }
 
     function blogSlug(form) {
@@ -162,6 +166,10 @@
         const data = {};
         Array.from(form.elements).forEach((el) => {
             if (!el.name || el.disabled) return;
+            if (el.type === 'checkbox') {
+                data[el.name] = el.checked;
+                return;
+            }
             data[el.name] = el.value;
         });
         return data;
@@ -171,7 +179,12 @@
         if (!data || typeof data !== 'object') return;
         Object.keys(data).forEach((key) => {
             const el = form.elements.namedItem(key);
-            if (el && 'value' in el) el.value = data[key] ?? '';
+            if (!el) return;
+            if (el.type === 'checkbox') {
+                el.checked = Boolean(data[key]);
+                return;
+            }
+            if ('value' in el) el.value = data[key] ?? '';
         });
     }
 

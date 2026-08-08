@@ -31,7 +31,7 @@ Site URL is set in `astro.config.mjs`: production defaults to `https://arindamxd
 - SEO: meta description, canonical, Open Graph, Twitter card, Person JSON-LD
 - Client motion: Lenis, hero appear, scroll reveal (`data-reveal`), count-up stats — respects `prefers-reduced-motion`
 - App deep-link verification: `.well-known/assetlinks.json` (CameraX, certification app)
-- Static privacy-policy / app pages under `public/apps/` (CameraX, Coco, Ensecure)
+- Static privacy-policy / app pages under `public/apps/` (Coco, Ensecure); CameraX privacy is `/projects/camerax/privacy-policy`
 
 ---
 
@@ -73,13 +73,13 @@ npm run preview  # preview production build
 │   │   ├── Footer.astro
 │   │   ├── sections/              # Home / list page sections
 │   │   └── elements/              # Cards, project/blog pages, code block
-│   ├── content/                   # Site copy (JSON catalogs + blogs|projects/*.md)
+│   ├── content/                   # Site copy (JSON catalogs + blogs|projects|privacy-policies/*.md)
 │   ├── layouts/BaseLayout.astro
 │   ├── pages/
 │   │   ├── index.astro            # Home
 │   │   ├── 404.astro
 │   │   ├── projects.astro
-│   │   ├── projects/[slug].astro
+│   │   ├── projects/[slug]/          # index + privacy-policy
 │   │   ├── blogs.astro
 │   │   └── blogs/[slug].astro
 │   ├── scripts/                   # Client JS (theme, motion, slider, …)
@@ -100,7 +100,8 @@ npm run preview  # preview production build
 | --- | --- | --- |
 | `/` | `pages/index.astro` | Full home composition |
 | `/projects` | `pages/projects.astro` | Project list |
-| `/projects/[slug]` | `pages/projects/[slug].astro` | Catalog + `content/projects/*.md` |
+| `/projects/[slug]` | `pages/projects/[slug]/index.astro` | Catalog + `content/projects/*.md` |
+| `/projects/[slug]/privacy-policy` | `pages/projects/[slug]/privacy-policy.astro` | Optional; `content/privacy-policies/*.md` |
 | `/blogs` | `pages/blogs.astro` | Blog list |
 | `/blogs/[slug]` | `pages/blogs/[slug].astro` | Catalog + `content/blogs/*.md` |
 | `/tools` | `pages/tools.astro` | Author blog/project MD (+ catalog JSON) and download |
@@ -117,8 +118,9 @@ Edit files in `src/content/`. Sections and detail pages import these at build ti
 | File | Role |
 | --- | --- |
 | `author-metadata.json` | Name, bio, SEO, intro hero, footer, social links |
-| `projects-metadata.json` | Project list/card + hero `header` + `content` path to MD |
+| `projects-metadata.json` | Project list/card + hero `header` + `content` (+ optional `source_code`, `privacy_policy`) |
 | `projects/*.md` | Project body (image groups + `##` content sections) |
+| `privacy-policies/*.md` | Per-project privacy policy pages (`/projects/<slug>/privacy-policy`) |
 | `blogs-metadata.json` | Blog list/card fields + `content` path to MD |
 | `blogs/*.md` | Blog intro frontmatter + Markdown body |
 | `brands-metadata.json` | Collaboration / brand logos (marquee) |
@@ -142,9 +144,10 @@ Full reference: **[docs/blog-authoring.md](./docs/blog-authoring.md)**. Markdown
 
 ### Adding a project
 
-1. Add a list entry to `projects-metadata.json` (`slug`, `title`, `desc`, `images`, `header`, `content`).
+1. Add a list entry to `projects-metadata.json` (`slug`, `title`, `desc`, `images`, `header`, `content`, optional `source_code` / `privacy_policy`).
 2. Create `src/content/projects/<slug>.md` with the fixed body sequence (image groups + `##` sections).
-3. Add logos / assets under `public/assets/projects/<slug>/` as needed.
+3. If `privacy_policy` is enabled, add `src/content/privacy-policies/<slug>.md`.
+4. Add logos / assets under `public/assets/projects/<slug>/` as needed.
 
 Full reference: **[docs/project-authoring.md](./docs/project-authoring.md)**. Markdown compiles to the typed blocks rendered by `ProjectPage.astro`.
 

@@ -22,8 +22,9 @@
                 "downloads": "100K+",
                 "link": "https://play.google.com/store/apps/details?id=com.arindam.camerax"
             },
-            "privacy_policy": true,
-            "content": "projects/camerax.md"
+            "content": "projects/camerax.md",
+            "source_code": "https://github.com/arindamxd/android-camerax",
+            "privacy_policy": true
         }
     ]
 }

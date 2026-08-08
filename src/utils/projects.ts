@@ -166,10 +166,11 @@ function toProject(entry: ProjectCatalogEntry): Project {
             ...(entry.header.downloads ? { downloads: entry.header.downloads } : {}),
             ...(entry.header.link ? { link: entry.header.link } : {}),
         },
-        ...(entry.privacy_policy ? { privacy_policy: true } : {}),
         page: {
             body: loadBody(entry.content),
         },
+        ...(entry.source_code ? { source_code: entry.source_code } : {}),
+        ...(entry.privacy_policy ? { privacy_policy: true } : {}),
     };
 }
 

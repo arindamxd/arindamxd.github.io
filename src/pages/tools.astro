@@ -219,6 +219,20 @@ const today = new Date().toISOString().slice(0, 10);
                         </fieldset>
 
                         <fieldset class="tools-fieldset">
+                            <legend class="tools-legend">Project links</legend>
+                            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                                <label class="tools-label">
+                                    <span>Source code</span>
+                                    <input class="tools-input" name="source_code" type="url" placeholder="https://github.com/…" />
+                                </label>
+                                <label class="tools-label flex-row items-center gap-3 sm:pt-7">
+                                    <input class="size-4 accent-primary" name="privacy_policy" type="checkbox" />
+                                    <span>Privacy policy page</span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="tools-fieldset">
                             <legend class="tools-legend">Body (Markdown · no frontmatter)</legend>
                             <div class="flex flex-wrap gap-2">
                                 <button type="button" class="tools-chip" data-project-insert="pair">Image pair</button>

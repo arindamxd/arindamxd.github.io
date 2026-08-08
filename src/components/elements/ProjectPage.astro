@@ -109,7 +109,7 @@ const body = project.page.body as ProjectBodyBlock[];
                         <div class="relative h-auto w-auto flex-none">
                             <a data-scramble class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline" href={header.link} target="_blank" rel="noopener">
                                 <div class="relative h-auto w-auto flex-none whitespace-pre">
-                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">Source Code / Live Preview</p>
+                                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">Live Preview</p>
                                 </div>
                                 <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
                                     <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
@@ -224,23 +224,41 @@ const body = project.page.body as ProjectBodyBlock[];
         return null;
     })}
 
-    <!-- Privacy Policy -->
-    {project.privacy_policy && (
+    <!-- Project links -->
+    {(project.source_code || project.privacy_policy) && (
         <div
-            class="relative mt-5 flex h-[64px] w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center rounded-[46px] border border-border bg-surface px-[18px] max-narrow:mt-2.5 max-narrow:rounded-[36px] max-narrow:mx-5"
+            class="relative mt-5 flex h-[64px] w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-evenly rounded-[46px] border border-border bg-surface max-narrow:mt-2.5 max-narrow:rounded-[36px] max-narrow:mx-5"
         >
-            <a
-                data-scramble
-                class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible no-underline"
-                href={`/projects/${project.slug}/privacy-policy`}
-            >
-                <div class="relative h-auto w-auto flex-none whitespace-pre">
-                    <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">Privacy Policy</p>
-                </div>
-                <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
-                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
-                </div>
-            </a>
+            {project.source_code && (
+                <a
+                    data-scramble
+                    class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible no-underline"
+                    href={project.source_code}
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <div class="relative h-auto w-auto flex-none whitespace-pre">
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">Source Code</p>
+                    </div>
+                    <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
+                        <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                    </div>
+                </a>
+            )}
+            {project.privacy_policy && (
+                <a
+                    data-scramble
+                    class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible no-underline"
+                    href={`/projects/${project.slug}/privacy-policy`}
+                >
+                    <div class="relative h-auto w-auto flex-none whitespace-pre">
+                        <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">Privacy Policy</p>
+                    </div>
+                    <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
+                        <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                    </div>
+                </a>
+            )}
         </div>
     )}
 

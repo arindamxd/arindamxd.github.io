@@ -32,11 +32,13 @@ Keep list/card and hero meta here. Do **not** put body layout copy or gallery im
     "downloads": "100K+",
     "link": "https://…"
   },
-  "content": "projects/camerax.md"
+  "content": "projects/camerax.md",
+  "source_code": "https://github.com/…",
+  "privacy_policy": true
 }
 ```
 
-`content` is relative to `src/content/`.
+`content` is relative to `src/content/`. Optional fields after `content`: `source_code`, then `privacy_policy`.
 
 ### Header fields
 
@@ -47,7 +49,16 @@ Keep list/card and hero meta here. Do **not** put body layout copy or gallery im
 | `released_date` | “Released on” (ISO date string) |
 | `updated_date` | Used for list sorting |
 | `downloads` | Optional catalog metadata |
-| `link` | “Source Code / Live Preview” CTA |
+| `link` | “Live Preview” CTA |
+
+### Catalog link fields (after `content`)
+
+| Field | Renders as |
+|-------|------------|
+| `source_code` | End-of-page “Source Code” link |
+| `privacy_policy` | End-of-page “Privacy Policy” link → `/projects/<slug>/privacy-policy` |
+
+When `privacy_policy` is `true`, add the policy Markdown at `src/content/privacy-policies/<slug>.md`.
 
 ## Body file (Markdown)
 
