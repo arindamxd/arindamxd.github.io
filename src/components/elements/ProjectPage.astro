@@ -108,7 +108,7 @@ const body = project.page.body as ProjectBodyBlock[];
                 {header.link && (
                     <div class="hero-card-bottom hero-card-bottom--project">
                         <div class="relative h-auto w-auto flex-none">
-                            <a data-scramble class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline" href={header.link} target="_blank" rel="noopener">
+                            <a data-scramble data-scramble-variant="primary" class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline" href={header.link} target="_blank" rel="noopener">
                                 <div class="relative h-auto w-auto flex-none whitespace-pre">
                                     <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">Live Preview</p>
                                 </div>
@@ -135,7 +135,7 @@ const body = project.page.body as ProjectBodyBlock[];
                 </div>
             </div>
             <div class="relative h-auto w-auto flex-none max-narrow:order-2">
-                <a data-scramble class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-[14px] overflow-visible no-underline" href="/projects">
+                <a data-scramble data-scramble-variant="primary" class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-[14px] overflow-visible no-underline" href="/projects">
                     <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_var(--color-border)] transition-colors duration-200 ease-in-out group-hover:bg-primary">
                         <div class="relative h-[14px] w-[15px] flex-none transition-[filter] duration-200 ease-in-out group-hover:brightness-0 group-hover:invert" style="image-rendering: pixelated;" aria-hidden="true">
                             <div class="aspect-square size-full">
@@ -233,6 +233,7 @@ const body = project.page.body as ProjectBodyBlock[];
                 {project.source_code && (
                     <a
                         data-scramble
+                        data-scramble-variant="primary"
                         class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible no-underline"
                         href={project.source_code}
                         target="_blank"
@@ -249,6 +250,7 @@ const body = project.page.body as ProjectBodyBlock[];
                 {project.privacy_policy && (
                     <a
                         data-scramble
+                        data-scramble-variant="primary"
                         class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible no-underline"
                         href={`/projects/${project.slug}/privacy-policy`}
                     >

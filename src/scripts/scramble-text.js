@@ -75,25 +75,135 @@ function relativeLuminance(color) {
 }
 
 export function resolveScrambleBg(host) {
+    let found = null;
+    let node = host;
+    while (node && node !== document.documentElement) {
+        const bg = getComputedStyle(node).backgroundColor;
+        if (!isTransparent(bg)) {
+            found = bg;
+            break;
+        }
+        node = node.parentElement;
+    }
+
+    if (!found) {
+        found =
+            getComputedStyle(document.documentElement).getPropertyValue('--color-bg').trim() ||
+            '#ffffff';
+    }
+
+    // Light text sitting on a light surface usually means the real fill is a
+    // sibling layer (e.g. Resume on primary) — fall back to brand primary.
     const textColor = getComputedStyle(host).color;
-    if (relativeLuminance(textColor) > 0.72) {
+    if (relativeLuminance(textColor) > 0.72 && relativeLuminance(found) > 0.72) {
         const primary = getComputedStyle(document.documentElement)
             .getPropertyValue('--color-primary')
             .trim();
         if (primary) return primary;
     }
 
-    let node = host;
-    while (node && node !== document.documentElement) {
-        const bg = getComputedStyle(node).backgroundColor;
-        if (!isTransparent(bg)) return bg;
-        node = node.parentElement;
-    }
+    return found;
+}
 
-    return (
-        getComputedStyle(document.documentElement).getPropertyValue('--color-bg').trim() ||
-        '#ffffff'
-    );
+/** Named presets: data-scramble-variant="primary|auto|light|dark" */
+export const SCRAMBLE_VARIANTS = {
+    /** Brand primary block + white glyphs */
+    primary: {
+        bg: 'var(--color-primary, var(--color-surface))',
+        fg: '#ffffff',
+    },
+    /** Light-theme surface block + dark glyphs */
+    light: {
+        bg: '#ffffff',
+        fg: '#171717',
+    },
+    /** Dark-theme surface block + light glyphs */
+    dark: {
+        bg: '#222222',
+        fg: '#f5f5f5',
+    },
+    /** Match surrounding surface (default). */
+    auto: null,
+};
+
+/** Optional overrides: data-scramble-bg / data-scramble-fg / data-scramble-variant. */
+function readScrambleAttr(el, name) {
+    if (!(el instanceof Element)) return '';
+    return el.getAttribute(`data-scramble-${name}`)?.trim() || '';
+}
+
+/** Map short tokens to CSS values; anything else passes through as-is. */
+function resolveScrambleColorToken(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+
+    switch (raw.toLowerCase()) {
+        case 'primary':
+            return 'var(--color-primary, var(--color-surface))';
+        case 'surface':
+            return 'var(--color-surface, var(--color-bg))';
+        case 'bg':
+        case 'background':
+            return 'var(--color-bg)';
+        case 'text':
+            return 'var(--color-text)';
+        case 'white':
+            return '#ffffff';
+        case 'black':
+            return '#171717';
+        default:
+            return raw;
+    }
+}
+
+function scrambleAttrSource(host) {
+    if (!(host instanceof Element)) return null;
+    return host.closest('[data-scramble]') || host;
+}
+
+function resolveScrambleVariant(source, host) {
+    const name = (
+        readScrambleAttr(source, 'variant') ||
+        readScrambleAttr(host, 'variant') ||
+        'auto'
+    ).toLowerCase();
+    if (!name || name === 'auto') return null;
+    return SCRAMBLE_VARIANTS[name] || null;
+}
+
+/**
+ * Resolve block + glyph colors.
+ * Priority: explicit bg/fg attrs → variant preset → auto bg (no fg).
+ */
+export function resolveScrambleVars(host) {
+    const source = scrambleAttrSource(host);
+    const variant = resolveScrambleVariant(source, host);
+
+    const bgToken =
+        readScrambleAttr(source, 'bg') ||
+        readScrambleAttr(host, 'bg');
+    const fgToken =
+        readScrambleAttr(source, 'fg') ||
+        readScrambleAttr(host, 'fg');
+
+    const bg =
+        resolveScrambleColorToken(bgToken) ||
+        variant?.bg ||
+        resolveScrambleBg(host);
+    const fg =
+        resolveScrambleColorToken(fgToken) ||
+        variant?.fg ||
+        '';
+
+    return { bg, fg };
+}
+
+export function applyScrambleVars(host) {
+    if (!(host instanceof Element)) return;
+    const { bg, fg } = resolveScrambleVars(host);
+    host.style.setProperty('--scramble-bg', bg);
+    if (fg) host.style.setProperty('--scramble-fg', fg);
+    else host.style.removeProperty('--scramble-fg');
 }
 
 function clearTimers(el) {
@@ -126,24 +236,22 @@ export function wrapElement(el) {
     const text = el.textContent?.replace(/\s+/g, ' ').trim();
     if (!text) return el;
 
-    const bg = resolveScrambleBg(el);
-
     if (el.matches('a, button')) {
         const span = document.createElement('span');
         span.className = 'scramble-host';
-        span.style.setProperty('--scramble-bg', bg);
         span.innerHTML = wrapWordsHtml(text);
         span.dataset.scrambleWrapped = 'true';
         el.textContent = '';
         el.appendChild(span);
         el.dataset.scrambleWrapped = 'true';
+        applyScrambleVars(span);
         return span;
     }
 
-    el.style.setProperty('--scramble-bg', bg);
     el.innerHTML = wrapWordsHtml(text);
     el.dataset.scrambleWrapped = 'true';
     el.classList.add('scramble-host');
+    applyScrambleVars(el);
     return el;
 }
 
@@ -169,7 +277,7 @@ export function playScramble(el, { onComplete, allowMobile = false } = {}) {
     }
 
     if (el instanceof Element) {
-        el.style.setProperty('--scramble-bg', resolveScrambleBg(el));
+        applyScrambleVars(el);
     }
 
     randoms.forEach((node, i) => {
