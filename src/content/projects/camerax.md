@@ -1,16 +1,16 @@
-![Image Small Top Left](https://images.unsplash.com/photo-1571763806648-5d022a3d1a29?q=80&w=400&auto=format&fit=crop)
-![Image Small Top Right](https://images.unsplash.com/photo-1571763806648-5d022a3d1a29?q=80&w=400&auto=format&fit=crop)
+![CameraX screenshot — camera preview](/assets/projects/camerax/screenshot-1.png)
+![CameraX screenshot — capture UI](/assets/projects/camerax/screenshot-2.png)
 
 ## Understanding CameraX: A Simpler, Consistent Approach to Android Camera Development
 
-CameraX is a Jetpack support library designed to simplify camera development by offering a consistent, easy-to-use API across a wide range of Android devices, with backward compatibility to Android 5.0 (API level 21). Built on top of camera2, it introduces a cleaner, case-based and lifecycle-aware approach that eliminates the need for device-specific workarounds. This significantly reduces the amount of code required when adding camera features. CameraX also unlocks modern camera experiences—such as Portrait, HDR, Night, and Beauty—through optional Extensions, enabling developers to deliver capabilities similar to preinstalled camera apps with minimal effort.
+CameraX is a Jetpack support library that makes camera app development easier. It offers a consistent, easy-to-use API across most Android devices, with backward-compatibility to Android 5.0 (API level 21). Built on camera2, it uses a simpler, lifecycle-aware use-case approach and resolves many device compatibility issues for you—so you write less code. Optional Extensions unlock experiences like Portrait, HDR, Night, and Beauty on supported devices. This open-source Kotlin demo shows those APIs in action and is available on Google Play (100K+ downloads) and GitHub.
 
-![Image Large Middle](https://images.unsplash.com/photo-1571763806648-5d022a3d1a29?q=80&w=800&auto=format&fit=crop)
+![CameraX screenshot — gallery / photo result](/assets/projects/camerax/screenshot-4.png)
 
 ## Why CameraX Accelerates Modern Android Camera Development
 
-CameraX streamlines Android camera development by removing the complexity traditionally associated with camera2. Its lifecycle-aware, use-case-based design helps developers build stable camera features without writing device-specific workarounds. With guaranteed behavior across thousands of Android devices and built-in support for advanced effects through Extensions, CameraX allows teams to ship camera experiences faster, with less code, and with far fewer edge-case issues.
+CameraX removes much of the complexity traditionally associated with camera2. Its lifecycle-aware, use-case-based design helps developers build stable camera features without device-specific workarounds, and Extensions make it easier to ship advanced camera experiences with less code. The latest Google Play release includes Android 15 support, and the project continues to evolve as an open-source learning and reference app for the CameraX APIs.
 
-![Image Small Bottom Left](https://images.unsplash.com/photo-1571763806648-5d022a3d1a29?q=80&w=400&auto=format&fit=crop)
-![Image Small Bottom Right](https://images.unsplash.com/photo-1571763806648-5d022a3d1a29?q=80&w=400&auto=format&fit=crop)
-![Image Large Bottom](https://images.unsplash.com/photo-1571763806648-5d022a3d1a29?q=80&w=800&auto=format&fit=crop)
+![CameraX screenshot — effects](/assets/projects/camerax/screenshot-3.png)
+![CameraX screenshot — settings](/assets/projects/camerax/screenshot-5.png)
+![CameraX screenshot — live preview](/assets/projects/camerax/screenshot-6.png)

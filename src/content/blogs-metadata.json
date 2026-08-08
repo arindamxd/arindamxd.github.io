@@ -5,7 +5,7 @@
         {
             "slug": "upi-intent-launch-ios",
             "title": "Setting Up UPI Intent Launch and Opening UPI Apps from iOS",
-            "thumb": "https://cdn-images-1.medium.com/max/1024/0*YJBIRxYp6A3c5MhF",
+            "thumb": "/assets/blogs/upi-intent-launch-ios/banner.jpg",
             "author": {
                 "name": "Arindam Karmakar",
                 "avatar": "/assets/author/author-grey.png"
@@ -16,7 +16,7 @@
         {
             "slug": "webrtc-with-swift-ios",
             "title": "Unleashing Real-Time Communication in iOS Apps: WebRTC with Swift",
-            "thumb": "https://cdn-images-1.medium.com/max/1024/1*Zz2uJXLZYjJyH6CoNMO5OA.jpeg",
+            "thumb": "/assets/blogs/webrtc-with-swift-ios/banner.jpg",
             "author": {
                 "name": "Arindam Karmakar",
                 "avatar": "/assets/author/author-grey.png"
@@ -27,7 +27,7 @@
         {
             "slug": "ios-uicontrol-and-user-interaction",
             "title": "Unveiling the Magic: A Deep Dive into iOS UIControl and User Interaction",
-            "thumb": "https://cdn-images-1.medium.com/max/1024/1*e8s1TZCoxxCQqoFXJynBmw.jpeg",
+            "thumb": "/assets/blogs/ios-uicontrol-and-user-interaction/banner.jpg",
             "author": {
                 "name": "Arindam Karmakar",
                 "avatar": "/assets/author/author-grey.png"

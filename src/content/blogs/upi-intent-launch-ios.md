@@ -1,7 +1,7 @@
 ---
 title: "Setting Up UPI Intent Launch and Opening UPI Apps from iOS"
 description: "UPI (Unified Payments Interface) is a real-time payment system in India that allows users to transfer money instantly using their smartphones. To facilitate UPI payments, many apps have integrated UPI functionality."
-banner: "https://cdn-images-1.medium.com/max/1024/0*YJBIRxYp6A3c5MhF"
+banner: "/assets/blogs/upi-intent-launch-ios/banner.jpg"
 ---
 
 ## Understanding UPI

@@ -16,38 +16,26 @@ This Privacy Policy explains how the **CameraX** app ("CameraX", "we", "us", "ou
 
 ## Data Collection
 
-We collect **only** anonymous diagnostic data via trusted third-party services such as Firebase Crashlytics, solely to improve app stability and performance. This data is **technical in nature** (e.g., device model, OS version, app version, crash stack trace, timestamp), and contains **no personal identifiers** such as your name, email address, phone number, or precise location.
+CameraX **does not collect** personal data. As declared on the [Google Play Data safety](https://play.google.com/store/apps/details?id=com.arindam.camerax) section:
 
-### Firebase Crashlytics
+- **No data collected**
+- **No data shared with third parties**
 
-CameraX uses Firebase Crashlytics to gather crash reports and technical diagnostics. These help us quickly identify and resolve issues, improving reliability for everyone. Importantly, Crashlytics **does not collect** any personal data or sensitive identifiers.
-
-- **Data captured:** device model, OS version, app version, stack traces, crash timestamp, and similar technical details.
-- **Purpose:** identify and fix crashes, improve reliability.
-- **Data we don't capture:** information such as your name, email, or precise location.
-
-For more information, see [Firebase's Privacy and Security Policy](https://firebase.google.com/support/privacy).
-
-> CameraX itself **does not** run its own analytics servers and **does not** sell your data.
+The app does not gather your name, email address, phone number, precise location, photos for upload, or any other personal identifiers. Photos and videos you capture stay on your device unless you choose to share them yourself through other apps.
 
 ## Data Usage & Sharing
 
-All diagnostic data is used solely to debug and improve CameraX. These reports are processed securely by Firebase Crashlytics (Google). We never use your data to build marketing profiles, and we do **not** sell, rent, trade or share personal information—past legal obligations or court orders notwithstanding.
+Because CameraX does not collect personal data, there is nothing to sell, rent, trade, or share with third parties for advertising or analytics.
 
 ## Data Retention
 
-- Crash reports and related diagnostics are retained by Firebase according to Google's retention policies.
-- CameraX itself **does not** keep separate copies of crash logs on its own servers.
-
-## International Transfers
-
-Because Firebase operates globally, anonymous diagnostic data **may be transferred and processed** outside your country. Google applies industry-standard safeguards and compliance frameworks (such as GDPR and ISO certifications) to protect this data.
+CameraX does not operate its own servers for storing user content or personal information. Media you capture is stored locally on your device according to your device and OS settings.
 
 ## Children's Privacy
 
-CameraX is **not directed toward children under the age of 13** (or the relevant minimum age in your country). We do not knowingly collect or process any information from children. If we become aware that a child has provided any data, we will take steps to delete it promptly.
+CameraX is **not directed toward children under the age of 13** (or the relevant minimum age in your country). We do not knowingly collect or process any information from children.
 
-If you believe a child has used CameraX and shared information with us, please contact us at the email address below.
+If you believe a child has used CameraX in a way that raises a privacy concern, please contact us at the email address below.
 
 ## User Choices & Controls
 
@@ -61,15 +49,11 @@ To function properly, CameraX requires only these permissions for its core funct
 
 ## Data Security
 
-We use industry-standard measures and rely on Google's platform security for Crashlytics. However, no method of transmission or storage is 100% secure.
+CameraX keeps your media on-device. We encourage you to keep your device updated and to use the security features provided by Android and your manufacturer.
 
 ## External Links
 
-CameraX may include links to external websites or SDK providers. These are offered for your convenience only. We do not govern their content or privacy practices, and encourage you to read their privacy policies before using those services.
-
-## Third-Party Services
-
-For details on how Google handles data in the services we use, please see [Google's official Privacy & Terms](https://policies.google.com/privacy) resources (including Firebase Crashlytics).
+CameraX may include links to external websites (for example, the open-source repository or documentation). These are offered for your convenience only. We do not govern their content or privacy practices, and encourage you to read their privacy policies before using those services.
 
 ## Policy Updates
 

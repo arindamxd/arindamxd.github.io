@@ -1,7 +1,7 @@
 ---
 title: "A Deep Dive into iOS UIControl and User Interaction"
 description: "Ever wondered how those intuitive buttons, sliders, and text fields in your favorite iOS apps come alive? The secret weapon behind them is a superhero class called UIControl. Today, we're embarking on a journey into its world to empower you to craft captivating user interactions within your own iOS applications!"
-banner: "https://cdn-images-1.medium.com/max/1024/1*e8s1TZCoxxCQqoFXJynBmw.jpeg"
+banner: "/assets/blogs/ios-uicontrol-and-user-interaction/banner.jpg"
 ---
 
 ## Imagine UIControl as Your Toolkit for Building Interactive Elements

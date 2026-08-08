@@ -1,7 +1,7 @@
 ---
 title: "Unleashing Real-Time Communication in iOS Apps: WebRTC with Swift"
 description: "Imagine adding video calls or even screen sharing to your app, without needing extra plugins or server gymnastics. That’s the magic of WebRTC (Web Real-Time Communication). It lets you create those features directly within your app, and Swift, with its clean code and modern feel, is a perfect fit for building this on iOS."
-banner: "https://cdn-images-1.medium.com/max/1024/1*Zz2uJXLZYjJyH6CoNMO5OA.jpeg"
+banner: "/assets/blogs/webrtc-with-swift-ios/banner.jpg"
 ---
 
 ## Understanding WebRTC

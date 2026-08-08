@@ -83,7 +83,7 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
     </div>
 
     <!-- Article Content -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-1 overflow-hidden pt-6 narrow:pt-10 max-narrow:px-5">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-1 overflow-hidden pt-16 max-narrow:px-5">
         <div class="article-content relative flex h-auto w-px max-w-[550px] flex-1 flex-col break-words">
             {blog.page.body.map((block: BlogBodyBlock) => {
                 if (block.type === "title") {
