@@ -11,11 +11,11 @@ Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** 
 
 | Layer | Choice |
 | --- | --- |
-| Framework | [Astro](https://astro.build) `^5.16` (static output) |
+| Framework | [Astro](https://astro.build) `^7.2` (static output, Vite 8) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) via `@tailwindcss/vite` |
 | Motion | Custom CSS + JS (`motion.css`, hero appear, scroll reveal) + [Lenis](https://github.com/darkroomengineering/lenis) smooth scroll |
-| Content | JSON under `src/content/` (no Markdown content collections) |
-| Runtime | Node `>=18` |
+| Content | JSON catalogs + Markdown bodies under `src/content/` (runtime loaders in `src/utils/`) |
+| Runtime | Node `>=22.12` |
 | Deploy | GitHub Pages via Actions (`trunk` branch) |
 | Format | Prettier + `prettier-plugin-astro` + `prettier-plugin-tailwindcss` |
 
@@ -74,10 +74,12 @@ npm run preview  # preview production build
 │   │   ├── sections/              # Home / list page sections
 │   │   └── elements/              # Cards, project/blog pages, code block
 │   ├── content/                   # Site copy (JSON catalogs + blogs|projects|privacy-policies/*.md)
+│   ├── content.config.ts          # Content Layer registration (blogs glob)
 │   ├── layouts/BaseLayout.astro
 │   ├── pages/
 │   │   ├── index.astro            # Home
 │   │   ├── 404.astro
+│   │   ├── tools.astro            # Local MD / catalog authoring helper
 │   │   ├── projects.astro
 │   │   ├── projects/[slug]/          # index + privacy-policy
 │   │   ├── blogs.astro
