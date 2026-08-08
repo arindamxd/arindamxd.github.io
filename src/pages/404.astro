@@ -3,7 +3,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionNotFound from "../components/sections/SectionNotFound.astro";
 ---
 
-<BaseLayout home={false} title="Page Not Found">
+<BaseLayout
+    home={false}
+    title="Page Not Found"
+    description="The page you’re looking for doesn’t exist or has been moved."
+    noindex={true}
+>
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
         <div class="proton-root contents min-h-screen w-auto">

@@ -6,6 +6,7 @@ import SectionBlogs from "../../components/sections/SectionBlogs.astro";
 import Footer from "../../components/Footer.astro";
 
 import { getBlogs } from "../../utils/blogs";
+import { absoluteUrl, siteAuthor, siteOrigin } from "../../utils/seo";
 
 // props
 const { blog } = Astro.props;
@@ -16,9 +17,38 @@ export async function getStaticPaths() {
         props: { blog },
     }));
 }
+
+const description = blog.page.intro.paragraph;
+const image = blog.page.intro.banner || blog.thumb;
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: blog.title,
+    description,
+    image: absoluteUrl(image),
+    datePublished: blog.date.toISOString(),
+    author: {
+        "@type": "Person",
+        name: blog.author.name,
+        url: siteOrigin + "/",
+    },
+    publisher: {
+        "@type": "Person",
+        name: siteAuthor.name,
+        url: siteOrigin + "/",
+    },
+    mainEntityOfPage: absoluteUrl(`/blogs/${blog.slug}/`),
+};
 ---
 
-<BaseLayout home={false} title={blog.title}>
+<BaseLayout
+    home={false}
+    title={blog.title}
+    description={description}
+    image={image}
+    type="article"
+    jsonLd={jsonLd}
+>
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
         <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">

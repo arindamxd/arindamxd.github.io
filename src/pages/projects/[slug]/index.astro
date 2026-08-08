@@ -5,6 +5,7 @@ import ProjectPage from "../../../components/elements/ProjectPage.astro";
 import SectionProjects from "../../../components/sections/SectionProjects.astro";
 import Footer from "../../../components/Footer.astro";
 import { getProjects } from "../../../utils/projects";
+import { absoluteUrl, siteAuthor, siteOrigin } from "../../../utils/seo";
 
 // props
 const { project } = Astro.props;
@@ -15,9 +16,39 @@ export async function getStaticPaths() {
         props: { project },
     }));
 }
+
+const description = project.desc.short || project.desc.long;
+const image = project.images.banner || project.images.thumb;
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: project.title,
+    description: project.desc.long || project.desc.short,
+    image: absoluteUrl(image),
+    applicationCategory: project.header.category,
+    operatingSystem: "Android",
+    author: {
+        "@type": "Person",
+        name: siteAuthor.name,
+        url: siteOrigin + "/",
+    },
+    datePublished: project.header.released_date.toISOString(),
+    dateModified: project.header.updated_date.toISOString(),
+    ...(project.header.link
+        ? { url: project.header.link, installUrl: project.header.link }
+        : { url: absoluteUrl(`/projects/${project.slug}/`) }),
+    ...(project.source_code ? { codeRepository: project.source_code } : {}),
+};
 ---
 
-<BaseLayout home={false} title={project.title}>
+<BaseLayout
+    home={false}
+    title={project.title}
+    description={description}
+    image={image}
+    type="article"
+    jsonLd={jsonLd}
+>
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
         <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">

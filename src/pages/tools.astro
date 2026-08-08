@@ -7,7 +7,7 @@ const author = (await import("../content/author-metadata.json")).default;
 const today = new Date().toISOString().slice(0, 10);
 ---
 
-<BaseLayout home={false} title="Tools">
+<BaseLayout home={false} title="Tools" noindex={true} description="Private authoring tools for site content.">
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
         <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">
             <NavBar />

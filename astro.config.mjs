@@ -1,23 +1,26 @@
 // astro.config.mjs
 
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from '@tailwindcss/vite';
 
 const SERVER_PORT = 3000;
-const LOCALHOST_URL = `http://localhost:${SERVER_PORT}`;
 const LIVE_URL = 'https://arindamxd.github.io';
 
-// Explicit SITE_URL env override (preferred) falls back to NODE_ENV
+// Prefer explicit SITE_URL; otherwise always use the live site so sitemap/canonical stay correct in CI.
 const SITE_URL = process.env.SITE_URL?.trim();
-const isProduction = process.env.NODE_ENV === 'production';
-const BASE_URL = SITE_URL || (isProduction ? LIVE_URL : LOCALHOST_URL);
+const BASE_URL = SITE_URL || LIVE_URL;
 
 export default defineConfig({
     site: BASE_URL,
     server: { port: SERVER_PORT },
     base: '/', // keep "/" when deploying to arindamxd.github.io
-    integrations: [],
+    integrations: [
+        sitemap({
+            filter: (page) => !page.includes('/tools'),
+        }),
+    ],
     vite: {
         resolve: {
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],

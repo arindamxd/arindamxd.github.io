@@ -37,6 +37,7 @@ function resolvePrivacy(slug: string) {
 
 const privacy = resolvePrivacy(project.slug);
 const Content = privacy.Content ?? privacy.default;
+const { frontmatter } = privacy;
 
 export async function getStaticPaths() {
     return getProjectsWithPrivacyPolicy().map((project) => ({
@@ -44,9 +45,15 @@ export async function getStaticPaths() {
         props: { project },
     }));
 }
+
+const description = `Privacy Policy for ${frontmatter.app}. Last updated ${frontmatter.lastUpdated}. How ${frontmatter.app} handles diagnostic data and permissions.`;
 ---
 
-<BaseLayout home={false} title={`${project.title} Privacy Policy`}>
+<BaseLayout
+    home={false}
+    title={`${project.title} Privacy Policy`}
+    description={description}
+>
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
         <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">

@@ -1,6 +1,6 @@
 {
     "name": "Arindam Karmakar",
-    "role": "Mobile App Developer",
+    "role": "Mobile Engineering",
     "subRole": "iOS / Android",
     "bio": "A young Google-certified associate programmer with many talents and a passion for all things Google/Android.",
     "canonical": "https://arindamxd.github.io/",
@@ -39,7 +39,6 @@
     "footer": {
         "avatar": "/assets/author/author-grey.png",
         "title": "Say Hello  👋",
-        "role": "Mobile Engineering",
         "description": "WARNING: I sometimes ghost by accident. Not personal. I’ll get back when I remember I’m human.",
         "social": [
             {

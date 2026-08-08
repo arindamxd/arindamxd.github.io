@@ -2,11 +2,90 @@
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import PageLoader from "../components/PageLoader.astro";
+import {
+    absoluteUrl,
+    canonicalFromPathname,
+    metaDescription,
+    pageTitle,
+    siteAuthor,
+    siteOrigin,
+} from "../utils/seo";
 
-const author = (await import("../content/author-metadata.json")).default;
+interface Props {
+    home?: boolean;
+    /** Short page title (without site name). Ignored when home. */
+    title?: string;
+    description?: string;
+    /** Absolute or site-relative image for OG/Twitter. */
+    image?: string;
+    /** Open Graph type */
+    type?: "website" | "article" | "profile";
+    noindex?: boolean;
+    /** Extra JSON-LD objects (Person/WebSite defaults always included on home). */
+    jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
 
-// props
-const { home = false, title = author.name } = Astro.props;
+const {
+    home = false,
+    title: pageTitleProp = siteAuthor.name,
+    description: descriptionProp,
+    image: imageProp,
+    type = home ? "website" : "website",
+    noindex = false,
+    jsonLd,
+} = Astro.props as Props;
+
+const fullTitle = pageTitle(pageTitleProp, home);
+const description = metaDescription(
+    descriptionProp ||
+        (home
+            ? `${siteAuthor.intro.subTitle} ${siteAuthor.bio}`
+            : siteAuthor.bio),
+);
+const canonical = canonicalFromPathname(Astro.url.pathname);
+const ogImage = absoluteUrl(imageProp || siteAuthor.ogImage);
+const robots = noindex
+    ? "noindex, nofollow"
+    : "index, follow, max-image-preview:large";
+
+const personLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: siteAuthor.name,
+    url: siteOrigin + "/",
+    jobTitle: siteAuthor.role,
+    description: siteAuthor.bio,
+    image: absoluteUrl(siteAuthor.intro.avatar),
+    address: {
+        "@type": "PostalAddress",
+        addressCountry: siteAuthor.location,
+    },
+    sameAs: [
+        ...siteAuthor.intro.social.map((s) => s.url),
+        ...siteAuthor.footer.social.map((s) => s.url),
+    ].filter((url, i, arr) => arr.indexOf(url) === i),
+};
+
+const websiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteAuthor.name,
+    url: siteOrigin + "/",
+    description: siteAuthor.intro.subTitle,
+    author: { "@type": "Person", name: siteAuthor.name },
+};
+
+const extraLd = jsonLd
+    ? Array.isArray(jsonLd)
+        ? jsonLd
+        : [jsonLd]
+    : [];
+
+const structuredData = home
+    ? [personLd, websiteLd, ...extraLd]
+    : extraLd.length
+      ? extraLd
+      : [personLd];
 ---
 
 <!DOCTYPE html>
@@ -15,19 +94,16 @@ const { home = false, title = author.name } = Astro.props;
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <!-- Title -->
-        <title>{home ? author.name : `${author.name} | ${title}`}</title>
+        <title>{fullTitle}</title>
 
-        <!-- SEO -->
-        <meta name="description" content={author.bio} />
-        <link rel="canonical" href={author.canonical} />
-        <meta name="robots" content="max-image-preview:large" />
+        <meta name="description" content={description} />
+        <meta name="author" content={siteAuthor.name} />
+        <link rel="canonical" href={canonical} />
+        <meta name="robots" content={robots} />
 
-        <!-- Favicons -->
-        <link rel="icon" href="/assets/resources/favicon.svg" />
+        <link rel="icon" href="/assets/resources/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/assets/resources/favicon.svg" />
 
-        <!-- Color scheme -->
         <meta name="theme-color" content="#171717" />
         <meta name="color-scheme" content="light dark" />
 
@@ -201,38 +277,26 @@ const { home = false, title = author.name } = Astro.props;
             html.loader-skip .page-loader { display: none !important; }
         </style>
 
-        <!-- Facebook Open Graph -->
-        <meta property="og:title" content={home ? author.name : `${author.name} | ${title}`} />
-        <meta property="og:description" content={author.bio} />
-        <meta property="og:type" content="portfolio" />
-        <meta property="og:url" content={author.canonical} />
-        <meta property="og:image" content={author.ogImage} />
+        <!-- Open Graph -->
+        <meta property="og:site_name" content={siteAuthor.name} />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content={type} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:alt" content={fullTitle} />
 
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={author.bio} />
-        <meta name="twitter:image" content={author.ogImage} />
+        <meta name="twitter:title" content={fullTitle} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content={fullTitle} />
 
-        <!-- Preload critical assets -->
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="preload" as="image" href={author.ogImage} />
 
-        <!-- Structured data -->
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "Person",
-                "name": "Arindam Karmakar",
-                "url": "https://arindamxd.github.io/",
-                "sameAs": [
-                    "https://github.com/arindamxd",
-                    "https://linkedin.com/in/arindamxd",
-                    "https://x.com/arindamxd"
-                ],
-                "jobTitle": "Mobile App Developer"
-            }
-        </script>
+        <script type="application/ld+json" set:html={JSON.stringify(structuredData.length === 1 ? structuredData[0] : structuredData)} />
 
         <!-- Soft page transitions; bottom nav persists via transition:persist -->
         <ClientRouter />
