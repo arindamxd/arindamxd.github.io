@@ -71,27 +71,27 @@ const items = sorted.slice(0, 4);
             <!-- Timeline -->
             <div
                 data-reveal
-                class="relative flex h-min w-full flex-none flex-row flex-nowrap content-start items-start justify-start gap-[27px] overflow-visible p-0 shadow-[inset_0_1px_0_0_#eeeeee] dark:shadow-[inset_0_1px_0_0_var(--color-border)]"
+                class="relative flex h-min w-full flex-none flex-row flex-nowrap content-start items-start justify-start gap-[27px] overflow-visible p-0 shadow-[inset_0_1px_0_0_#eeeeee] dark:shadow-[inset_0_1px_0_0_var(--color-border)] max-narrow:gap-4"
             >
-                <div class="pointer-events-none absolute top-[-5px] right-0 z-[2] h-full w-[130px] flex-none overflow-hidden bg-[linear-gradient(90deg,#fff0_-35%,#fff)] dark:bg-[linear-gradient(90deg,transparent_-35%,var(--color-bg))]" />
+                <div class="pointer-events-none absolute top-[-5px] right-0 z-[2] h-full w-[130px] flex-none overflow-hidden bg-[linear-gradient(90deg,#fff0_-35%,#fff)] dark:bg-[linear-gradient(90deg,transparent_-35%,var(--color-bg))] max-narrow:w-10" />
                 <div class="relative flex h-min w-min flex-none flex-col flex-nowrap content-start items-start justify-start gap-2.5 overflow-visible pt-[17px] pb-0">
                     <div class="absolute top-[-7px] left-0 z-[1] aspect-square h-[14px] w-[14px] flex-none rounded-full bg-primary" />
-                    <div class="relative flex h-min w-auto flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 self-stretch overflow-hidden p-0">
+                    <div class="relative flex h-min w-auto flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 self-stretch overflow-visible p-0">
                         <div class="relative h-auto w-auto flex-none whitespace-pre" style="outline: none; display: flex; flex-direction: column; justify-content: flex-end; flex-shrink: 0; will-change: transform; transform: none;">
-                            <p class="m-0 p-0 font-manrope text-[52px] font-semibold leading-none tracking-[-0.05em] text-text whitespace-pre">{currentYear}</p>
+                            <p class="m-0 p-0 font-manrope text-[52px] font-semibold leading-none tracking-[-0.05em] text-text whitespace-pre max-narrow:text-[44px]">{currentYear}</p>
                         </div>
                     </div>
                 </div>
-                <div class="relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-center gap-[27px] overflow-visible p-0">
+                <div class="relative flex h-min w-px min-w-0 flex-1 flex-row flex-nowrap content-center items-center justify-center gap-[27px] overflow-visible p-0 max-narrow:gap-3">
                     {yearList.map((year, index) => (
                         <div class:list={[
-                            "relative flex h-min w-px flex-1 flex-col flex-nowrap content-start items-start justify-start gap-2.5 overflow-visible pt-[19px] pb-0",
-                            index >= 3 && "max-narrow:hidden",
+                            "relative flex h-min w-px min-w-0 flex-1 flex-col flex-nowrap content-start items-start justify-start gap-2.5 overflow-visible pt-[19px] pb-0",
+                            index >= 2 && "max-narrow:hidden",
                         ]}>
                             <div class="absolute top-[-5px] left-0 z-[1] aspect-square h-2.5 w-2.5 flex-none rounded-full bg-[#cacaca]" />
-                            <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0">
+                            <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0">
                                 <div class="relative h-auto w-auto flex-none whitespace-pre opacity-40" style="outline: none; display: flex; flex-direction: column; justify-content: flex-end; flex-shrink: 0; will-change: transform; transform: none;">
-                                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text whitespace-pre max-narrow:text-[16px]">{year}</p>
+                                    <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[140%] tracking-[-0.04em] text-left text-text whitespace-nowrap max-narrow:text-[15px]">{year}</p>
                                 </div>
                             </div>
                         </div>
