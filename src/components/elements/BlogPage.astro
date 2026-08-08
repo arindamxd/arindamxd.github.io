@@ -66,7 +66,7 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
         </div>
 
         <!-- Article Intro -->
-        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-5 overflow-hidden pt-8 pb-16">
+        <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-5 overflow-hidden pt-8 pb-8">
             <p class="m-0 w-full p-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[24px]">{blog.page.intro.title}</p>
             <p class="m-0 w-full p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/60 max-narrow:text-[16px]">{blog.page.intro.paragraph}</p>
         </div>
@@ -74,7 +74,7 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
     </div>
 
     <!-- Article Image -->
-    <div class="relative my-[5px] flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-0 overflow-hidden px-[30px] py-0 max-narrow:px-1">
+    <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-0 overflow-hidden px-[30px] py-0 max-narrow:px-2.5">
         <div class="relative aspect-[1.6290322580645162] h-auto max-h-none w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-narrow:rounded-[20px]">
             <div class="absolute inset-0" style="border-radius:inherit;">
                 <img decoding="auto" loading="lazy" src={blog.page.intro.banner} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
@@ -83,7 +83,7 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
     </div>
 
     <!-- Article Content -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-1 overflow-hidden pt-5 max-narrow:px-5">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-1 overflow-hidden pt-6 max-narrow:px-5">
         <div class="article-content relative flex h-auto w-px max-w-[550px] flex-1 flex-col break-words">
             {blog.page.body.map((block: BlogBodyBlock) => {
                 if (block.type === "title") {
@@ -158,10 +158,11 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
     .article-content > :first-child {
         margin-top: 0;
     }
-    .article-content > .article-title {
+    /* Section titles only when not the first body block (banner sits above) */
+    .article-content > .article-title:not(:first-child) {
         margin-top: 3.25rem; /* ~52px before new section */
     }
-    .article-content > .article-subtitle {
+    .article-content > .article-subtitle:not(:first-child) {
         margin-top: 3.25rem;
     }
     .article-content > .article-paragraph,

@@ -74,14 +74,14 @@ const avatars = [
     </div>
 
     <!-- Phone stage: hand art + slider CSS in global.css; side art → Tailwind -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[60px] overflow-visible px-0 pt-0 pb-[210px] max-narrow:gap-10 max-narrow:px-2.5 max-narrow:pb-0">
+    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[60px] overflow-visible px-0 pt-0 pb-[210px] max-narrow:gap-10 max-narrow:pb-0">
         <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-8 overflow-visible p-0">
 
             <!-- Left Screen Art -->
             <div class="relative h-auto w-[360px] flex-none self-stretch overflow-hidden rounded-[60px] bg-[linear-gradient(270deg,#f3f3f3,#fff)] dark:bg-[linear-gradient(270deg,var(--color-surface),var(--color-bg))] max-narrow:hidden"></div>
 
-            <!-- Mobile Phone with Testimonial -->
-            <div class="relative z-[1] h-auto w-auto flex-none">
+            <!-- Mobile Phone with Testimonial — shell scales 360×750 mock to fit section gutter -->
+            <div class="testimonials-phone-shell relative z-[1] h-auto w-[360px] max-w-full flex-none">
                 <div class="testimonials main-wrapper rounded-[60px] bg-primary opacity-100">
 
                     <!-- Mobile Border -->

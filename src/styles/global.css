@@ -224,14 +224,28 @@
     order: -1000;
     flex: none;
     width: auto;
+    max-width: 100%;
     height: auto;
     z-index: 9;
+    box-sizing: border-box;
 }
 
 @media (max-width: 609.98px) {
     .nav-bar-container {
         top: calc(100% - min(var(--proton-viewport-height, 100%), 100%) + 8px);
         bottom: unset;
+        /* Keep nav clear of viewport edges (matches section gutter) */
+        max-width: calc(100% - 20px); /* 10px each side */
+        padding-inline: 0;
+    }
+}
+
+/* Compact phones (S8+ 360, etc.): stronger side gutter + denser 52px nav */
+@media (max-width: 389.98px) {
+    .nav-bar-container {
+        max-width: calc(100% - 32px); /* 16px each side */
+        /* 52px nav: slight nudge so bar sits mid blue / top chrome */
+        top: calc(100% - min(var(--proton-viewport-height, 100%), 100%) + 11px);
     }
 }
 
@@ -762,7 +776,7 @@
    .hero-card-slot-dev — Horizontal Bar Group
    ====================================================== */
 
-/* Main container */
+/* Main container — width fills the card; avoid fixed 432px overflow on phones */
 .hero-card-slot-div.hero-card-slot-centered {
     display: flex;
     flex-direction: row;
@@ -771,7 +785,8 @@
     align-content: center;
     justify-content: flex-start;
 
-    width: 432px;
+    width: 100%;
+    max-width: 432px;
     height: min-content;
     gap: 10px;
 
@@ -1041,6 +1056,38 @@
    .testimonials — Tall Flex Section (360px × 750px)
    ====================================================== */
 
+/* Mobile shell: keep intro-like outside gutter; scale fixed mock to fit */
+.testimonials-phone-shell {
+    width: 360px;
+    max-width: 100%;
+}
+
+@media (max-width: 609.98px) {
+    /*
+     * Phone body is 360px but .mobile-border bleeds ±10px (380 visual).
+     * On 360 CSS-px devices (S8+), a full-width 360 body + bleed cancels
+     * the section’s px-2.5 gutter — shrink shell so the full frame fits.
+     * S20 Ultra (412) still gets max 360px and looks unchanged.
+     */
+    .testimonials-phone-shell {
+        width: min(360px, calc(100% * 360 / 380));
+        max-width: 100%;
+        aspect-ratio: 360 / 750;
+        position: relative;
+        container-type: inline-size;
+        container-name: testimonials-phone;
+    }
+
+    .testimonials-phone-shell > .testimonials.main-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        /* length/length → unitless factor (scale() rejects bare cqw/360) */
+        transform: scale(calc(100cqw / 360px));
+        transform-origin: top left;
+    }
+}
+
 /* Main wrapper */
 .testimonials.main-wrapper {
     display: flex;
@@ -1117,7 +1164,7 @@
     right: 0;
 }
 
-/* Main vertical stack */
+/* Main vertical stack — top pad clears Dynamic Island in phone-border */
 .testimonials .vertical-stack {
     display: flex;
     flex: 1 0 0;
@@ -1129,7 +1176,7 @@
 
     width: 1px;
     height: 100%;
-    padding: 70px 50px 50px;
+    padding: 92px 50px 50px;
 
     position: relative;
     overflow: visible;
@@ -1171,13 +1218,13 @@
     gap: 6px;
 }
 
-/* Inline row groups */
+/* Inline row groups — left-align with shared edge */
 .testimonials .progress-bar,
 .testimonials .vertical-stack-top-person {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     align-content: center;
 
@@ -1342,7 +1389,7 @@
    .progress-bar-row — Interactive Thin Row (360 × 3)
    ============================================== */
 
-/* Main clickable flex row */
+/* Main clickable flex row — fill segment, not full phone width */
 .progress-bar-row.main-flex {
     display: flex;
     flex-direction: row;
@@ -1355,10 +1402,10 @@
     position: relative;
     will-change: var(--proton-will-change-override, transform);
 
-    width: 360px;
+    width: 100%;
     height: 3px;
 
-    gap: 20px;
+    gap: 0;
     padding: 0;
     overflow: hidden;
 }

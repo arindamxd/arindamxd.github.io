@@ -170,6 +170,70 @@ Entry stylesheets (only these two):
 
 Dark mode is **class-based** (`html.dark`), not `prefers-color-scheme`.
 
+### Mobile layout guidelines
+
+Use these gutters so layouts stay consistent from **iPhone 16 (~393 CSS px)** down to compact Androids (**Galaxy S8+ / many phones at 360 CSS px**). Always verify at **360** and **~390–412** in DevTools — fixed `360px` mocks and `w-full` + `mx-*` often look fine at 412 and break at 360.
+
+#### Breakpoints
+
+| Token / query | Range | Use for |
+| --- | --- | --- |
+| `max-narrow:` / `@media (max-width: 609.98px)` | ≤609px | All mobile layout |
+| `max-[389px]:` / `@media (max-width: 389.98px)` | ≤389px | Compact phones only (nav densify; leave iPhone 16 alone) |
+
+#### Outside screen gutter (cards & chrome)
+
+Match the **home intro** section: **`max-narrow:px-2.5`** (10px each side).
+
+Apply to:
+
+- Section shells and framed cards (intro hero card, testimonials phone stage, footer “Say Hello” card, project hero card, Source Code / Privacy bar, blog banner image)
+- Prefer a **wrapper with `px-2.5`** and a full-width child — not `w-full` + `mx-2.5` (margins on `w-full` are unreliable in centered flex columns)
+
+```html
+<!-- ✅ Footer / links bar pattern -->
+<div class="w-full max-w-[550px] max-narrow:px-2.5">
+  <div class="w-full rounded-[…] border …">…</div>
+</div>
+
+<!-- ✅ Section pattern (intro, skills, …) -->
+<section class="… max-w-[550px] max-narrow:px-2.5">…</section>
+```
+
+#### Text blocks (wider inset)
+
+Standalone copy stays on the original text gutter: **`max-narrow:px-5`** (20px).
+
+Apply to:
+
+- Project title / description / “Back to projects”
+- Project body `content` blocks
+- Blog article text columns
+- “More projects” / “Coming soon…” headings on project detail (`slug` only — home/catalog keep shared `px-2.5`)
+
+Do **not** put text and cards in one shared `px-2.5` wrapper if text must stay at `px-5`.
+
+#### Navbar
+
+- Floating `.nav-bar-container` must keep side clearance on narrow viewports: `max-width: calc(100% - 20px)` (≤609), and `calc(100% - 32px)` (≤389)
+- On ≤389px, densify the pill (height 52px, gaps, Contact, theme toggle) so the bar still fits inside that max-width
+- Top offset: `+8px` on ≤609, `+11px` on ≤389 — keeps the denser 52px compact nav vertically centered in the top blue / chrome band
+
+#### Fixed-width phone mocks (testimonials)
+
+The testimonials phone is a **360×750** mock with a `.mobile-border` that bleeds **±10px** (≈380px visual). On a **360px** viewport that cancels a `px-2.5` gutter unless you scale.
+
+- Shell: `min(360px, calc(100% * 360 / 380))` so body + border fit inside the section gutter
+- Scale with a **unitless** factor: `transform: scale(calc(100cqw / 360px))` — `scale(calc(100cqw / 360))` is invalid (length, not number) and is ignored
+- See `.testimonials-phone-shell` in `global.css`
+
+#### Checklist before shipping mobile UI
+
+1. Compare side margin of new cards to home intro / footer at **360** and **412**
+2. Keep text at `px-5` when it was designed that way; don’t force it to card gutter
+3. Never ship a hard `width: 360px` (or similar) without a scale/fit strategy for viewports ≤ that width
+4. Prefer `px-*` wrappers over `mx-*` on `w-full` flex children
+
 ---
 
 ## Client scripts
@@ -206,6 +270,7 @@ Loaded from `BaseLayout.astro`:
 | --- | --- |
 | [docs/blog-authoring.md](./docs/blog-authoring.md) | Blog catalog + Markdown authoring |
 | [docs/project-authoring.md](./docs/project-authoring.md) | Project catalog + Markdown body |
+| [Mobile layout guidelines](#mobile-layout-guidelines) | Screen gutters (`px-2.5` cards / `px-5` text), nav, 360px phone mocks |
 
 ---
 
