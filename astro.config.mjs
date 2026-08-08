@@ -16,6 +16,8 @@ export default defineConfig({
     site: BASE_URL,
     server: { port: SERVER_PORT },
     base: '/', // keep "/" when deploying to arindamxd.github.io
+    // Preserve Astro 5/6 whitespace behavior (v7 default is 'jsx', which can drop spaces between inline elements)
+    compressHTML: true,
     integrations: [
         sitemap({
             filter: (page) => !page.includes('/tools'),
