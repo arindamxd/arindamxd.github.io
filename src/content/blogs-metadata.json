@@ -3,15 +3,37 @@
     "description": "Random code experiments, bugs I’ve squashed, and things I’m tinkering with.",
     "data": [
         {
-            "slug": "understanding-ios-uicontrol-and-interaction",
-            "title": "Understanding iOS UIControl and Interaction",
-            "thumb": "https://images.unsplash.com/photo-1535564409135-9891b00db6ed?q=80&w=500&auto=format&fit=crop",
+            "slug": "upi-intent-launch-ios",
+            "title": "Setting Up UPI Intent Launch and Opening UPI Apps from iOS",
+            "thumb": "https://cdn-images-1.medium.com/max/1024/0*YJBIRxYp6A3c5MhF",
+            "author": {
+                "name": "Arindam Karmakar",
+                "avatar": "/assets/author/author-grey.png"
+            },
+            "date": "2024-08-30",
+            "content": "blogs/upi-intent-launch-ios.md"
+        },
+        {
+            "slug": "webrtc-with-swift-ios",
+            "title": "Unleashing Real-Time Communication in iOS Apps: WebRTC with Swift",
+            "thumb": "https://cdn-images-1.medium.com/max/1024/1*Zz2uJXLZYjJyH6CoNMO5OA.jpeg",
+            "author": {
+                "name": "Arindam Karmakar",
+                "avatar": "/assets/author/author-grey.png"
+            },
+            "date": "2024-04-02",
+            "content": "blogs/webrtc-with-swift-ios.md"
+        },
+        {
+            "slug": "ios-uicontrol-and-user-interaction",
+            "title": "Unveiling the Magic: A Deep Dive into iOS UIControl and User Interaction",
+            "thumb": "https://cdn-images-1.medium.com/max/1024/1*e8s1TZCoxxCQqoFXJynBmw.jpeg",
             "author": {
                 "name": "Arindam Karmakar",
                 "avatar": "/assets/author/author-grey.png"
             },
             "date": "2024-03-29",
-            "content": "blogs/understanding-ios-uicontrol-and-interaction.md"
+            "content": "blogs/ios-uicontrol-and-user-interaction.md"
         }
     ]
 }
