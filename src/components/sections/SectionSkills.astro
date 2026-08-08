@@ -29,7 +29,7 @@ const tools = metadata.tech.tools || [];
             <div class="relative h-full w-full flex-none">
                 <div class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-3 overflow-visible">
                     {stack.map((item, i) => (
-                        <ElementSkill icon={item.icon} label={item.label} index={i} />
+                        <ElementSkill icon={item.icon} label={item.label} description={item.description} index={i} />
                     ))}
                 </div>
             </div>
@@ -38,7 +38,7 @@ const tools = metadata.tech.tools || [];
             <div class="relative h-full w-full flex-none">
                 <div class="relative flex h-min w-full flex-row flex-wrap content-center items-center justify-center gap-3 overflow-visible">
                     {tools.map((item, i) => (
-                        <ElementSkill icon={item.icon} label={item.label} index={stack.length + i} />
+                        <ElementSkill icon={item.icon} label={item.label} description={item.description} index={stack.length + i} />
                     ))}
                 </div>
             </div>

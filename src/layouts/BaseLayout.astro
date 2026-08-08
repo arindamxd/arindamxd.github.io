@@ -53,7 +53,7 @@ const personLd = {
     "@type": "Person",
     name: siteAuthor.name,
     url: siteOrigin + "/",
-    jobTitle: siteAuthor.role,
+    jobTitle: `${siteAuthor.role}, ${siteAuthor.subRole}`,
     description: siteAuthor.bio,
     image: absoluteUrl(siteAuthor.intro.avatar),
     address: {

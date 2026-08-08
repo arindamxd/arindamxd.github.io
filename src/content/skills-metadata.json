@@ -1,37 +1,59 @@
 {
     "title": "Powered By",
-    "description": "From IDEs to frameworks  —  here’s what powers my daily workflow.",
+    "description": "Languages, frameworks, and the mobile stack I use day to day — including payments, scanning, and security.",
     "tech": {
         "stack": [
             {
                 "icon": "/assets/skills/kotlin.svg",
-                "label": "Kotlin"
+                "label": "Kotlin",
+                "description": "Primary language for Android apps, libraries, and production features."
             },
             {
                 "icon": "/assets/skills/swift.svg",
-                "label": "Swift"
+                "label": "Swift",
+                "description": "Native iOS development for apps, SDKs, and platform integrations."
             },
             {
-                "icon": "/assets/skills/python.svg",
-                "label": "Python"
+                "icon": "/assets/skills/flutter.svg",
+                "label": "Flutter",
+                "description": "Cross-platform UI when shared mobile experiences make sense."
             },
             {
                 "icon": "/assets/skills/compose.svg",
-                "label": "Jetpack Compose"
+                "label": "Jetpack Compose",
+                "description": "Modern declarative UI for Android screens and components."
+            },
+            {
+                "icon": "/assets/skills/upi.svg",
+                "label": "UPI",
+                "description": "Payment intents, app deep links, and end-to-end UPI flows."
+            },
+            {
+                "icon": "/assets/skills/qr.svg",
+                "label": "QR Scanner",
+                "description": "Camera pipelines for scanning, decoding, and payment QR use cases."
+            },
+            {
+                "icon": "/assets/skills/rasp.svg",
+                "label": "Security / RASP",
+                "description": "Runtime app protection, hardening, and mobile security controls."
             }
         ],
         "tools": [
             {
                 "icon": "/assets/skills/android-studio.svg",
-                "label": "Android Studio"
+                "label": "Android Studio",
+                "description": "Primary IDE for Android builds, debugging, and profiling."
             },
             {
                 "icon": "/assets/skills/xcode.svg",
-                "label": "Xcode"
+                "label": "Xcode",
+                "description": "Primary IDE for iOS builds, simulators, and App Store tooling."
             },
             {
                 "icon": "/assets/skills/vs-code.svg",
-                "label": "Visual Studio Code"
+                "label": "Visual Studio Code",
+                "description": "Lightweight editor for scripts, configs, and side projects."
             }
         ]
     }

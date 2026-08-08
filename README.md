@@ -1,6 +1,6 @@
 # arindamxd.github.io
 
-Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** — Mobile Engineering (iOS / Android). Static Astro site with JSON-driven content, dark/light theme, and intentional motion.
+Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** — Technical Lead, Mobile Engineering. Static Astro site with JSON-driven content, dark/light theme, and intentional motion.
 
 **Live:** [https://arindamxd.github.io](https://arindamxd.github.io)  
 **Repo:** [github.com/arindamxd/arindamxd.github.io](https://github.com/arindamxd/arindamxd.github.io)

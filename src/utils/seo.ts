@@ -27,7 +27,7 @@ export function metaDescription(text: string, max = 160): string {
 }
 
 export function pageTitle(page: string, home = false): string {
-    if (home) return `${author.name} — ${author.role}`;
+    if (home) return `${author.name} — ${author.role} · ${author.subRole}`;
     return `${page} | ${author.name}`;
 }
 

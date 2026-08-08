@@ -380,19 +380,19 @@ html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) {
     }
 }
 
-html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) .skill-chip,
+html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) .skill-chip > :first-child,
 html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) .cms-item {
     opacity: 0;
 }
 
-html.js-motion [data-reveal-stagger].is-revealed .skill-chip,
+html.js-motion [data-reveal-stagger].is-revealed .skill-chip > :first-child,
 html.js-motion [data-reveal-stagger].is-revealed .cms-item {
     opacity: 1;
     animation: cms-stagger-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: var(--stagger-delay, var(--skill-delay, 0ms));
 }
 
-html.js-motion [data-reveal-stagger].reveal-instant .skill-chip,
+html.js-motion [data-reveal-stagger].reveal-instant .skill-chip > :first-child,
 html.js-motion [data-reveal-stagger].reveal-instant .cms-item {
     opacity: 1 !important;
     transform: none !important;
@@ -427,7 +427,7 @@ html.js-motion [data-reveal-stagger].reveal-instant .cms-item {
         transition: none !important;
     }
 
-    html.js-motion [data-reveal-stagger] .skill-chip,
+    html.js-motion [data-reveal-stagger] .skill-chip > :first-child,
     html.js-motion [data-reveal-stagger] .cms-item {
         opacity: 1 !important;
         transform: none !important;

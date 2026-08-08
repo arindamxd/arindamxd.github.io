@@ -2,7 +2,7 @@
     "name": "arindam-karmakar",
     "type": "module",
     "version": "1.0.1",
-    "description": "Personal portfolio website of Arindam Karmakar - Mobile Engineering",
+    "description": "Personal portfolio website of Arindam Karmakar - Technical Lead, Mobile Engineering",
     "author": {
         "name": "Arindam Karmakar",
         "email": "arindamxd@gmail.com",
@@ -18,8 +18,11 @@
         "portfolio",
         "astro",
         "static-site",
-        "mobile-developer",
+        "technical-lead",
+        "mobile-engineering",
         "android",
+        "ios",
+        "flutter",
         "kotlin",
         "swift"
     ],

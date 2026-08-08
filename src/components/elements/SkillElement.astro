@@ -1,28 +1,47 @@
 ---
 // props
-const { icon, label, index = 0 } = Astro.props;
+const { icon, label, description = "", index = 0 } = Astro.props;
 const delayMs = Math.min(Number(index) * 45, 360);
+const tipId = `skill-tip-${String(label).toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${index}`;
 ---
 
 <div
-    class="skill-chip relative flex-none"
+    class="skill-chip group/skill relative flex-none"
     style={`--skill-delay: ${delayMs}ms`}
-    title={label}
     aria-label={label}
 >
     <div
-        class="group relative flex size-[54px] flex-row flex-nowrap content-center items-center justify-center overflow-hidden rounded-[9px] border border-border bg-surface transition-[transform,border-color,box-shadow,background-color] duration-300 ease-[cubic-bezier(0.68,0,0.31,0.91)] will-change-transform hover:-translate-y-0.5 hover:border-border hover:bg-bg hover:shadow-[0_8px_18px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_8px_18px_rgba(0,0,0,0.35)]"
+        class="relative flex size-[54px] flex-row flex-nowrap content-center items-center justify-center overflow-hidden rounded-[9px] border border-border bg-surface transition-[transform,border-color,box-shadow,background-color] duration-300 ease-[cubic-bezier(0.68,0,0.31,0.91)] will-change-transform group-hover/skill:-translate-y-0.5 group-hover/skill:bg-bg group-hover/skill:shadow-[0_8px_18px_rgba(0,0,0,0.06)] dark:group-hover/skill:shadow-[0_8px_18px_rgba(0,0,0,0.35)]"
     >
-        <div class="relative aspect-square size-[30px] flex-none overflow-visible transition-transform duration-300 ease-out group-hover:scale-110">
+        <div class="relative aspect-square size-[30px] flex-none overflow-visible transition-transform duration-300 ease-out group-hover/skill:scale-110">
             <div class="absolute inset-0 rounded-[inherit]">
                 <img
                     decoding="async"
                     loading="lazy"
                     src={icon}
-                    alt={label}
+                    alt=""
                     class="block size-full rounded-[inherit] object-cover object-center"
                 />
             </div>
         </div>
     </div>
+
+    {description && (
+        <div
+            id={tipId}
+            role="tooltip"
+            class="skill-tooltip pointer-events-none absolute bottom-[calc(100%+12px)] left-1/2 z-30 w-max max-w-[220px] rounded-[12px] border border-border bg-bg px-3.5 py-2.5 text-left shadow-[0_12px_28px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
+        >
+            <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-text">
+                {label}
+            </p>
+            <p class="m-0 mt-1 p-0 font-manrope text-[12px] font-semibold leading-[140%] tracking-[-0.03em] text-text/55">
+                {description}
+            </p>
+            <span
+                class="absolute top-full left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-r border-b border-border bg-bg"
+                aria-hidden="true"
+            ></span>
+        </div>
+    )}
 </div>

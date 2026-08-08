@@ -1,15 +1,15 @@
 {
     "name": "Arindam Karmakar",
-    "role": "Mobile Engineering",
-    "subRole": "iOS / Android",
-    "bio": "A young Google-certified associate programmer with many talents and a passion for all things Google/Android.",
+    "role": "Technical Lead",
+    "subRole": "Mobile Engineering",
+    "bio": "Technical Lead in mobile engineering across Android, iOS, and Flutter — with hands-on work in UPI payments, QR scanning, and app security including RASP.",
     "canonical": "https://arindamxd.github.io/",
     "ogImage": "/assets/resources/og-image.png",
     "location": "India",
     "intro": {
         "avatar": "/assets/author/author-grey.png",
         "title": "I code apps that stay awake longer than me",
-        "subTitle": "From Android to iOS, I design, develop, and deliver mobile solutions that work in the real world.",
+        "subTitle": "From Android and iOS to Flutter, I lead mobile engineering for real-world payments, scanning, and security.",
         "social": [
             {
                 "name": "Stack Overflow",
