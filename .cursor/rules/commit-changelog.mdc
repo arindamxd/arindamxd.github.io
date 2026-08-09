@@ -1,0 +1,18 @@
+---
+description: When the user asks to commit — update CHANGELOG Unreleased first, then commit
+alwaysApply: true
+---
+
+# Commit + changelog
+
+When the user asks to **commit** (e.g. “commit this”, “commit the changes”), **update [`CHANGELOG.md`](CHANGELOG.md) first**, then commit.
+
+## Required steps
+
+1. **Changelog** — Under `## [Unreleased]`, add concise Keep a Changelog bullets for what is being committed (`Added` / `Changed` / `Fixed` as appropriate). Skip only if the change is purely cosmetic/docs-with-no-product-impact *and* the user says to skip the changelog; default is **always update**.
+2. **Stage** — Include `CHANGELOG.md` with the rest of the intentional commit set (do not commit secrets).
+3. **Commit** — Follow the usual git commit protocol (status/diff/log → HEREDOC message → verify).
+
+Do **not** bump the package version, tag, or push unless the user also asked for a version bump/release (see [`.cursor/rules/version-bump.mdc`](version-bump.mdc)).
+
+On release bumps, Unreleased is folded into the version section as part of that workflow — still keep Unreleased accurate between releases by updating it on each “commit this” request.

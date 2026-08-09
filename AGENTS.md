@@ -15,13 +15,24 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 | **Package** | `1.0.4` | Bump in `package.json` on release |
 | **Git tags** | `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
 | **Memory doc** | `1.0.4` | Same as package after each memory update on a release line |
-| **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go, fold into the version on release |
+| **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go (required when asked to commit), fold into the version on release |
 | **Node** | `>=22.12` | `engines` in package.json |
 | **Astro** | `^7.2` | Static output · Vite 8 |
 | **Tailwind** | v4 via `@tailwindcss/vite` | Tokens in `src/styles/tokens.css` |
 | **License** | CC-BY-4.0 | See `LICENSE` |
 
-**When releasing:** move `[Unreleased]` notes into a new `CHANGELOG.md` section → bump `package.json` (+ lock) → update this **Versions** table + memory changelog → commit → tag `vX.Y.Z` → push branch + tags.
+**When the user asks to bump / release the project version:** run the **full release** (do not stop at local-only steps unless they say so):
+
+1. Fold `[Unreleased]` in [`CHANGELOG.md`](CHANGELOG.md) into `## [X.Y.Z] — YYYY-MM-DD` (+ compare links).
+2. Bump `version` in [`package.json`](package.json) and root [`package-lock.json`](package-lock.json).
+3. Sync this file: header version, **Versions** table, memory changelog entry.
+4. Commit (`Release vX.Y.Z.`).
+5. Annotated tag `vX.Y.Z`.
+6. Push branch **and** tag to origin.
+
+Cursor rule: [`.cursor/rules/version-bump.mdc`](.cursor/rules/version-bump.mdc).
+
+**When the user asks to commit:** update [`CHANGELOG.md`](CHANGELOG.md) `[Unreleased]` with bullets for that work, stage it with the commit, then commit. Do not version-bump/tag/push unless they also asked for a release. Rule: [`.cursor/rules/commit-changelog.mdc`](.cursor/rules/commit-changelog.mdc).
 
 ---
 
@@ -146,6 +157,8 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 | Tokens | `src/styles/tokens.css` |
 | Nav / glass | `src/styles/nav.css`, `src/components/NavBar.astro` |
 | Site README | `README.md` |
+| Version bump / release | [`.cursor/rules/version-bump.mdc`](.cursor/rules/version-bump.mdc) · Versions section above |
+| Commit + changelog | [`.cursor/rules/commit-changelog.mdc`](.cursor/rules/commit-changelog.mdc) |
 
 ---
 
@@ -159,6 +172,8 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 - Feature sheets: Tailwind `@apply` for layout/type/token colors; page-scoped `tools.css` / `design.css` use `@reference` to `global.css`.
 - Design-system docs + Cursor rule + stack blurb synced for `@apply`-in-sheets.
 - Home contributions calendar + shared `SectionHeading`; gallery preview paths for Skills / Brands / Contributions.
+- Version-bump workflow: when asked to bump version → changelog + package + memory → commit → tag → push (rule: `.cursor/rules/version-bump.mdc`).
+- Commit workflow: when asked to commit → update `CHANGELOG.md` Unreleased first, then commit (rule: `.cursor/rules/commit-changelog.mdc`).
 
 ### 1.0.3 — 2026-08-09
 

@@ -8,7 +8,11 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+- Cursor rules for version-bump (full release: commit + tag + push) and commit+changelog workflows
+
 ### Changed
+
+- `AGENTS.md`: commit requests must update `[Unreleased]` first; version-bump steps listed explicitly
 
 ### Fixed
 
