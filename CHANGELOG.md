@@ -8,7 +8,13 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+- Microsoft Clarity in production alongside GA4 (XOR-encoded project ID; ClientRouter page hints)
+- Reach tool header shortcuts to Google Console, Google Analytics, and Microsoft Clarity
+
 ### Changed
+
+- `ToolsPageShell` optional `header-actions` slot (top-right of title row)
+- `.tools-chip` works as links (`inline-flex`, no underline)
 
 ### Fixed
 

@@ -58,18 +58,33 @@ const mainMax = wide ? "max-w-[1280px]" : narrow ? "max-w-[550px]" : "max-w-[110
                             </div>
                         )
                     }
-                    <div class="flex w-full flex-col gap-3">
-                        <h1 class="m-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-text max-narrow:text-[34px]">
-                            {title}
-                        </h1>
-                        <p
-                            class:list={[
-                                "m-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text/60 max-narrow:text-[15px]",
-                                narrow ? "w-full" : "max-w-[560px]",
-                            ]}
-                        >
-                            <slot name="description">{description}</slot>
-                        </p>
+                    <div
+                        class:list={[
+                            "flex w-full flex-col gap-5",
+                            Astro.slots.has("header-actions") &&
+                                "sm:flex-row sm:items-start sm:justify-between sm:gap-8",
+                        ]}
+                    >
+                        <div class="flex min-w-0 flex-col gap-3">
+                            <h1 class="m-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-text max-narrow:text-[34px]">
+                                {title}
+                            </h1>
+                            <p
+                                class:list={[
+                                    "m-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text/60 max-narrow:text-[15px]",
+                                    narrow ? "w-full" : "max-w-[560px]",
+                                ]}
+                            >
+                                <slot name="description">{description}</slot>
+                            </p>
+                        </div>
+                        {
+                            Astro.slots.has("header-actions") && (
+                                <div class="flex flex-none flex-wrap items-center gap-2 sm:justify-end sm:pt-2">
+                                    <slot name="header-actions" />
+                                </div>
+                            )
+                        }
                     </div>
                 </header>
 

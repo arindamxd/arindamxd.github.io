@@ -64,7 +64,7 @@
 }
 
 .tools-chip {
-    @apply cursor-pointer rounded-full border border-border bg-surface px-[0.85rem] py-[0.45rem] font-manrope text-[12px] font-semibold tracking-[-0.04em] text-text appearance-none;
+    @apply inline-flex cursor-pointer items-center justify-center rounded-full border border-border bg-surface px-[0.85rem] py-[0.45rem] font-manrope text-[12px] font-semibold tracking-[-0.04em] text-text no-underline appearance-none;
     transition:
         background-color 0.2s ease,
         border-color 0.2s ease;

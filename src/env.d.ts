@@ -41,7 +41,9 @@ declare global {
     interface Window {
         dataLayer: unknown[];
         gtag: GtagFunction;
+        clarity?: (...args: unknown[]) => void;
         __gaPageLoadBound?: boolean;
+        __clarityBooted?: boolean;
         __restoreScrollY?: number;
         __scrollRestoreDone?: boolean;
         __pageLoaderDone?: boolean;

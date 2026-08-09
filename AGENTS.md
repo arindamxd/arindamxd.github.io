@@ -121,7 +121,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `reveal.ts` / `hero-appear.ts` / `count-up.ts` | Appear, scroll reveal, YoE count |
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
 | `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
-| `analytics.ts` | GA4 bootstrap + ClientRouter page views |
+| `analytics.ts` | GA4 + Microsoft Clarity bootstrap + ClientRouter page views |
 | `markdown-fullscreen.ts` | Fullscreen markdown doc panels |
 | Tools scripts | `tools-*.ts` for author / markdown / scramble-compare / analytics-reach |
 

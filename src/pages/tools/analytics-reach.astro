@@ -12,6 +12,37 @@ import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
         <code class="tools-code">author-metadata.json</code>. Curated numbers only — nothing live on the public site.
     </span>
 
+    <nav
+        slot="header-actions"
+        class="flex flex-wrap items-center gap-2"
+        aria-label="Analytics dashboards"
+    >
+        <a
+            class="tools-chip"
+            href="https://console.cloud.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Google Console
+        </a>
+        <a
+            class="tools-chip"
+            href="https://analytics.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Google Analytics
+        </a>
+        <a
+            class="tools-chip"
+            href="https://clarity.microsoft.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Microsoft Clarity
+        </a>
+    </nav>
+
     <div id="tools-reach-app" class="flex w-full flex-col gap-10">
         <div
             class="flex w-fit flex-wrap items-center gap-1 rounded-full border border-border bg-surface p-1"
