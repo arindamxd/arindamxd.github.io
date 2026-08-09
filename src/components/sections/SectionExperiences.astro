@@ -1,36 +1,56 @@
 ---
 import type { Experience } from "../../types/experience";
 import { formatDateByYear } from "../../utils/date";
+import {
+    previewExperiences,
+    previewYearsOfExperience,
+} from "../../utils/design-preview-data";
 
-// data
-const metadata = (await import("../../content/experiences-metadata.json")).default;
+interface Props {
+    preview?: boolean;
+}
+
+const { preview = false } = Astro.props;
+
+const metadata = preview
+    ? previewExperiences
+    : (await import("../../content/experiences-metadata.json")).default;
 
 const today = new Date();
-const start = metadata.data.length > 0 ? new Date(metadata.data.reduce((earliest, exp) =>
-    new Date(exp.start) < new Date(earliest.start) ? exp : earliest
-).start) : new Date();
+let yearsOfExperience: number;
 
-let yearsOfExperience = today.getFullYear() - start.getFullYear();
-// if today’s month/day is before Oct 1, subtract 1 because the year isn’t complete
-if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth() && today.getDate() < start.getDate())) {
-    yearsOfExperience--;
+if (preview) {
+    yearsOfExperience = previewYearsOfExperience;
+} else {
+    const start =
+        metadata.data.length > 0
+            ? new Date(
+                  metadata.data.reduce((earliest, exp) =>
+                      new Date(exp.start) < new Date(earliest.start) ? exp : earliest,
+                  ).start,
+              )
+            : new Date();
+
+    yearsOfExperience = today.getFullYear() - start.getFullYear();
+    if (
+        today.getMonth() < start.getMonth() ||
+        (today.getMonth() === start.getMonth() && today.getDate() < start.getDate())
+    ) {
+        yearsOfExperience--;
+    }
 }
 
 const currentYear = new Date().getFullYear();
-const yearList = Array.from({ length: 5 }, (_, i) => (currentYear - 1) - i);
+const yearList = Array.from({ length: 5 }, (_, i) => currentYear - 1 - i);
 
-const experienceList: Experience[] = metadata.data.map(experience => ({
+const experienceList: Experience[] = metadata.data.map((experience) => ({
     ...experience,
     start: new Date(experience.start),
     end: experience.end === "-" ? "-" : new Date(experience.end),
 }));
 
-// sort by date descending
-const sorted = [...experienceList].sort((a, b) =>
-    b.start.getTime() - a.start.getTime()
-);
+const sorted = [...experienceList].sort((a, b) => b.start.getTime() - a.start.getTime());
 
-// show only 4 items
 const items = sorted.slice(0, 4);
 ---
 

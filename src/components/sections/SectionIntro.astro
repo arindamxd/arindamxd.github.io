@@ -1,20 +1,47 @@
 ---
 import { Image } from 'astro:assets';
+import {
+    previewAuthor,
+    previewExperiences,
+    previewYearsOfExperience,
+} from "../../utils/design-preview-data";
 
-// data
-const author = (await import("../../content/author-metadata.json")).default;
-const experiences = (await import("../../content/experiences-metadata.json")).default;
+interface Props {
+    /** `/design` gallery — live chrome, dummy copy */
+    preview?: boolean;
+}
 
-const today = new Date();
-const start = experiences.data.length > 0 ? new Date(experiences.data.reduce((earliest, exp) =>
-    new Date(exp.start) < new Date(earliest.start) ? exp : earliest
-).start) : new Date();
+const { preview = false } = Astro.props;
 
-let years = today.getFullYear() - start.getFullYear();
+const author = preview
+    ? previewAuthor
+    : (await import("../../content/author-metadata.json")).default;
+const experiences = preview
+    ? previewExperiences
+    : (await import("../../content/experiences-metadata.json")).default;
 
-// if today’s month/day is before Oct 1, subtract 1 because the year isn’t complete
-if (today.getMonth() < start.getMonth() || (today.getMonth() === start.getMonth() && today.getDate() < start.getDate())) {
-    years--;
+let years: number;
+if (preview) {
+    years = previewYearsOfExperience;
+} else {
+    const today = new Date();
+    const start =
+        experiences.data.length > 0
+            ? new Date(
+                  experiences.data.reduce((earliest, exp) =>
+                      new Date(exp.start) < new Date(earliest.start) ? exp : earliest,
+                  ).start,
+              )
+            : new Date();
+
+    years = today.getFullYear() - start.getFullYear();
+
+    if (
+        today.getMonth() < start.getMonth() ||
+        (today.getMonth() === start.getMonth() && today.getDate() < start.getDate())
+    ) {
+        years--;
+    }
 }
 ---
 

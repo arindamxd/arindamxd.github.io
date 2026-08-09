@@ -36,3 +36,33 @@
         --overflow-clip-fallback: hidden;
     }
 }
+
+/*
+ * Gallery / fallback media shell — same look as `.design-nav-demo`.
+ * Works with transparent placeholder SVG, or `src`-less imgs after error recovery.
+ */
+.design-media-ph,
+img[src*="design-media-placeholder"] {
+    background-color: var(--color-surface);
+    background-image: linear-gradient(
+        135deg,
+        var(--color-surface),
+        color-mix(in srgb, var(--color-primary) 18%, var(--color-bg))
+    );
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+/* Hide browser broken-image icon when we stripped a failed src */
+img.design-media-ph:not([src]),
+img.design-media-ph[src=''] {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+}

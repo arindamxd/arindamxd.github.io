@@ -251,7 +251,15 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
+    width: 100%;
+    max-width: 550px;
+    padding: 2.5rem 1.25rem;
+    border-radius: 28px;
+    background:
+        linear-gradient(135deg, var(--color-surface), color-mix(in srgb, var(--color-primary) 18%, var(--color-bg)));
+    box-shadow: inset 0 0 0 1px var(--color-border);
 }
 
 /* Demo uses live `.nav-pill.nav-glass` / `.nav-theme-toggle.nav-glass` from nav.css */
@@ -302,51 +310,152 @@
     box-shadow: inset 0 0 0 1px var(--color-border);
 }
 
-.design-hero-card {
+/* Live section mounts on /design — keep gallery width, no extra chrome */
+.design-live-section {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
-    padding: 1.25rem 1.25rem 1.15rem;
-    border-radius: 28px;
+    align-items: center;
+}
+
+.design-live-section > section,
+.design-live-section > footer {
+    width: 100%;
+}
+
+
+.design-skel {
+    display: block;
+    flex: none;
+    background: color-mix(in srgb, var(--color-text) 10%, var(--color-border));
+    border-radius: 9999px;
+}
+
+.design-skel-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.design-skel-line {
+    border-radius: 6px;
+}
+
+.design-skel-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.design-skel-dot {
+    width: 10px;
+    height: 10px;
+    background: color-mix(in srgb, var(--color-active) 55%, var(--color-border));
+}
+
+.design-skel-display {
+    height: 42px;
+    border-radius: 10px;
+}
+
+.design-skel-pill {
+    width: 148px;
+    height: 28px;
+    border-radius: 9999px;
+}
+
+.design-skel-cta-primary {
+    width: 168px;
+    height: 58px;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-primary) 55%, var(--color-border));
+}
+
+.design-skel-cta-secondary {
+    width: 118px;
+    height: 58px;
+    border-radius: 9999px;
     background: var(--color-surface);
     box-shadow: inset 0 0 0 1px var(--color-border);
 }
 
-.design-hero-id {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
+.design-skel-pin {
+    width: 13px;
+    height: 14px;
+    border-radius: 3px 3px 6px 6px;
 }
 
-.design-hero-avatar {
-    width: 70px;
-    height: 70px;
-    flex: none;
-    border-radius: 9999px;
-    background: color-mix(in srgb, var(--color-bg) 70%, var(--color-border));
+.design-skel-404 {
+    width: 72%;
+    height: 88px;
+    border-radius: 14px;
 }
 
-.design-hero-badge {
-    width: fit-content;
-    padding: 0.45rem 0.7rem;
-    border-radius: 9999px;
-    background: var(--color-bg);
-    box-shadow: inset 0 0 0 1px var(--color-border);
+.design-skel-on-primary {
+    background: color-mix(in srgb, #fff 28%, transparent);
 }
 
-.design-hero-location {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
+.design-yoe-skeleton {
+    pointer-events: none;
 }
 
-.design-hero-pin {
-    width: 10px;
-    height: 12px;
-    flex: none;
-    border-radius: 2px 2px 4px 4px;
-    background: var(--color-text);
-    opacity: 0.7;
+.design-skel-yoe-count {
+    width: 58px;
+    height: 52px;
+    border-radius: 12px;
+    background: color-mix(in srgb, #fff 32%, transparent);
+}
+
+.design-skel-yoe-plus {
+    position: absolute;
+    left: 52px;
+    top: -10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    background: color-mix(in srgb, #fff 40%, transparent);
+}
+
+.design-skel-yoe-ladder {
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    width: 72px;
+    height: 96px;
+    transform: translateY(-50%);
+    border-radius: 12px;
+    background: color-mix(in srgb, #fff 14%, transparent);
+}
+
+@media (max-width: 609px) {
+    .design-skel-display {
+        height: 30px;
+    }
+
+    .design-skel-cta-primary,
+    .design-skel-cta-secondary {
+        height: 52px;
+    }
+
+    .design-skel-404 {
+        height: 64px;
+    }
+
+    .design-skel-yoe-count {
+        width: 44px;
+        height: 40px;
+    }
+
+    .design-skel-yoe-plus {
+        left: 40px;
+        width: 16px;
+        height: 16px;
+    }
+
+    .design-skel-yoe-ladder {
+        right: 16px;
+        width: 56px;
+        height: 76px;
+    }
 }
 
 .design-skill-chip {
@@ -365,25 +474,6 @@
     height: 22px;
     border-radius: 5px;
     background: color-mix(in srgb, var(--color-text) 18%, transparent);
-}
-
-.design-yoe-banner {
-    display: flex;
-    align-items: center;
-    gap: 1.1rem;
-    padding: 1.15rem 1.25rem;
-    border-radius: 32px;
-    background: var(--color-primary);
-}
-
-.design-yoe-count {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 48px;
-    font-weight: 600;
-    letter-spacing: -0.06em;
-    line-height: 0.9;
-    color: #fff;
 }
 
 .design-timeline {
@@ -592,6 +682,7 @@
 .design-job-row {
     display: grid;
     grid-template-columns: 1.2fr 1fr auto;
+    align-items: center;
     gap: 0.75rem;
     padding: 0.95rem 0;
     border-top: 1px solid var(--color-border);
@@ -711,6 +802,7 @@
     border-radius: 36px;
     background: var(--color-primary);
     box-shadow: inset 0 0 0 3px color-mix(in srgb, #000 18%, transparent);
+    pointer-events: none;
 }
 
 .design-footer-shell {
@@ -718,6 +810,7 @@
     border: 1px solid var(--color-border);
     background: var(--color-surface);
     padding: 9px;
+    pointer-events: none;
 }
 
 .design-footer-inner {

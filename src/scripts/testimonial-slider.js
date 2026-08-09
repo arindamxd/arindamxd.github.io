@@ -1,9 +1,23 @@
 // Testimonial phone slider — re-inits on Astro view transitions
 (async () => {
     try {
-        const metadataModule = await import('../content/testimonials-metadata.json');
-        const metadata = metadataModule.default;
-        const testimonials = metadata.data;
+        function readTestimonials() {
+            const el = document.getElementById('testimonials-data');
+            if (!el) return null;
+            try {
+                const data = JSON.parse(el.textContent || '[]');
+                return Array.isArray(data) ? data : null;
+            } catch {
+                return null;
+            }
+        }
+
+        let testimonials = readTestimonials();
+        if (!testimonials || testimonials.length === 0) {
+            // Fallback for pages that still rely on the catalog JSON
+            const metadataModule = await import('../content/testimonials-metadata.json');
+            testimonials = metadataModule.default?.data || [];
+        }
 
         if (!testimonials || testimonials.length === 0) {
             console.error('No testimonials data found!');
@@ -27,6 +41,9 @@
 
         function init() {
             cleanup();
+
+            const next = readTestimonials();
+            if (next?.length) testimonials = next;
 
             const progressBarsContainer = document.getElementById('progressBarsContainer');
             const screenBg = document.getElementById('screenBg');

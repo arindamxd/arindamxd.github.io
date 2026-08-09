@@ -1,13 +1,27 @@
 ---
-// data
-const author = (await import("../content/author-metadata.json")).default;
+import { previewAuthor } from "../utils/design-preview-data";
+
+interface Props {
+    preview?: boolean;
+}
+
+const { preview = false } = Astro.props;
+
+const author = preview
+    ? previewAuthor
+    : (await import("../content/author-metadata.json")).default;
 
 const currentYear = new Date().getFullYear();
 ---
 
 <footer
-    id="contact"
-    class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible bg-bg pt-20 pb-[100px] max-narrow:px-2.5 max-narrow:pt-[60px] max-narrow:pb-[100px]"
+    id={preview ? "contact-preview" : "contact"}
+    class:list={[
+        "relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible bg-bg",
+        preview
+            ? "pt-0 pb-0"
+            : "pt-20 pb-[100px] max-narrow:px-2.5 max-narrow:pt-[60px] max-narrow:pb-[100px]",
+    ]}
 >
     <!-- Contact chrome: surface shell + white form -->
     <div

@@ -3,6 +3,24 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Footer from "../components/Footer.astro";
 import MarkdownDocPanel from "../components/MarkdownDocPanel.astro";
 import BlogCodeBlock from "../components/elements/BlogCodeBlock.astro";
+import SectionIntro from "../components/sections/SectionIntro.astro";
+import SectionNotFound from "../components/sections/SectionNotFound.astro";
+import SectionExperiences from "../components/sections/SectionExperiences.astro";
+import SectionCredentials from "../components/sections/SectionCredentials.astro";
+import SectionBrands from "../components/sections/SectionBrands.astro";
+import SectionSkills from "../components/sections/SectionSkills.astro";
+import SectionTestimonials from "../components/sections/SectionTestimonials.astro";
+import SectionProjects from "../components/sections/SectionProjects.astro";
+import SectionBlogs from "../components/sections/SectionBlogs.astro";
+import ProjectPage from "../components/elements/ProjectPage.astro";
+import ProjectPrivacyPage from "../components/elements/ProjectPrivacyPage.astro";
+import BlogPage from "../components/elements/BlogPage.astro";
+import NavBar from "../components/NavBar.astro";
+import {
+    previewBlogDetail,
+    previewPrivacyFrontmatter,
+    previewProjectDetail,
+} from "../utils/design-preview-data";
 import "../styles/tools.css";
 import "../styles/design.css";
 
@@ -14,6 +32,7 @@ const toc = [
     { id: "layout", label: "Layout" },
     { id: "components", label: "Components" },
     { id: "home", label: "Home" },
+    { id: "404", label: "404" },
     { id: "project", label: "Project" },
     { id: "blog", label: "Blog" },
     { id: "forms", label: "Forms" },
@@ -400,19 +419,13 @@ button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
                     </div>
 
                     <div>
-                        <p class="design-label">Nav pill + theme toggle (anatomy)</p>
+                        <p class="design-label">Nav pill + theme toggle (`NavBar` preview)</p>
                         <div class="design-nav-demo">
-                            <div class="nav-pill nav-glass" aria-hidden="true" style="pointer-events: none;">
-                                <span class="design-nav-home" />
-                                <span class="design-nav-link">Projects</span>
-                                <span class="design-nav-link">Blogs</span>
-                                <span class="design-nav-contact">Contact</span>
-                            </div>
-                            <div class="nav-theme-toggle nav-glass flex items-center justify-center" aria-hidden="true" style="pointer-events: none;">
-                                <span class="design-theme-knob" />
-                            </div>
+                            <NavBar preview />
                         </div>
-                        <p class="design-hint">Same `.nav-glass` as live chrome (BaseLayout) — pill 60→52, contact 46→40, toggle circle beside.</p>
+                        <p class="design-hint">
+                            Live `NavBar` in-flow (not fixed). Dummy Contact mailto · links jump to gallery Home/Project/Blog anchors.
+                        </p>
                     </div>
 
                     <div>
@@ -431,178 +444,73 @@ button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
                     <div>
                         <h2 class="design-section-title">Home</h2>
                         <p class="design-section-desc">
-                            Signature home sections — match these when extending the landing page.
+                            Live section components with dummy copy (`preview`) — same chrome as `/`.
                         </p>
                     </div>
 
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Home hero (identity + slogan stack)</p>
-                        <div class="design-hero-card">
-                            <div class="design-hero-id">
-                                <div class="design-hero-avatar" />
-                                <div>
-                                    <p class="m-0 font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-text max-narrow:text-[19px]">
-                                        Arindam
-                                    </p>
-                                    <p class="m-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text/60 max-narrow:text-[13px]">
-                                        Technical Lead · Mobile
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="flex gap-1.5">
-                                <span class="design-social-circle" /><span class="design-social-circle" /><span class="design-social-circle" />
-                            </div>
-                            <p class="m-0 font-manrope text-[34px] font-semibold leading-[95%] tracking-[-0.05em] text-text max-narrow:text-[28px]">
-                                Building mobile products with care.
-                            </p>
-                            <p class="m-0 font-manrope text-[15px] font-semibold leading-[140%] tracking-[-0.04em] text-text/60">
-                                Intro support under the slogan · CTAs + pulse sit below.
-                            </p>
-                            <div class="design-hero-badge">
-                                <p class="m-0 font-manrope text-[11px] font-semibold leading-none tracking-[-0.05em] text-text">
-                                    8+ Years of Experience
-                                </p>
-                            </div>
-                            <div class="design-hero-location">
-                                <span class="design-hero-pin" aria-hidden="true" />
-                                <p class="m-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-text max-narrow:text-[12px]">
-                                    <span class="text-text/60">Located in&nbsp;</span>India<span class="text-text/60">,&nbsp;available worldwide.</span>
-                                </p>
-                            </div>
-                            <a
-                                data-scramble
-                                class="group relative flex w-fit items-center gap-[7px] no-underline"
-                                href="#home"
-                            >
-                                <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">
-                                    Bottom card link
-                                </p>
-                                <div class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
-                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
-                                </div>
-                            </a>
+                    <div class="w-full">
+                        <p class="design-label">Home hero (`SectionIntro` preview)</p>
+                        <div class="design-live-section">
+                            <SectionIntro preview />
                         </div>
-                        <p class="design-hint">Full chrome: tie + hole + slot bars + available-for cycle — see SectionIntro</p>
                     </div>
 
+                    <div class="w-full">
+                        <p class="design-label">Skills (`SectionSkills`)</p>
+                        <div class="design-live-section">
+                            <SectionSkills />
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <p class="design-label">Experience (`SectionExperiences` preview)</p>
+                        <div class="design-live-section">
+                            <SectionExperiences preview />
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <p class="design-label">Credentials (`SectionCredentials` preview)</p>
+                        <div class="design-live-section">
+                            <SectionCredentials preview />
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <p class="design-label">Brand marquee (`SectionBrands`)</p>
+                        <div class="design-live-section">
+                            <SectionBrands />
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <p class="design-label">Testimonials (`SectionTestimonials` preview)</p>
+                        <div class="design-live-section">
+                            <SectionTestimonials preview />
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <p class="design-label">Footer contact shell (`Footer` preview)</p>
+                        <div class="design-live-section">
+                            <Footer preview />
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 404 -->
+                <section id="404" class="design-section">
                     <div>
-                        <p class="design-label">Skill chip</p>
-                        <div class="design-skill-chip" title="Swift">
-                            <span class="design-skill-glyph" />
-                        </div>
-                        <p class="design-hint">54×54 · radius 9px · surface + border · tooltip on hover in production</p>
+                        <h2 class="design-section-title">404</h2>
+                        <p class="design-section-desc">
+                            Live `SectionNotFound` with dummy location / card link copy.
+                        </p>
                     </div>
 
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Experience YoE banner</p>
-                        <div class="design-yoe-banner">
-                            <p class="design-yoe-count">8</p>
-                            <div>
-                                <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-white/90">Years of experience</p>
-                                <p class="m-0 mt-1 font-manrope text-[14px] font-semibold tracking-[-0.03em] text-white/60">Shipping mobile products end-to-end.</p>
-                            </div>
-                        </div>
-                        <p class="design-hint">Count 65→48 · ladder SVG in production · data-count-to</p>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Experience timeline + mid-header + row</p>
-                        <div class="design-timeline">
-                            <div class="design-timeline-track">
-                                <span class="design-timeline-dot is-now" />
-                                <span class="design-timeline-line" />
-                                <span class="design-timeline-dot is-past" />
-                                <span class="design-timeline-line" />
-                                <span class="design-timeline-dot is-past" />
-                            </div>
-                            <div class="design-timeline-years">
-                                <span class="is-now">2026</span>
-                                <span class="is-past">2024</span>
-                                <span class="is-past">2022</span>
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <h3 class="m-0 font-manrope text-[24px] font-semibold leading-[140%] tracking-[-0.04em] text-text max-narrow:text-[22px]">
-                                Experience
-                            </h3>
-                            <p class="m-0 mt-2 max-w-[480px] font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text/50 max-narrow:text-[15px]">
-                                Mid-header between timeline and employment rows.
-                            </p>
-                        </div>
-                        <div class="design-job-row">
-                            <p class="design-job-title">Technical Lead</p>
-                            <p class="design-job-company">Company</p>
-                            <p class="design-job-years">2022 — Present</p>
-                        </div>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Credentials accordion</p>
-                        <button type="button" class="design-cred-trigger" aria-expanded="true">
-                            <span>Certifications</span>
-                            <span class="design-cred-plus is-open" aria-hidden="true" />
-                        </button>
-                        <div class="design-cred-panel">
-                            <div class="design-cred-row">
-                                <div>
-                                    <p class="m-0 font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[14px]">Credential title</p>
-                                    <p class="m-0 mt-0.5 font-manrope text-[14px] font-semibold tracking-[-0.03em] text-text/50 max-narrow:text-[13px]">Organization</p>
-                                </div>
-                                <span class="relative h-2.5 w-2.5 text-[var(--color-primary)]" aria-hidden="true">
-                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <p class="design-label">Brand marquee</p>
-                        <div class="design-marquee">
-                            <div class="design-marquee-track">
-                                <span /><span /><span /><span /><span /><span />
-                            </div>
-                        </div>
-                        <p class="design-hint">52px track · edge mask fade · logos dark:invert</p>
-                    </div>
-
-                    <div>
-                        <p class="design-label">Testimonials phone (signature)</p>
-                        <div class="design-phone-stub">
-                            <div class="design-phone-bars" aria-hidden="true">
-                                <span class="is-on" /><span /><span />
-                            </div>
-                            <p class="m-0 font-manrope text-[18px] font-semibold leading-[130%] tracking-[-0.04em] text-white">
-                                “Quote at 22px inside the phone.”
-                            </p>
-                            <div class="mt-4 flex items-center gap-2">
-                                <span class="size-7 rounded-full bg-white/25" />
-                                <p class="m-0 font-manrope text-[12px] font-semibold tracking-[-0.03em] text-white/80">Person chip</p>
-                            </div>
-                            <p class="m-0 mt-4 font-manrope text-[11px] font-semibold tracking-[-0.03em] text-white/50">
-                                Gesture zones · progress bars · home only
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Footer contact shell (nested)</p>
-                        <div class="design-footer-shell">
-                            <div class="design-footer-inner">
-                                <h3 class="m-0 text-center font-manrope text-[34px] font-semibold leading-[110%] tracking-[-0.03em] text-text max-narrow:text-[28px]">
-                                    Let’s talk
-                                </h3>
-                                <p class="m-0 mt-3 max-w-[277px] text-center font-manrope text-[15px] font-semibold leading-[140%] tracking-[-0.02em] text-text/60">
-                                    Heading 50→34 + support, then person stack.
-                                </p>
-                                <div class="mt-5 size-14 rounded-full bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
-                                <p class="m-0 mt-3 font-manrope text-[19px] font-semibold tracking-[-0.04em] text-text">Name</p>
-                                <p class="m-0 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/60">Role</p>
-                                <div class="mt-4 flex justify-center gap-1.5">
-                                    <span class="design-social-circle" /><span class="design-social-circle" /><span class="design-social-circle" />
-                                </div>
-                                <p class="m-0 mt-5 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/60">© 2026 / All rights Reserved.</p>
-                                <p class="m-0 mt-3 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/60">Created by · avatar · name</p>
-                            </div>
+                    <div class="w-full">
+                        <p class="design-label">404 hero card (`SectionNotFound` preview)</p>
+                        <div class="design-live-section">
+                            <SectionNotFound preview />
                         </div>
                     </div>
                 </section>
@@ -612,130 +520,41 @@ button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
                     <div>
                         <h2 class="design-section-title">Project</h2>
                         <p class="design-section-desc">
-                            Project list cards and detail chrome — distinct from the blog list shell.
+                            Live project list + detail + privacy chrome with dummy copy (`preview`).
                         </p>
                     </div>
 
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Sticky project media card</p>
-                        <div class="design-project-card">
-                            <div class="design-project-card-media" />
-                            <div class="design-project-caption">
-                                <div class="design-project-logo" />
-                                <div class="min-w-0 flex-1">
-                                    <p class="m-0 truncate font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[14px]">
-                                        CameraX
-                                    </p>
-                                    <p class="m-0 truncate font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/60 max-narrow:text-[13px]">
-                                        Short description
-                                    </p>
-                                </div>
-                                <span class="design-project-arrow" aria-hidden="true" />
-                            </div>
+                    <div class="w-full">
+                        <p class="design-label">Project list (`SectionProjects` preview · home + limit)</p>
+                        <div class="design-live-section">
+                            <SectionProjects preview home limit />
                         </div>
-                        <p class="design-hint">Caption overlays banner (justify-end) · sticky top 110px · 400→280</p>
                     </div>
 
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Project hero card (banner + metadata + Live Preview)</p>
-                        <div class="design-project-hero">
-                            <div class="design-project-hero-media" />
-                            <div class="design-meta-row">
-                                <div class="design-meta-icon" />
-                                <p class="m-0 flex-1 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50 max-narrow:text-[13px]">
-                                    Organization
-                                </p>
-                                <p class="m-0 font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[14px]">
-                                    Example Co.
-                                </p>
-                            </div>
-                            <a
-                                data-scramble
-                                data-scramble-variant="primary"
-                                class="group relative mt-2 flex w-fit items-center gap-[7px] no-underline"
-                                href="#project"
+                    <div class="w-full">
+                        <p class="design-label">Project detail (`ProjectPage` preview)</p>
+                        <div class="design-live-section">
+                            <ProjectPage project={previewProjectDetail} />
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <p class="design-label">Privacy page (`ProjectPrivacyPage` preview)</p>
+                        <div class="design-live-section">
+                            <ProjectPrivacyPage
+                                projectTitle={previewProjectDetail.title}
+                                projectSlug={previewProjectDetail.slug}
+                                frontmatter={previewPrivacyFrontmatter}
                             >
-                                <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">
-                                    Live Preview
-                                </p>
-                                <div class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
-                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
-                                </div>
-                            </a>
+                                <h2>Section</h2>
+                                <p>Dummy privacy body paragraph for the gallery.</p>
+                                <ul>
+                                    <li>Disc list item</li>
+                                    <li>Another policy point</li>
+                                </ul>
+                                <blockquote>Blockquote · left border + surface wash</blockquote>
+                            </ProjectPrivacyPage>
                         </div>
-                        <p class="design-hint">Order after card: left H1 + long desc → then back control</p>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Project metadata row</p>
-                        <div class="design-meta-row">
-                            <div class="design-meta-icon" />
-                            <p class="m-0 flex-1 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50 max-narrow:text-[13px]">
-                                Category
-                            </p>
-                            <p class="m-0 font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[14px]">
-                                Mobile
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Project links bar</p>
-                        <div class="design-links-bar">
-                            <a class="group relative flex items-center gap-[7px] no-underline" href="#project" data-scramble data-scramble-variant="primary">
-                                <span class="font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">Source Code</span>
-                                <span class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
-                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
-                                </span>
-                            </a>
-                            <a class="group relative flex items-center gap-[7px] no-underline" href="#project" data-scramble data-scramble-variant="primary">
-                                <span class="font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">Privacy Policy</span>
-                                <span class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
-                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Project “View all” bar</p>
-                        <div class="design-links-bar">
-                            <a class="group relative flex items-center gap-[7px] no-underline" href="#project" data-scramble>
-                                <span class="font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">View all</span>
-                                <span class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
-                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
-                                </span>
-                            </a>
-                        </div>
-                        <p class="design-hint">Centered single link · same 64px surface bar as links bar</p>
-                    </div>
-
-                    <div>
-                        <p class="design-label">Project body media layouts</p>
-                        <div class="design-media-layouts">
-                            <div class="design-media-pair">
-                                <span /><span />
-                            </div>
-                            <div class="design-media-large" />
-                        </div>
-                        <p class="design-hint">images-pair · image-large · images-pair-then-large · ~1180px · rounded 30→20</p>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Privacy page chrome</p>
-                        <p class="m-0 font-manrope text-[15px] font-semibold tracking-[-0.04em] text-text/60">For app · CameraX</p>
-                        <p class="m-0 mt-1 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/40">Last updated · 1 Jan 2024</p>
-                        <div class="my-4 h-px w-full bg-border" />
-                        <p class="m-0 font-manrope text-[24px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[22px]">Section</p>
-                        <ul class="mt-3 m-0 flex list-none flex-col gap-2 p-0">
-                            <li class="m-0 flex items-start gap-3">
-                                <span class="mt-[0.65em] size-[5px] shrink-0 rounded-full bg-text/40" />
-                                <p class="m-0 font-manrope text-[16px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50">Disc list item</p>
-                            </li>
-                        </ul>
-                        <blockquote class="design-privacy-quote m-0 mt-4">
-                            Blockquote · left border + surface wash
-                        </blockquote>
                     </div>
                 </section>
 
@@ -744,96 +563,21 @@ button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
                     <div>
                         <h2 class="design-section-title">Blog</h2>
                         <p class="design-section-desc">
-                            Article chrome beyond the list shell and code block.
+                            Live blog list + article chrome with dummy copy (`preview`).
                         </p>
                     </div>
 
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Detail H1 (left) + meta row</p>
-                        <h3 class="m-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-text max-narrow:text-[34px]">
-                            Article title
-                        </h3>
-                        <div class="mt-5 flex items-center gap-[22px] max-narrow:gap-[26px]">
-                            <div class="flex items-center gap-2.5">
-                                <span class="size-7 rounded-full bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
-                                <p class="m-0 font-manrope text-[15px] font-semibold tracking-[-0.05em] text-text max-narrow:text-[14px]">
-                                    Author
-                                </p>
-                            </div>
-                            <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50 max-narrow:text-[13px]">
-                                29 March 2024
-                            </p>
+                    <div class="w-full">
+                        <p class="design-label">Blog list (`SectionBlogs` preview · home + limit)</p>
+                        <div class="design-live-section">
+                            <SectionBlogs preview home limit />
                         </div>
-                        <div class="my-5 h-px w-full bg-border" />
-                        <p class="m-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-text max-narrow:text-[24px]">
-                            Intro lead
-                        </p>
-                        <p class="mt-3 m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/60 max-narrow:text-[16px]">
-                            Supporting intro paragraph under the hairline.
-                        </p>
                     </div>
 
-                    <div>
-                        <p class="design-label">Banner media</p>
-                        <div class="design-banner-stub" />
-                        <p class="design-hint">Max ~1180px · aspect ~1.63 · rounded-[30→20]</p>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Article type scale</p>
-                        <h4 class="article-title m-0 font-manrope text-[38px] font-semibold leading-[125%] tracking-[-0.05em] text-text max-narrow:text-[30px]">
-                            Section heading
-                        </h4>
-                        <h5 class="mt-4 m-0 font-manrope text-[22px] font-semibold leading-[140%] tracking-[-0.04em] text-text max-narrow:text-[20px]">
-                            Subheading
-                        </h5>
-                        <p class="mt-3 m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50 max-narrow:text-[16px]">
-                            Body paragraph at /50. Rhythm: ~52px before titles, ~24px peers, ~20px under heading.
-                        </p>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Bullets — disc / labeled / numbered</p>
-                        <ul class="m-0 flex list-none flex-col gap-2.5 p-0">
-                            <li class="m-0 flex items-start gap-3">
-                                <span class="mt-[0.65em] size-[5px] shrink-0 rounded-full bg-text/40" />
-                                <p class="m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50 max-narrow:text-[16px]">
-                                    Plain disc item
-                                </p>
-                            </li>
-                            <li class="m-0 flex items-start gap-3">
-                                <span class="mt-[0.65em] size-[5px] shrink-0 rounded-full bg-text/40" />
-                                <p class="m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50 max-narrow:text-[16px]">
-                                    <span class="text-text">Label:</span> labeled bullet from MD
-                                </p>
-                            </li>
-                            <li class="m-0 flex items-start gap-3">
-                                <span class="w-5 shrink-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/40 tabular-nums max-narrow:text-[16px]">1.</span>
-                                <p class="m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50 max-narrow:text-[16px]">
-                                    Numbered step
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="max-w-[550px]">
-                        <p class="design-label">Blog “View all” (inline in list shell)</p>
-                        <div class="design-shell">
-                            <div class="flex h-12 items-center px-4">
-                                <a
-                                    data-scramble
-                                    data-scramble-variant="primary"
-                                    class="group relative flex items-center gap-[7px] no-underline"
-                                    href="#blog"
-                                >
-                                    <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">
-                                        View all
-                                    </p>
-                                    <div class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
-                                        <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
-                                    </div>
-                                </a>
-                            </div>
+                    <div class="w-full">
+                        <p class="design-label">Blog article (`BlogPage` preview)</p>
+                        <div class="design-live-section">
+                            <BlogPage blog={previewBlogDetail} />
                         </div>
                     </div>
                 </section>
@@ -1007,6 +751,19 @@ button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
                 fill="var(--color-primary)"
             />
         </svg>
+        <svg viewBox="0 0 69 13" id="svg8935606026"><path d="M 5.622 1.61 C 6.001 0.915 6.999 0.915 7.378 1.61 L 8.298 3.296 C 8.441 3.56 8.696 3.745 8.992 3.8 L 10.88 4.154 C 11.658 4.3 11.966 5.249 11.422 5.824 L 10.102 7.22 C 9.896 7.438 9.799 7.737 9.837 8.035 L 10.085 9.94 C 10.187 10.725 9.379 11.312 8.664 10.972 L 6.929 10.149 C 6.657 10.02 6.343 10.02 6.071 10.149 L 4.336 10.972 C 3.621 11.312 2.813 10.725 2.915 9.94 L 3.163 8.035 C 3.201 7.737 3.104 7.438 2.897 7.22 L 1.578 5.824 C 1.034 5.249 1.342 4.3 2.12 4.154 L 4.008 3.8 C 4.304 3.745 4.559 3.56 4.702 3.296 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 19.622 1.61 C 20.001 0.915 20.999 0.915 21.378 1.61 L 22.298 3.296 C 22.442 3.56 22.696 3.745 22.991 3.8 L 24.88 4.154 C 25.658 4.3 25.966 5.249 25.422 5.824 L 24.102 7.22 C 23.896 7.438 23.799 7.737 23.837 8.035 L 24.085 9.94 C 24.186 10.725 23.379 11.312 22.664 10.972 L 20.929 10.149 C 20.657 10.02 20.343 10.02 20.071 10.149 L 18.336 10.972 C 17.621 11.312 16.814 10.725 16.915 9.94 L 17.163 8.035 C 17.201 7.737 17.104 7.438 16.898 7.22 L 15.578 5.824 C 15.034 5.249 15.342 4.3 16.12 4.154 L 18.009 3.8 C 18.304 3.745 18.558 3.56 18.702 3.296 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 33.622 1.61 C 34.001 0.915 34.999 0.915 35.378 1.61 L 36.298 3.296 C 36.441 3.56 36.696 3.745 36.992 3.8 L 38.88 4.154 C 39.658 4.3 39.966 5.249 39.422 5.824 L 38.102 7.22 C 37.896 7.438 37.799 7.737 37.837 8.035 L 38.085 9.94 C 38.187 10.725 37.379 11.312 36.664 10.972 L 34.929 10.149 C 34.657 10.02 34.343 10.02 34.071 10.149 L 32.336 10.972 C 31.621 11.312 30.814 10.725 30.915 9.94 L 31.163 8.035 C 31.201 7.737 31.104 7.438 30.898 7.22 L 29.578 5.824 C 29.034 5.249 29.342 4.3 30.12 4.154 L 32.008 3.8 C 32.304 3.745 32.559 3.56 32.702 3.296 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 47.622 1.61 C 48.001 0.915 48.999 0.915 49.378 1.61 L 50.298 3.296 C 50.441 3.56 50.696 3.745 50.992 3.8 L 52.88 4.154 C 53.658 4.3 53.966 5.249 53.422 5.824 L 52.102 7.22 C 51.896 7.438 51.799 7.737 51.837 8.035 L 52.085 9.94 C 52.187 10.725 51.379 11.312 50.664 10.972 L 48.929 10.149 C 48.657 10.02 48.343 10.02 48.071 10.149 L 46.336 10.972 C 45.621 11.312 44.813 10.725 44.915 9.94 L 45.163 8.035 C 45.201 7.737 45.104 7.438 44.898 7.22 L 43.578 5.824 C 43.034 5.249 43.342 4.3 44.12 4.154 L 46.008 3.8 C 46.304 3.745 46.559 3.56 46.702 3.296 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 61.622 1.61 C 62.001 0.915 62.999 0.915 63.378 1.61 L 64.298 3.296 C 64.442 3.56 64.696 3.745 64.992 3.8 L 66.88 4.154 C 67.658 4.3 67.966 5.249 67.422 5.824 L 66.103 7.22 C 65.896 7.438 65.799 7.737 65.838 8.035 L 66.085 9.94 C 66.186 10.725 65.379 11.312 64.664 10.972 L 62.929 10.149 C 62.657 10.02 62.343 10.02 62.071 10.149 L 60.336 10.972 C 59.621 11.312 58.813 10.725 58.915 9.94 L 59.163 8.035 C 59.201 7.737 59.104 7.438 58.898 7.22 L 57.578 5.824 C 57.034 5.249 57.342 4.3 58.12 4.154 L 60.008 3.8 C 60.304 3.745 60.559 3.56 60.702 3.296 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path></svg>
+        <svg width="13" height="14" viewBox="0 0 13 14" fill="none" id="svg-1885035283_1212">
+            <g opacity="0.4" clip-path="url(#svg-1885035283_1212_clip0_6060_486)">
+                <path d="M12.1214 5.70297L3.18949 2.38949L3.1768 2.38492C2.9967 2.32261 2.80271 2.31223 2.61699 2.35496C2.43127 2.3977 2.26133 2.49182 2.12657 2.62657C1.99182 2.76133 1.8977 2.93127 1.85496 3.11699C1.81223 3.30271 1.82261 3.4967 1.88492 3.6768L1.88949 3.68949L5.20297 12.6214C5.27321 12.819 5.40288 12.99 5.57418 13.1109C5.74548 13.2318 5.95001 13.2968 6.15969 13.2968H6.17746C6.39166 13.2931 6.59919 13.2217 6.77039 13.0929C6.94159 12.9642 7.06768 12.7845 7.13063 12.5798L7.1352 12.565L8.21328 8.71328L12.065 7.6352L12.0798 7.63063C12.2845 7.56835 12.4644 7.44298 12.5936 7.27242C12.7229 7.10186 12.795 6.89483 12.7996 6.68087C12.8042 6.4669 12.7411 6.25695 12.6193 6.08098C12.4976 5.905 12.3233 5.77199 12.1214 5.70094V5.70297ZM7.55465 7.63266C7.45387 7.66088 7.36206 7.71457 7.28806 7.78857C7.21406 7.86257 7.16037 7.95438 7.13215 8.05516L6.13277 11.6246L3.18899 3.68899L11.1241 6.6343L7.55465 7.63266Z" fill="currentColor"></path>
+            </g>
+            <defs>
+                <clipPath id="svg-1885035283_1212_clip0_6060_486">
+                    <rect width="13" height="13" fill="white" transform="translate(0 0.5)"></rect>
+                </clipPath>
+            </defs>
+        </svg>
+        <svg viewBox="0 0 124 164" id="svg12488493370"><path d="M 0 161.947 C 0 160.842 0.895 159.947 2 159.947 C 3.105 159.947 4 160.842 4 161.947 C 4 163.052 3.105 163.947 2 163.947 C 0.895 163.947 0 163.052 0 161.947 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 0 152 C 0 150.895 0.895 150 2 150 C 3.105 150 4 150.895 4 152 C 4 153.105 3.105 154 2 154 C 0.895 154 0 153.105 0 152 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 0 142 C 0 140.895 0.895 140 2 140 C 3.105 140 4 140.895 4 142 C 4 143.105 3.105 144 2 144 C 0.895 144 0 143.105 0 142 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 0 132 C 0 130.895 0.895 130 2 130 C 3.105 130 4 130.895 4 132 C 4 133.105 3.105 134 2 134 C 0.895 134 0 133.105 0 132 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 0 122 C 0 120.895 0.895 120 2 120 C 3.105 120 4 120.895 4 122 C 4 123.105 3.105 124 2 124 C 0.895 124 0 123.105 0 122 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 10 122 C 10 120.895 10.895 120 12 120 C 13.105 120 14 120.895 14 122 C 14 123.105 13.105 124 12 124 C 10.895 124 10 123.105 10 122 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 20 122 C 20 120.895 20.895 120 22 120 C 23.105 120 24 120.895 24 122 C 24 123.105 23.105 124 22 124 C 20.895 124 20 123.105 20 122 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 30 122 C 30 120.895 30.895 120 32 120 C 33.105 120 34 120.895 34 122 C 34 123.105 33.105 124 32 124 C 30.895 124 30 123.105 30 122 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 40 122 C 40 120.895 40.895 120 42 120 C 43.105 120 44 120.895 44 122 C 44 123.105 43.105 124 42 124 C 40.895 124 40 123.105 40 122 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 40 112 C 40 110.895 40.895 110 42 110 C 43.105 110 44 110.895 44 112 C 44 113.105 43.105 114 42 114 C 40.895 114 40 113.105 40 112 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 40 102 C 40 100.895 40.895 100 42 100 C 43.105 100 44 100.895 44 102 C 44 103.105 43.105 104 42 104 C 40.895 104 40 103.105 40 102 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 40 92 C 40 90.895 40.895 90 42 90 C 43.105 90 44 90.895 44 92 C 44 93.105 43.105 94 42 94 C 40.895 94 40 93.105 40 92 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 40 82 C 40 80.895 40.895 80 42 80 C 43.105 80 44 80.895 44 82 C 44 83.105 43.105 84 42 84 C 40.895 84 40 83.105 40 82 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 50 82 C 50 80.895 50.895 80 52 80 C 53.105 80 54 80.895 54 82 C 54 83.105 53.105 84 52 84 C 50.895 84 50 83.105 50 82 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 60 82 C 60 80.895 60.895 80 62 80 C 63.105 80 64 80.895 64 82 C 64 83.105 63.105 84 62 84 C 60.895 84 60 83.105 60 82 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 70 82 C 70 80.895 70.895 80 72 80 C 73.105 80 74 80.895 74 82 C 74 83.105 73.105 84 72 84 C 70.895 84 70 83.105 70 82 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 80 82 C 80 80.895 80.895 80 82 80 C 83.105 80 84 80.895 84 82 C 84 83.105 83.105 84 82 84 C 80.895 84 80 83.105 80 82 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 80 72 C 80 70.895 80.895 70 82 70 C 83.105 70 84 70.895 84 72 C 84 73.105 83.105 74 82 74 C 80.895 74 80 73.105 80 72 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 80 62 C 80 60.895 80.895 60 82 60 C 83.105 60 84 60.895 84 62 C 84 63.105 83.105 64 82 64 C 80.895 64 80 63.105 80 62 Z" fill="var(--color-accent) /* {&quot;name&quot;:&quot;Blue&quot;} */"></path><path d="M 80 52 C 80 50.895 80.895 50 82 50 C 83.105 50 84 50.895 84 52 C 84 53.105 83.105 54 82 54 C 80.895 54 80 53.105 80 52 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 80 42 C 80 40.895 80.895 40 82 40 C 83.105 40 84 40.895 84 42 C 84 43.105 83.105 44 82 44 C 80.895 44 80 43.105 80 42 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 90 42 C 90 40.895 90.895 40 92 40 C 93.105 40 94 40.895 94 42 C 94 43.105 93.105 44 92 44 C 90.895 44 90 43.105 90 42 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 100 42 C 100 40.895 100.895 40 102 40 C 103.105 40 104 40.895 104 42 C 104 43.105 103.105 44 102 44 C 100.895 44 100 43.105 100 42 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 110 42 C 110 40.895 110.895 40 112 40 C 113.105 40 114 40.895 114 42 C 114 43.105 113.105 44 112 44 C 110.895 44 110 43.105 110 42 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 120 42 C 120 40.895 120.895 40 122 40 C 123.105 40 124 40.895 124 42 C 124 43.105 123.105 44 122 44 C 120.895 44 120 43.105 120 42 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 120 32 C 120 30.895 120.895 30 122 30 C 123.105 30 124 30.895 124 32 C 124 33.105 123.105 34 122 34 C 120.895 34 120 33.105 120 32 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 120 22 C 120 20.895 120.895 20 122 20 C 123.105 20 124 20.895 124 22 C 124 23.105 123.105 24 122 24 C 120.895 24 120 23.105 120 22 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 120 12 C 120 10.895 120.895 10 122 10 C 123.105 10 124 10.895 124 12 C 124 13.105 123.105 14 122 14 C 120.895 14 120 13.105 120 12 Z" fill="rgba(255,255,255,0.25)"></path><path d="M 120 2 C 120 0.895 120.895 0 122 0 C 123.105 0 124 0.895 124 2 C 124 3.105 123.105 4 122 4 C 120.895 4 120 3.105 120 2 Z" fill="rgba(255,255,255,0.25)"></path></svg>
+
     </div>
 </BaseLayout>
 

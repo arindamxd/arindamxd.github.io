@@ -1,6 +1,15 @@
 ---
-// data
-const author = (await import("../../content/author-metadata.json")).default;
+import { previewAuthor } from "../../utils/design-preview-data";
+
+interface Props {
+    preview?: boolean;
+}
+
+const { preview = false } = Astro.props;
+
+const author = preview
+    ? previewAuthor
+    : (await import("../../content/author-metadata.json")).default;
 ---
 
 <section class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-narrow:gap-[30px] max-narrow:px-2.5">

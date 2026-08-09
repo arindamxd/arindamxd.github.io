@@ -317,7 +317,7 @@ Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./
 | Persist | `transition:persist="site-nav"` only — **never** `transition:name` / `view-transition-name` on the nav (Chromium drops backdrop blur) |
 | Page shells | Prefer `overflow-x-hidden` (not `overflow-hidden`) on the page wrapper so WebKit can still frost |
 
-`/design` Components demo reuses the same `.nav-pill.nav-glass` / `.nav-theme-toggle.nav-glass` classes — not a parallel mock.
+`/design` Components demo mounts live [`NavBar`](../src/components/NavBar.astro) with `preview` (in-flow, not fixed) — same glass classes as BaseLayout chrome.
 
 ### Theme toggle
 
@@ -325,7 +325,7 @@ Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. Clip the 
 
 ### Hero ID card (home)
 
-[`SectionIntro`](../src/components/sections/SectionIntro.astro) — home first viewport.
+[`SectionIntro`](../src/components/sections/SectionIntro.astro) — home first viewport. `/design` → Home mounts the same component with `preview` (dummy copy via `design-preview-data.ts`).
 
 | Piece | Spec |
 | --- | --- |
@@ -334,11 +334,15 @@ Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. Clip the 
 | Slot bars | Active / inactive indicator bars in card header |
 | Slogan H1 | Display `70→48`, leading ~`90%`, tracking tight |
 | Intro support | `17→15` under slogan |
-| YoE badge | Micro `11px`, tracking `-0.05em` |
+| YoE badge | Micro `11px`, tracking `-0.05em`; fill darker than content bg (`color-mix` with black) + inset `border` — not `surface` |
 | CTAs | Primary Resume + secondary My work |
 | Availability | Green pulse + cycling “Available for…” (`available-text.js` + scramble) |
 | Location row | Pin + `13→12`; muted “Located in…” + city |
 | Bottom link | Outbound text+arrow (`cardLinkText` / `cardLinkURL`) |
+
+### 404 card
+
+[`SectionNotFound`](../src/components/sections/SectionNotFound.astro) — same tie/hole/card/bottom chrome as home, **no** slot bars or identity stack. Display `404` at `141px` / tracking `-0.09em`; title + muted support; single primary “Go back home” CTA. `/design` mounts the same component with `preview`.
 
 ### Project hero card
 
@@ -365,7 +369,7 @@ Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. Clip the 
 
 | Piece | Spec |
 | --- | --- |
-| YoE banner | `bg-primary` shell `rounded-[40→32]`; count `65→48` white + `data-count-to`; ladder SVG; labels white `/60`–`/90` at `14px` |
+| YoE banner | `bg-primary` shell `rounded-[40→32]`; count `65→48` white + `data-count-to`; ladder SVG; labels white `/60`–`/90` at `14px`. `/design` mounts `SectionExperiences` with `preview`. |
 | Year timeline | Hairline + current-year primary dot `14px` + past `#cacaca` `10px`; **now** year `52→44`; past years `18→15` `/40`; edge fade |
 | Mid-header | Left H3 `24→22` + support `17→15` `/50` between timeline and rows |
 | Employment rows | 3-col `title / company / years`; top hairline; `16→14` / `14→13` / `opacity-60` |

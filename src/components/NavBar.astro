@@ -1,11 +1,18 @@
 ---
+interface Props {
+    /** `/design` gallery — live chrome, dummy Contact / in-page anchors */
+    preview?: boolean;
+}
+
+const { preview = false } = Astro.props;
+const contactHref = preview ? "mailto:hello@example.com" : "mailto:arindamxd@gmail.com";
 ---
 
 <div class="relative flex max-w-full flex-row flex-nowrap items-center justify-start gap-3 max-[389px]:gap-2">
     <header class="nav-pill nav-glass">
         <a
             class="relative flex size-[34px] flex-none items-center justify-center rounded-full no-underline max-[389px]:size-[30px]"
-            href="/"
+            href={preview ? "#home" : "/"}
             aria-label="Go to homepage"
         >
             <svg
@@ -44,7 +51,7 @@
                 data-scramble
                 data-scramble-variant="auto"
                 class="flex items-center font-manrope text-[16px] font-semibold leading-none tracking-[-0.04em] text-white no-underline transition-colors duration-[400ms] ease-[cubic-bezier(0.44,0,0.56,1)] hover:text-white/70 max-narrow:text-[14px] max-[389px]:text-[13px]"
-                href="/projects"
+                href={preview ? "#project" : "/projects"}
             >
                 Projects
             </a>
@@ -52,7 +59,7 @@
                 data-scramble
                 data-scramble-variant="auto"
                 class="flex items-center font-manrope text-[16px] font-semibold leading-none tracking-[-0.04em] text-white no-underline transition-colors duration-[400ms] ease-[cubic-bezier(0.44,0,0.56,1)] hover:text-white/70 max-narrow:text-[14px] max-[389px]:text-[13px]"
-                href="/blogs"
+                href={preview ? "#blog" : "/blogs"}
             >
                 Blogs
             </a>
@@ -60,7 +67,7 @@
                 data-scramble
                 data-scramble-variant="light"
                 class="group relative flex h-[46px] flex-none cursor-pointer items-center justify-center rounded-full bg-white px-5 no-underline shadow-[0_1px_6px_0_rgba(0,0,0,0.09)] transition-colors duration-200 ease-in-out hover:bg-primary max-[389px]:h-[40px] max-[389px]:px-3.5"
-                href="mailto:arindamxd@gmail.com"
+                href={contactHref}
                 target="_blank"
                 rel="noopener"
             >
@@ -80,54 +87,57 @@
         aria-label="Switch to dark mode"
         class="nav-theme-toggle nav-glass"
     >
-        <span data-theme-track class="nav-theme-toggle__track">
-            <!-- Light icon -->
-            <span
-                data-theme-icon="light"
-                class="flex h-full w-1/2 items-center justify-center text-white"
-                aria-hidden="true"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    role="presentation"
-                    focusable="false"
-                    class="size-5 shrink-0 select-none"
-                    fill="none"
+        <!-- Clip layer is separate from .nav-glass — overflow+backdrop-filter on one node kills blur -->
+        <span class="nav-theme-toggle__clip">
+            <span data-theme-track class="nav-theme-toggle__track">
+                <!-- Light icon -->
+                <span
+                    data-theme-icon="light"
+                    class="flex h-full w-1/2 items-center justify-center text-white"
+                    aria-hidden="true"
                 >
-                    <circle cx="12" cy="12" r="5.25" stroke="currentColor" stroke-width="1.5" />
-                    <path
-                        d="M12 1.5v2.25M12 20.25v2.25M1.5 12h2.25M20.25 12h2.25M4.5 4.5l1.5 1.5M18 18l1.5 1.5M19.5 4.5l-1.5 1.5M6 18l-1.5 1.5"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                    />
-                </svg>
-            </span>
-            <!-- Dark icon -->
-            <span
-                data-theme-icon="dark"
-                class="flex h-full w-1/2 items-center justify-center text-white"
-                aria-hidden="true"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    role="presentation"
-                    focusable="false"
-                    class="size-5 shrink-0 select-none"
-                    fill="none"
-                >
-                    <path
-                        d="M 6.382 0 C 5.421 3.179 6.287 6.628 8.635 8.976 C 10.983 11.324 14.432 12.19 17.611 11.229 C 16.362 15.336 12.387 17.989 8.116 17.567 C 3.845 17.145 0.466 13.766 0.044 9.495 C -0.378 5.224 2.275 1.249 6.382 0 Z"
-                        transform="translate(3.754 2.635)"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        role="presentation"
+                        focusable="false"
+                        class="size-5 shrink-0 select-none"
                         fill="none"
-                    />
-                </svg>
+                    >
+                        <circle cx="12" cy="12" r="5.25" stroke="currentColor" stroke-width="1.5" />
+                        <path
+                            d="M12 1.5v2.25M12 20.25v2.25M1.5 12h2.25M20.25 12h2.25M4.5 4.5l1.5 1.5M18 18l1.5 1.5M19.5 4.5l-1.5 1.5M6 18l-1.5 1.5"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </span>
+                <!-- Dark icon -->
+                <span
+                    data-theme-icon="dark"
+                    class="flex h-full w-1/2 items-center justify-center text-white"
+                    aria-hidden="true"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        role="presentation"
+                        focusable="false"
+                        class="size-5 shrink-0 select-none"
+                        fill="none"
+                    >
+                        <path
+                            d="M 6.382 0 C 5.421 3.179 6.287 6.628 8.635 8.976 C 10.983 11.324 14.432 12.19 17.611 11.229 C 16.362 15.336 12.387 17.989 8.116 17.567 C 3.845 17.145 0.466 13.766 0.044 9.495 C -0.378 5.224 2.275 1.249 6.382 0 Z"
+                            transform="translate(3.754 2.635)"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            fill="none"
+                        />
+                    </svg>
+                </span>
             </span>
         </span>
     </button>
