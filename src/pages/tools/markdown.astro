@@ -1,0 +1,161 @@
+---
+import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
+---
+
+<ToolsPageShell
+    title="Markdown preview"
+    description="Paste Markdown or open a .md file to see a live HTML preview."
+    showBack={true}
+    wide={true}
+>
+    <div id="tools-markdown" class="tools-md">
+        <div class="tools-md-toolbar">
+            <div class="tools-md-toolbar-actions">
+                <label class="tools-btn-secondary tools-md-file-btn">
+                    <span>Open .md file</span>
+                    <input id="md-file" class="sr-only" type="file" accept=".md,.markdown,text/markdown,text/plain" />
+                </label>
+                <button type="button" class="tools-chip" data-md-action="sample">Sample</button>
+                <button type="button" class="tools-chip" data-md-action="clear">Clear</button>
+                <button type="button" class="tools-btn-primary" data-md-action="fullscreen">Full page preview</button>
+            </div>
+            <p id="md-filename" class="tools-md-filename" aria-live="polite"></p>
+        </div>
+
+        <!-- Flat grid: both boxes share one row track → identical height -->
+        <div class="tools-md-workspace">
+            <div class="tools-md-pane-head tools-md-head-source">
+                <p class="tools-md-pane-label">Source</p>
+            </div>
+            <div class="tools-md-pane-head tools-md-head-preview">
+                <p class="tools-md-pane-label">Preview</p>
+                <button type="button" class="tools-chip" data-md-action="copy-html">Copy HTML</button>
+            </div>
+
+            <div class="tools-md-box tools-md-editor-wrap">
+                <label class="sr-only" for="md-source">Markdown source</label>
+                <textarea
+                    id="md-source"
+                    class="tools-md-editor"
+                    data-lenis-prevent
+                    spellcheck="true"
+                    placeholder="# Heading&#10;&#10;Paste Markdown here…"
+                ></textarea>
+            </div>
+
+            <div id="md-preview" class="tools-md-box tools-md-preview" data-lenis-prevent aria-live="polite">
+                <p class="tools-md-empty">Preview appears here.</p>
+            </div>
+        </div>
+
+        <div id="md-fullscreen" class="tools-md-fullscreen" hidden>
+            <div class="tools-md-fullscreen-bar">
+                <p class="tools-md-pane-label">Full page preview</p>
+                <button type="button" class="tools-chip" data-md-action="close-fullscreen">Close</button>
+            </div>
+            <div id="md-fullscreen-body" class="tools-md-fullscreen-body tools-md-preview" data-lenis-prevent></div>
+        </div>
+    </div>
+</ToolsPageShell>
+
+<style is:global>
+    /* Page-critical layout — keeps Source/Preview boxes locked to one shared height */
+    #tools-markdown.tools-md {
+        --md-box-h: 70vh;
+    }
+
+    #tools-markdown .tools-md-workspace {
+        display: grid;
+        width: 100%;
+        min-width: 0;
+        gap: 0.65rem 1.25rem;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto var(--md-box-h) auto var(--md-box-h);
+        grid-template-areas:
+            "head-source"
+            "box-source"
+            "head-preview"
+            "box-preview";
+        align-items: stretch;
+    }
+
+    #tools-markdown .tools-md-head-source {
+        grid-area: head-source;
+    }
+
+    #tools-markdown .tools-md-head-preview {
+        grid-area: head-preview;
+    }
+
+    #tools-markdown .tools-md-editor-wrap {
+        grid-area: box-source;
+    }
+
+    #tools-markdown .tools-md-preview.tools-md-box {
+        grid-area: box-preview;
+    }
+
+    @media (min-width: 1024px) {
+        #tools-markdown .tools-md-workspace {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto var(--md-box-h);
+            grid-template-areas:
+                "head-source head-preview"
+                "box-source box-preview";
+        }
+    }
+
+    #tools-markdown .tools-md-pane-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        min-height: 32px;
+    }
+
+    #tools-markdown .tools-md-box {
+        box-sizing: border-box;
+        width: 100%;
+        height: var(--md-box-h) !important;
+        min-height: var(--md-box-h) !important;
+        max-height: var(--md-box-h) !important;
+        overflow: auto !important;
+        overscroll-behavior: contain;
+        border-radius: 18px;
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+    }
+
+    #tools-markdown .tools-md-editor-wrap {
+        position: relative;
+        overflow: hidden !important;
+    }
+
+    #tools-markdown .tools-md-editor {
+        position: absolute;
+        inset: 0;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        resize: none;
+        overflow: auto;
+        overscroll-behavior: contain;
+        border: 0;
+        border-radius: 18px;
+        background: transparent;
+        color: var(--color-text);
+        padding: 1.1rem 1.2rem;
+        font-family: var(--font-fragment);
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.55;
+        outline: none;
+    }
+
+    #tools-markdown .tools-md-editor-wrap:focus-within {
+        border-color: var(--color-primary);
+    }
+</style>
+
+<script src="../../scripts/tools-markdown.js" />

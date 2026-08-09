@@ -1,0 +1,66 @@
+---
+import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
+import { siteTools } from "../../utils/tools";
+---
+
+<ToolsPageShell
+    title="Tools"
+    description="Private utilities for authoring and reviewing site content. More tools will land here over time."
+    narrow={true}
+>
+    <div id="tools-hub" class="tools-hub">
+        <div class="tools-hub-search">
+            <label class="sr-only" for="tools-hub-search">Search tools</label>
+            <input
+                id="tools-hub-search"
+                class="tools-input tools-hub-search-input"
+                type="text"
+                role="searchbox"
+                placeholder="Search tools…"
+                autocomplete="off"
+                enterkeyhint="search"
+                spellcheck="false"
+            />
+            <button
+                type="button"
+                id="tools-hub-clear"
+                class="tools-hub-clear"
+                aria-label="Clear search"
+                hidden
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" fill="none">
+                    <path
+                        d="M4 4l8 8M12 4l-8 8"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                    ></path>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="tools-hub-list" aria-label="Available tools">
+            {
+                siteTools.map((tool) => (
+                    <a
+                        class="tools-hub-link"
+                        href={tool.href}
+                        data-tool-search={`${tool.title} ${tool.description} ${tool.slug}`.toLowerCase()}
+                    >
+                        <p class="tools-hub-link-title">{tool.title}</p>
+                        <p class="tools-hub-link-desc">{tool.description}</p>
+                    </a>
+                ))
+            }
+        </nav>
+
+        <p id="tools-hub-empty" class="tools-hub-empty" hidden>No tools match that search.</p>
+
+        <p class="m-0 pt-2 font-manrope text-[13px] font-semibold leading-[130%] tracking-[-0.04em] text-text/50">
+            Looking for tokens and UI recipes?
+            <a class="text-text underline decoration-border underline-offset-2 hover:decoration-text" href="/design">Open the design system</a>.
+        </p>
+    </div>
+</ToolsPageShell>
+
+<script src="../../scripts/tools-hub.js" />

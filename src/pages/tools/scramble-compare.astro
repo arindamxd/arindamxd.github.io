@@ -1,0 +1,107 @@
+---
+import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
+
+const SAMPLE = "Technical Lead · Mobile Engineering";
+
+const engines = [
+    {
+        id: "ours",
+        name: "Ours",
+        pkg: "src/scripts/scramble-text.js",
+        note: "Keel-style glyph overlay · data-scramble hover on the live site",
+    },
+    {
+        id: "scrambl",
+        name: "@scrambl/core",
+        pkg: "@scrambl/core",
+        note: "Zero-dep engine · reveal directions · charsets · MIT",
+    },
+    {
+        id: "scramble-text",
+        name: "scramble-text",
+        pkg: "scramble-text",
+        note: "Yomotsu / GSAP-like shuffle · class API · MIT",
+    },
+    {
+        id: "scrmbl",
+        name: "scrmbl",
+        pkg: "scrmbl",
+        note: "Decode / sweep · vanilla controller · MIT",
+    },
+] as const;
+---
+
+<ToolsPageShell
+    title="Scramble compare"
+    description="Side-by-side hover (and click) comparison of our scramble vs @scrambl/core, scramble-text, and scrmbl."
+    showBack={true}
+    wide={true}
+>
+    <div id="tools-scramble-compare" class="tools-scramble" data-sample={SAMPLE}>
+        <div class="tools-scramble-toolbar">
+            <label class="tools-label tools-scramble-text-field">
+                <span>Sample text</span>
+                <input
+                    id="scramble-sample"
+                    class="tools-input"
+                    type="text"
+                    value={SAMPLE}
+                    autocomplete="off"
+                    spellcheck="false"
+                />
+            </label>
+            <div class="tools-scramble-actions">
+                <button type="button" class="tools-btn-primary" data-scramble-action="play-all">Play all</button>
+                <button type="button" class="tools-chip" data-scramble-action="reset">Reset</button>
+            </div>
+            <p class="tools-scramble-hint m-0 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/45">
+                Hover any card (or focus it) to scramble. Reduced motion snaps to plain text.
+            </p>
+        </div>
+
+        <div class="tools-scramble-grid">
+            {
+                engines.map((engine) => (
+                    <article class="tools-scramble-card" data-engine={engine.id} tabindex="0">
+                        <header class="tools-scramble-card-head">
+                            <div>
+                                <p class="tools-scramble-card-name">{engine.name}</p>
+                                <p class="tools-scramble-card-pkg">{engine.pkg}</p>
+                            </div>
+                            <button type="button" class="tools-chip" data-scramble-action="play" data-engine={engine.id}>
+                                Play
+                            </button>
+                        </header>
+                        <p class="tools-scramble-stage" data-scramble-stage={engine.id}>
+                            {SAMPLE}
+                        </p>
+                        <p class="tools-scramble-card-note">{engine.note}</p>
+                    </article>
+                ))
+            }
+        </div>
+
+        <aside class="tools-scramble-legend">
+            <p class="tools-scramble-card-name">Notes</p>
+            <ul class="tools-scramble-legend-list">
+                <li>
+                    <strong>Ours</strong> — keeps dual glyph layers (random + main); closest to live site CTAs.
+                </li>
+                <li>
+                    <strong>@scrambl/core</strong> — full reveal engine; good if you want directions / charsets without Motion+.
+                </li>
+                <li>
+                    <strong>scramble-text</strong> — simple GSAP-like shuffle; older API, still fine for hover replay.
+                </li>
+                <li>
+                    <strong>scrmbl</strong> — modern decode controller with <code class="tools-code">replay()</code> for hover.
+                </li>
+                <li>
+                    Motion+ <code class="tools-code">scrambleText</code> is not included here (licensed). See design-system §12.2.1.
+                </li>
+            </ul>
+        </aside>
+    </div>
+</ToolsPageShell>
+
+<script src="../../scripts/tools-scramble-compare.js" />

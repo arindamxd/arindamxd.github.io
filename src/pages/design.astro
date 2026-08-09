@@ -1,0 +1,540 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/tools.css";
+import "../styles/design.css";
+
+const toc = [
+    { id: "principles", label: "Principles" },
+    { id: "color", label: "Color" },
+    { id: "type", label: "Typography" },
+    { id: "shape", label: "Shape" },
+    { id: "layout", label: "Layout" },
+    { id: "components", label: "Components" },
+    { id: "forms", label: "Forms" },
+    { id: "motion", label: "Motion" },
+    { id: "roadmap", label: "Roadmap UX" },
+    { id: "rules", label: "Do / Don’t" },
+];
+
+const colors = [
+    { name: "bg", token: "--color-bg", cls: "bg-bg", role: "Page background" },
+    { name: "text", token: "--color-text", cls: "bg-text", role: "Primary text / icons" },
+    { name: "surface", token: "--color-surface", cls: "bg-surface", role: "Shells, inputs" },
+    { name: "border", token: "--color-border", cls: "bg-[var(--color-border)]", role: "Hairlines, rings" },
+    { name: "primary", token: "--color-primary", cls: "bg-primary", role: "CTA fill / accents" },
+    { name: "accent", token: "--color-accent", cls: "bg-[var(--color-accent)]", role: "Rare brand cyan" },
+    { name: "active", token: "--color-active", cls: "bg-[var(--color-active)]", role: "Availability / success" },
+    { name: "inactive", token: "--color-inactive", cls: "bg-[var(--color-inactive)]", role: "Secondary hover wash" },
+];
+
+const typeScale = [
+    { role: "Display / hero", size: "70px → 48px", tracking: "-0.06em", leading: "90%", sample: "Arindam", sampleClass: "text-[70px] leading-[90%] tracking-[-0.06em] max-narrow:text-[48px]" },
+    { role: "Page / section H1–H2", size: "50px → 34px", tracking: "-0.05em", leading: "105–110%", sample: "Design system", sampleClass: "text-[50px] leading-[110%] tracking-[-0.05em] max-narrow:text-[34px]" },
+    { role: "Card / emphasis", size: "20–22px → 17–19px", tracking: "-0.04em", leading: "120–130%", sample: "Technical Lead · Mobile", sampleClass: "text-[20px] leading-[130%] tracking-[-0.04em] max-narrow:text-[17px]" },
+    { role: "Body / CTA label", size: "17px → 15px", tracking: "-0.04em", leading: "140%", sample: "Calm, precise, portfolio-grade craft.", sampleClass: "text-[17px] leading-[140%] tracking-[-0.04em] max-narrow:text-[15px]" },
+    { role: "List title", size: "16px → 14px", tracking: "-0.04em", leading: "130%", sample: "Project row title", sampleClass: "text-[16px] leading-[130%] tracking-[-0.04em] max-narrow:text-[14px]" },
+    { role: "Meta / back / nav", size: "13–14px → 12–13px", tracking: "-0.04em", leading: "120–130%", sample: "Back to home · Located in…", sampleClass: "text-[14px] leading-[130%] tracking-[-0.04em] max-narrow:text-[13px]" },
+    { role: "Micro badge", size: "11px", tracking: "-0.05em", leading: "none", sample: "8+ Years of Experience", sampleClass: "text-[11px] leading-none tracking-[-0.05em]" },
+];
+---
+
+<BaseLayout
+    home={false}
+    title="Design system"
+    noindex={true}
+    description="Living style guide for tokens, components, and UX patterns used on this site."
+>
+    <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
+        <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">
+            <NavBar />
+        </div>
+
+        <div class="proton-root contents min-h-screen w-auto">
+            <main
+                class="relative mx-auto flex h-min w-full max-w-[1100px] flex-none flex-col flex-nowrap content-center items-stretch justify-start gap-16 bg-bg px-5 pb-24 pt-[120px] max-narrow:gap-12 max-narrow:px-4 max-narrow:pt-[100px]"
+            >
+                <header class="flex w-full flex-col gap-8">
+                    <div class="relative h-auto w-auto flex-none">
+                        <a
+                            data-scramble
+                            data-scramble-variant="primary"
+                            class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-4 overflow-visible no-underline"
+                            href="/tools"
+                        >
+                            <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_var(--color-border)] transition-colors duration-200 ease-in-out group-hover:bg-primary">
+                                <div
+                                    class="relative h-[14px] w-[15px] flex-none transition-[filter] duration-200 ease-in-out group-hover:brightness-0 group-hover:invert"
+                                    style="image-rendering: pixelated;"
+                                    aria-hidden="true"
+                                >
+                                    <div class="aspect-square size-full">
+                                        <svg class="size-full"><use href="#svg12261373696"></use></svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative h-auto w-auto flex-none whitespace-pre">
+                                <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[13px]">
+                                    Back to tools
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="flex w-full flex-col gap-3">
+                        <h1 class="m-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-text max-narrow:text-[34px]">
+                            Design system
+                        </h1>
+                        <p class="m-0 max-w-[560px] font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text/60 max-narrow:text-[15px]">
+                            Tokens, components, and UX patterns to match when building new UI. Written docs live in
+                            <code class="tools-code">docs/design-system.md</code>.
+                        </p>
+                    </div>
+
+                    <nav class="design-toc" aria-label="Design sections">
+                        {toc.map((item) => (
+                            <a href={`#${item.id}`}>{item.label}</a>
+                        ))}
+                    </nav>
+                </header>
+
+                <!-- Principles -->
+                <section id="principles" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Principles</h2>
+                        <p class="design-section-desc">
+                            Technical Lead · Mobile. Calm, precise, craft-forward. Content stays in a 550px column unless a tool needs width.
+                        </p>
+                    </div>
+                    <div class="design-rules">
+                        <p class="design-rule">
+                            <strong>One composition</strong>
+                            First viewport reads as one composition — not a dashboard of cards and stats.
+                        </p>
+                        <p class="design-rule">
+                            <strong>One job per section</strong>
+                            One headline, one short support line, then the content.
+                        </p>
+                        <p class="design-rule">
+                            <strong>Pills + shells, not cards</strong>
+                            Interactive chrome is pill-shaped; groups use surface shells and rows.
+                        </p>
+                        <p class="design-rule">
+                            <strong>Match code first</strong>
+                            Prefer existing patterns over inventing new chrome.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Color -->
+                <section id="color" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Color</h2>
+                        <p class="design-section-desc">
+                            Use semantic tokens — not raw hex. Toggle theme to verify light/dark flip. Primary and accent stay constant.
+                        </p>
+                    </div>
+                    <div class="design-swatch-grid">
+                        {colors.map((c) => (
+                            <div class="design-swatch">
+                                <div class:list={["design-swatch-chip", c.cls]} />
+                                <p class="design-swatch-meta">
+                                    {c.name}
+                                    <span>{c.token} · {c.role}</span>
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                    <div>
+                        <p class="design-label">Text hierarchy via opacity on text-text</p>
+                        <div class="flex flex-col gap-2">
+                            <p class="m-0 font-manrope text-[17px] font-semibold tracking-[-0.04em] text-text">Primary · 100%</p>
+                            <p class="m-0 font-manrope text-[17px] font-semibold tracking-[-0.04em] text-text/60">Supporting · /60</p>
+                            <p class="m-0 font-manrope text-[17px] font-semibold tracking-[-0.04em] text-text/50">Meta · /50</p>
+                            <p class="m-0 font-manrope text-[17px] font-semibold tracking-[-0.04em] text-text/40">Quiet · /40</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Typography -->
+                <section id="type" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Typography</h2>
+                        <p class="design-section-desc">
+                            Manrope 600 for almost all UI. Fragment Mono for code and technical previews. Don’t expand Inter.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="design-label">Families</p>
+                        <div class="design-demo-row">
+                            <p class="m-0 font-manrope text-[22px] font-semibold tracking-[-0.04em] text-text">Manrope · UI & marketing</p>
+                            <p class="m-0 font-fragment text-[16px] text-text">Fragment Mono · code / previews</p>
+                        </div>
+                    </div>
+                    <div>
+                        {typeScale.map((row) => (
+                            <div class="design-type-row">
+                                <p class="design-type-meta">
+                                    {row.role} · {row.size} · tracking {row.tracking} · leading {row.leading}
+                                </p>
+                                <p class:list={["m-0 p-0 font-manrope font-semibold text-text", row.sampleClass]}>{row.sample}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <!-- Shape -->
+                <section id="shape" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Shape & elevation</h2>
+                        <p class="design-section-desc">
+                            Almost no drop shadows. Depth = surface contrast + 1px border or inset ring.
+                        </p>
+                    </div>
+                    <div class="design-radius-row">
+                        <div class="design-radius-item">
+                            <div class="design-radius-box rounded-full" />
+                            <p class="design-label">pill · full</p>
+                        </div>
+                        <div class="design-radius-item">
+                            <div class="design-radius-box rounded-[45px]" />
+                            <p class="design-label">shell · 45px</p>
+                        </div>
+                        <div class="design-radius-item">
+                            <div class="design-radius-box rounded-[41px]" />
+                            <p class="design-label">row · 41px</p>
+                        </div>
+                        <div class="design-radius-item">
+                            <div class="design-radius-box rounded-[30px]" />
+                            <p class="design-label">media · 30px</p>
+                        </div>
+                        <div class="design-radius-item">
+                            <div class="design-radius-box rounded-[14px]" />
+                            <p class="design-label">utility · 14px</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Layout -->
+                <section id="layout" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Layout widths</h2>
+                        <p class="design-section-desc">
+                            Default storytelling column is 550px. Wider only for multi-pane tools.
+                        </p>
+                    </div>
+                    <div class="flex w-full flex-col gap-3">
+                        <div class="design-width-bar" style="max-width: 550px;">550px · home, footer, lists, tools hub</div>
+                        <div class="design-width-bar" style="max-width: 1100px;">1100px · tools author forms</div>
+                        <div class="design-width-bar" style="max-width: 1280px;">1280px · markdown split panes</div>
+                    </div>
+                    <div>
+                        <p class="design-label">Section header (marketing · centered)</p>
+                        <div class="flex w-full flex-col items-center gap-3 py-6 text-center">
+                            <h3 class="m-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-text max-narrow:text-[34px]">
+                                Selected work
+                            </h3>
+                            <p class="m-0 max-w-[350px] font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text opacity-60 max-narrow:text-[15px]">
+                                One short supporting line under the title.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Components -->
+                <section id="components" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Components</h2>
+                        <p class="design-section-desc">
+                            Live recipes used on the site. Hover CTAs and links to feel scramble + transitions.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Primary + secondary CTA</p>
+                        <div class="design-demo-row">
+                            <a
+                                data-scramble
+                                data-scramble-variant="primary"
+                                class="group relative flex h-[58px] w-min cursor-pointer flex-row flex-nowrap content-center items-center justify-start gap-4 overflow-hidden rounded-full py-[3px] pr-[74px] pl-7 no-underline"
+                                href="#components"
+                            >
+                                <div class="relative z-[2] h-auto w-auto flex-none whitespace-pre">
+                                    <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-white no-underline max-narrow:text-[15px]">
+                                        Resume
+                                    </p>
+                                </div>
+                                <div class="absolute top-[3px] right-[3px] z-[2] flex h-[52px] w-[52px] flex-col flex-nowrap content-center items-center justify-center rounded-full bg-white p-0">
+                                    <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45" style="image-rendering: pixelated;">
+                                        <div class="h-full w-full" style="aspect-ratio:inherit">
+                                            <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute inset-0 z-0 overflow-hidden rounded-full bg-primary transition-[filter] duration-200 ease-in-out group-hover:brightness-95" />
+                            </a>
+                            <a
+                                data-scramble
+                                class="group relative flex h-[58px] w-min cursor-pointer flex-row flex-nowrap content-center items-center justify-center gap-4 overflow-visible rounded-full bg-surface px-7 py-5 no-underline transition-colors duration-200 ease-in-out hover:bg-inactive"
+                                href="#components"
+                            >
+                                <div class="relative z-[1] h-auto w-auto flex-none whitespace-pre">
+                                    <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-narrow:text-[15px]">
+                                        My work
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Back control (detail / tools)</p>
+                        <a
+                            data-scramble
+                            data-scramble-variant="primary"
+                            class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-4 overflow-visible no-underline"
+                            href="#components"
+                        >
+                            <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_var(--color-border)] transition-colors duration-200 ease-in-out group-hover:bg-primary">
+                                <div
+                                    class="relative h-[14px] w-[15px] flex-none transition-[filter] duration-200 ease-in-out group-hover:brightness-0 group-hover:invert"
+                                    style="image-rendering: pixelated;"
+                                    aria-hidden="true"
+                                >
+                                    <div class="aspect-square size-full">
+                                        <svg class="size-full"><use href="#svg12261373696"></use></svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text max-narrow:text-[13px]">
+                                Back to projects
+                            </p>
+                        </a>
+                    </div>
+
+                    <div>
+                        <p class="design-label">List shell + rows (550px)</p>
+                        <div class="design-shell">
+                            <a class="design-shell-row" href="#components" data-scramble data-scramble-variant="primary">
+                                <div class="flex min-w-0 items-center gap-3">
+                                    <div class="size-11 flex-none rounded-[22px] bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
+                                    <p class="m-0 truncate font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-text max-narrow:text-[14px]">
+                                        Sample project
+                                    </p>
+                                </div>
+                                <p class="m-0 shrink-0 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/50">2024</p>
+                            </a>
+                            <a class="design-shell-row" href="#components" data-scramble data-scramble-variant="primary">
+                                <div class="flex min-w-0 items-center gap-3">
+                                    <div class="size-11 flex-none rounded-[22px] bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
+                                    <p class="m-0 truncate font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-text max-narrow:text-[14px]">
+                                        Another row
+                                    </p>
+                                </div>
+                                <p class="m-0 shrink-0 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/50">2023</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Text link with arrow</p>
+                        <a
+                            data-scramble
+                            data-scramble-variant="primary"
+                            class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-start gap-[7px] overflow-visible py-0 no-underline"
+                            href="#components"
+                        >
+                            <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text no-underline max-narrow:text-[13px]">
+                                Source Code
+                            </p>
+                            <div class="relative h-2.5 w-2.5 flex-none transition-transform duration-200 ease-out group-hover:rotate-45">
+                                <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Availability pulse</p>
+                        <div class="flex items-center gap-2.5">
+                            <span class="relative flex size-2.5">
+                                <span class="absolute inline-flex size-full animate-ping rounded-full bg-[var(--color-active)] opacity-40" />
+                                <span class="relative inline-flex size-2.5 rounded-full bg-[var(--color-active)]" />
+                            </span>
+                            <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text">
+                                Available for freelance
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Forms -->
+                <section id="forms" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Forms & tools chrome</h2>
+                        <p class="design-section-desc">
+                            Shared classes in <code class="tools-code">tools.css</code>. Search uses a full pill + custom clear — not native cancel.
+                        </p>
+                    </div>
+                    <div class="flex max-w-[550px] flex-col gap-4">
+                        <div>
+                            <p class="design-label">Input</p>
+                            <input class="tools-input" type="text" placeholder="Project title…" value="Design gallery" />
+                        </div>
+                        <div>
+                            <p class="design-label">Textarea</p>
+                            <textarea class="tools-textarea" rows="3" placeholder="Short description…">Match existing patterns before inventing new ones.</textarea>
+                        </div>
+                        <div>
+                            <p class="design-label">Chips + buttons</p>
+                            <div class="design-demo-row">
+                                <button type="button" class="tools-chip">Chip</button>
+                                <button type="button" class="tools-btn-primary">Primary</button>
+                                <button type="button" class="tools-btn-secondary">Secondary</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="design-label">Tabs</p>
+                            <div class="design-demo-row">
+                                <button type="button" class="tools-tab is-active">Blog</button>
+                                <button type="button" class="tools-tab">Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Motion -->
+                <section id="motion" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Motion</h2>
+                        <p class="design-section-desc">
+                            Ship 2–3 intentional motions. Respect prefers-reduced-motion. Nested scroll: data-lenis-prevent.
+                        </p>
+                    </div>
+                    <div class="design-rules">
+                        <p class="design-rule">
+                            <strong>Today</strong>
+                            Lenis · page loader · appear reveals · data-scramble · 200ms color/opacity hovers.
+                        </p>
+                        <p class="design-rule">
+                            <strong>Target stack</strong>
+                            Motion (JS) runtime · inView reveal · springs · Motion+ scrambleText · optional circular cursor.
+                        </p>
+                        <p class="design-rule">
+                            <strong>Hovers</strong>
+                            Short color/opacity transitions · 200ms ease-in-out. Scramble on key CTAs and links.
+                        </p>
+                        <p class="design-rule">
+                            <strong>Compare tool</strong>
+                            Bake-off live engines at <a class="underline" href="/tools/scramble-compare">/tools/scramble-compare</a>.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="design-label">Scramble sample — hover / focus</p>
+                        <a
+                            data-scramble
+                            data-scramble-variant="primary"
+                            class="inline-block font-manrope text-[22px] font-semibold tracking-[-0.04em] text-text no-underline"
+                            href="#motion"
+                        >
+                            Hover to scramble
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Roadmap UX previews -->
+                <section id="roadmap" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Roadmap UX (preview)</h2>
+                        <p class="design-section-desc">
+                            Specs from the enhancement roadmap — visual targets for future work, not shipped chrome.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Traffic meta line (§12.3.1)</p>
+                        <p class="m-0 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/50">
+                            171.9K UNIQUE · 1.04M VIEWS / MONTH
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Circular cursor (§12.2.4) — static mock</p>
+                        <div class="relative flex h-[120px] max-w-[320px] items-center justify-center rounded-[18px] border border-border bg-surface">
+                            <div
+                                class="pointer-events-none size-7 rounded-full border border-text/40"
+                                aria-hidden="true"
+                            />
+                            <div class="pointer-events-none absolute size-1.5 rounded-full bg-text/50" aria-hidden="true" />
+                            <p class="absolute bottom-3 m-0 font-fragment text-[11px] text-text/40">~28px ring · desktop only</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Motion duration tokens (target)</p>
+                        <div class="design-demo-row">
+                            <span class="tools-chip">120ms fast</span>
+                            <span class="tools-chip">200ms mid</span>
+                            <span class="tools-chip">320ms slow</span>
+                            <span class="tools-chip">520ms enter</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Do / Don't -->
+                <section id="rules" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Do / Don’t</h2>
+                        <p class="design-section-desc">Anti-patterns from the written design system — keep new UI on the left column.</p>
+                    </div>
+                    <div class="design-rules">
+                        <p class="design-rule design-rule-do">
+                            <strong>Do</strong>
+                            Tokens first · Manrope 600 · 550px column · pills for actions · surface shells · scramble on key links · verify light/dark.
+                        </p>
+                        <p class="design-rule design-rule-dont">
+                            <strong>Don’t</strong>
+                            Purple gradients · cream+terracotta kits · Inter as display · card-grid heroes · glow stacks · emoji ornament · hard-coded light-only greys.
+                        </p>
+                        <p class="design-rule design-rule-do">
+                            <strong>Do</strong>
+                            Register tools in siteTools · noindex private utilities · data-lenis-prevent on nested scroll.
+                        </p>
+                        <p class="design-rule design-rule-dont">
+                            <strong>Don’t</strong>
+                            Invent a second scramble/reveal engine · fight Lenis · ship native search cancel · mismatched max-widths vs footer.
+                        </p>
+                    </div>
+
+                    <div class="design-links">
+                        <a class="tools-btn-secondary" href="/tools">Tools hub</a>
+                        <a class="tools-btn-secondary" href="https://github.com/arindamxd/arindamxd.github.io/blob/main/docs/design-system.md" target="_blank" rel="noopener">
+                            Full docs on GitHub
+                        </a>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <Footer />
+    </div>
+
+    <div
+        id="svg-templates"
+        style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict"
+        aria-hidden="true"
+    >
+        <svg viewBox="0 0 15 14" id="svg12261373696">
+            <path
+                d="M 4.114 6.168 L 14.239 6.168 L 14.239 7.832 L 4.114 7.832 L 8.576 12.294 L 7.399 13.47 L 0.929 7 L 7.399 0.529 L 8.576 1.706 Z"
+                fill="var(--color-text)"
+            />
+        </svg>
+        <svg viewBox="0 0 10 10" id="link-arrow">
+            <path
+                d="M 8.336 2.84 L 1.176 10 L 0 8.824 L 7.159 1.664 L 0.849 1.664 L 0.849 0 L 10 0 L 10 9.151 L 8.336 9.151 Z"
+                fill="var(--color-primary)"
+            />
+        </svg>
+    </div>
+</BaseLayout>

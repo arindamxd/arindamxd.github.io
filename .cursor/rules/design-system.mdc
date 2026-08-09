@@ -1,0 +1,55 @@
+---
+description: UI/UX design system for this portfolio site — tokens, layout, components, motion
+alwaysApply: true
+---
+
+# Design system (follow for all UI)
+
+Full reference: [`docs/design-system.md`](docs/design-system.md). Living gallery: `/design` (`src/pages/design.astro`). Tokens: `src/styles/global.css`. Tools styles: `src/styles/tools.css`.
+
+## Personality
+
+Technical, craft-forward portfolio. Calm and precise — not loud SaaS marketing. Prefer matching existing section/element patterns over new visual languages.
+
+**Avoid:** purple gradients, cream+terracotta editorial kits, broadsheet dense grids, glow stacks, emoji chrome, Inter/Roboto/Arial as display type, dashboard card grids on marketing surfaces.
+
+## Layout
+
+- Default content width: **`max-w-[550px]`** (home sections, footer, tools hub). Match footer when building hub-like pages.
+- Tools author `~1100px`; markdown split `~1280px`.
+- Breakpoint: `max-narrow:` ≤609px (`--breakpoint-narrow: 610px`).
+- One job per section: one headline + one short muted support line.
+- Top padding under nav ≈ `110–120px`.
+
+## Color (semantic only)
+
+Use `bg-bg`, `text-text`, `bg-surface`, `border-border`, `bg-primary`, `bg-inactive`, `text-text/60` (and `/50`–`/40` for meta). Primary `#2a29ff` and accent/active stay across themes; surfaces flip in `.dark`.
+
+Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Minimal drop shadows (nav glass is the exception).
+
+## Type
+
+- **Manrope 600** (`font-manrope`) for UI/marketing. Tracking ≈ `-0.04em` (titles `-0.05em`).
+- **Fragment Mono** for code / raw markdown only.
+- Scale: hero `70→48`, section `50→34`, body/CTA `17→15`, meta `13–14→12–13`. Text usually `m-0 p-0`.
+
+## Shape
+
+- Interactive chrome → **`rounded-full`** (CTAs, nav, search).
+- Soft shells → `rounded-[45px]/[46px]` (mobile `[36px]`).
+- Utility form fields → `14px` radius unless search (pill).
+- Prefer surface shells + rows over generic cards. Cards only when wrapping a clear interaction (e.g. tools hub links).
+
+## Recipes to copy
+
+- **Back control:** 52px circle + “Back to …” label (see blog/project/tools shell) — not plain “← text”.
+- **Primary CTA:** pill, primary fill, optional scramble (`data-scramble`).
+- **Tools:** register in `src/utils/tools.ts`; use `ToolsPageShell`; nested scroll → `data-lenis-prevent`.
+- **Search:** `type="text"` + custom clear button (no native search cancel).
+- **Private tools:** `noindex={true}`.
+
+## Motion
+
+Lenis page scroll; scramble on key CTAs; short `200ms` hovers; optional `appear-*` / reveal. Don’t add motion noise. Honor reduced motion.
+
+**Enhancements:** **Adopt Motion (JS)** (OSS `motion`) as the animation runtime. Use it for **scroll reveal** (`inView`, §12.2.2), **spring physics** (§12.2.3), and optional **circular custom cursor** (§12.2.4). **Verify Lenis vs native scroll** before locking the stack (§12.2.5). Prefer native View Transitions for page morphs. Replace custom scramble with Motion+ [`scrambleText`](https://motion.dev/examples/js-scramble-text) (§12.2.1) only with a membership. Keep at most one smooth-scroll approach; no GSAP theatre.

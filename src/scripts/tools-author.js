@@ -1,5 +1,5 @@
 /**
- * /tools — blog & project markdown authoring + download
+ * /tools/author — blog & project markdown authoring + download
  */
 (function () {
     const STORAGE_KEY = 'tools-author-draft-v1';

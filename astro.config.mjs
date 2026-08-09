@@ -20,7 +20,7 @@ export default defineConfig({
     compressHTML: true,
     integrations: [
         sitemap({
-            filter: (page) => !page.includes('/tools'),
+            filter: (page) => !page.includes('/tools') && !page.includes('/design'),
         }),
     ],
     vite: {

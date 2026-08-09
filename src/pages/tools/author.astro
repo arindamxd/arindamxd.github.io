@@ -1,0 +1,260 @@
+---
+import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
+
+const author = (await import("../../content/author-metadata.json")).default;
+const today = new Date().toISOString().slice(0, 10);
+---
+
+<ToolsPageShell title="Author" description="Draft a blog or project body, then download the Markdown (and catalog JSON) ready for src/content/." showBack={true}>
+    <span slot="description">
+        Draft a blog or project body, then download the Markdown (and catalog JSON) ready for <code class="tools-code">src/content/</code>.
+    </span>
+
+    <div
+        id="tools-app"
+        class="flex w-full flex-col gap-10"
+        data-author-name={author.name}
+        data-author-avatar={author.intro.avatar}
+        data-today={today}
+    >
+        <div
+            class="flex w-fit items-center gap-1 rounded-full border border-border bg-surface p-1"
+            role="tablist"
+            aria-label="Content type"
+        >
+            <button
+                type="button"
+                role="tab"
+                id="tab-blog"
+                aria-selected="true"
+                data-tools-tab="blog"
+                class="tools-tab is-active"
+            >
+                Blog
+            </button>
+            <button
+                type="button"
+                role="tab"
+                id="tab-project"
+                aria-selected="false"
+                data-tools-tab="project"
+                class="tools-tab"
+            >
+                Project
+            </button>
+        </div>
+
+        <!-- Blog panel -->
+        <section
+            id="panel-blog"
+            role="tabpanel"
+            aria-labelledby="tab-blog"
+            class="grid w-full grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10"
+        >
+            <form id="form-blog" class="flex flex-col gap-5" autocomplete="off">
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">Catalog</legend>
+                    <label class="tools-label">
+                        <span>Slug</span>
+                        <input class="tools-input" name="slug" type="text" placeholder="my-post" required />
+                    </label>
+                    <label class="tools-label">
+                        <span>List title</span>
+                        <input class="tools-input" name="listTitle" type="text" placeholder="Understanding iOS UIControl…" required />
+                    </label>
+                    <label class="tools-label">
+                        <span>Thumb URL</span>
+                        <input class="tools-input" name="thumb" type="url" placeholder="https://… or /assets/…" />
+                    </label>
+                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <label class="tools-label">
+                            <span>Author name</span>
+                            <input class="tools-input" name="authorName" type="text" value={author.name} />
+                        </label>
+                        <label class="tools-label">
+                            <span>Date</span>
+                            <input class="tools-input" name="date" type="date" value={today} />
+                        </label>
+                    </div>
+                    <label class="tools-label">
+                        <span>Author avatar</span>
+                        <input class="tools-input" name="authorAvatar" type="text" value={author.intro.avatar} />
+                    </label>
+                </fieldset>
+
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">Article intro (frontmatter)</legend>
+                    <label class="tools-label">
+                        <span>Intro title</span>
+                        <input class="tools-input" name="introTitle" type="text" placeholder="Lead heading under the meta row" />
+                    </label>
+                    <label class="tools-label">
+                        <span>Intro description</span>
+                        <textarea class="tools-textarea min-h-[88px]" name="introDescription" placeholder="Short intro copy"></textarea>
+                    </label>
+                    <label class="tools-label">
+                        <span>Banner URL</span>
+                        <input class="tools-input" name="banner" type="url" placeholder="https://… wide image" />
+                    </label>
+                </fieldset>
+
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">Body (Markdown)</legend>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="tools-chip" data-blog-insert="section">## Section</button>
+                        <button type="button" class="tools-chip" data-blog-insert="subtitle">### Subtitle</button>
+                        <button type="button" class="tools-chip" data-blog-insert="labeled">Labeled list</button>
+                        <button type="button" class="tools-chip" data-blog-insert="code">Code block</button>
+                    </div>
+                    <label class="tools-label">
+                        <span class="sr-only">Body</span>
+                        <textarea
+                            class="tools-textarea min-h-[280px] font-fragment"
+                            name="body"
+                            data-lenis-prevent
+                            spellcheck="true"
+                            placeholder={'## Section heading\n\nBody paragraph…\n\n### Supporting heading\n\n- **Label**: explanation\n- Plain item\n\n```swift\nlet x = 1\n```'}
+                        ></textarea>
+                    </label>
+                </fieldset>
+
+                <div class="flex flex-wrap gap-3 pt-1">
+                    <button type="button" class="tools-btn-primary" data-download="blog-md">Download .md</button>
+                    <button type="button" class="tools-btn-secondary" data-download="blog-json">Download catalog JSON</button>
+                </div>
+            </form>
+
+            <aside class="tools-preview-pane">
+                <div class="flex items-center justify-between gap-3">
+                    <p class="m-0 font-manrope text-[13px] font-semibold tracking-[-0.05em] text-text/50">Preview · blogs/&lt;slug&gt;.md</p>
+                    <button type="button" class="tools-chip" data-copy="blog">Copy</button>
+                </div>
+                <pre id="preview-blog" class="tools-preview" data-lenis-prevent aria-live="polite"></pre>
+            </aside>
+        </section>
+
+        <!-- Project panel -->
+        <section
+            id="panel-project"
+            role="tabpanel"
+            aria-labelledby="tab-project"
+            hidden
+            class="grid w-full grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10"
+        >
+            <form id="form-project" class="flex flex-col gap-5" autocomplete="off">
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">Catalog</legend>
+                    <label class="tools-label">
+                        <span>Slug</span>
+                        <input class="tools-input" name="slug" type="text" placeholder="camerax" required />
+                    </label>
+                    <label class="tools-label">
+                        <span>Title</span>
+                        <input class="tools-input" name="title" type="text" placeholder="CameraX" required />
+                    </label>
+                    <label class="tools-label">
+                        <span>Short description</span>
+                        <input class="tools-input" name="descShort" type="text" placeholder="Card subtitle" />
+                    </label>
+                    <label class="tools-label">
+                        <span>Long description</span>
+                        <textarea class="tools-textarea min-h-[88px]" name="descLong" placeholder="Intro paragraph under the page h1"></textarea>
+                    </label>
+                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <label class="tools-label">
+                            <span>Thumb URL</span>
+                            <input class="tools-input" name="thumb" type="text" placeholder="/assets/projects/…/logo.svg" />
+                        </label>
+                        <label class="tools-label">
+                            <span>Thumb bg color</span>
+                            <input class="tools-input" name="thumbBg" type="text" placeholder="rgb(42, 41, 255)" value="rgb(42, 41, 255)" />
+                        </label>
+                    </div>
+                    <label class="tools-label">
+                        <span>Banner URL</span>
+                        <input class="tools-input" name="banner" type="url" placeholder="https://… wide hero image" />
+                    </label>
+                </fieldset>
+
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">Header meta</legend>
+                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <label class="tools-label">
+                            <span>Organization</span>
+                            <input class="tools-input" name="organization" type="text" placeholder="Personal" />
+                        </label>
+                        <label class="tools-label">
+                            <span>Category</span>
+                            <input class="tools-input" name="category" type="text" placeholder="Productivity / Camera App" />
+                        </label>
+                        <label class="tools-label">
+                            <span>Released</span>
+                            <input class="tools-input" name="released" type="date" value={today} />
+                        </label>
+                        <label class="tools-label">
+                            <span>Updated</span>
+                            <input class="tools-input" name="updated" type="date" value={today} />
+                        </label>
+                        <label class="tools-label">
+                            <span>Downloads</span>
+                            <input class="tools-input" name="downloads" type="text" placeholder="100K+" />
+                        </label>
+                        <label class="tools-label">
+                            <span>Link</span>
+                            <input class="tools-input" name="link" type="url" placeholder="https://…" />
+                        </label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">Project links</legend>
+                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <label class="tools-label">
+                            <span>Source code</span>
+                            <input class="tools-input" name="source_code" type="url" placeholder="https://github.com/…" />
+                        </label>
+                        <label class="tools-label flex-row items-center gap-3 sm:pt-7">
+                            <input class="size-4 accent-primary" name="privacy_policy" type="checkbox" />
+                            <span>Privacy policy page</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">Body (Markdown · no frontmatter)</legend>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="tools-chip" data-project-insert="pair">Image pair</button>
+                        <button type="button" class="tools-chip" data-project-insert="large">Large image</button>
+                        <button type="button" class="tools-chip" data-project-insert="section">## Section</button>
+                        <button type="button" class="tools-chip" data-project-insert="trio">Pair + large</button>
+                    </div>
+                    <label class="tools-label">
+                        <span class="sr-only">Body</span>
+                        <textarea
+                            class="tools-textarea min-h-[280px] font-fragment"
+                            name="body"
+                            data-lenis-prevent
+                            spellcheck="true"
+                            placeholder={'![Image Small Top Left](https://…)\n![Image Small Top Right](https://…)\n\n## Section heading\n\nBody paragraph…\n\n![Image Large Middle](https://…)'}
+                        ></textarea>
+                    </label>
+                </fieldset>
+
+                <div class="flex flex-wrap gap-3 pt-1">
+                    <button type="button" class="tools-btn-primary" data-download="project-md">Download .md</button>
+                    <button type="button" class="tools-btn-secondary" data-download="project-json">Download catalog JSON</button>
+                </div>
+            </form>
+
+            <aside class="tools-preview-pane">
+                <div class="flex items-center justify-between gap-3">
+                    <p class="m-0 font-manrope text-[13px] font-semibold tracking-[-0.05em] text-text/50">Preview · projects/&lt;slug&gt;.md</p>
+                    <button type="button" class="tools-chip" data-copy="project">Copy</button>
+                </div>
+                <pre id="preview-project" class="tools-preview" data-lenis-prevent aria-live="polite"></pre>
+            </aside>
+        </section>
+    </div>
+</ToolsPageShell>
+
+<script src="../../scripts/tools-author.js" />
