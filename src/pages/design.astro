@@ -2,6 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
+import MarkdownDocPanel from "../components/MarkdownDocPanel.astro";
+import BlogCodeBlock from "../components/elements/BlogCodeBlock.astro";
 import "../styles/tools.css";
 import "../styles/design.css";
 
@@ -12,6 +14,9 @@ const toc = [
     { id: "shape", label: "Shape" },
     { id: "layout", label: "Layout" },
     { id: "components", label: "Components" },
+    { id: "home", label: "Home" },
+    { id: "project", label: "Project" },
+    { id: "blog", label: "Blog" },
     { id: "forms", label: "Forms" },
     { id: "motion", label: "Motion" },
     { id: "roadmap", label: "Roadmap UX" },
@@ -88,7 +93,9 @@ const typeScale = [
                         </h1>
                         <p class="m-0 max-w-[560px] font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text/60 max-narrow:text-[15px]">
                             Tokens, components, and UX patterns to match when building new UI. Written docs live in
-                            <code class="tools-code">docs/design-system.md</code>.
+                            <button type="button" class="md-doc-trigger" data-md-doc="design-system">
+                                docs/design-system.md
+                            </button>.
                         </p>
                     </div>
 
@@ -317,24 +324,25 @@ const typeScale = [
                         <p class="design-label">List shell + rows (550px)</p>
                         <div class="design-shell">
                             <a class="design-shell-row" href="#components" data-scramble data-scramble-variant="primary">
-                                <div class="flex min-w-0 items-center gap-3">
-                                    <div class="size-11 flex-none rounded-[22px] bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
+                                <div class="flex min-w-0 items-center gap-[15px]">
+                                    <div class="size-[54px] flex-none rounded-full bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
                                     <p class="m-0 truncate font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-text max-narrow:text-[14px]">
-                                        Sample project
+                                        Sample article
                                     </p>
                                 </div>
-                                <p class="m-0 shrink-0 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/50">2024</p>
+                                <p class="m-0 shrink-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50 max-narrow:text-[13px]">Mar 2024</p>
                             </a>
                             <a class="design-shell-row" href="#components" data-scramble data-scramble-variant="primary">
-                                <div class="flex min-w-0 items-center gap-3">
-                                    <div class="size-11 flex-none rounded-[22px] bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
+                                <div class="flex min-w-0 items-center gap-[15px]">
+                                    <div class="size-[54px] flex-none rounded-full bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
                                     <p class="m-0 truncate font-manrope text-[16px] font-semibold leading-[130%] tracking-[-0.04em] text-text max-narrow:text-[14px]">
-                                        Another row
+                                        Another article
                                     </p>
                                 </div>
-                                <p class="m-0 shrink-0 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/50">2023</p>
+                                <p class="m-0 shrink-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50 max-narrow:text-[13px]">Jan 2023</p>
                             </a>
                         </div>
+                        <p class="design-hint">Blog list row: 54px thumb · title 16→14 · date /50 — inside surface shell</p>
                     </div>
 
                     <div>
@@ -355,6 +363,31 @@ const typeScale = [
                     </div>
 
                     <div>
+                        <p class="design-label">Markdown doc trigger (data-md-doc)</p>
+                        <p class="m-0 font-manrope text-[15px] font-semibold tracking-[-0.04em] text-text/60">
+                            Open any registered doc with
+                            <button type="button" class="md-doc-trigger" data-md-doc="design-system">
+                                docs/design-system.md
+                            </button>
+                            — pair with
+                            <code class="tools-code">MarkdownDocPanel</code>.
+                        </p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Blog code block (BlogCodeBlock / Shiki)</p>
+                        <BlogCodeBlock
+                            language="swift"
+                            code={`let button = UIButton(type: .system)
+button.setTitle("Tap", for: .normal)
+button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
+                        />
+                        <p class="mt-3 m-0 font-manrope text-[13px] font-semibold tracking-[-0.03em] text-text/45">
+                            Fenced ```lang blocks in blog MD → this shell. Inline backticks are plain text today.
+                        </p>
+                    </div>
+
+                    <div>
                         <p class="design-label">Availability pulse</p>
                         <div class="flex items-center gap-2.5">
                             <span class="relative flex size-2.5">
@@ -364,6 +397,444 @@ const typeScale = [
                             <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text">
                                 Available for freelance
                             </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Nav pill + theme toggle (anatomy)</p>
+                        <div class="design-nav-demo">
+                            <div class="design-nav-pill" aria-hidden="true">
+                                <span class="design-nav-home" />
+                                <span class="design-nav-link">Projects</span>
+                                <span class="design-nav-link">Blogs</span>
+                                <span class="design-nav-contact">Contact</span>
+                            </div>
+                            <div class="design-theme-toggle" aria-hidden="true">
+                                <span class="design-theme-knob" />
+                            </div>
+                        </div>
+                        <p class="design-hint">Live chrome is in the page header — match sizes: pill 60→52, contact 46→40, toggle circle beside.</p>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Social icon circles</p>
+                        <div class="design-demo-row">
+                            <span class="design-social-circle" aria-hidden="true" />
+                            <span class="design-social-circle" aria-hidden="true" />
+                            <span class="design-social-circle" aria-hidden="true" />
+                        </div>
+                        <p class="design-hint">36px surface circle · 22px icon · opacity 40→100 · brightness-0 dark:invert</p>
+                    </div>
+                </section>
+
+                <!-- Home -->
+                <section id="home" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Home</h2>
+                        <p class="design-section-desc">
+                            Signature home sections — match these when extending the landing page.
+                        </p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Home hero (identity + slogan stack)</p>
+                        <div class="design-hero-card">
+                            <div class="design-hero-id">
+                                <div class="design-hero-avatar" />
+                                <div>
+                                    <p class="m-0 font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-text max-narrow:text-[19px]">
+                                        Arindam
+                                    </p>
+                                    <p class="m-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text/60 max-narrow:text-[13px]">
+                                        Technical Lead · Mobile
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-1.5">
+                                <span class="design-social-circle" /><span class="design-social-circle" /><span class="design-social-circle" />
+                            </div>
+                            <p class="m-0 font-manrope text-[34px] font-semibold leading-[95%] tracking-[-0.05em] text-text max-narrow:text-[28px]">
+                                Building mobile products with care.
+                            </p>
+                            <p class="m-0 font-manrope text-[15px] font-semibold leading-[140%] tracking-[-0.04em] text-text/60">
+                                Intro support under the slogan · CTAs + pulse sit below.
+                            </p>
+                            <div class="design-hero-badge">
+                                <p class="m-0 font-manrope text-[11px] font-semibold leading-none tracking-[-0.05em] text-text">
+                                    8+ Years of Experience
+                                </p>
+                            </div>
+                            <div class="design-hero-location">
+                                <span class="design-hero-pin" aria-hidden="true" />
+                                <p class="m-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-text max-narrow:text-[12px]">
+                                    <span class="text-text/60">Located in&nbsp;</span>India<span class="text-text/60">,&nbsp;available worldwide.</span>
+                                </p>
+                            </div>
+                            <a
+                                data-scramble
+                                class="group relative flex w-fit items-center gap-[7px] no-underline"
+                                href="#home"
+                            >
+                                <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">
+                                    Bottom card link
+                                </p>
+                                <div class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
+                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                                </div>
+                            </a>
+                        </div>
+                        <p class="design-hint">Full chrome: tie + hole + slot bars + available-for cycle — see SectionIntro</p>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Skill chip</p>
+                        <div class="design-skill-chip" title="Swift">
+                            <span class="design-skill-glyph" />
+                        </div>
+                        <p class="design-hint">54×54 · radius 9px · surface + border · tooltip on hover in production</p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Experience YoE banner</p>
+                        <div class="design-yoe-banner">
+                            <p class="design-yoe-count">8</p>
+                            <div>
+                                <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-white/90">Years of experience</p>
+                                <p class="m-0 mt-1 font-manrope text-[14px] font-semibold tracking-[-0.03em] text-white/60">Shipping mobile products end-to-end.</p>
+                            </div>
+                        </div>
+                        <p class="design-hint">Count 65→48 · ladder SVG in production · data-count-to</p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Experience timeline + mid-header + row</p>
+                        <div class="design-timeline">
+                            <div class="design-timeline-track">
+                                <span class="design-timeline-dot is-now" />
+                                <span class="design-timeline-line" />
+                                <span class="design-timeline-dot is-past" />
+                                <span class="design-timeline-line" />
+                                <span class="design-timeline-dot is-past" />
+                            </div>
+                            <div class="design-timeline-years">
+                                <span class="is-now">2026</span>
+                                <span class="is-past">2024</span>
+                                <span class="is-past">2022</span>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h3 class="m-0 font-manrope text-[24px] font-semibold leading-[140%] tracking-[-0.04em] text-text max-narrow:text-[22px]">
+                                Experience
+                            </h3>
+                            <p class="m-0 mt-2 max-w-[480px] font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text/50 max-narrow:text-[15px]">
+                                Mid-header between timeline and employment rows.
+                            </p>
+                        </div>
+                        <div class="design-job-row">
+                            <p class="design-job-title">Technical Lead</p>
+                            <p class="design-job-company">Company</p>
+                            <p class="design-job-years">2022 — Present</p>
+                        </div>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Credentials accordion</p>
+                        <button type="button" class="design-cred-trigger" aria-expanded="true">
+                            <span>Certifications</span>
+                            <span class="design-cred-plus is-open" aria-hidden="true" />
+                        </button>
+                        <div class="design-cred-panel">
+                            <div class="design-cred-row">
+                                <div>
+                                    <p class="m-0 font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[14px]">Credential title</p>
+                                    <p class="m-0 mt-0.5 font-manrope text-[14px] font-semibold tracking-[-0.03em] text-text/50 max-narrow:text-[13px]">Organization</p>
+                                </div>
+                                <span class="relative h-2.5 w-2.5 text-[var(--color-primary)]" aria-hidden="true">
+                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Brand marquee</p>
+                        <div class="design-marquee">
+                            <div class="design-marquee-track">
+                                <span /><span /><span /><span /><span /><span />
+                            </div>
+                        </div>
+                        <p class="design-hint">52px track · edge mask fade · logos dark:invert</p>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Testimonials phone (signature)</p>
+                        <div class="design-phone-stub">
+                            <div class="design-phone-bars" aria-hidden="true">
+                                <span class="is-on" /><span /><span />
+                            </div>
+                            <p class="m-0 font-manrope text-[18px] font-semibold leading-[130%] tracking-[-0.04em] text-white">
+                                “Quote at 22px inside the phone.”
+                            </p>
+                            <div class="mt-4 flex items-center gap-2">
+                                <span class="size-7 rounded-full bg-white/25" />
+                                <p class="m-0 font-manrope text-[12px] font-semibold tracking-[-0.03em] text-white/80">Person chip</p>
+                            </div>
+                            <p class="m-0 mt-4 font-manrope text-[11px] font-semibold tracking-[-0.03em] text-white/50">
+                                Gesture zones · progress bars · home only
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Footer contact shell (nested)</p>
+                        <div class="design-footer-shell">
+                            <div class="design-footer-inner">
+                                <h3 class="m-0 text-center font-manrope text-[34px] font-semibold leading-[110%] tracking-[-0.03em] text-text max-narrow:text-[28px]">
+                                    Let’s talk
+                                </h3>
+                                <p class="m-0 mt-3 max-w-[277px] text-center font-manrope text-[15px] font-semibold leading-[140%] tracking-[-0.02em] text-text/60">
+                                    Heading 50→34 + support, then person stack.
+                                </p>
+                                <div class="mt-5 size-14 rounded-full bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
+                                <p class="m-0 mt-3 font-manrope text-[19px] font-semibold tracking-[-0.04em] text-text">Name</p>
+                                <p class="m-0 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/60">Role</p>
+                                <div class="mt-4 flex justify-center gap-1.5">
+                                    <span class="design-social-circle" /><span class="design-social-circle" /><span class="design-social-circle" />
+                                </div>
+                                <p class="m-0 mt-5 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/60">© 2026 / All rights Reserved.</p>
+                                <p class="m-0 mt-3 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/60">Created by · avatar · name</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Project -->
+                <section id="project" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Project</h2>
+                        <p class="design-section-desc">
+                            Project list cards and detail chrome — distinct from the blog list shell.
+                        </p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Sticky project media card</p>
+                        <div class="design-project-card">
+                            <div class="design-project-card-media" />
+                            <div class="design-project-caption">
+                                <div class="design-project-logo" />
+                                <div class="min-w-0 flex-1">
+                                    <p class="m-0 truncate font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[14px]">
+                                        CameraX
+                                    </p>
+                                    <p class="m-0 truncate font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/60 max-narrow:text-[13px]">
+                                        Short description
+                                    </p>
+                                </div>
+                                <span class="design-project-arrow" aria-hidden="true" />
+                            </div>
+                        </div>
+                        <p class="design-hint">Caption overlays banner (justify-end) · sticky top 110px · 400→280</p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Project hero card (banner + metadata + Live Preview)</p>
+                        <div class="design-project-hero">
+                            <div class="design-project-hero-media" />
+                            <div class="design-meta-row">
+                                <div class="design-meta-icon" />
+                                <p class="m-0 flex-1 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50 max-narrow:text-[13px]">
+                                    Organization
+                                </p>
+                                <p class="m-0 font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[14px]">
+                                    Example Co.
+                                </p>
+                            </div>
+                            <a
+                                data-scramble
+                                data-scramble-variant="primary"
+                                class="group relative mt-2 flex w-fit items-center gap-[7px] no-underline"
+                                href="#project"
+                            >
+                                <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">
+                                    Live Preview
+                                </p>
+                                <div class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
+                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                                </div>
+                            </a>
+                        </div>
+                        <p class="design-hint">Order after card: left H1 + long desc → then back control</p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Project metadata row</p>
+                        <div class="design-meta-row">
+                            <div class="design-meta-icon" />
+                            <p class="m-0 flex-1 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50 max-narrow:text-[13px]">
+                                Category
+                            </p>
+                            <p class="m-0 font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[14px]">
+                                Mobile
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Project links bar</p>
+                        <div class="design-links-bar">
+                            <a class="group relative flex items-center gap-[7px] no-underline" href="#project" data-scramble data-scramble-variant="primary">
+                                <span class="font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">Source Code</span>
+                                <span class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
+                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                                </span>
+                            </a>
+                            <a class="group relative flex items-center gap-[7px] no-underline" href="#project" data-scramble data-scramble-variant="primary">
+                                <span class="font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">Privacy Policy</span>
+                                <span class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
+                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Project “View all” bar</p>
+                        <div class="design-links-bar">
+                            <a class="group relative flex items-center gap-[7px] no-underline" href="#project" data-scramble>
+                                <span class="font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">View all</span>
+                                <span class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
+                                    <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                                </span>
+                            </a>
+                        </div>
+                        <p class="design-hint">Centered single link · same 64px surface bar as links bar</p>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Project body media layouts</p>
+                        <div class="design-media-layouts">
+                            <div class="design-media-pair">
+                                <span /><span />
+                            </div>
+                            <div class="design-media-large" />
+                        </div>
+                        <p class="design-hint">images-pair · image-large · images-pair-then-large · ~1180px · rounded 30→20</p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Privacy page chrome</p>
+                        <p class="m-0 font-manrope text-[15px] font-semibold tracking-[-0.04em] text-text/60">For app · CameraX</p>
+                        <p class="m-0 mt-1 font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/40">Last updated · 1 Jan 2024</p>
+                        <div class="my-4 h-px w-full bg-border" />
+                        <p class="m-0 font-manrope text-[24px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[22px]">Section</p>
+                        <ul class="mt-3 m-0 flex list-none flex-col gap-2 p-0">
+                            <li class="m-0 flex items-start gap-3">
+                                <span class="mt-[0.65em] size-[5px] shrink-0 rounded-full bg-text/40" />
+                                <p class="m-0 font-manrope text-[16px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50">Disc list item</p>
+                            </li>
+                        </ul>
+                        <blockquote class="design-privacy-quote m-0 mt-4">
+                            Blockquote · left border + surface wash
+                        </blockquote>
+                    </div>
+                </section>
+
+                <!-- Blog -->
+                <section id="blog" class="design-section">
+                    <div>
+                        <h2 class="design-section-title">Blog</h2>
+                        <p class="design-section-desc">
+                            Article chrome beyond the list shell and code block.
+                        </p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Detail H1 (left) + meta row</p>
+                        <h3 class="m-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-text max-narrow:text-[34px]">
+                            Article title
+                        </h3>
+                        <div class="mt-5 flex items-center gap-[22px] max-narrow:gap-[26px]">
+                            <div class="flex items-center gap-2.5">
+                                <span class="size-7 rounded-full bg-surface shadow-[inset_0_0_0_1px_var(--color-border)]" />
+                                <p class="m-0 font-manrope text-[15px] font-semibold tracking-[-0.05em] text-text max-narrow:text-[14px]">
+                                    Author
+                                </p>
+                            </div>
+                            <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50 max-narrow:text-[13px]">
+                                29 March 2024
+                            </p>
+                        </div>
+                        <div class="my-5 h-px w-full bg-border" />
+                        <p class="m-0 font-manrope text-[26px] font-semibold leading-[130%] tracking-[-0.04em] text-text max-narrow:text-[24px]">
+                            Intro lead
+                        </p>
+                        <p class="mt-3 m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/60 max-narrow:text-[16px]">
+                            Supporting intro paragraph under the hairline.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="design-label">Banner media</p>
+                        <div class="design-banner-stub" />
+                        <p class="design-hint">Max ~1180px · aspect ~1.63 · rounded-[30→20]</p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Article type scale</p>
+                        <h4 class="article-title m-0 font-manrope text-[38px] font-semibold leading-[125%] tracking-[-0.05em] text-text max-narrow:text-[30px]">
+                            Section heading
+                        </h4>
+                        <h5 class="mt-4 m-0 font-manrope text-[22px] font-semibold leading-[140%] tracking-[-0.04em] text-text max-narrow:text-[20px]">
+                            Subheading
+                        </h5>
+                        <p class="mt-3 m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50 max-narrow:text-[16px]">
+                            Body paragraph at /50. Rhythm: ~52px before titles, ~24px peers, ~20px under heading.
+                        </p>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Bullets — disc / labeled / numbered</p>
+                        <ul class="m-0 flex list-none flex-col gap-2.5 p-0">
+                            <li class="m-0 flex items-start gap-3">
+                                <span class="mt-[0.65em] size-[5px] shrink-0 rounded-full bg-text/40" />
+                                <p class="m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50 max-narrow:text-[16px]">
+                                    Plain disc item
+                                </p>
+                            </li>
+                            <li class="m-0 flex items-start gap-3">
+                                <span class="mt-[0.65em] size-[5px] shrink-0 rounded-full bg-text/40" />
+                                <p class="m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50 max-narrow:text-[16px]">
+                                    <span class="text-text">Label:</span> labeled bullet from MD
+                                </p>
+                            </li>
+                            <li class="m-0 flex items-start gap-3">
+                                <span class="w-5 shrink-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/40 tabular-nums max-narrow:text-[16px]">1.</span>
+                                <p class="m-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/50 max-narrow:text-[16px]">
+                                    Numbered step
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="max-w-[550px]">
+                        <p class="design-label">Blog “View all” (inline in list shell)</p>
+                        <div class="design-shell">
+                            <div class="flex h-12 items-center px-4">
+                                <a
+                                    data-scramble
+                                    data-scramble-variant="primary"
+                                    class="group relative flex items-center gap-[7px] no-underline"
+                                    href="#blog"
+                                >
+                                    <p class="m-0 font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text max-narrow:text-[13px]">
+                                        View all
+                                    </p>
+                                    <div class="relative h-2.5 w-2.5 transition-transform duration-200 ease-out group-hover:rotate-45">
+                                        <svg class="h-full w-full"><use href="#link-arrow"></use></svg>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -507,10 +978,9 @@ const typeScale = [
                     </div>
 
                     <div class="design-links">
-                        <a class="tools-btn-secondary" href="/tools">Tools hub</a>
-                        <a class="tools-btn-secondary" href="https://github.com/arindamxd/arindamxd.github.io/blob/main/docs/design-system.md" target="_blank" rel="noopener">
-                            Full docs on GitHub
-                        </a>
+                        <button type="button" class="tools-btn-secondary" data-md-doc="design-system">
+                            Full documentation
+                        </button>
                     </div>
                 </section>
             </main>
@@ -518,6 +988,8 @@ const typeScale = [
 
         <Footer />
     </div>
+
+    <MarkdownDocPanel id="design-system" src="docs/design-system.md" label="docs/design-system.md" />
 
     <div
         id="svg-templates"
@@ -538,3 +1010,5 @@ const typeScale = [
         </svg>
     </div>
 </BaseLayout>
+
+<script src="../scripts/markdown-fullscreen.js" />

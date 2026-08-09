@@ -44,9 +44,14 @@ Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Mini
 
 - **Back control:** 52px circle + “Back to …” label (see blog/project/tools shell) — not plain “← text”.
 - **Primary CTA:** pill, primary fill, optional scramble (`data-scramble`).
+- **Home:** hero ID card + location; skill chips; experience YoE/timeline/rows; credentials accordion; brands marquee; testimonials phone (home-only); footer nested contact shell.
+- **Project:** sticky media cards (not blog list shell); metadata rows; links bar; privacy page type.
+- **Blog article:** left H1 + meta row + hairline + intro; body scale 38/22/18; disc/labeled/numbered bullets; `BlogCodeBlock` for fenced code; inline View all.
+- **Markdown docs:** `data-md-doc="<id>"` + `MarkdownDocPanel`; optional `.md-doc-trigger`.
 - **Tools:** register in `src/utils/tools.ts`; use `ToolsPageShell`; nested scroll → `data-lenis-prevent`.
 - **Search:** `type="text"` + custom clear button (no native search cancel).
 - **Private tools:** `noindex={true}`.
+- **Gallery:** living previews at `/design`.
 
 ## Motion
 

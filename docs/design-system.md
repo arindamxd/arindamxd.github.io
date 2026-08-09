@@ -151,8 +151,7 @@ Reset margins on text: `m-0 p-0` is the house style.
 
 ### Nav pill
 
-- Floating, `rounded-full`, dark translucent glass, white labels, white Contact chip that hovers to `primary`.
-- Theme toggle: separate circle beside nav.
+Floating glass nav — see **Nav pill (detailed)** below for sizes. Theme toggle is a separate circle beside the pill.
 
 ### Back control (detail / tools)
 
@@ -178,6 +177,218 @@ p  17→15, center, max-w 350px, opacity 60%
 - Shared classes in `src/styles/tools.css`: `.tools-input`, `.tools-textarea`, `.tools-chip`, `.tools-btn-primary`, `.tools-btn-secondary`.
 - Search fields: **full pill** + custom clear button (not native `type="search"` cancel).
 - Nested scroll areas: `data-lenis-prevent` + `overscroll-behavior: contain`.
+
+### Markdown doc fullscreen (`data-md-doc`)
+
+Open a project Markdown file in a fullscreen GFM viewer from any control.
+
+1. Mount a panel once per page:
+
+```astro
+import MarkdownDocPanel from "../components/MarkdownDocPanel.astro";
+<!-- … -->
+<MarkdownDocPanel id="design-system" src="docs/design-system.md" />
+<script src="../scripts/markdown-fullscreen.js" />
+```
+
+2. Trigger with matching id:
+
+```html
+<button type="button" class="md-doc-trigger" data-md-doc="design-system">
+  docs/design-system.md
+</button>
+<!-- or any button / link / element: -->
+<button type="button" class="tools-btn-secondary" data-md-doc="design-system">
+  Full documentation
+</button>
+```
+
+| Piece | Role |
+| --- | --- |
+| `data-md-doc="<id>"` | Opens the panel with the same id |
+| `.md-doc-trigger` | Optional inline style (Fragment Mono chip, like `.tools-code`) |
+| `MarkdownDocPanel` | Build-time renders `src` → HTML into `[data-md-doc-panel]` |
+| Close / Esc | Built into the script; nested body uses `data-lenis-prevent` |
+
+Do **not** deep-link to GitHub for in-site docs when this pattern fits. Reuse one panel id for multiple triggers on the same page.
+
+### Blog code blocks & snippets
+
+Article fenced code is **not** plain `<pre>` — it goes through [`BlogCodeBlock.astro`](../src/components/elements/BlogCodeBlock.astro) via `BlogPage.astro`.
+
+**Authoring** (in `src/content/blogs/*.md`):
+
+````md
+```swift
+let button = UIButton(type: .system)
+button.setTitle("Tap", for: .normal)
+```
+````
+
+| Piece | Detail |
+| --- | --- |
+| Parser | Fenced `code` nodes → `{ type: "code", code, language }` in [`blogs.ts`](../src/utils/blogs.ts) |
+| Component | `BlogCodeBlock` → Astro `<Code>` (Shiki) |
+| Themes | Light: `github-light` · Dark: `github-dark` (follow site theme) |
+| Shell | `.article-code` — `bg-surface`, inset border, radius `20px` → `16px` narrow |
+| Language label | Uppercase meta bar (hidden for `plaintext` / `text`) |
+| Type | Mono stack 13px / 12px narrow, weight 500 — **not** Fragment Mono inside Shiki lines |
+| Spacing | ~24px between peers; ~20px under a heading (`BlogPage` rhythm) |
+
+**Inline `` `code` `` in blog paragraphs:** currently flattened to plain text by the MD → block pipeline (no styled inline chip). Prefer fenced blocks for real snippets. Tools/UI chrome may use `.tools-code` / `.md-doc-trigger` instead.
+
+Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./blog-authoring.md).
+
+### Nav pill (detailed)
+
+[`NavBar.astro`](../src/components/NavBar.astro) — floating, persisted across View Transitions.
+
+| Piece | Spec |
+| --- | --- |
+| Height | `60px` → `52px` narrow |
+| Fill | Dark translucent glass (`rgba(26,26,26,0.7)`), `backdrop-blur` ~7px, soft shadow |
+| Home control | Circle `34→30` |
+| Links | Manrope `16→14/13`, white, `data-scramble` |
+| Contact chip | Pill `46→40`, white fill → hover `primary` |
+
+### Theme toggle
+
+Separate circle beside nav (`60→52`): glass matching nav; inner track `w-[200%]` slides `300ms` with house cubic-bezier; `data-theme-toggle`.
+
+### Hero ID card (home)
+
+[`SectionIntro`](../src/components/sections/SectionIntro.astro) — home first viewport.
+
+| Piece | Spec |
+| --- | --- |
+| Tie / shell | `.hero-tie` above card; soft shell + inset border; `.hero-card-hole` |
+| Identity | Avatar ~`70px`; name `22→19`; role `14→13`; social icons `22px` `opacity-40→100` |
+| Slot bars | Active / inactive indicator bars in card header |
+| Slogan H1 | Display `70→48`, leading ~`90%`, tracking tight |
+| Intro support | `17→15` under slogan |
+| YoE badge | Micro `11px`, tracking `-0.05em` |
+| CTAs | Primary Resume + secondary My work |
+| Availability | Green pulse + cycling “Available for…” (`available-text.js` + scramble) |
+| Location row | Pin + `13→12`; muted “Located in…” + city |
+| Bottom link | Outbound text+arrow (`cardLinkText` / `cardLinkURL`) |
+
+### Project hero card
+
+[`ProjectPage`](../src/components/elements/ProjectPage.astro) reuses tie/hole/card chrome but **not** the home identity stack.
+
+| Piece | Spec |
+| --- | --- |
+| Media | Banner image inside card (`rounded-[40→30]`) |
+| Metadata rows | Organization / Category / Released (see below) |
+| Live Preview | Bottom text+arrow when `header.link` is set |
+| After card | Left H1 `50→34` + long desc `18→16` `/60`, **then** back control (blog is back → H1) |
+
+### Brand logo marquee
+
+[`SectionBrands`](../src/components/sections/SectionBrands.astro): eyebrow `13→12` `/60`; `.logo-track` height `52px`; edge mask fade; logos `dark:invert`.
+
+### Skill chips
+
+[`SkillElement`](../src/components/elements/SkillElement.astro): square `54px`, radius `9px`, `bg-surface` + `border-border`; hover lift + soft shadow; tooltip `rounded-[12px]` with label + short description + caret.
+
+### Experience block
+
+[`SectionExperiences`](../src/components/sections/SectionExperiences.astro):
+
+| Piece | Spec |
+| --- | --- |
+| YoE banner | `bg-primary` shell `rounded-[40→32]`; count `65→48` white + `data-count-to`; ladder SVG; labels white `/60`–`/90` at `14px` |
+| Year timeline | Hairline + current-year primary dot `14px` + past `#cacaca` `10px`; **now** year `52→44`; past years `18→15` `/40`; edge fade |
+| Mid-header | Left H3 `24→22` + support `17→15` `/50` between timeline and rows |
+| Employment rows | 3-col `title / company / years`; top hairline; `16→14` / `14→13` / `opacity-60` |
+
+### Credentials accordion
+
+[`SectionCredentials`](../src/components/sections/SectionCredentials.astro): `data-credentials-accordion`; trigger `20→17` + plus→minus; CSS grid-rows expand `~0.4s`; expanded panel = nested title/org rows; outbound URLs use text+arrow.
+
+### Testimonials phone
+
+[`SectionTestimonials`](../src/components/sections/SectionTestimonials.astro): phone shell ~360×750 (scaled); `bg-primary` frame; `#prevButton` / `#nextButton` gesture zones; progress bars; quote `22px` white; person chip; side gradient panels. Home-only signature — don’t reuse as generic carousel chrome.
+
+### Footer contact shell
+
+[`Footer.astro`](../src/components/Footer.astro) — always `max-w-[550px]`.
+
+| Piece | Spec |
+| --- | --- |
+| Outer | `rounded-[46→36]` `bg-surface` `border-border` `p-[9px]` |
+| Inner | `bg-bg` `rounded-[40→32]` `px-[60→30]` `py-[50→40/30]` |
+| Heading | Centered H2 `50→34` + support `17→15` (`max-w-[277px]` `/60`) |
+| Person | Avatar `70→56`; name `22→19`; role `14→13` `/60` |
+| Socials | Circles `36px` `bg-surface`; icons `22px` `opacity-40→100` |
+| Meta | © row `/60`; “Created by” + small avatar + name (`13px`) |
+
+### Sticky project media card
+
+[`ProjectElement`](../src/components/elements/ProjectElement.astro) — **not** the blog list shell.
+
+| Piece | Spec |
+| --- | --- |
+| Stick | `sticky top-[110px]` |
+| Height | `400→280` |
+| Frame | `rounded-[45px]` `p-[9px]` over banner image |
+| Caption | Pill **overlaid** at bottom (`justify-end`): logo disc + title `16→14` + desc `/60` `14→13` + arrow circle on `bg-surface` |
+
+### Project metadata rows
+
+Inside project hero card: height `74px`, `rounded-[41px]` **`bg-bg`**; icon circle `54px` **`bg-surface`**; label `/50` `14→13`; value right `16→14`. Used for Organization / Category / Released.
+
+### Project links bar
+
+Height `64px`, `rounded-[46→36]` `bg-surface` `border-border`; evenly spaced text+arrow links (`Source Code`, `Privacy Policy`).
+
+### Project “View all” bar
+
+[`ProjectViewAll`](../src/components/elements/ProjectViewAll.astro): same `64px` surface bar as links bar, but **single centered** “View all” + arrow (home projects section). Distinct from blog inline View all.
+
+### Project body media
+
+Content title `26→24`; body `18→16` `/60`. Media up to `~1180px`, `rounded-[30→20]`. Layouts: `image-large`, `images-pair`, `images-pair-then-large` — see [`project-authoring.md`](./project-authoring.md).
+
+### Detail page H1 (left)
+
+Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left**-aligned (marketing sections stay centered).
+
+### Blog list row
+
+[`BlogElement`](../src/components/elements/BlogElement.astro) inside list shell: thumb **`54px`** circle (hover `scale-110`); title `16→14`; date `14→13` `/50`; row `rounded-[41px]` `bg-bg` `py-2.5 pl-2.5 pr-5`.
+
+### Article meta + intro
+
+[`BlogPage`](../src/components/elements/BlogPage.astro):
+
+| Piece | Spec |
+| --- | --- |
+| Order | Back → H1 → meta (project is hero → H1 → back) |
+| Meta row | Avatar `28px` + author `15→14` + date `14→13` `/50` |
+| Divider | `h-px bg-border` in `py-5` |
+| Intro | Lead `26→24`; support `18→16` `/60` |
+| Banner | Max `~1180px`, `rounded-[30→20]` |
+| Body H2 | `38→30` |
+| Body H3 | `22→20` |
+| Body para | `18→16` `/50` |
+| Rhythm | ~52px before titles; ~24px peers; ~20px heading→content |
+
+### Article bullets
+
+| Style | Spec |
+| --- | --- |
+| Disc | `5px` circle `bg-text/40` |
+| Labeled | `<span class="text-text">Label:</span>` + muted rest (`- **Label**: text` in MD) |
+| Numbered | `1.` `text-text/40` tabular nums |
+
+### Blog “View all” (inline)
+
+[`BlogViewAll`](../src/components/elements/BlogViewAll.astro): flat `h-12` row inside list shell — label **“View all”** + arrow, **no** surface bar (unlike `ProjectViewAll`).
+
+### Privacy policy page
+
+[`ProjectPrivacyPage`](../src/components/elements/ProjectPrivacyPage.astro): back control + left H1; “For app” `/60`; “Last updated” `/40`; hairline; `.privacy-content` h2 `26→24`, h3 `20→18`, p/li `18→16` `/50`; disc `5px`; blockquote left border + surface wash.
 
 ### Tools hub
 

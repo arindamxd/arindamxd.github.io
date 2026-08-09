@@ -9,6 +9,36 @@
     border: 1px solid var(--color-border);
 }
 
+/* Inline trigger → fullscreen MarkdownDocPanel (data-md-doc="<id>") */
+.md-doc-trigger {
+    appearance: none;
+    display: inline;
+    margin: 0;
+    padding: 0.1em 0.35em;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-family: var(--font-fragment);
+    font-size: 0.9em;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.md-doc-trigger:hover,
+.md-doc-trigger:focus-visible {
+    border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border));
+    color: var(--color-primary);
+    outline: none;
+}
+
 .tools-tab {
     appearance: none;
     border: 0;
@@ -516,6 +546,58 @@ body.tools-md-fullscreen-open {
     font-weight: 600;
     letter-spacing: -0.03em;
     color: color-mix(in srgb, var(--color-text) 50%, transparent);
+}
+
+.tools-hub-design {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 1.25rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.tools-hub-design-link {
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.tools-hub-design-title {
+    margin: 0;
+    font-family: var(--font-manrope);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.3;
+    color: var(--color-text);
+}
+
+.tools-hub-design-arrow {
+    display: flex;
+    flex: none;
+    width: 10px;
+    height: 10px;
+    color: var(--color-primary);
+    transition: transform 0.2s ease-out;
+}
+
+.tools-hub-design-link:hover .tools-hub-design-arrow {
+    transform: rotate(45deg);
+}
+
+.tools-hub-design-desc {
+    margin: 0;
+    font-family: var(--font-manrope);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.35;
+    color: color-mix(in srgb, var(--color-text) 45%, transparent);
 }
 
 /* ---------- Scramble compare ---------- */

@@ -1,0 +1,28 @@
+---
+import { renderMarkdownDoc } from "../utils/markdown-doc";
+
+interface Props {
+    /** Stable id — match with data-md-doc on triggers */
+    id: string;
+    /** Project-relative path, e.g. docs/design-system.md */
+    src: string;
+    /** Label shown in the fullscreen bar */
+    label?: string;
+}
+
+const { id, src, label = src } = Astro.props;
+const html = renderMarkdownDoc(src);
+---
+
+<div
+    class="tools-md-fullscreen"
+    data-md-doc-panel={id}
+    data-md-doc-src={src}
+    hidden
+>
+    <div class="tools-md-fullscreen-bar">
+        <p class="tools-md-pane-label">{label}</p>
+        <button type="button" class="tools-chip" data-md-doc-close>Close</button>
+    </div>
+    <div class="tools-md-fullscreen-body tools-md-preview" data-lenis-prevent set:html={html} />
+</div>

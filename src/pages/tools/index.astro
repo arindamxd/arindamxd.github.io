@@ -56,10 +56,22 @@ import { siteTools } from "../../utils/tools";
 
         <p id="tools-hub-empty" class="tools-hub-empty" hidden>No tools match that search.</p>
 
-        <p class="m-0 pt-2 font-manrope text-[13px] font-semibold leading-[130%] tracking-[-0.04em] text-text/50">
-            Looking for tokens and UI recipes?
-            <a class="text-text underline decoration-border underline-offset-2 hover:decoration-text" href="/design">Open the design system</a>.
-        </p>
+        <div class="tools-hub-design">
+            <a
+                class="tools-hub-design-link"
+                href="/design"
+                data-scramble
+                data-scramble-variant="primary"
+            >
+                <span class="tools-hub-design-title">Design system</span>
+                <span class="tools-hub-design-arrow" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" width="10" height="10" fill="currentColor">
+                        <path d="M 8.336 2.84 L 1.176 10 L 0 8.824 L 7.159 1.664 L 0.849 1.664 L 0.849 0 L 10 0 L 10 9.151 L 8.336 9.151 Z"></path>
+                    </svg>
+                </span>
+            </a>
+            <p class="tools-hub-design-desc">Tokens, type, shells, and UI recipes.</p>
+        </div>
     </div>
 </ToolsPageShell>
 
