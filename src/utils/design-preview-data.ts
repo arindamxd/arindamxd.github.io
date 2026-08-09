@@ -68,6 +68,12 @@ export const previewAuthor = {
                 icon: "/assets/socials/github.svg",
             },
         ],
+        reach: {
+            uniques: "12.4K",
+            views: "48.2K",
+            period: "month" as const,
+            label: "UNIQUE · VIEWS / MONTH",
+        },
     },
 } as const;
 

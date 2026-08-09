@@ -101,6 +101,7 @@ Registry: [`src/utils/tools.ts`](src/utils/tools.ts) — add hub entries here wh
 | `author` | `/tools/author` | Draft blog/project → download MD + catalog JSON |
 | `markdown` | `/tools/markdown` | Side-by-side MD preview (`data-lenis-prevent` on nested scroll) |
 | `scramble-compare` | `/tools/scramble-compare` | Scramble library bake-off |
+| `analytics-reach` | `/tools/analytics-reach` | Format GA4 uniques/views → `src/content/footer-reach.json` |
 
 Shell: [`ToolsPageShell.astro`](src/components/tools/ToolsPageShell.astro) · styles: page-scoped [`tools.css`](src/styles/tools.css) · all tools `noindex`.
 

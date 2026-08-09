@@ -11,13 +11,19 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Cursor rules for version-bump (full release: commit + tag + push) and commit+changelog workflows
 - Google Analytics 4 (shared `GoogleAnalytics` + `src/utils/analytics.ts`) with ClientRouter page views; skipped in local `astro dev`
 - Production JS obfuscation for all published client scripts and inline HTML scripts (`vite-plugins/obfuscate-production-js.mjs`)
+- Private `/tools/analytics-reach` tool to format GA4 uniques/views into `src/content/footer-reach.json`
+- Footer reach ticker from curated `footer-reach.json` (above copyright)
 
 ### Changed
 
 - `AGENTS.md`: commit requests must update `[Unreleased]` first; version-bump steps listed explicitly
 - Contributions calendar shows the last 8 months (was last year); section copy refreshed
+- Reach tool defaults to Realtime fetch and falls back when standard reports are empty
 
 ### Fixed
+
+- TypeScript types in contributions and credentials sections (`astro check` clean)
+- Footer reach/copyright spacing tightened into one stack
 
 ## [1.0.4] — 2026-08-09
 

@@ -1,5 +1,6 @@
 ---
 import { previewAuthor } from "../utils/design-preview-data";
+import { reachAriaLabel, type FooterReach } from "../utils/reach";
 
 interface Props {
     preview?: boolean;
@@ -10,6 +11,11 @@ const { preview = false } = Astro.props;
 const author = preview
     ? previewAuthor
     : (await import("../content/author-metadata.json")).default;
+
+const reach: FooterReach | undefined = preview
+    ? (author.footer as { reach?: FooterReach }).reach
+    : ((await import("../content/footer-reach.json")).default as { reach?: FooterReach })
+          .reach;
 
 const currentYear = new Date().getFullYear();
 ---
@@ -107,8 +113,20 @@ const currentYear = new Date().getFullYear();
                 </div>
             </div>
 
-            <!-- Copyright -->
-            <div class="relative flex h-min w-full flex-col flex-nowrap items-center justify-start overflow-visible p-0">
+            <!-- Reach ticker + copyright (tight stack) -->
+            <div class="relative flex w-full flex-col items-center gap-2.5">
+                {
+                    reach && (
+                        <p
+                            class="m-0 p-0 text-center font-manrope text-[11px] font-semibold uppercase leading-none tracking-[0.08em] text-text/50"
+                            aria-label={reachAriaLabel(reach)}
+                        >
+                            {reach.uniques} UNIQUE
+                            <span aria-hidden="true"> · </span>
+                            {reach.views} VIEWS / {reach.period.toUpperCase()}
+                        </p>
+                    )
+                }
                 <p class="m-0 p-0 text-center font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-text opacity-60 no-underline max-narrow:text-[13px]">
                     &copy; <b>{currentYear}</b> / All rights Reserved.
                 </p>

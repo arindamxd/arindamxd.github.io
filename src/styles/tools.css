@@ -459,6 +459,74 @@ body.tools-md-fullscreen-open {
     @apply font-semibold text-text;
 }
 
+/* Reach stats tool */
+.tools-select {
+    @apply appearance-none pr-10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+}
+
+.tools-reach-details {
+    @apply m-0 overflow-hidden rounded-[14px] border border-border bg-surface;
+}
+
+.tools-reach-summary {
+    @apply flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-[0.85rem] font-manrope text-[13px] font-semibold tracking-[-0.04em] select-none;
+    color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+.tools-reach-summary::-webkit-details-marker,
+.tools-reach-summary::marker {
+    display: none;
+    content: "";
+}
+
+.tools-reach-summary-label {
+    @apply min-w-0;
+}
+
+.tools-reach-summary-chevron {
+    @apply relative size-[0.65rem] shrink-0 opacity-60;
+}
+
+.tools-reach-summary-chevron::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-15%) rotate(45deg);
+    transition: transform 0.2s ease;
+}
+
+.tools-reach-details[open] .tools-reach-summary-chevron::before {
+    transform: translateY(20%) rotate(225deg);
+}
+
+.tools-reach-details[open] .tools-reach-summary {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tools-reach-details-body {
+    @apply hidden px-3 pb-3 pt-3;
+}
+
+.tools-reach-details[open] > .tools-reach-details-body {
+    @apply block;
+}
+
+.tools-reach-raw {
+    @apply m-0 max-h-[min(40vh,360px)] overflow-auto rounded-[12px] border border-border bg-bg px-4 py-3 font-fragment text-[12px] font-normal leading-[1.55] wrap-break-word whitespace-pre-wrap text-text;
+    overscroll-behavior: contain;
+}
+
+.tools-reach-json {
+    @apply m-0 min-h-[9rem] overflow-auto rounded-[18px] border border-border bg-surface px-[1.2rem] py-[1.1rem] font-fragment text-[12px] font-normal leading-[1.55] whitespace-pre text-text;
+    overscroll-behavior: contain;
+    tab-size: 4;
+}
+
 .sr-only {
     @apply absolute m-[-1px] h-px w-px overflow-hidden border-0 p-0 whitespace-nowrap;
     clip: rect(0, 0, 0, 0);

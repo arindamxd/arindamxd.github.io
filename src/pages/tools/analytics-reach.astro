@@ -1,0 +1,265 @@
+---
+import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
+---
+
+<ToolsPageShell
+    title="Reach stats"
+    description="Turn GA4 uniques and views into footer.reach JSON for author-metadata — curated numbers, not a live public API."
+    showBack={true}
+>
+    <span slot="description">
+        Turn GA4 uniques and views into <code class="tools-code">footer.reach</code> for
+        <code class="tools-code">author-metadata.json</code>. Curated numbers only — nothing live on the public site.
+    </span>
+
+    <div id="tools-reach-app" class="flex w-full flex-col gap-10">
+        <div
+            class="flex w-fit flex-wrap items-center gap-1 rounded-full border border-border bg-surface p-1"
+            role="tablist"
+            aria-label="How to load numbers"
+        >
+            <button
+                type="button"
+                role="tab"
+                id="tab-fetch"
+                aria-selected="true"
+                data-reach-tab="fetch"
+                class="tools-tab is-active"
+            >
+                Fetch from GA4
+            </button>
+            <button
+                type="button"
+                role="tab"
+                id="tab-manual"
+                aria-selected="false"
+                data-reach-tab="manual"
+                class="tools-tab"
+            >
+                Enter numbers
+            </button>
+        </div>
+
+        <!-- Fetch from GA4 (default) -->
+        <section
+            id="panel-fetch"
+            role="tabpanel"
+            aria-labelledby="tab-fetch"
+            class="flex w-full flex-col gap-5"
+        >
+            <form id="form-fetch" class="flex flex-col gap-5" autocomplete="off">
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">One-time Google setup</legend>
+                    <ol
+                        class="m-0 flex list-decimal flex-col gap-2 ps-5 font-manrope text-[13px] font-semibold leading-[145%] tracking-[-0.04em] text-text/50"
+                    >
+                        <li>
+                            Google Cloud → enable <span class="text-text/70">Google Analytics Data API</span>
+                        </li>
+                        <li>
+                            Credentials → OAuth client → type <span class="text-text/70">Web application</span>
+                        </li>
+                        <li>
+                            Origins:
+                            <code class="tools-code">http://localhost:3000</code>
+                            and
+                            <code class="tools-code">https://arindamxd.github.io</code>
+                        </li>
+                        <li>
+                            Property ID: Analytics → Admin → <span class="text-text/70">Property details</span>
+                            (digits only — not <code class="tools-code">G-…</code>)
+                        </li>
+                    </ol>
+                </fieldset>
+
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">Credentials</legend>
+                    <p class="m-0 max-w-[36rem] font-manrope text-[13px] font-semibold leading-[145%] tracking-[-0.04em] text-text/45">
+                        Stored only in this browser. Never commit the client ID to git.
+                    </p>
+                    <label class="tools-label">
+                        <span>OAuth client ID</span>
+                        <input
+                            class="tools-input"
+                            name="clientId"
+                            type="text"
+                            placeholder="….apps.googleusercontent.com"
+                            autocomplete="off"
+                            spellcheck="false"
+                        />
+                    </label>
+                    <label class="tools-label">
+                        <span>Property ID</span>
+                        <input
+                            class="tools-input"
+                            name="propertyId"
+                            type="text"
+                            inputmode="numeric"
+                            placeholder="123456789"
+                            autocomplete="off"
+                            spellcheck="false"
+                        />
+                    </label>
+                    <label class="tools-label">
+                        <span>Date range</span>
+                        <select class="tools-input tools-select" name="range">
+                            <option value="realtime" selected>Realtime (last ~30 min)</option>
+                            <option value="28daysAgo">Last 28 days (month)</option>
+                            <option value="7daysAgo">Last 7 days (week)</option>
+                            <option value="365daysAgo">Last 365 days (year)</option>
+                        </select>
+                    </label>
+                </fieldset>
+
+                <div class="flex flex-wrap gap-3">
+                    <button type="button" class="tools-btn-primary" data-reach-action="sign-in-fetch">
+                        Sign in &amp; fetch
+                    </button>
+                    <button type="button" class="tools-btn-secondary" data-reach-action="save-settings">
+                        Save in browser
+                    </button>
+                </div>
+                <p
+                    id="reach-fetch-status"
+                    class="m-0 min-h-[1.35em] font-manrope text-[13px] font-semibold tracking-[-0.04em] text-text/50"
+                    aria-live="polite"
+                ></p>
+
+                <details class="tools-reach-details" id="reach-raw-details">
+                    <summary class="tools-reach-summary">
+                        <span class="tools-reach-summary-label">Raw API response</span>
+                        <span class="tools-reach-summary-chevron" aria-hidden="true"></span>
+                    </summary>
+                    <div class="tools-reach-details-body">
+                        <pre
+                            id="reach-raw"
+                            class="tools-reach-raw"
+                            data-lenis-prevent
+                            aria-live="polite"
+                        >Fetch to load the report JSON.</pre>
+                    </div>
+                </details>
+            </form>
+        </section>
+
+        <!-- Enter numbers -->
+        <section
+            id="panel-manual"
+            role="tabpanel"
+            aria-labelledby="tab-manual"
+            hidden
+            class="flex w-full flex-col gap-5"
+        >
+            <form id="form-manual" class="flex flex-col gap-5" autocomplete="off">
+                <fieldset class="tools-fieldset">
+                    <legend class="tools-legend">From Google Analytics</legend>
+                    <p class="m-0 max-w-[36rem] font-manrope text-[13px] font-semibold leading-[145%] tracking-[-0.04em] text-text/50">
+                        In GA: <span class="text-text/70">Reports → Acquisition</span> or
+                        <span class="text-text/70">Engagement → Overview</span>. Copy active users and views for your range, then paste below.
+                    </p>
+                    <div class="grid w-full grid-cols-1 gap-5 sm:grid-cols-3">
+                        <label class="tools-label">
+                            <span>Unique users</span>
+                            <input
+                                class="tools-input"
+                                name="uniques"
+                                type="number"
+                                min="0"
+                                step="1"
+                                placeholder="e.g. 1240"
+                            />
+                        </label>
+                        <label class="tools-label">
+                            <span>Page views</span>
+                            <input
+                                class="tools-input"
+                                name="views"
+                                type="number"
+                                min="0"
+                                step="1"
+                                placeholder="e.g. 3820"
+                            />
+                        </label>
+                        <label class="tools-label">
+                            <span>Period label</span>
+                            <select class="tools-input tools-select" name="period">
+                                <option value="month" selected>Month</option>
+                                <option value="week">Week</option>
+                                <option value="year">Year</option>
+                            </select>
+                        </label>
+                    </div>
+                </fieldset>
+                <div class="flex flex-wrap gap-3">
+                    <button type="button" class="tools-btn-primary" data-reach-action="apply-manual">
+                        Format JSON
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Shared output -->
+        <section
+            class="flex w-full flex-col gap-6 rounded-[28px] border border-border bg-surface p-[9px] max-narrow:rounded-[22px]"
+            aria-label="Output"
+        >
+            <div
+                class="flex w-full flex-col gap-8 rounded-[22px] bg-bg px-6 py-7 max-narrow:rounded-[18px] max-narrow:px-5 max-narrow:py-6 sm:px-8"
+            >
+                <div class="flex flex-col gap-3">
+                    <p class="m-0 font-manrope text-[13px] font-semibold tracking-[-0.05em] text-text/50">
+                        Footer preview
+                    </p>
+                    <div
+                        id="reach-ticker-preview"
+                        class="flex min-h-[56px] items-center justify-center"
+                    >
+                        <p
+                            id="reach-ticker"
+                            class="m-0 p-0 text-center font-manrope text-[11px] font-semibold uppercase leading-none tracking-[0.08em] text-text/50"
+                        >
+                            Waiting for numbers…
+                        </p>
+                    </div>
+                </div>
+
+                <div class="h-px w-full bg-border" aria-hidden="true"></div>
+
+                <div class="flex flex-col gap-3">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <p class="m-0 font-manrope text-[13px] font-semibold tracking-[-0.05em] text-text/50">
+                            footer-reach.json
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" class="tools-chip" data-reach-action="copy">
+                                Copy
+                            </button>
+                            <button type="button" class="tools-chip" data-reach-action="download">
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                    <pre
+                        id="reach-json"
+                        class="tools-reach-json"
+                        data-lenis-prevent
+                        aria-live="polite"
+                    >{`{
+    "reach": {
+        "uniques": "…",
+        "views": "…",
+        "period": "month",
+        "label": "UNIQUE · VIEWS / MONTH"
+    }
+}`}</pre>
+                    <p class="m-0 font-manrope text-[13px] font-semibold leading-[145%] tracking-[-0.04em] text-text/45">
+                        Replace <code class="tools-code">src/content/footer-reach.json</code>, then commit and deploy.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</ToolsPageShell>
+
+<script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="../../scripts/tools-analytics-reach.js" />

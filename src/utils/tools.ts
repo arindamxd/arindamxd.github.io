@@ -28,6 +28,13 @@ export const siteTools: SiteTool[] = [
             "Hover bake-off: our scramble vs @scrambl/core, scramble-text, and scrmbl.",
         href: "/tools/scramble-compare",
     },
+    {
+        slug: "analytics-reach",
+        title: "Reach stats",
+        description:
+            "Format GA4 uniques and views into footer.reach JSON for author-metadata.",
+        href: "/tools/analytics-reach",
+    },
 ];
 
 export function getTool(slug: string): SiteTool | undefined {
