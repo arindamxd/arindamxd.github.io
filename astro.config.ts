@@ -20,6 +20,11 @@ export default defineConfig({
     base: "/", // keep "/" when deploying to arindamxd.github.io
     // Preserve Astro 5/6 whitespace behavior (v7 default is 'jsx', which can drop spaces between inline elements)
     compressHTML: true,
+    // TODO(2026-12): Remove after year-end once Play Console + bookmarks use /projects/*/privacy-policy only.
+    redirects: {
+        "/apps/coco/privacy-policy": "/projects/coco/privacy-policy",
+        "/apps/ensecure/privacy-policy": "/projects/ensecure/privacy-policy",
+    },
     integrations: [
         react(),
         sitemap({

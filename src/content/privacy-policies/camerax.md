@@ -21,7 +21,7 @@ CameraX **does not collect** personal data. As declared on the [Google Play Data
 - **No data collected**
 - **No data shared with third parties**
 
-The app does not gather your name, email address, phone number, precise location, photos for upload, or any other personal identifiers. Photos and videos you capture stay on your device unless you choose to share them yourself through other apps.
+> The app does not gather your name, email address, phone number, precise location, photos for upload, or any other personal identifiers. Photos and videos you capture stay on your device unless you choose to share them yourself through other apps.
 
 ## Data Usage & Sharing
 
@@ -45,7 +45,7 @@ To function properly, CameraX requires only these permissions for its core funct
 - **Microphone**
 - **Storage**
 
-**You are always in control:** permissions can be managed or revoked through your device settings. Please note that disabling certain permissions may limit app functionality.
+> **You are always in control:** permissions can be managed or revoked through your device settings. Please note that disabling certain permissions may limit app functionality.
 
 ## Data Security
 

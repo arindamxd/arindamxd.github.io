@@ -33,8 +33,8 @@ Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.
 - SEO: meta description, canonical, Open Graph, Twitter card, Person JSON-LD
 - GA4 page views in production only (skipped in `astro dev`)
 - Client motion: Lenis, hero appear, scroll reveal (`data-reveal`), count-up, scramble — respects `prefers-reduced-motion`
-- App deep-link verification: `.well-known/assetlinks.json` (CameraX, certification app)
-- Static privacy-policy / app pages under `public/apps/` (Coco, Ensecure); CameraX privacy is `/projects/camerax/privacy-policy`
+- App deep-link verification: `public/.well-known/assetlinks.json` (CameraX, certification app)
+- Project privacy policies at `/projects/<slug>/privacy-policy` (CameraX, Coco, Ensecure); old `/apps/*/privacy-policy` URLs redirect
 
 ---
 
@@ -64,7 +64,7 @@ npm run preview  # preview production build
 ```text
 /
 ├── .github/workflows/deploy.yml   # GitHub Pages (push to trunk)
-├── .well-known/assetlinks.json    # Android App Links
+├── public/.well-known/assetlinks.json  # Android App Links (served at /.well-known/)
 ├── AGENTS.md                      # Git-tracked agent / project memory
 ├── CHANGELOG.md                   # Product release notes
 ├── tsconfig.json                  # Strict TS · allowJs: false
@@ -73,7 +73,7 @@ npm run preview  # preview production build
 │   ├── blog-authoring.md          # Blog JSON catalog + Markdown authoring
 │   └── project-authoring.md       # Project JSON catalog + Markdown body
 ├── public/
-│   ├── apps/                      # App landing / privacy pages
+│   ├── .well-known/               # Android App Links (assetlinks.json)
 │   └── assets/                    # Fonts, images, icons, project art
 ├── scripts/
 │   └── assert-no-js.mjs           # CI gate: no JS under src/

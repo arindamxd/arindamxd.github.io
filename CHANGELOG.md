@@ -12,17 +12,23 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Reach tool header shortcuts to Google Console, Google Analytics, and Microsoft Clarity
 - Python skill chip (`public/assets/skills/python.svg`) on the home skills stack
 - Author gallery photos under `public/assets/author/gallery/` (`pic01`–`pic03`)
+- Coco and Ensecure project pages with Astro privacy policies at `/projects/<slug>/privacy-policy`
 
 ### Changed
 
 - `ToolsPageShell` optional `header-actions` slot (top-right of title row)
 - `.tools-chip` works as links (`inline-flex`, no underline)
 - X social icon: use `/assets/socials/x.svg` (renamed from `x-small.svg`)
+- Android `assetlinks.json` served from `public/.well-known/` (ships with the static build)
+- Project list order via `updated_date`: CameraX → Coco → Ensecure
+- Privacy callouts as highlighted blockquotes (no-analytics / on-device / permissions control)
+- Footer reach ticker figures refreshed (`footer-reach.json`)
 
 ### Removed
 
 - Unused legacy root `images/` gallery (sample/wall + fulls/thumbs)
 - Orphan assets: unused author PNGs, `favicon.svg`, Inter woff2 files and `font-inter` token
+- Static `public/apps/` Coco/Ensecure privacy HTML (redirects keep old `/apps/*/privacy-policy` URLs until end of 2026)
 
 ### Fixed
 

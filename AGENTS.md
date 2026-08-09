@@ -156,6 +156,11 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 - Default column **`max-w-[550px]`** (home, footer, tools hub).
 - Semantic tokens only (`bg-bg`, `text-text`, …). Match existing section recipes.
 
+### Legacy `/apps/*/privacy-policy` redirects
+
+- [`astro.config.ts`](astro.config.ts) redirects `/apps/coco|ensecure/privacy-policy` → `/projects/<slug>/privacy-policy` for old Play Console / bookmark links.
+- **Remove by end of 2026** (`TODO(2026-12)` in config) once store listings point only at the new URLs.
+
 ---
 
 ## Where to look

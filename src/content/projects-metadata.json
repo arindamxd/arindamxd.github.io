@@ -18,12 +18,56 @@
                 "organization": "Personal",
                 "category": "Productivity / Camera App",
                 "released_date": "2019-09-27",
-                "updated_date": "2025-08-28",
+                "updated_date": "2025-08-30",
                 "downloads": "100K+",
                 "link": "https://play.google.com/store/apps/details?id=com.arindam.camerax"
             },
             "content": "projects/camerax.md",
             "source_code": "https://github.com/arindamxd/android-camerax",
+            "privacy_policy": true
+        },
+        {
+            "slug": "coco",
+            "title": "Coco",
+            "desc": {
+                "short": "Personal Android app on Google Play",
+                "long": "Coco is a personal Android project published on Google Play. See the store listing for features and updates, and the privacy policy for how anonymous diagnostics are handled."
+            },
+            "images": {
+                "thumb": "/assets/projects/coco/logo.svg",
+                "thumb_bg_color": "rgb(42, 41, 255)",
+                "banner": "https://play-lh.googleusercontent.com/Xkj3lXP5qefsHAgIWBc_j5ZIN0V7rmsatAkbH1znuSxXB2o37OvzxCcrY5jL-9KjbuY=w480-h960-rw"
+            },
+            "header": {
+                "organization": "Personal",
+                "category": "Android App",
+                "released_date": "2020-01-01",
+                "updated_date": "2025-08-29",
+                "link": "https://play.google.com/store/apps/details?id=io.arindam.coco"
+            },
+            "content": "projects/coco.md",
+            "privacy_policy": true
+        },
+        {
+            "slug": "ensecure",
+            "title": "Ensecure",
+            "desc": {
+                "short": "Personal Android security-focused app on Google Play",
+                "long": "Ensecure is a personal Android project published on Google Play. See the store listing for features and updates, and the privacy policy for how anonymous diagnostics are handled."
+            },
+            "images": {
+                "thumb": "/assets/projects/ensecure/logo.svg",
+                "thumb_bg_color": "rgb(42, 41, 255)",
+                "banner": "https://play-lh.googleusercontent.com/Fw_C84pMKcBMyZGAam76dAXn5WGZC7feEO7zQKJQ60p3GR6PHG0BIcT2dqnOQqLuK14=w480-h960-rw"
+            },
+            "header": {
+                "organization": "Personal",
+                "category": "Security / Android App",
+                "released_date": "2020-01-01",
+                "updated_date": "2025-08-28",
+                "link": "https://play.google.com/store/apps/details?id=com.ensecure"
+            },
+            "content": "projects/ensecure.md",
             "privacy_policy": true
         }
     ]
