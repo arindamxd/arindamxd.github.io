@@ -87,7 +87,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 
 - Section: [`SectionSkills.astro`](src/components/sections/SectionSkills.astro) · chip: [`SkillElement.astro`](src/components/elements/SkillElement.astro) · CSS: [`skills.css`](src/styles/skills.css)
 - Metadata shape: `title`, `description`, `tech.stack[]` / related groups with `icon`, `label`, `description`
-- Current stack chips include Kotlin, Swift, Flutter, Jetpack Compose, UPI, QR Scanner, Security/RASP (see JSON for truth)
+- Current stack chips include Kotlin, Swift, Python, Flutter, Jetpack Compose, UPI, QR Scanner, Security/RASP (see JSON for truth)
 - `/design` mounts live `SectionSkills` with `preview` dummy catalog
 - Chip recipe: `54px` square, `9px` radius, surface + border, hover lift + tooltip — details in design-system
 

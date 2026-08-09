@@ -10,11 +10,19 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 - Microsoft Clarity in production alongside GA4 (XOR-encoded project ID; ClientRouter page hints)
 - Reach tool header shortcuts to Google Console, Google Analytics, and Microsoft Clarity
+- Python skill chip (`public/assets/skills/python.svg`) on the home skills stack
+- Author gallery photos under `public/assets/author/gallery/` (`pic01`–`pic03`)
 
 ### Changed
 
 - `ToolsPageShell` optional `header-actions` slot (top-right of title row)
 - `.tools-chip` works as links (`inline-flex`, no underline)
+- X social icon: use `/assets/socials/x.svg` (renamed from `x-small.svg`)
+
+### Removed
+
+- Unused legacy root `images/` gallery (sample/wall + fulls/thumbs)
+- Orphan assets: unused author PNGs, `favicon.svg`, Inter woff2 files and `font-inter` token
 
 ### Fixed
 

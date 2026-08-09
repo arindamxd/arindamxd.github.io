@@ -40,7 +40,7 @@ export const previewAuthor = {
             {
                 name: "X",
                 url: "#",
-                icon: "/assets/socials/x-small.svg",
+                icon: "/assets/socials/x.svg",
             },
         ],
         resumeURL: "#",
@@ -55,7 +55,7 @@ export const previewAuthor = {
             {
                 name: "X",
                 url: "#",
-                icon: "/assets/socials/x-small.svg",
+                icon: "/assets/socials/x.svg",
             },
             {
                 name: "LinkedIn",

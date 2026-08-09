@@ -164,7 +164,6 @@ Semantic tokens (use these — not raw hex in new UI):
 | --- | --- | --- |
 | **Manrope** | `font-manrope` | Almost all UI & marketing type (weight **600** default) |
 | **Fragment Mono** | `font-fragment` | Code, raw Markdown, technical previews |
-| Inter | `font-inter` | Legacy/secondary only — don’t expand use |
 
 **Tracking:** typically `-0.04em` body/UI; `-0.05em` large titles; hero display can go to `-0.06em` / `-0.09em` (404).
 
