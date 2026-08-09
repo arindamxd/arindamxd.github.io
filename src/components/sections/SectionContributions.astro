@@ -1,13 +1,24 @@
 ---
 import GitHubContributionsCalendar from "../elements/GitHubContributionsCalendar";
 import SectionHeading from "../elements/SectionHeading.astro";
+import {
+    previewContributionDays,
+    previewContributionsMeta,
+} from "../../utils/design-preview-data";
 
 interface Props {
+    preview?: boolean;
     /** Override metadata usernames; contribution days are merged by date. */
     usernames?: string[];
 }
 
-const metadata = (await import("../../content/contributions-metadata.json")).default;
+const { preview = false } = Astro.props;
+
+const liveMeta = preview
+    ? null
+    : (await import("../../content/contributions-metadata.json")).default;
+
+const metadata = preview ? previewContributionsMeta : liveMeta!;
 const { usernames = metadata.usernames } = Astro.props;
 
 type ContributionDay = {
@@ -46,28 +57,37 @@ function mergeContributionDays(sets: ContributionDay[][]): ContributionDay[] {
         }));
 }
 
-const fetched = await Promise.all(
-    usernames.map(async (username) => {
-        try {
-            const response = await fetch(
-                `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
-            );
-            if (!response.ok) return [] as ContributionDay[];
-            const data = (await response.json()) as ContributionsResponse;
-            return Array.isArray(data.contributions) ? data.contributions : [];
-        } catch {
-            return [] as ContributionDay[];
-        }
-    }),
-);
+let contributions: ContributionDay[] = [];
+let totalCount = 0;
 
-const contributions = mergeContributionDays(fetched.filter((set) => set.length > 0));
-const totalCount = contributions.reduce((sum, day) => sum + day.count, 0);
-const label = usernames.join(" + ");
+if (preview) {
+    contributions = previewContributionDays();
+    totalCount = contributions.reduce((sum, day) => sum + day.count, 0);
+} else {
+    const fetched = await Promise.all(
+        usernames.map(async (username) => {
+            try {
+                const response = await fetch(
+                    `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
+                );
+                if (!response.ok) return [] as ContributionDay[];
+                const data = (await response.json()) as ContributionsResponse;
+                return Array.isArray(data.contributions) ? data.contributions : [];
+            } catch {
+                return [] as ContributionDay[];
+            }
+        }),
+    );
+
+    contributions = mergeContributionDays(fetched.filter((set) => set.length > 0));
+    totalCount = contributions.reduce((sum, day) => sum + day.count, 0);
+}
+
+const label = preview ? "preview" : usernames.join(" + ");
 ---
 
 <section
-    id="contributions"
+    id={preview ? "contributions-preview" : "contributions"}
     class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible p-0 max-narrow:px-2.5"
 >
     <SectionHeading title={metadata.title} description={metadata.description} />

@@ -1,16 +1,26 @@
 ---
 import ElementSkill from "./../elements/SkillElement.astro";
 import SectionHeading from "../elements/SectionHeading.astro";
+import { previewSkills } from "../../utils/design-preview-data";
 
-// data
-const metadata = (await import("../../content/skills-metadata.json")).default;
+interface Props {
+    preview?: boolean;
+}
+
+const { preview = false } = Astro.props;
+
+const metadata = preview
+    ? previewSkills
+    : (await import("../../content/skills-metadata.json")).default;
 
 const stack = metadata.tech.stack || [];
 const tools = metadata.tech.tools || [];
 ---
 
-<section id="skills" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible p-0 max-narrow:px-2.5">
-
+<section
+    id={preview ? "skills-preview" : "skills"}
+    class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible p-0 max-narrow:px-2.5"
+>
     <SectionHeading title={metadata.title} description={metadata.description} />
 
     <div
@@ -37,5 +47,4 @@ const tools = metadata.tech.tools || [];
             </div>
         )}
     </div>
-
 </section>

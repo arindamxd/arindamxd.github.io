@@ -373,3 +373,88 @@ export const previewBlogs: Blog[] = [
 ];
 
 export const previewBlogDetail = previewBlogs[0];
+
+export const previewSkills = {
+    title: "Powered By",
+    description: "Dummy stack for the gallery — not live site skills.",
+    tech: {
+        stack: [
+            {
+                icon: "/assets/skills/kotlin.svg",
+                label: "Kotlin",
+                description: "Dummy chip tooltip for the gallery.",
+            },
+            {
+                icon: "/assets/skills/swift.svg",
+                label: "Swift",
+                description: "Dummy chip tooltip for the gallery.",
+            },
+            {
+                icon: "/assets/skills/flutter.svg",
+                label: "Flutter",
+                description: "Dummy chip tooltip for the gallery.",
+            },
+            {
+                icon: "/assets/skills/qr.svg",
+                label: "Scanner",
+                description: "Dummy chip tooltip for the gallery.",
+            },
+        ],
+        tools: [
+            {
+                icon: "/assets/skills/upi.svg",
+                label: "Studio",
+                description: "Dummy tool chip for the gallery.",
+            },
+            {
+                icon: "/assets/skills/rasp.svg",
+                label: "Editor",
+                description: "Dummy tool chip for the gallery.",
+            },
+        ],
+    },
+} as const;
+
+export const previewBrands = {
+    title: "Proudly worked/working with",
+    logos: [
+        previewMedia.logo,
+        previewMedia.logo,
+        previewMedia.logo,
+        previewMedia.logo,
+        previewMedia.logo,
+        previewMedia.logo,
+    ],
+} as const;
+
+export const previewContributionsMeta = {
+    title: "Contributions",
+    description: "Dummy GitHub activity for the gallery — not live data.",
+    usernames: ["preview"],
+} as const;
+
+/** Stable last-year contribution days for gallery (no network). */
+export function previewContributionDays(): {
+    date: string;
+    count: number;
+    level: number;
+}[] {
+    const end = new Date();
+    end.setUTCHours(0, 0, 0, 0);
+    const start = new Date(end);
+    start.setUTCDate(start.getUTCDate() - 364);
+
+    const days: { date: string; count: number; level: number }[] = [];
+    for (let d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
+        const seed = d.getUTCFullYear() * 10000 + (d.getUTCMonth() + 1) * 100 + d.getUTCDate();
+        const count = seed % 7 === 0 ? 0 : (seed % 12);
+        const level =
+            count <= 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 8 ? 3 : 4;
+        days.push({
+            date: d.toISOString().slice(0, 10),
+            count,
+            level,
+        });
+    }
+    return days;
+}

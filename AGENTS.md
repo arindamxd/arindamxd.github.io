@@ -58,7 +58,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 | Author (intro + footer) | `src/content/author-metadata.json` | Intro, Footer, NotFound |
 | Experiences | `src/content/experiences-metadata.json` | `SectionExperiences`, YoE |
 | Credentials | `src/content/credentials-metadata.json` | `SectionCredentials` accordion |
-| Brands | `src/content/brands-metadata.json` | `SectionBrands` marquee |
+| Brands | `src/content/brands-metadata.json` | `SectionBrands` marquee (`title` + `logos[]`) |
 | **Skills** | `src/content/skills-metadata.json` | `SectionSkills` + `SkillElement` (icons under `public/assets/skills/`) |
 | Testimonials | `src/content/testimonials-metadata.json` | Phone slider; DOM `#testimonials-data` |
 | Contributions | `src/content/contributions-metadata.json` | `SectionContributions` + calendar island |
@@ -76,8 +76,8 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 - Section: [`SectionSkills.astro`](src/components/sections/SectionSkills.astro) · chip: [`SkillElement.astro`](src/components/elements/SkillElement.astro) · CSS: [`skills.css`](src/styles/skills.css)
 - Metadata shape: `title`, `description`, `tech.stack[]` / related groups with `icon`, `label`, `description`
 - Current stack chips include Kotlin, Swift, Flutter, Jetpack Compose, UPI, QR Scanner, Security/RASP (see JSON for truth)
+- `/design` mounts live `SectionSkills` with `preview` dummy catalog
 - Chip recipe: `54px` square, `9px` radius, surface + border, hover lift + tooltip — details in design-system
-- `/design` mounts live `SectionSkills` (no separate dummy skills catalog yet)
 
 ---
 

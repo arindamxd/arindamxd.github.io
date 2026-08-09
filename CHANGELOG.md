@@ -11,6 +11,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Home GitHub contributions calendar (`react-github-calendar` React island) before footer
 - Shared `SectionHeading` element (centered title + muted description) used across home marketing sections
 - Contributions section copy + usernames in `contributions-metadata.json`
+- Gallery `preview` paths for Skills, Brands, and Contributions (dummy data; no live leak / no network)
 
 ### Changed
 
@@ -18,6 +19,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Page-scoped `tools.css` / `design.css` `@reference` `global.css` for `@apply` theme access
 - Skills, credentials, testimonials, projects, blogs, and contributions sections share `SectionHeading`
 - `/design` Layout sample mounts live `SectionHeading` (no hand mock)
+- Brands metadata shape is `{ title, logos[] }`; credentials accordion binds per-root (multi-instance safe)
 
 ### Fixed
 

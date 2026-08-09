@@ -1,9 +1,12 @@
-[
-    "/assets/brands/kbnbfc.svg",
-    "/assets/brands/accenture.svg",
-    "/assets/brands/kreditbee.svg",
-    "/assets/brands/ifs-fsm.svg",
-    "/assets/brands/krazybee.svg",
-    "/assets/brands/trell.svg",
-    "/assets/brands/cosmote.svg"
-]
+{
+    "title": "Proudly worked/working with",
+    "logos": [
+        "/assets/brands/kbnbfc.svg",
+        "/assets/brands/accenture.svg",
+        "/assets/brands/kreditbee.svg",
+        "/assets/brands/ifs-fsm.svg",
+        "/assets/brands/krazybee.svg",
+        "/assets/brands/trell.svg",
+        "/assets/brands/cosmote.svg"
+    ]
+}

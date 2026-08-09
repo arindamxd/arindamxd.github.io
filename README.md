@@ -129,7 +129,7 @@ Edit files in `src/content/`. Sections and detail pages import these at build ti
 | `privacy-policies/*.md` | Per-project privacy policy pages (`/projects/<slug>/privacy-policy`) |
 | `blogs-metadata.json` | Blog list/card fields + `content` path to MD |
 | `blogs/*.md` | Blog intro frontmatter + Markdown body |
-| `brands-metadata.json` | Collaboration / brand logos (marquee) |
+| `brands-metadata.json` | Brand marquee (`title` + `logos[]`) |
 | `skills-metadata.json` | Skills section (`tech.stack`, `tech.tools`) |
 | `experiences-metadata.json` | Work history (`title`, `company`, `start`, `end`) |
 | `testimonials-metadata.json` | Phone slider quotes |
