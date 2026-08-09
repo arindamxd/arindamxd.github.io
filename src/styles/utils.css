@@ -61,7 +61,7 @@ img.design-media-ph[src=''] {
     @apply block h-full w-full object-cover text-transparent select-none;
 }
 
-/* GitHub contributions island — match site type color; restore SVG interaction */
+/* GitHub contributions island — fit column width (no inner scroll) */
 .github-contributions-calendar {
     color: var(--color-text);
     font-family: var(--font-manrope);
@@ -69,6 +69,22 @@ img.design-media-ph[src=''] {
 
 .github-contributions-calendar a {
     color: inherit;
+}
+
+.github-contributions-calendar .react-activity-calendar {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.github-contributions-calendar .react-activity-calendar__scroll-container {
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+
+.github-contributions-calendar .react-activity-calendar__calendar {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
 }
 
 .github-contributions-calendar svg,

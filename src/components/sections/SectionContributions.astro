@@ -3,10 +3,11 @@ import GitHubContributionsCalendar from "../elements/GitHubContributionsCalendar
 import SectionHeading from "../elements/SectionHeading.astro";
 
 interface Props {
-    username?: string;
+    /** One or more GitHub usernames; contribution days are merged by date. */
+    usernames?: string[];
 }
 
-const { username = "arindamxd" } = Astro.props;
+const { usernames = ["arindamxd", "arindamkb"] } = Astro.props;
 
 type ContributionDay = {
     date: string;
@@ -19,24 +20,49 @@ type ContributionsResponse = {
     contributions?: ContributionDay[];
 };
 
-let contributions: ContributionDay[] = [];
-let totalCount = 0;
-
-try {
-    const response = await fetch(
-        `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
-    );
-    if (response.ok) {
-        const data = (await response.json()) as ContributionsResponse;
-        contributions = Array.isArray(data.contributions) ? data.contributions : [];
-        totalCount =
-            typeof data.total?.lastYear === "number"
-                ? data.total.lastYear
-                : contributions.reduce((sum, day) => sum + day.count, 0);
-    }
-} catch {
-    // Keep empty calendar if the upstream API is unreachable at build/request time.
+function levelForCount(count: number, max: number): number {
+    if (count <= 0 || max <= 0) return 0;
+    return Math.min(4, Math.max(1, Math.ceil((count / max) * 4)));
 }
+
+function mergeContributionDays(sets: ContributionDay[][]): ContributionDay[] {
+    const byDate = new Map<string, number>();
+
+    for (const set of sets) {
+        for (const day of set) {
+            byDate.set(day.date, (byDate.get(day.date) ?? 0) + day.count);
+        }
+    }
+
+    const max = Math.max(0, ...byDate.values());
+
+    return [...byDate.entries()]
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([date, count]) => ({
+            date,
+            count,
+            level: levelForCount(count, max),
+        }));
+}
+
+const fetched = await Promise.all(
+    usernames.map(async (username) => {
+        try {
+            const response = await fetch(
+                `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
+            );
+            if (!response.ok) return [] as ContributionDay[];
+            const data = (await response.json()) as ContributionsResponse;
+            return Array.isArray(data.contributions) ? data.contributions : [];
+        } catch {
+            return [] as ContributionDay[];
+        }
+    }),
+);
+
+const contributions = mergeContributionDays(fetched.filter((set) => set.length > 0));
+const totalCount = contributions.reduce((sum, day) => sum + day.count, 0);
+const label = usernames.join(" + ");
 ---
 
 <section
@@ -54,7 +80,7 @@ try {
     >
         <GitHubContributionsCalendar
             client:load
-            username={username}
+            username={label}
             contributions={contributions}
             totalCount={totalCount}
         />

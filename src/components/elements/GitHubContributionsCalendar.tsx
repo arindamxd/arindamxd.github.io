@@ -50,17 +50,16 @@ export default function GitHubContributionsCalendar({
 
     return (
         <div
-            className="github-contributions-calendar w-full overflow-x-auto"
-            data-lenis-prevent
+            className="github-contributions-calendar w-full"
             aria-label={`${username} GitHub contributions`}
         >
             <ActivityCalendar
                 data={contributions}
                 colorScheme={colorScheme}
                 theme={THEME}
-                fontSize={12}
-                blockSize={10}
-                blockMargin={3}
+                fontSize={11}
+                blockSize={8}
+                blockMargin={2}
                 maxLevel={4}
                 labels={{
                     totalCount: `${count} contributions in the last year`,
