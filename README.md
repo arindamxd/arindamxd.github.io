@@ -62,6 +62,7 @@ npm run preview  # preview production build
 ├── .github/workflows/deploy.yml   # GitHub Pages (push to trunk)
 ├── .well-known/assetlinks.json    # Android App Links
 ├── AGENTS.md                      # Git-tracked agent / project memory
+├── CHANGELOG.md                   # Product release notes
 ├── docs/
 │   ├── design-system.md           # UI/UX source of truth
 │   ├── blog-authoring.md          # Blog JSON catalog + Markdown authoring
@@ -272,6 +273,7 @@ Loaded from `BaseLayout.astro`:
 | Doc | What it’s for |
 | --- | --- |
 | [AGENTS.md](./AGENTS.md) | Git-tracked agent / project memory (durable decisions) |
+| [CHANGELOG.md](./CHANGELOG.md) | Product release notes (Keep a Changelog) |
 | [docs/design-system.md](./docs/design-system.md) | UI/UX source of truth · living gallery at `/design` |
 | [docs/blog-authoring.md](./docs/blog-authoring.md) | Blog catalog + Markdown authoring |
 | [docs/project-authoring.md](./docs/project-authoring.md) | Project catalog + Markdown body |

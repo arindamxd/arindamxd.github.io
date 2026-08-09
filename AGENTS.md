@@ -1,7 +1,7 @@
 # AGENTS.md — project memory
 
 Git-tracked map + durable decisions for humans and coding agents.  
-**Current site version:** `1.0.2` ([`package.json`](package.json) · git tag `v1.0.2`)  
+**Current site version:** `1.0.3` ([`package.json`](package.json) · git tag `v1.0.3`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
 **UI source of truth:** [`docs/design-system.md`](docs/design-system.md) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc) · Gallery: `/design`
 
 Keep this file in sync when you ship durable architecture decisions or bump the package version. Prefer linking to long recipes in `docs/` over duplicating them here.
@@ -12,15 +12,16 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 | Field | Value | Notes |
 | --- | --- | --- |
-| **Package** | `1.0.2` | Bump in `package.json` on release |
-| **Git tags** | `v1.0.2`, `v1.0.1` | Match package when tagging |
-| **Memory doc** | `1.0.2` | Same as package after each memory update on a release line |
+| **Package** | `1.0.3` | Bump in `package.json` on release |
+| **Git tags** | `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
+| **Memory doc** | `1.0.3` | Same as package after each memory update on a release line |
+| **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go, fold into the version on release |
 | **Node** | `>=22.12` | `engines` in package.json |
 | **Astro** | `^7.2` | Static output · Vite 8 |
 | **Tailwind** | v4 via `@tailwindcss/vite` | Tokens in `src/styles/tokens.css` |
 | **License** | CC-BY-4.0 | See `LICENSE` |
 
-**When releasing:** bump `package.json` → update this **Versions** table + append **Changelog** → tag `vX.Y.Z` if you tag releases.
+**When releasing:** move `[Unreleased]` notes into a new `CHANGELOG.md` section → bump `package.json` (+ lock) → update this **Versions** table + memory changelog → commit → tag `vX.Y.Z` → push branch + tags.
 
 ---
 
@@ -149,15 +150,20 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 
 ## Changelog (memory)
 
-Versioned notes for **this memory file** and related agent guidance — not a full product changelog. Align the top **Versions** row when the package bumps.
+Versioned notes for **this memory file** and related agent guidance — full product history lives in [`CHANGELOG.md`](CHANGELOG.md). Align the top **Versions** row when the package bumps.
 
-### 1.0.2 — 2026-08-09
+### 1.0.3 — 2026-08-09
 
+- Release bump to `1.0.3`; root `CHANGELOG.md` (Keep a Changelog) for ongoing product notes.
 - Expanded `AGENTS.md`: routes, content/skills/tools map, motion scripts, version table.
 - Gallery: live `preview` mounts + media/logo placeholders + `image-fallback.js`.
 - Theme toggle clip via `.nav-theme-toggle__clip`; design-system docs + `.cursor/rules/design-system.mdc` synced.
 - Logo placeholder glyph set to letter **A**.
 
+### 1.0.2 — 2026-08-09
+
+- Package release tag `v1.0.2` (pre-gallery memory expansion).
+
 ### 1.0.1 — (prior)
 
-- See git tag `v1.0.1` / commit history for site release notes.
+- See git tag `v1.0.1` / `CHANGELOG.md`.
