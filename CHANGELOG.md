@@ -9,11 +9,13 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Added
 
 - Home GitHub contributions calendar (`react-github-calendar` React island) before footer
+- Shared `SectionHeading` element (centered title + muted description) used across home marketing sections
 
 ### Changed
 
 - Feature sheets use Tailwind `@apply` for layout/type/token colors (keep glass, keyframes, prose, and state machines as plain CSS); credentials accordion CSS moved into `utils.css`
 - Page-scoped `tools.css` / `design.css` `@reference` `global.css` for `@apply` theme access
+- Skills, credentials, testimonials, projects, blogs, and contributions sections share `SectionHeading`
 
 ### Fixed
 

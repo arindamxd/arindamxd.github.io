@@ -1,5 +1,6 @@
 ---
 import ElementSkill from "./../elements/SkillElement.astro";
+import SectionHeading from "../elements/SectionHeading.astro";
 
 // data
 const metadata = (await import("../../content/skills-metadata.json")).default;
@@ -8,17 +9,9 @@ const stack = metadata.tech.stack || [];
 const tools = metadata.tech.tools || [];
 ---
 
-<section id="skills" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[50px] overflow-visible p-0 max-narrow:gap-[30px] max-narrow:px-2.5">
+<section id="skills" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible p-0 max-narrow:px-2.5">
 
-    <!-- Heading -->
-    <div data-reveal class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-start gap-3 overflow-visible p-0 max-narrow:gap-2.5">
-        <div class="relative h-auto w-full flex-none text-balance">
-            <h2 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-center text-text no-underline max-narrow:text-[34px]">{metadata.title}</h2>
-        </div>
-        <div class="relative h-auto w-full max-w-[350px] flex-none whitespace-pre-wrap break-words text-balance opacity-60">
-            <p class="m-0 p-0 font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text no-underline max-narrow:text-[15px] text-center">{metadata.description}</p>
-        </div>
-    </div>
+    <SectionHeading title={metadata.title} description={metadata.description} />
 
     <div
         data-reveal
