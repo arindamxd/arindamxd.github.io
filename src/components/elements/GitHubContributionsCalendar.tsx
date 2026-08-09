@@ -62,7 +62,7 @@ export default function GitHubContributionsCalendar({
                 blockMargin={2}
                 maxLevel={4}
                 labels={{
-                    totalCount: `${count} contributions in the last year`,
+                    totalCount: `${count} contributions in the last 8 months`,
                 }}
             />
         </div>

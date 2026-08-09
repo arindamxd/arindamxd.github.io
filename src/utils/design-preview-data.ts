@@ -433,7 +433,7 @@ export const previewContributionsMeta = {
     usernames: ["preview"],
 } as const;
 
-/** Stable last-year contribution days for gallery (no network). */
+/** Stable last-8-months contribution days for gallery (no network). */
 export function previewContributionDays(): {
     date: string;
     count: number;
@@ -442,7 +442,7 @@ export function previewContributionDays(): {
     const end = new Date();
     end.setUTCHours(0, 0, 0, 0);
     const start = new Date(end);
-    start.setUTCDate(start.getUTCDate() - 364);
+    start.setUTCMonth(start.getUTCMonth() - 8);
 
     const days: { date: string; count: number; level: number }[] = [];
     for (let d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {

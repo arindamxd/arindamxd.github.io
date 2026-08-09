@@ -32,6 +32,15 @@ type ContributionsResponse = {
     contributions?: ContributionDay[];
 };
 
+/** Inclusive start date (UTC YYYY-MM-DD) for the last eight months of activity. */
+function lastEightMonthsFromDate(from = new Date()): string {
+    const end = new Date(from);
+    end.setUTCHours(0, 0, 0, 0);
+    const start = new Date(end);
+    start.setUTCMonth(start.getUTCMonth() - 8);
+    return start.toISOString().slice(0, 10);
+}
+
 function levelForCount(count: number, max: number): number {
     if (count <= 0 || max <= 0) return 0;
     return Math.min(4, Math.max(1, Math.ceil((count / max) * 4)));
@@ -57,8 +66,13 @@ function mergeContributionDays(sets: ContributionDay[][]): ContributionDay[] {
         }));
 }
 
+function filterFromDate(days: ContributionDay[], fromDate: string): ContributionDay[] {
+    return days.filter((day) => day.date >= fromDate);
+}
+
 let contributions: ContributionDay[] = [];
 let totalCount = 0;
+const windowFrom = lastEightMonthsFromDate();
 
 if (preview) {
     contributions = previewContributionDays();
@@ -79,7 +93,10 @@ if (preview) {
         }),
     );
 
-    contributions = mergeContributionDays(fetched.filter((set) => set.length > 0));
+    const recentSets = fetched
+        .filter((set) => set.length > 0)
+        .map((set) => filterFromDate(set, windowFrom));
+    contributions = mergeContributionDays(recentSets);
     totalCount = contributions.reduce((sum, day) => sum + day.count, 0);
 }
 

@@ -13,6 +13,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Changed
 
 - `AGENTS.md`: commit requests must update `[Unreleased]` first; version-bump steps listed explicitly
+- Contributions calendar shows the last 8 months (was last year); section copy refreshed
 
 ### Fixed
 
