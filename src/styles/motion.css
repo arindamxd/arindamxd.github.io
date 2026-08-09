@@ -355,12 +355,6 @@ html.js-motion [data-reveal].reveal-instant {
         animation: page-fade-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
-    /* Bottom nav stays put (Layout Template “exclude from page effect”) */
-    ::view-transition-old(site-nav),
-    ::view-transition-new(site-nav) {
-        animation: none;
-        mix-blend-mode: normal;
-    }
 }
 
 /* Stagger-in under a reveal parent (skills + CMS lists) */

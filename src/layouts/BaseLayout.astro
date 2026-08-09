@@ -338,11 +338,8 @@ const structuredData = home
         <PageLoader />
         {
             !hideNav && (
-                <div
-                    class="nav-bar-container"
-                    transition:persist="site-nav"
-                    transition:name="site-nav"
-                >
+                /* persist only — view-transition-name (transition:name) breaks backdrop-filter */
+                <div class="nav-bar-container" transition:persist="site-nav">
                     <NavBar />
                 </div>
             )

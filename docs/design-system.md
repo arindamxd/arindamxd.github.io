@@ -23,7 +23,7 @@ Source of truth for UI/UX architecture on this site. Prefer matching **existing 
 
 ```
 BaseLayout          → SEO, theme, ClientRouter, Lenis, page loader
-  NavBar            → floating pill (persisted across transitions)
+  NavBar            → floating glass pill (mounted here once; `transition:persist` only)
   .site-root        → page content scope (wraps main sections)
   main / sections   → content
   Footer            → contact shell (max 550px)
@@ -60,7 +60,7 @@ global.css
 | [`fonts.css`](../src/styles/fonts.css) | `@font-face` |
 | [`base.css`](../src/styles/base.css) | Reset + `--site-will-change-override` / aspect-ratio support |
 | [`motion.css`](../src/styles/motion.css) | Page loader, appear / reveal |
-| [`nav.css`](../src/styles/nav.css) | Floating `.nav-bar-container` |
+| [`nav.css`](../src/styles/nav.css) | `.nav-bar-container`, shared `.nav-glass` / `.nav-pill` / `.nav-theme-toggle` |
 | [`utils.css`](../src/styles/utils.css) | Presence, scrollbars, overflow helpers |
 | [`hero.css`](../src/styles/hero.css) | Hero ID card, tie, scramble, location |
 | [`projects.css`](../src/styles/projects.css) | Sticky project media cards |
@@ -194,7 +194,7 @@ Reset margins on text: `m-0 p-0` is the house style.
 | Utility inputs (tools forms) | `14px` or full pill when search-like | See `tools.css` |
 | Icon button | Circle `52px` / `34px` | Back control, nav home |
 
-**Elevation:** almost none. Depth = surface contrast + 1px border/inset ring. Nav uses blur + soft shadow as a special case (`backdrop-blur`, dark translucent pill).
+**Elevation:** almost none. Depth = surface contrast + 1px border/inset ring. Nav is the exception: shared `.nav-glass` (`backdrop-filter` blur 16px + soft shadow). Do not sprinkle glass elsewhere.
 
 **Cards:** not the default metaphor. Use **surface shells** and **rows**. Cards only when they wrap a clear interaction (e.g. tools hub links).
 
@@ -304,19 +304,24 @@ Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./
 
 ### Nav pill (detailed)
 
-[`NavBar.astro`](../src/components/NavBar.astro) — floating glass chrome, mounted once from [`BaseLayout.astro`](../src/layouts/BaseLayout.astro) (outside page shells so `backdrop-filter` works). Persisted across View Transitions.
+[`NavBar.astro`](../src/components/NavBar.astro) — floating glass chrome, mounted **once** from [`BaseLayout.astro`](../src/layouts/BaseLayout.astro) (direct `body` child, outside page `overflow-x-hidden` shells). Do **not** re-declare the nav in pages / tools / design.
 
 | Piece | Spec |
 | --- | --- |
-| Height | `60px` → `52px` narrow |
-| Fill | Shared `.nav-glass` — dark translucent (`rgba(26,26,26,0.7)` / dark `rgba(48,48,48,0.82)`), `backdrop-filter` blur 7px + saturate, soft shadow. Container must not use `transform` or `overflow: hidden` ancestors or frost breaks. |
+| Position | Fixed; desktop near bottom (~18px), narrow at top (~8–11px); centered with flex (**no** `transform` on the container) |
+| Height | `60px` → `52px` at ≤389px |
+| Fill | `.nav-glass` in [`nav.css`](../src/styles/nav.css): `backdrop-filter: blur(16px) saturate(1.45)`; fill `rgba(26,26,26,0.52)` / dark `rgba(40,40,40,0.55)`; solid fallback when unsupported; `prefers-reduced-transparency` → opaque, no blur |
 | Home control | Circle `34→30` |
 | Links | Manrope `16→14/13`, white, `data-scramble` |
 | Contact chip | Pill `46→40`, white fill → hover `primary` |
+| Persist | `transition:persist="site-nav"` only — **never** `transition:name` / `view-transition-name` on the nav (Chromium drops backdrop blur) |
+| Page shells | Prefer `overflow-x-hidden` (not `overflow-hidden`) on the page wrapper so WebKit can still frost |
+
+`/design` Components demo reuses the same `.nav-pill.nav-glass` / `.nav-theme-toggle.nav-glass` classes — not a parallel mock.
 
 ### Theme toggle
 
-Separate circle beside nav (`60→52`): glass matching nav; inner track `w-[200%]` slides `300ms` with house cubic-bezier; `data-theme-toggle`.
+Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. Clip the sliding icons on the **inner** `.nav-theme-toggle__track` (`overflow: hidden` + `w-[200%]`), not on the glass node itself — same-element `overflow: hidden` + `backdrop-filter` breaks frost in Chrome. Track slides `300ms` with house cubic-bezier under `html.dark`; `data-theme-toggle`.
 
 ### Hero ID card (home)
 
@@ -550,7 +555,7 @@ External references worth tracking: [Motion](https://motion.dev/), [Motion `anim
 | --- | --- | --- |
 | **P0 — Reduced-motion contract** | Audit every animation; provide CSS/`matchMedia('(prefers-reduced-motion: reduce)')` no-ops for scramble, Lenis, reveals | Accessibility baseline |
 | **P0 — Motion token scale** | Formalize durations: `120 / 200 / 320 / 520ms` and one house easing (e.g. `cubic-bezier(0.44, 0, 0.56, 1)` already used in nav) as CSS variables | Consistency |
-| **P1 — View Transitions polish** | Named transitions for shared elements (project thumb → detail banner, blog row → article). Astro ClientRouter already enables VT; add `view-transition-name` sparingly | Native, 0kb |
+| **P1 — View Transitions polish** | Named transitions for shared elements (project thumb → detail banner, blog row → article). Astro ClientRouter already enables VT; add `view-transition-name` sparingly — **never on `.nav-glass` / `.nav-bar-container`** (breaks frost) | Native, 0kb |
 | **P1 — Adopt Motion (JS)** | Add open-source [`motion`](https://motion.dev/) **vanilla JS** (not React) as the site animation runtime: `animate`, `inView`, `stagger`, `scroll` as needed. Works with Astro scripts ([Astro guide](https://developers.netlify.com/guides/motion-animation-library-with-astro/)). Foundation for §12.2.2–12.2.3 | Small, MIT |
 | **P1 — Motion scroll reveal (`inView`)** | On top of Adopt Motion (JS): replace custom `appear-*` / [`reveal.js`](../src/scripts/reveal.js) with Motion `inView` + `animate` + `stagger` — see **§12.2.2** | Primary reveal path |
 | **P1 — Motion spring physics** | On top of Adopt Motion (JS): use `animate(..., { type: "spring", ... })` for interactive UI (tools, pills, back control) — see **§12.2.3** | Natural feel |

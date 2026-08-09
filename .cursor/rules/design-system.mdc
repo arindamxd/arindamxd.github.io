@@ -25,7 +25,7 @@ Technical, craft-forward portfolio. Calm and precise — not loud SaaS marketing
 
 Use `bg-bg`, `text-text`, `bg-surface`, `border-border`, `bg-primary`, `bg-inactive`, `text-text/60` (and `/50`–`/40` for meta). Primary `#2a29ff` and accent/active stay across themes; surfaces flip in `.dark`.
 
-Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Minimal drop shadows (nav glass is the exception — shared `.nav-glass` in `nav.css`; no `transform` / ancestor `overflow: hidden` on the nav shell).
+Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Minimal drop shadows (nav glass is the exception — `.nav-glass` in `nav.css`; mount from BaseLayout; no `transform` / `view-transition-name` / same-node `overflow: hidden` on glass).
 
 ## Type
 
