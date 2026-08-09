@@ -1,246 +1,85 @@
-/* Hero ID card / tie / slots / scramble / location (+ mobile overrides) */
+/* Hero ID card / tie / slots / scramble / location — layout via @apply; motion/Safari/calc stay plain */
+
 .site-root .hero-tie-container {
-    flex: none;
-    width: auto;
-    height: auto;
-    position: absolute;
-    left: 50%;
-    top: 0;
+    @apply absolute top-0 left-1/2 z-[1] h-auto w-auto shrink-0;
     transform: translate(-50%);
-    z-index: 1;
     will-change: var(--site-will-change-effect-override, transform);
 }
 
 .site-root .hero-badge {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    height: min-content;
-    position: relative;
-    padding: 80px 0 0;
-    overflow: hidden;
+    @apply relative flex h-min w-full flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden pt-20 pb-0;
 }
 
 .site-root .hero-card {
-
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: flex-start;
-    flex: 1 0 0px;
-    /* Chrome pad/gap match footer shell: 9px top+sides (desktop) */
-    gap: 9px;
-    width: 1px;
-    height: min-content;
-    position: relative;
-    padding: 9px 9px 22px;
-    border-radius: 46px;
-    background-color: var(--color-surface);
+    @apply relative flex h-min w-px flex-1 flex-col flex-nowrap content-center items-center justify-start gap-[9px] rounded-[46px] bg-surface pt-[9px] px-[9px] pb-[22px];
 }
 
 .site-root .hero-card-hole {
-
+    @apply relative mb-0 w-[63px] shrink-0 rounded-[46px] bg-bg;
     aspect-ratio: 3.3157894736842106 / 1;
-    flex: none;
-    width: 63px;
     height: var(--site-aspect-ratio-supported, 19px);
-    position: relative;
-    margin-bottom: 0;
-    border-radius: 46px;
-    background-color: var(--color-bg);
 }
 
 .site-root .hero-card-content {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: center;
-    flex: none;
-    gap: 40px;
-    width: 100%;
-    height: min-content;
-    position: relative;
+    @apply relative flex h-min w-full shrink-0 flex-col flex-nowrap content-start items-start justify-center gap-10 overflow-hidden rounded-[36px] bg-bg;
     padding: var(--padding, 30px 40px 40px);
-    overflow: hidden;
-    border-radius: 36px;
-    background-color: var(--color-bg);
     box-shadow: 0 7px 26.5px #00000008;
     will-change: var(--site-will-change-override, transform);
 }
 
 .site-root .hero-card-slot-container {
-    flex: none;
-    width: 100%;
-    height: auto;
-    position: relative;
+    @apply relative h-auto w-full shrink-0;
 }
 
 .site-root .hero-card-content-identity {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex: none;
-    gap: 36px;
-    width: 100%;
-    height: min-content;
-    position: relative;
+    @apply relative flex h-min w-full shrink-0 flex-col flex-nowrap content-start items-start justify-start gap-9;
 }
 
 .site-root .hero-card-content-top {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: space-between;
-    flex: none;
-    gap: 20px;
-    width: 100%;
-    height: min-content;
-    position: relative;
-    padding: 0;
-    overflow: visible;
+    @apply relative flex h-min w-full shrink-0 flex-row flex-nowrap content-start items-start justify-between gap-5 overflow-visible p-0;
     will-change: var(--site-will-change-effect-override, transform);
 }
 
 .site-root .hero-card-content-top-left {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex: 1 1 auto;
-    gap: 18px;
-    min-width: 0;
-    width: auto;
-    height: min-content;
-    position: relative;
-    padding: 0;
-    overflow: visible;
+    @apply relative flex h-min w-auto min-w-0 flex-1 flex-row flex-nowrap content-start items-start justify-start gap-[18px] overflow-visible p-0;
 }
 
 .site-root .hero-card-content-avatar {
-    aspect-ratio: 1 / 1;
-    flex: none;
-    width: 70px;
+    @apply relative aspect-square w-[70px] shrink-0 rounded-[100px];
     height: var(--site-aspect-ratio-supported, 70px);
-    position: relative;
-    border-radius: 100px;
 }
 
 .site-root .hero-card-content-main {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex: 1 0 0px;
-    gap: 12px;
-    width: 1px;
-    height: min-content;
-    position: relative;
-    padding: 0;
-    overflow: visible;
+    @apply relative flex h-min w-px flex-1 flex-col flex-nowrap content-start items-start justify-start gap-3 overflow-visible p-0;
 }
 
 .site-root .hero-card-content-main-text {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex: none;
-    gap: 7px;
-    width: 100%;
-    height: min-content;
-    position: relative;
-    padding: 0;
-    overflow: visible;
+    @apply relative flex h-min w-full shrink-0 flex-col flex-nowrap content-start items-start justify-start gap-[7px] overflow-visible p-0;
 }
 
 .site-root .hero-card-content-main-text-name {
+    @apply relative h-auto w-full shrink-0 wrap-break-word whitespace-pre-wrap;
     --site-paragraph-spacing: 0px;
-    flex: none;
-    width: 100%;
-    height: auto;
-    position: relative;
-    white-space: pre-wrap;
     word-break: break-word;
-    word-wrap: break-word;
 }
 
 .site-root .hero-card-content-main-text-role {
+    @apply relative h-auto w-full shrink-0 wrap-break-word whitespace-pre-wrap opacity-60;
     --site-paragraph-spacing: 0px;
-    flex: none;
-    width: 100%;
-    height: auto;
-    position: relative;
-    opacity: 0.6;
-    white-space: pre-wrap;
     word-break: break-word;
-    word-wrap: break-word;
 }
 
-
-
 .site-root .hero-card-content-top-available {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex: 0 0 auto;
-    gap: 7px;
-    width: max-content;
-    height: min-content;
-    position: relative;
-    margin-left: auto;
-    padding: 4px 0 0;
-    overflow: visible;
+    @apply relative ml-auto flex h-min w-max shrink-0 flex-row flex-nowrap content-start items-start justify-start gap-[7px] overflow-visible pt-1 pb-0;
 }
 
 .site-root .available-dot-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    flex: none;
-    gap: 10px;
-    width: min-content;
-    height: min-content;
-    position: relative;
-    padding: 3px 0 0;
-    overflow: visible;
+    @apply relative flex h-min w-min shrink-0 flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-visible pt-[3px] pb-0;
 }
 
 .site-root .available-pulse {
-    aspect-ratio: 1 / 1;
-    flex: none;
-    width: 8px;
+    @apply relative aspect-square w-2 shrink-0 rounded-full bg-active;
     height: var(--site-aspect-ratio-supported, 8px);
-    position: relative;
-    border-radius: 100%;
-    background-color: var(--color-active);
-
-    /* Add animation */
     animation: pulseOpacity 0.8s ease-in-out infinite alternate;
 }
 
@@ -256,27 +95,18 @@
 .site-root .available-text-container,
 .site-root .hero-card-content-badge-text-container,
 .site-root .location-text-container {
+    @apply relative h-auto w-auto shrink-0 whitespace-pre;
     --site-paragraph-spacing: 0px;
-    flex: none;
-    width: auto;
-    height: auto;
-    position: relative;
-    white-space: pre;
 }
 
 /* Keep both lines left-aligned; reserve width so cycle doesn’t shift the block */
 .site-root .available-text-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    min-width: 13ch;
+    @apply flex min-w-[13ch] flex-col items-start;
 }
 
 /* Keel-style scramble — used by Available for… (opt-in elsewhere via JS) */
 .available-scramble {
-    display: inline-flex;
-    cursor: pointer;
-    outline: none;
+    @apply inline-flex cursor-pointer outline-none;
 }
 
 .available-scramble:focus-visible {
@@ -286,169 +116,83 @@
 
 .scramble-host,
 .scramble-word {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    white-space: nowrap;
+    @apply inline-flex flex-nowrap whitespace-nowrap;
 }
 
 .scramble-char {
-    position: relative;
+    @apply relative;
 }
 
 .scramble-random {
-    z-index: 2;
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @apply pointer-events-none absolute inset-0 z-[2] flex items-center justify-center opacity-0;
     color: var(--scramble-fg, currentColor);
     background-color: var(--scramble-bg, var(--color-surface));
-    opacity: 0;
-    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
     .scramble-random {
-        display: none;
+        @apply hidden;
     }
 }
 
 .site-root .hero-card-content-slogan {
+    @apply relative h-auto w-full shrink-0 wrap-break-word whitespace-pre-wrap;
     --site-paragraph-spacing: 0px;
-    flex: none;
-    width: 100%;
-    height: auto;
-    position: relative;
-    white-space: pre-wrap;
     word-break: break-word;
-    word-wrap: break-word;
     will-change: var(--site-will-change-effect-override, transform);
 }
 
 .site-root .hero-card-content-others {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex: none;
-    gap: 22px;
-    width: 100%;
-    height: min-content;
-    position: relative;
-    padding: 0;
-    overflow: visible;
+    @apply relative flex h-min w-full shrink-0 flex-col flex-nowrap content-start items-start justify-start gap-[22px] overflow-visible p-0;
     will-change: var(--site-will-change-effect-override, transform);
 }
 
 .hero-card-content-badge {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex: none;
-    gap: 10px;
-    width: min-content;
-    height: min-content;
-    position: relative;
-    padding: 6px 8px 6px 6px;
-    overflow: visible;
-    border-radius: 50px;
+    @apply relative flex h-min w-min shrink-0 flex-row flex-nowrap content-start items-start justify-start gap-2.5 overflow-visible rounded-[50px] py-1.5 pr-2 pl-1.5;
     /* Darker than hero content bg (#222 dark / #fff light) — not surface */
     background-color: color-mix(in srgb, var(--color-bg) 82%, #000);
     box-shadow: inset 0 0 0 1px var(--color-border);
 }
 
 .hero-card-content-description {
+    @apply relative h-auto w-full shrink-0 opacity-50;
     --site-paragraph-spacing: 0px;
     --site-text-wrap-override: balance;
-    flex: none;
-    width: 100%;
-    height: auto;
-    position: relative;
-    opacity: 0.5;
 }
 
 .site-root .hero-card-content-buttons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: flex-start;
-    flex: none;
-    gap: 10px;
-    width: 100%;
-    height: min-content;
-    position: relative;
-    padding: 0;
-    overflow: hidden;
+    @apply relative flex h-min w-full shrink-0 flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-hidden p-0;
 }
 
 /* Intro/project card footer — mobile-first compact stack */
 .site-root .hero-card-bottom {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    flex: none;
-    width: 100%;
-    height: auto;
-    position: relative;
-    padding: 8px 16px 0;
-    overflow: visible;
-    box-sizing: border-box;
+    @apply relative box-border flex h-auto w-full shrink-0 flex-col flex-nowrap items-center justify-center gap-0.5 overflow-visible pt-2 px-4 pb-0;
 }
 
 .site-root .hero-card-bottom > * {
-    flex: 0 0 auto;
+    @apply shrink-0;
 }
 
 .site-root .hero-card-bottom-location {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    gap: 5px;
-    width: auto;
-    max-width: 100%;
-    height: auto;
-    position: relative;
-    padding: 0;
+    @apply relative flex h-auto w-auto max-w-full shrink-0 flex-row flex-nowrap items-center justify-center gap-[5px] p-0;
 }
 
 /* Project detail: 64px gray strip — same as footer “Created by” / View all bars */
 .site-root .hero-card-bottom.hero-card-bottom--project {
-    justify-content: center;
-    align-items: center;
-    height: 64px;
-    min-height: 64px;
+    @apply h-16 min-h-16 items-center justify-center overflow-hidden px-[50px] py-0;
     margin-top: -9px; /* cancel hero-card gap so total gray = 64px */
-    padding: 0 50px;
-    overflow: hidden;
 }
 
 .site-root .hero-card:has(.hero-card-bottom--project) {
-    padding-bottom: 0;
+    @apply pb-0;
 }
 
 .site-root .location-icon {
-    flex: none;
-    width: 13px;
-    height: 14px;
-    position: relative;
+    @apply relative h-3.5 w-[13px] shrink-0;
 }
 
 .site-root .location-text-container {
-    white-space: nowrap;
+    @apply whitespace-nowrap;
 }
 
 .site-root .location-text-container p {
@@ -458,19 +202,11 @@
 /* Web: horizontal bar — Bottom: pad 12px 50px 0, ~30px tall */
 @media (min-width: 610px) {
     .site-root .hero-card-bottom {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 0;
-        height: auto;
-        min-height: 30px;
-        padding: 12px 50px 0;
-        overflow: hidden;
+        @apply h-auto min-h-[30px] flex-row items-center justify-between gap-0 overflow-hidden pt-3 px-[50px] pb-0;
     }
 
     .site-root .hero-card-bottom-location {
-        justify-content: flex-start;
-        width: min-content;
+        @apply w-min justify-start;
     }
 
     .site-root .location-text-container p {
@@ -480,44 +216,23 @@
 }
 
 /* ======================================================
-   .hero-card-slot-dev — Horizontal Bar Group
+   .hero-card-slot-div — Horizontal Bar Group
    ====================================================== */
 
-/* Main container — width fills the card; avoid fixed 432px overflow on phones */
 .hero-card-slot-div.hero-card-slot-centered {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: flex-start;
-
-    width: 100%;
-    max-width: 432px;
-    height: min-content;
-    gap: 10px;
-
-    position: relative;
-    padding: 0;
-    overflow: visible;
+    @apply relative flex h-min w-full max-w-[432px] flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0;
 }
 
-/* Bars */
 .hero-card-slot-div .hero-card-slot-bar-active,
 .hero-card-slot-div .hero-card-slot-bar-inactive {
-    flex: 1 0 0;
-    width: 1px;
-    height: 4px;
-    position: relative;
-    border-radius: 50px;
-    opacity: 1;
+    @apply relative h-1 w-px flex-1 rounded-[50px] opacity-100;
 }
 
 .hero-card-slot-bar-active {
-    background-color: var(--color-active);
+    @apply bg-active;
 }
 .hero-card-slot-bar-inactive {
-    background-color: var(--color-inactive);
+    @apply bg-inactive;
 }
 
 /* Safari/WebKit fallback */
@@ -540,48 +255,24 @@
    .hero-tie — Logo/Icon Stack
    ====================================================== */
 
-/* Main container */
 .hero-tie.hero-tie-centered {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: flex-start;
-
-    width: 63px;
-    height: min-content;
-    gap: 0;
-
-    position: relative;
-    padding: 0;
-    overflow: visible;
+    @apply relative flex h-min w-[63px] flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-visible p-0;
 }
 
-/* Child elements */
 .hero-tie .hero-tie-stripe {
-    flex: none;
-    width: 53px;
-    height: 30px;
-    position: relative;
-    background-color: var(--color-primary);
-    opacity: 1;
+    @apply relative h-[30px] w-[53px] shrink-0 bg-primary opacity-100;
 }
 
 .hero-tie .hero-tie-holder {
-    flex: none;
-    width: 63px;
+    @apply relative w-[63px] shrink-0;
     height: var(--site-aspect-ratio-supported, 44px);
     aspect-ratio: 1.4318 / 1;
-    position: relative;
 }
 
 .hero-tie .hero-tie-box {
-    flex: none;
-    width: 31px;
+    @apply relative w-[31px] shrink-0;
     height: var(--site-aspect-ratio-supported, 26px);
     aspect-ratio: 1.1923 / 1;
-    position: relative;
 }
 
 /* Safari/WebKit fallback */
@@ -600,82 +291,63 @@
     }
 }
 
-
 @media (max-width: 609.98px) {
     .site-root .hero-tie-container {
         top: -14px;
         will-change: unset;
     }
 
-    /* Mobile Badge: pad-top 117px so lanyard shows under nav */
     .site-root .hero-badge {
-        padding: 117px 0 0;
-        overflow: hidden;
+        @apply overflow-hidden pt-[117px] pb-0;
     }
 
-    /* Mobile Card: chrome matches footer shell (6px top+sides) */
     .site-root .hero-card {
-        border-radius: 36px;
-        gap: 6px;
-        padding: 6px 6px 18px;
+        @apply gap-1.5 rounded-[36px] pt-1.5 px-1.5 pb-[18px];
     }
 
     .site-root .hero-card-hole {
-        width: 46px;
+        @apply mb-0 w-[46px];
         height: var(--site-aspect-ratio-supported, 14px);
-        margin-bottom: 0;
     }
 
-    /* Mobile White: pad 18×30×30, gap 26 */
     .site-root .hero-card-content {
-        border-radius: 30px;
-        gap: 26px;
-        padding: 18px 30px 30px;
+        @apply gap-[26px] rounded-[30px] pt-[18px] px-[30px] pb-[30px];
     }
 
-    /* Mobile Identity (Top + slogan): gap 24 */
     .site-root .hero-card-content-identity {
-        gap: 24px;
+        @apply gap-6;
     }
 
     .site-root .hero-card-content-top {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 22px;
-        justify-content: flex-start;
+        @apply flex-col items-start justify-start gap-[22px];
         will-change: unset;
     }
 
     .site-root .hero-card-content-top-left {
-        flex: none;
-        order: 1;
-        align-self: stretch;
-        width: 100%;
+        @apply order-1 w-full shrink-0 self-stretch;
         margin-left: 0;
     }
 
     .site-root .hero-card-content-avatar {
-        width: 60px;
+        @apply w-[60px];
         height: var(--site-aspect-ratio-supported, 60px);
     }
 
     .site-root .hero-card-content-main-text {
-        gap: 4px;
+        @apply gap-1;
     }
 
     .site-root .hero-card-content-top-available {
-        order: 0;
-        align-self: flex-start;
+        @apply order-0 self-start p-0;
         margin-left: 0;
-        padding: 0;
     }
 
     .site-root .hero-card-content-main-text-name {
-        order: 0;
+        @apply order-0;
     }
 
     .site-root .hero-card-content-main-text-role {
-        order: 1;
+        @apply order-1;
     }
 
     .site-root .hero-card-content-slogan,
@@ -685,63 +357,45 @@
     }
 
     .site-root .hero-card-content-buttons {
-        align-items: flex-start;
-        align-content: flex-start;
-        flex-direction: column;
+        @apply flex-col content-start items-start;
     }
 
     .hero-card-content-buttons > div:not(:first-child) {
         display: none !important;
     }
 
-    /* Mobile Bottom: pad 10×50×0, gap 9, stacked */
     .site-root .hero-card-bottom {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 9px;
-        padding: 10px 50px 0;
-        overflow: hidden;
+        @apply flex-col items-center justify-center gap-[9px] overflow-hidden pt-2.5 px-[50px] pb-0;
     }
 
     .site-root .hero-card-bottom.hero-card-bottom--project {
-        justify-content: center;
-        align-items: center;
-        height: 64px;
-        min-height: 64px;
+        @apply h-16 min-h-16 items-center justify-center px-[50px] py-0;
         margin-top: -6px; /* cancel mobile hero-card gap */
-        padding: 0 50px;
     }
 
     .site-root .hero-card:has(.hero-card-bottom--project) {
-        padding-bottom: 0;
+        @apply pb-0;
     }
-
 
     .site-root .hand-art {
-        display: none;
+        @apply hidden;
     }
 
-    /* Mobile lanyard: stripe 46×90, clip at ~76px (not full 117 pad) */
     .hero-tie .hero-tie-stripe {
-        width: 46px;
-        height: 90px;
+        @apply h-[90px] w-[46px];
     }
 
     .hero-tie .hero-tie-holder {
         aspect-ratio: unset;
-        width: 54px;
-        height: 37px;
+        @apply h-[37px] w-[54px];
     }
 
     .hero-tie .hero-tie-box {
         aspect-ratio: unset;
-        width: 24px;
-        height: 17px;
+        @apply h-[17px] w-6;
     }
 
     .site-root .hero-card-content-top-available {
-        padding: 0;
+        @apply p-0;
     }
-
 }

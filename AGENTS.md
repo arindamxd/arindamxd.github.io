@@ -27,7 +27,7 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 ## Stack (short)
 
-- Astro static portfolio · Tailwind v4 · feature CSS via [`global.css`](src/styles/global.css) (do **not** import `tools.css` / `design.css` into global)
+- Astro static portfolio · Tailwind v4 · feature CSS via [`global.css`](src/styles/global.css) (layout via `@apply` in sheets; do **not** import `tools.css` / `design.css` into global — those `@reference` global for theme)
 - Content: JSON catalogs + Markdown under `src/content/` · loaders in `src/utils/`
 - Motion today: Lenis + custom appear/reveal/scramble/count-up · Motion.js adoption is roadmap in design-system §12
 - Deploy: GitHub Pages from **`trunk`** · live https://arindamxd.github.io
@@ -39,7 +39,7 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 | Route | Role |
 | --- | --- |
-| `/` | Home — intro, skills, experience, credentials, brands, testimonials, projects, blogs, footer |
+| `/` | Home — intro, skills, experience, credentials, brands, testimonials, projects, blogs, contributions, footer |
 | `/projects`, `/projects/[slug]` | Catalog + detail (sticky media cards) |
 | `/projects/[slug]/privacy-policy` | Privacy MD when `privacy_policy: true` |
 | `/blogs`, `/blogs/[slug]` | Catalog + article |

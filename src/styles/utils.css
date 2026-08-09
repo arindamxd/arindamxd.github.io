@@ -58,11 +58,58 @@ img[src*="design-media-placeholder"] {
 /* Hide browser broken-image icon when we stripped a failed src */
 img.design-media-ph:not([src]),
 img.design-media-ph[src=''] {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    color: transparent;
-    -webkit-user-select: none;
-    user-select: none;
+    @apply block h-full w-full object-cover text-transparent select-none;
+}
+
+/* GitHub contributions island — match site type color; restore SVG interaction */
+.github-contributions-calendar {
+    color: var(--color-text);
+    font-family: var(--font-manrope);
+}
+
+.github-contributions-calendar a {
+    color: inherit;
+}
+
+.github-contributions-calendar svg,
+.github-contributions-calendar svg * {
+    pointer-events: auto;
+}
+
+/* Credentials accordion — grid open/close state (not expressible as utilities) */
+.credentials-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.credentials-item[data-open='true'] .credentials-panel {
+    grid-template-rows: 1fr;
+}
+
+.credentials-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.28s ease;
+}
+
+.credentials-item[data-open='true'] .credentials-panel-inner {
+    opacity: 1;
+}
+
+.credentials-icon-v {
+    transform-origin: center;
+    transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.25s ease;
+}
+
+.credentials-item[data-open='true'] .credentials-icon-v {
+    transform: scaleY(0);
+    opacity: 0;
+}
+
+.credentials-trigger:focus-visible {
+    @apply rounded outline-2 outline-offset-4 outline-primary;
 }

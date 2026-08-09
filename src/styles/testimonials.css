@@ -1,22 +1,18 @@
+/* Testimonials phone UI — layout via @apply; masks, scale shell, Safari gaps, hover overlays stay plain */
+
 .site-root .hand-art {
     -webkit-mask: linear-gradient(180deg, #000000 75%, rgba(0, 0, 0, 0) 100%) add;
-    flex: none;
+    @apply pointer-events-none absolute z-0 shrink-0 overflow-visible;
     inset: -30px -188px -188px 7px;
     mask: linear-gradient(180deg, rgb(0, 0, 0) 75%, rgba(0, 0, 0, 0) 100%) add;
-    overflow: visible;
-    pointer-events: none;
-    position: absolute;
-    z-index: 0;
 }
 
 /* ======================================================
    .testimonials — Tall Flex Section (360px × 750px)
    ====================================================== */
 
-/* Mobile shell: keep intro-like outside gutter; scale fixed mock to fit */
 .testimonials-phone-shell {
-    width: 360px;
-    max-width: 100%;
+    @apply w-[360px] max-w-full;
 }
 
 @media (max-width: 609.98px) {
@@ -28,247 +24,106 @@
      */
     .testimonials-phone-shell {
         width: min(360px, calc(100% * 360 / 380));
-        max-width: 100%;
+        @apply relative max-w-full;
         aspect-ratio: 360 / 750;
-        position: relative;
         container-type: inline-size;
         container-name: testimonials-phone;
     }
 
     .testimonials-phone-shell > .testimonials.main-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
+        @apply absolute top-0 left-0;
         /* length/length → unitless factor (scale() rejects bare cqw/360) */
         transform: scale(calc(100cqw / 360px));
         transform-origin: top left;
     }
 }
 
-/* Main wrapper */
 .testimonials.main-wrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-
-    width: 360px;
-    height: 750px;
-    gap: 20px;
-    padding: 0;
-
-    position: relative;
-    overflow: visible;
+    @apply relative flex h-[750px] w-[360px] flex-row flex-nowrap content-center items-center justify-center gap-5 overflow-visible p-0;
 }
 
-/* Background overlay */
 .testimonials .mobile-border {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    left: -10px;
-
-    height: 771px;
-    flex: none;
-    overflow: visible;
-    pointer-events: none;
-
-    z-index: 2;
+    @apply pointer-events-none absolute top-[-10px] right-[-10px] left-[-10px] z-[2] h-[771px] shrink-0 overflow-visible;
 }
 
-/* Foreground centered flex */
 .testimonials .gestures {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-
-    min-height: 750px;
-    width: auto;
-    gap: 10px;
-    padding: 0;
-
-    overflow: hidden;
+    @apply absolute top-0 right-0 left-0 z-10 flex w-auto min-h-[750px] flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0;
     will-change: var(--site-will-change-override, transform);
-    z-index: 10;
 }
 
-/* Split left & right absolute containers */
 .testimonials .gesture-left-container,
 .testimonials .gesture-right-container {
-    position: absolute;
-    top: 50%;
-    height: 100%;
-    width: 50%;
-    flex: none;
-    z-index: 1;
-
+    @apply absolute top-1/2 z-[1] h-full w-1/2 shrink-0;
     transform: translateY(-50%);
 }
 .testimonials .gesture-left-container {
-    left: 0;
+    @apply left-0;
 }
 .testimonials .gesture-right-container {
-    right: 0;
+    @apply right-0;
 }
 
-/* Main vertical stack — top pad clears Dynamic Island in phone-border */
 .testimonials .vertical-stack {
-    display: flex;
-    flex: 1 0 0;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-content: flex-start;
-
-    width: 1px;
-    height: 100%;
-    padding: 92px 50px 50px;
-
-    position: relative;
-    overflow: visible;
-    z-index: 2;
+    @apply relative z-[2] flex h-full w-px flex-1 flex-col flex-nowrap content-start items-start justify-between overflow-visible pt-[92px] px-[50px] pb-[50px];
 }
 
-/* Sections */
 .testimonials .vertical-stack-top,
 .testimonials .vertical-stack-info,
 .testimonials .vertical-stack-info-data,
 .testimonials .vertical-stack-info-recommendation-author {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    align-content: flex-start;
-
-    width: 100%;
-    height: min-content;
-    padding: 0;
-    position: relative;
-    overflow: visible;
+    @apply relative flex h-min w-full flex-col flex-nowrap content-start items-start justify-start overflow-visible p-0;
     gap: var(--site-gap, 20px);
 }
 
-/* Individual gaps */
 .testimonials .vertical-stack-top {
-    gap: 25px;
+    @apply gap-[25px];
 }
 .testimonials .vertical-stack-info {
-    gap: 40px;
-    z-index: 2;
+    @apply z-[2] gap-10;
 }
 .testimonials .vertical-stack-info-data {
-    gap: 20px;
+    @apply gap-5;
 }
 .testimonials .vertical-stack-info-recommendation-author {
-    gap: 6px;
+    @apply gap-1.5;
 }
 
-/* Inline row groups — left-align with shared edge */
 .testimonials .progress-bar,
 .testimonials .vertical-stack-top-person {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: center;
-
-    width: 100%;
-    height: min-content;
-    gap: 10px;
-    padding: 0;
-    position: relative;
-    overflow: visible;
+    @apply relative flex h-min w-full flex-row flex-nowrap content-center items-center justify-start gap-2.5 overflow-visible p-0;
 }
 
-/* Row flexed bars */
 .testimonials .progress-bar-segment {
-    flex: 1 0 0;
-    width: 1px;
-    height: 3px;
-    position: relative;
+    @apply relative h-[3px] w-px flex-1;
 }
 
-/* Icon + text row */
 .testimonials .vertical-stack-top-person-avatar {
-    flex: none;
-    width: 33px;
+    @apply relative aspect-square w-[33px] shrink-0;
     height: var(--site-aspect-ratio-supported, 33px);
-    aspect-ratio: 1 / 1;
-    position: relative;
 }
 .testimonials .vertical-stack-top-person-info {
-    display: flex;
-    flex: 1 0 0;
-    flex-direction: column;
-    gap: 2px;
-
-    width: 1px;
-    height: min-content;
-    position: relative;
+    @apply relative flex h-min w-px flex-1 flex-col gap-0.5;
 }
 
-/* Text blocks */
 .testimonials .vertical-stack-top-person-info-name,
 .testimonials .vertical-stack-top-person-info-role,
 .testimonials .vertical-stack-info-recommendation-text,
 .testimonials .vertical-stack-info-recommendation-author-name,
 .testimonials .vertical-stack-info-recommendation-author-role {
-    width: 100%;
-    height: auto;
-
-    flex: none;
-    position: relative;
-    white-space: pre-wrap;
+    @apply relative h-auto w-full shrink-0 wrap-break-word whitespace-pre-wrap;
     word-break: break-word;
-    word-wrap: break-word;
 }
 
-/* Small decorative */
 .testimonials .stars-icon {
-    width: 69px;
-    height: 13px;
-    flex: none;
-    position: relative;
+    @apply relative h-[13px] w-[69px] shrink-0;
 }
 
-/* Full overlay row */
 .testimonials .vertical-stack-image {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    gap: 10px;
-    padding: 0;
-    overflow: hidden;
-    z-index: 1;
+    @apply absolute top-0 left-0 z-[1] flex h-full w-full flex-row flex-nowrap items-center justify-center gap-2.5 overflow-hidden p-0;
 }
 
-/* Absolute background */
 .testimonials .vertical-stack-image-background {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
+    @apply absolute inset-0 z-[1];
 }
 
 /* Safari fallback adjustments */
@@ -286,7 +141,6 @@
         gap: 0;
     }
 
-    /* margin simulation */
     .testimonials.main-wrapper > * {
         margin: 0 10px;
     }
@@ -317,65 +171,33 @@
    .gesture-item — Narrow Clickable Container (180 × 760)
    ====================================================== */
 
-/* Main interactive wrapper */
 .gesture-item.gesture-wrapper {
-    position: relative;
-    cursor: pointer;
-    overflow: visible;
+    @apply relative cursor-pointer overflow-visible;
 }
 
-/* Full absolute child (covers parent) */
 .gesture-item .gesture-item-full {
-    position: absolute;
-    inset: 0;
-
-    flex: none;
-    overflow: visible;
-    opacity: 0;
-
+    @apply absolute inset-0 shrink-0 overflow-visible opacity-0;
     will-change: var(--site-will-change-override, opacity);
     transition: opacity 0.2s ease-in-out;
 }
 
-/* Hover state: reveal full overlay */
 .gesture-item:hover .gesture-item-full {
-    opacity: 1;
+    @apply opacity-100;
 }
 
 /* ==============================================
    .progress-bar-row — Interactive Thin Row (360 × 3)
    ============================================== */
 
-/* Main clickable flex row — fill segment, not full phone width */
 .progress-bar-row.main-flex {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-    position: relative;
+    @apply relative flex h-[3px] w-full cursor-pointer flex-row flex-nowrap content-center items-center justify-center gap-0 overflow-hidden p-0;
     will-change: var(--site-will-change-override, transform);
-
-    width: 100%;
-    height: 3px;
-
-    gap: 0;
-    padding: 0;
-    overflow: hidden;
 }
 
-/* Full overlay container */
 .progress-bar-row .overlay-container {
-    flex: none;
-    position: absolute;
-    inset: 0;
-    z-index: 1;
+    @apply absolute inset-0 z-[1] shrink-0;
 }
 
-/* Safari/WebKit fallback adjustments */
 @supports (background: -webkit-named-image(i)) and (not (font-palette: dark)) {
     .progress-bar-row.main-flex {
         gap: 0;

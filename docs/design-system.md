@@ -98,8 +98,9 @@ Hero / layout CSS is scoped as `.site-root .hero-…` (and similar). Layout help
 **Rules**
 
 - Put new custom CSS in the matching feature sheet with **semantic** class names (`.hero-…`, `.projects-card`, `.tools-…`).
-- Prefer Tailwind utilities + design tokens (`bg-bg`, `text-text`, …) when they fit.
-- Do not invent a second root wrapper or a parallel variable namespace.
+- Prefer **`@apply`** inside those sheets for layout / spacing / type / token colors (`flex`, `gap-*`, `rounded-*`, `bg-surface`, `font-manrope`, …). Keep plain CSS for glass, keyframes, prose descendants, data-attribute state machines, and calc/var quirks.
+- Page-scoped sheets (`tools.css`, `design.css`) must start with `@reference "./global.css";` so `@apply` can see the theme.
+- Prefer Tailwind utilities in markup when a one-off fits; do not invent a second root wrapper or a parallel variable namespace.
 
 **Private tools** (`/tools`): hub + one route per tool. Register tools in [`src/utils/tools.ts`](../src/utils/tools.ts). Shell: [`ToolsPageShell.astro`](../src/components/tools/ToolsPageShell.astro).
 
@@ -529,7 +530,7 @@ Authoring docs: [`blog-authoring.md`](./blog-authoring.md), [`project-authoring.
 6. **Interaction** — scramble on key links; back control pattern on subpages.
 7. **Theme** — verify light and dark; icons invert correctly.
 8. **Motion** — optional reveal; Lenis-safe nested scroll.
-9. **CSS home** — page content under `site-root`; new rules in the matching feature sheet (`hero.css`, `projects.css`, …) or Tailwind — not a one-off orphan stylesheet.
+9. **CSS home** — page content under `site-root`; new rules in the matching feature sheet (`hero.css`, `projects.css`, …) with `@apply` for layout when possible, or Tailwind in markup — not a one-off orphan stylesheet.
 10. **SEO** — private utilities: `noindex={true}`.
 11. **Registry** — tools go through `siteTools`, not one-off orphan pages.
 

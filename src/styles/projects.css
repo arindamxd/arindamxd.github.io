@@ -1,69 +1,25 @@
-/* Project card caption + logo zoom */
+/* Project card caption + logo zoom — layout via @apply; hover transforms stay plain */
+
 .projects-card .caption-info {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: space-between;
-    width: 100%;
-    height: min-content;
-    padding: 10px;
-    position: relative;
-    z-index: 1;
-    overflow: visible;
+    @apply relative z-[1] flex h-min w-full flex-row flex-nowrap content-center items-center justify-between overflow-visible p-2.5;
 }
 
 .projects-card .caption-info-content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: flex-start;
-    flex: 1 0 0;
-    width: 1px;
-    height: min-content;
-    gap: 14px;
-    padding: 0;
-    position: relative;
-    overflow: hidden;
+    @apply relative flex h-min w-px flex-1 flex-row flex-nowrap content-center items-center justify-start gap-3.5 overflow-hidden p-0;
 }
 
 .projects-card .caption-info-logo {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    width: 54px;
-    height: 54px;
-    gap: 10px;
-    padding: 0;
-    position: relative;
+    @apply relative flex h-[54px] w-[54px] flex-row flex-nowrap content-center items-center justify-center gap-2.5 p-0;
 }
 
 .projects-card .project-logo {
-    aspect-ratio: 1 / 1;
-    width: 22px;
+    @apply relative aspect-square w-[22px] shrink-0 overflow-visible;
     height: var(--site-aspect-ratio-supported, 22px);
-    flex: none;
-    position: relative;
-    overflow: visible;
 }
 
 .projects-card .project-logo img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 44px;
-    height: 44px;
-    max-width: none;
+    @apply absolute top-1/2 left-1/2 h-11 w-11 max-w-none rounded-[inherit] object-contain object-center;
     margin: -22px 0 0 -22px;
-    border-radius: inherit;
-    object-fit: contain;
-    object-position: center;
     transform: translateZ(0) scale(0.5);
     transform-origin: center;
     backface-visibility: hidden;
@@ -72,30 +28,13 @@
 }
 
 .projects-card .caption-info-text {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex: 1 0 0;
-    width: 1px;
-    height: min-content;
-    gap: 1px;
-    padding: 0 20px 0 0;
-    position: relative;
-    overflow: visible;
+    @apply relative flex h-min w-px flex-1 flex-col flex-nowrap content-start items-start justify-start gap-px overflow-visible py-0 pr-5 pl-0;
 }
 
 .projects-card .caption-info-text-title,
 .projects-card .caption-info-text-description {
-    width: 100%;
-    height: auto;
-    flex: none;
-    position: relative;
-    white-space: pre-wrap;
+    @apply relative h-auto w-full shrink-0 wrap-break-word whitespace-pre-wrap;
     word-break: break-word;
-    word-wrap: break-word;
 }
 
 .projects-card .caption-info-text-description {
@@ -103,25 +42,12 @@
 }
 
 .projects-card .caption-info-arrow {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    aspect-ratio: 1 / 1;
-    width: 54px;
+    @apply relative flex aspect-square w-[54px] flex-row flex-nowrap content-center items-center justify-center gap-2.5 p-0;
     height: var(--site-aspect-ratio-supported, 54px);
-    gap: 10px;
-    padding: 0;
-    position: relative;
 }
 
 .projects-card .link-icon-circle-bg {
-    width: 12px;
-    height: 12px;
-    flex: none;
-    position: relative;
+    @apply relative h-3 w-3 shrink-0;
     transition: transform 0.3s ease-out;
 }
 
@@ -134,12 +60,7 @@
 }
 
 .projects-card .project-background-image {
-    inset: 0;
-    position: absolute;
-    z-index: 0;
-    flex: none;
-    background-size: cover;
-    background-position: center;
+    @apply absolute inset-0 z-0 shrink-0 bg-cover bg-center;
     transition: transform 0.3s ease-in-out;
 }
 

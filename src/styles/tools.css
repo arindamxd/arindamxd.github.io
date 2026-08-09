@@ -1,31 +1,14 @@
-/* Shared styles for /tools hub and individual tool pages */
+/* Shared styles for /tools hub and individual tool pages — chrome via @apply; MD prose stays plain */
+@reference "./global.css";
 
 .tools-code {
-    font-family: var(--font-fragment);
-    font-size: 0.9em;
-    padding: 0.1em 0.35em;
-    border-radius: 6px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    @apply rounded-md border border-border bg-surface px-[0.35em] py-[0.1em] font-fragment text-[0.9em];
 }
 
 /* Inline trigger → fullscreen MarkdownDocPanel (data-md-doc="<id>") */
 .md-doc-trigger {
-    appearance: none;
-    display: inline;
-    margin: 0;
-    padding: 0.1em 0.35em;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    background: var(--color-surface);
-    color: var(--color-text);
-    font-family: var(--font-fragment);
-    font-size: 0.9em;
-    font-weight: 400;
-    letter-spacing: 0;
+    @apply m-0 inline cursor-pointer rounded-md border border-border bg-surface px-[0.35em] py-[0.1em] font-fragment text-[0.9em] font-normal tracking-normal text-text no-underline appearance-none;
     line-height: inherit;
-    text-decoration: none;
-    cursor: pointer;
     transition:
         border-color 0.2s ease,
         background-color 0.2s ease,
@@ -35,23 +18,11 @@
 .md-doc-trigger:hover,
 .md-doc-trigger:focus-visible {
     border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border));
-    color: var(--color-primary);
-    outline: none;
+    @apply text-primary outline-none;
 }
 
 .tools-tab {
-    appearance: none;
-    border: 0;
-    cursor: pointer;
-    border-radius: 9999px;
-    padding: 0.7rem 1.15rem;
-    font-family: var(--font-manrope);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    color: var(--color-text);
-    background: transparent;
-    opacity: 0.55;
+    @apply cursor-pointer rounded-full border-0 bg-transparent px-[1.15rem] py-[0.7rem] font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text appearance-none opacity-55;
     transition:
         opacity 0.2s ease,
         background-color 0.2s ease,
@@ -59,84 +30,41 @@
 }
 
 .tools-tab.is-active {
-    opacity: 1;
-    background: var(--color-text);
-    color: var(--color-bg);
+    @apply bg-text text-bg opacity-100;
 }
 
 .tools-fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    min-width: 0;
+    @apply m-0 flex min-w-0 flex-col gap-4 border-0 p-0;
 }
 
 .tools-legend {
-    padding: 0;
-    margin: 0 0 0.15rem;
-    font-family: var(--font-manrope);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.05em;
+    @apply m-0 mb-[0.15rem] p-0 font-manrope text-[13px] font-semibold tracking-[-0.05em];
     color: color-mix(in srgb, var(--color-text) 50%, transparent);
 }
 
 .tools-label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    min-width: 0;
-    font-family: var(--font-manrope);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
+    @apply flex min-w-0 flex-col gap-[0.4rem] font-manrope text-[13px] font-semibold tracking-[-0.04em];
     color: color-mix(in srgb, var(--color-text) 70%, transparent);
 }
 
 .tools-input,
 .tools-textarea {
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 14px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text);
-    padding: 0.85rem 1rem;
-    font-family: var(--font-manrope);
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1.4;
-    outline: none;
+    @apply box-border w-full rounded-[14px] border border-border bg-surface px-4 py-[0.85rem] font-manrope text-[15px] font-semibold leading-[1.4] tracking-[-0.04em] text-text outline-none;
     transition: border-color 0.2s ease;
 }
 
 .tools-textarea {
-    resize: vertical;
-    line-height: 1.55;
+    @apply resize-y leading-[1.55];
     overscroll-behavior: contain;
 }
 
 .tools-input:focus,
 .tools-textarea:focus {
-    border-color: var(--color-primary);
+    @apply border-primary;
 }
 
 .tools-chip {
-    appearance: none;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text);
-    border-radius: 9999px;
-    padding: 0.45rem 0.85rem;
-    font-family: var(--font-manrope);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    cursor: pointer;
+    @apply cursor-pointer rounded-full border border-border bg-surface px-[0.85rem] py-[0.45rem] font-manrope text-[12px] font-semibold tracking-[-0.04em] text-text appearance-none;
     transition:
         background-color 0.2s ease,
         border-color 0.2s ease;
@@ -149,15 +77,7 @@
 
 .tools-btn-primary,
 .tools-btn-secondary {
-    appearance: none;
-    border: 0;
-    cursor: pointer;
-    border-radius: 9999px;
-    padding: 0.85rem 1.35rem;
-    font-family: var(--font-manrope);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -0.05em;
+    @apply cursor-pointer rounded-full border-0 px-[1.35rem] py-[0.85rem] font-manrope text-[14px] font-semibold tracking-[-0.05em] appearance-none;
     transition:
         background-color 0.2s ease,
         color 0.2s ease,
@@ -165,18 +85,15 @@
 }
 
 .tools-btn-primary {
-    background: var(--color-primary);
-    color: #fff;
+    @apply bg-primary text-white;
 }
 
 .tools-btn-primary:hover {
-    opacity: 0.9;
+    @apply opacity-90;
 }
 
 .tools-btn-secondary {
-    background: var(--color-surface);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
+    @apply border border-border bg-surface text-text;
 }
 
 .tools-btn-secondary:hover {
@@ -184,91 +101,45 @@
 }
 
 .tools-preview-pane {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    min-width: 0;
-    position: sticky;
-    top: 100px;
-    align-self: start;
+    @apply sticky top-[100px] flex min-w-0 flex-col gap-3 self-start;
 }
 
 .tools-preview {
-    margin: 0;
-    max-height: min(70vh, 720px);
-    overflow: auto;
+    @apply m-0 max-h-[min(70vh,720px)] overflow-auto rounded-[18px] border border-border bg-surface px-[1.2rem] py-[1.1rem] font-fragment text-[12px] font-normal leading-[1.55] wrap-break-word whitespace-pre-wrap text-text;
     overscroll-behavior: contain;
-    border-radius: 18px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text);
-    padding: 1.1rem 1.2rem;
-    font-family: var(--font-fragment);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.55;
-    white-space: pre-wrap;
-    word-break: break-word;
 }
 
 .tools-md {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    min-width: 0;
+    @apply flex w-full min-w-0 flex-col gap-4;
 }
 
 .tools-md-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem 1rem;
+    @apply flex flex-wrap items-center justify-between gap-x-4 gap-y-3;
 }
 
 .tools-md-toolbar-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.65rem;
+    @apply flex flex-wrap items-center gap-[0.65rem];
 }
 
 .tools-md-file-btn {
-    display: inline-flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
+    @apply inline-flex cursor-pointer items-center justify-center;
 }
 
 .tools-md-filename {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
+    @apply m-0 font-manrope text-[13px] font-semibold tracking-[-0.04em];
     color: color-mix(in srgb, var(--color-text) 45%, transparent);
 }
 
 .tools-md-pane-label {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.05em;
+    @apply m-0 font-manrope text-[13px] font-semibold tracking-[-0.05em];
     color: color-mix(in srgb, var(--color-text) 50%, transparent);
 }
 
 .tools-md-preview {
-    color: var(--color-text);
-    padding: 1.35rem 1.5rem;
-    font-family: var(--font-manrope);
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1.65;
+    @apply px-6 py-[1.35rem] font-manrope text-[15px] font-medium leading-[1.65] tracking-[-0.02em] text-text;
 }
 
+/* MD preview prose — descendant selectors stay plain CSS */
 .tools-md-preview > :first-child {
     margin-top: 0;
 }
@@ -392,12 +263,7 @@
 }
 
 .tools-md-fullscreen {
-    position: fixed;
-    inset: 0;
-    z-index: 80;
-    display: flex;
-    flex-direction: column;
-    background: var(--color-bg);
+    @apply fixed inset-0 z-[80] flex flex-col bg-bg;
 }
 
 .tools-md-fullscreen[hidden] {
@@ -405,77 +271,40 @@
 }
 
 .tools-md-fullscreen-bar {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-surface);
+    @apply flex shrink-0 items-center justify-between gap-4 border-b border-border bg-surface px-5 py-4;
 }
 
 .tools-md-fullscreen-body {
-    flex: 1 1 auto;
-    min-height: 0;
-    height: auto;
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    overflow: auto;
+    @apply m-0 h-auto w-full max-w-none min-h-0 flex-auto overflow-auto rounded-none border-0 bg-transparent px-6 pt-6 pb-12;
     overscroll-behavior: contain;
-    padding: 1.5rem 1.5rem 3rem;
 }
 
 @media (min-width: 768px) {
     .tools-md-fullscreen-body {
-        padding: 2rem 2.5rem 3.5rem;
+        @apply px-10 pt-8 pb-14;
     }
 }
 
 body.tools-md-fullscreen-open {
-    overflow: hidden;
+    @apply overflow-hidden;
 }
 
 .tools-hub {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
+    @apply flex w-full flex-col gap-4;
 }
 
 .tools-hub-search {
-    position: relative;
-    display: block;
-    width: 100%;
+    @apply relative block w-full;
 }
 
 .tools-hub-search-input {
-    border-radius: 9999px;
-    padding-inline: 1.25rem 3rem;
+    @apply rounded-full pe-12 ps-5;
 }
 
 .tools-hub-clear {
-    appearance: none;
-    position: absolute;
-    top: 50%;
-    right: 0.55rem;
+    @apply absolute top-1/2 right-[0.55rem] m-0 inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-0 p-0 text-text appearance-none;
     transform: translateY(-50%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 9999px;
     background: color-mix(in srgb, var(--color-text) 8%, transparent);
-    color: var(--color-text);
-    cursor: pointer;
     transition:
         background-color 0.2s ease,
         opacity 0.2s ease;
@@ -490,22 +319,11 @@ body.tools-md-fullscreen-open {
 }
 
 .tools-hub-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 100%;
+    @apply flex w-full flex-col gap-3;
 }
 
 .tools-hub-link {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding: 1.15rem 1.25rem;
-    border-radius: 18px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    text-decoration: none;
-    color: inherit;
+    @apply flex flex-col gap-[0.4rem] rounded-[18px] border border-border bg-surface px-5 py-[1.15rem] text-inherit no-underline;
     transition:
         border-color 0.2s ease,
         background-color 0.2s ease;
@@ -521,68 +339,33 @@ body.tools-md-fullscreen-open {
 }
 
 .tools-hub-link-title {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    color: var(--color-text);
+    @apply m-0 font-manrope text-[18px] font-semibold tracking-[-0.04em] text-text;
 }
 
 .tools-hub-link-desc {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.45;
+    @apply m-0 font-manrope text-[14px] font-semibold leading-[1.45] tracking-[-0.03em];
     color: color-mix(in srgb, var(--color-text) 55%, transparent);
 }
 
 .tools-hub-empty {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    @apply m-0 font-manrope text-[14px] font-semibold tracking-[-0.03em];
     color: color-mix(in srgb, var(--color-text) 50%, transparent);
 }
 
 .tools-hub-design {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    margin-top: 1.25rem;
-    padding-top: 1.15rem;
-    border-top: 1px solid var(--color-border);
+    @apply mt-5 flex flex-col gap-[0.35rem] border-t border-border pt-[1.15rem];
 }
 
 .tools-hub-design-link {
-    display: inline-flex;
-    width: fit-content;
-    max-width: 100%;
-    align-items: center;
-    gap: 7px;
-    text-decoration: none;
-    color: inherit;
+    @apply inline-flex w-fit max-w-full items-center gap-[7px] text-inherit no-underline;
 }
 
 .tools-hub-design-title {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1.3;
-    color: var(--color-text);
+    @apply m-0 font-manrope text-[14px] font-semibold leading-[1.3] tracking-[-0.04em] text-text;
 }
 
 .tools-hub-design-arrow {
-    display: flex;
-    flex: none;
-    width: 10px;
-    height: 10px;
-    color: var(--color-primary);
+    @apply flex h-2.5 w-2.5 shrink-0 text-primary;
     transition: transform 0.2s ease-out;
 }
 
@@ -591,67 +374,44 @@ body.tools-md-fullscreen-open {
 }
 
 .tools-hub-design-desc {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.35;
+    @apply m-0 font-manrope text-[13px] font-semibold leading-[1.35] tracking-[-0.03em];
     color: color-mix(in srgb, var(--color-text) 45%, transparent);
 }
 
 /* ---------- Scramble compare ---------- */
 
 .tools-scramble {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
+    @apply flex w-full flex-col gap-6;
 }
 
 .tools-scramble-toolbar {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
+    @apply flex flex-col gap-[0.85rem];
 }
 
 .tools-scramble-text-field {
-    max-width: 560px;
+    @apply max-w-[560px];
 }
 
 .tools-scramble-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem;
+    @apply flex flex-wrap gap-[0.65rem];
 }
 
 .tools-scramble-hint {
-    margin: 0;
+    @apply m-0;
 }
 
 .tools-scramble-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.85rem;
+    @apply grid grid-cols-1 gap-[0.85rem];
 }
 
 @media (min-width: 720px) {
     .tools-scramble-grid {
-        grid-template-columns: 1fr 1fr;
+        @apply grid-cols-2;
     }
 }
 
 .tools-scramble-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    min-width: 0;
-    padding: 1.15rem 1.2rem 1.25rem;
-    border-radius: 22px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    outline: none;
-    cursor: default;
+    @apply flex min-w-0 cursor-default flex-col gap-[0.85rem] rounded-[22px] border border-border bg-surface px-[1.2rem] pt-[1.15rem] pb-5 outline-none;
     transition: border-color 0.2s ease;
 }
 
@@ -661,89 +421,45 @@ body.tools-md-fullscreen-open {
 }
 
 .tools-scramble-card-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.75rem;
+    @apply flex items-start justify-between gap-3;
 }
 
 .tools-scramble-card-name {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    color: var(--color-text);
+    @apply m-0 font-manrope text-[16px] font-semibold tracking-[-0.04em] text-text;
 }
 
 .tools-scramble-card-pkg {
-    margin: 0.2rem 0 0;
-    font-family: var(--font-fragment);
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0;
+    @apply mt-[0.2rem] mb-0 font-fragment text-[11px] font-normal tracking-normal break-all;
     color: color-mix(in srgb, var(--color-text) 45%, transparent);
-    word-break: break-all;
 }
 
 .tools-scramble-stage {
-    margin: 0;
-    min-height: 3.2rem;
-    display: flex;
-    align-items: center;
-    font-family: var(--font-manrope);
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1.25;
-    color: var(--color-text);
+    @apply m-0 flex min-h-[3.2rem] items-center font-manrope text-[22px] font-semibold leading-[1.25] tracking-[-0.04em] text-text;
 }
 
 .tools-scramble-card-note {
-    margin: 0;
-    font-family: var(--font-manrope);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.4;
+    @apply m-0 font-manrope text-[13px] font-semibold leading-[1.4] tracking-[-0.03em];
     color: color-mix(in srgb, var(--color-text) 50%, transparent);
 }
 
 .tools-scramble-legend {
-    padding: 1.15rem 1.2rem;
-    border-radius: 22px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
+    @apply rounded-[22px] border border-border bg-surface px-[1.2rem] py-[1.15rem];
 }
 
 .tools-scramble-legend-list {
-    margin: 0.75rem 0 0;
-    padding-left: 1.15rem;
-    font-family: var(--font-manrope);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.5;
+    @apply mt-3 mb-0 pl-[1.15rem] font-manrope text-[13px] font-semibold leading-[1.5] tracking-[-0.03em];
     color: color-mix(in srgb, var(--color-text) 60%, transparent);
 }
 
 .tools-scramble-legend-list li + li {
-    margin-top: 0.45rem;
+    @apply mt-[0.45rem];
 }
 
 .tools-scramble-legend-list strong {
-    color: var(--color-text);
-    font-weight: 600;
+    @apply font-semibold text-text;
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
+    @apply absolute m-[-1px] h-px w-px overflow-hidden border-0 p-0 whitespace-nowrap;
     clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
 }

@@ -1,29 +1,21 @@
-/* Brands marquee — animation only (layout → Tailwind D2) */
+/* Brands marquee — layout via @apply; animation + CSS vars stay plain */
 
-/* The scrolling container */
 .logo-track {
-    display: flex;
-    /* Calculate the total width for both sets of logos */
+    @apply flex;
     width: calc(var(--logo-width) * var(--logo-count) * 2);
-    /* Apply the animation */
     animation: scroll var(--animation-duration) linear infinite;
 }
 
-/* The keyframes for the scrolling animation */
 @keyframes scroll {
     0% {
         transform: translateX(0);
     }
     100% {
-        /* Move the track to the left by the width of one full set of logos */
         transform: translateX(calc(var(--logo-width) * var(--logo-count) * -1));
     }
 }
 
 .logo-item {
-    flex-shrink: 0;
+    @apply flex shrink-0 items-center justify-center;
     width: var(--logo-width);
-    display: flex; /* make each item a flexbox */
-    justify-content: center; /* center horizontally */
-    align-items: center; /* center vertically */
 }

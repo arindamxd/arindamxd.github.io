@@ -2,6 +2,7 @@
 
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -19,6 +20,7 @@ export default defineConfig({
     // Preserve Astro 5/6 whitespace behavior (v7 default is 'jsx', which can drop spaces between inline elements)
     compressHTML: true,
     integrations: [
+        react(),
         sitemap({
             filter: (page) => !page.includes('/tools') && !page.includes('/design'),
         }),

@@ -7,7 +7,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ## [Unreleased]
 
 ### Added
+
+- Home GitHub contributions calendar (`react-github-calendar` React island) before footer
+
 ### Changed
+
+- Feature sheets use Tailwind `@apply` for layout/type/token colors (keep glass, keyframes, prose, and state machines as plain CSS); credentials accordion CSS moved into `utils.css`
+- Page-scoped `tools.css` / `design.css` `@reference` `global.css` for `@apply` theme access
+
 ### Fixed
 
 ## [1.0.3] — 2026-08-09
