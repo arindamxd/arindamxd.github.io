@@ -36,7 +36,7 @@ BaseLayout          → SEO, theme, ClientRouter, Lenis, page loader
 | **Elements** (`components/elements/`) | Reusable row/card/page body pieces |
 | **Content** (`src/content/`) | JSON catalogs + Markdown bodies |
 | **Utils** (`src/utils/`) | Parse/merge content → typed models |
-| **Scripts** (`src/scripts/`) | Client behavior (scramble, reveal, theme, image-fallback, tools) |
+| **Scripts** (`src/scripts/`) | Client **TypeScript** only (scramble, reveal, theme, image-fallback, tools) — `allowJs: false` |
 | **Styles** | See CSS architecture below |
 
 ### CSS architecture
@@ -327,7 +327,7 @@ Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./
 
 ### Theme toggle
 
-Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. **Do not** put `overflow: hidden` on the glass node — same-element clip + `backdrop-filter` breaks frost in Chrome. Clip on the inner `.nav-theme-toggle__clip` (`overflow: hidden` + `border-radius: inherit`); the sliding `.nav-theme-toggle__track` is `width: 200%` and translates `300ms` with house cubic-bezier under `html.dark`. `data-theme-toggle` (all toggles sync via [`theme.js`](../src/scripts/theme.ts)).
+Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. **Do not** put `overflow: hidden` on the glass node — same-element clip + `backdrop-filter` breaks frost in Chrome. Clip on the inner `.nav-theme-toggle__clip` (`overflow: hidden` + `border-radius: inherit`); the sliding `.nav-theme-toggle__track` is `width: 200%` and translates `300ms` with house cubic-bezier under `html.dark`. `data-theme-toggle` (all toggles sync via [`theme.ts`](../src/scripts/theme.ts)).
 
 ### `/design` gallery placeholders
 
@@ -338,7 +338,7 @@ Dummy media for `preview` mounts — **not** live Camerax / blog / author photos
 | [`design-media-placeholder.svg`](../public/assets/resources/design-media-placeholder.svg) | Transparent shell; paint via `.design-media-ph` / `img[src*="design-media-placeholder"]` in [`utils.css`](../src/styles/utils.css) — same token gradient as `.design-nav-demo` (surface → primary mix), flips with theme |
 | [`design-logo-placeholder.svg`](../public/assets/resources/design-logo-placeholder.svg) | White **A** in rounded frame for project `thumb` on colored `thumb_bg_color` |
 | [`design-preview-data.ts`](../src/utils/design-preview-data.ts) | Dummy author, experiences, credentials, testimonials, projects, blogs, privacy frontmatter |
-| [`image-fallback.js`](../src/scripts/image-fallback.ts) | Capture-phase: broken `<img>` → media shell (or logo mark inside `.project-logo`); loaded from BaseLayout |
+| [`image-fallback.ts`](../src/scripts/image-fallback.ts) | Capture-phase: broken `<img>` → media shell (or logo mark inside `.project-logo`); loaded from BaseLayout |
 
 Testimonials phone reads `#testimonials-data` JSON from the section (preview embeds dummy quotes; live home uses the same embed path).
 
@@ -495,7 +495,7 @@ Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left*
 | Mechanism | When |
 | --- | --- |
 | Page loader | First paint hold, then exit slide |
-| **Scroll reveal** | Section / list enter — **target:** Motion `inView` + spring (§12.2.2); today: `appear-*` / reveal.js |
+| **Scroll reveal** | Section / list enter — **target:** Motion `inView` + spring (§12.2.2); today: `appear-*` / `reveal.ts` |
 | Lenis | Smooth page wheel scroll |
 | **Spring physics** | Interactive UI + reveals — **target:** Motion `type: "spring"` (§12.2.3) |
 | **Scramble on CTAs** | **target:** [Motion+ `scrambleText`](https://motion.dev/examples/js-scramble-text) (§12.2.1) |
@@ -581,7 +581,7 @@ External references worth tracking: [Motion](https://motion.dev/), [Motion `anim
 | **P0 — Motion token scale** | Formalize durations: `120 / 200 / 320 / 520ms` and one house easing (e.g. `cubic-bezier(0.44, 0, 0.56, 1)` already used in nav) as CSS variables | Consistency |
 | **P1 — View Transitions polish** | Named transitions for shared elements (project thumb → detail banner, blog row → article). Astro ClientRouter already enables VT; add `view-transition-name` sparingly — **never on `.nav-glass` / `.nav-bar-container`** (breaks frost) | Native, 0kb |
 | **P1 — Adopt Motion (JS)** | Add open-source [`motion`](https://motion.dev/) **vanilla JS** (not React) as the site animation runtime: `animate`, `inView`, `stagger`, `scroll` as needed. Works with Astro scripts ([Astro guide](https://developers.netlify.com/guides/motion-animation-library-with-astro/)). Foundation for §12.2.2–12.2.3 | Small, MIT |
-| **P1 — Motion scroll reveal (`inView`)** | On top of Adopt Motion (JS): replace custom `appear-*` / [`reveal.js`](../src/scripts/reveal.ts) with Motion `inView` + `animate` + `stagger` — see **§12.2.2** | Primary reveal path |
+| **P1 — Motion scroll reveal (`inView`)** | On top of Adopt Motion (JS): replace custom `appear-*` / [`reveal.ts`](../src/scripts/reveal.ts) with Motion `inView` + `animate` + `stagger` — see **§12.2.2** | Primary reveal path |
 | **P1 — Motion spring physics** | On top of Adopt Motion (JS): use `animate(..., { type: "spring", ... })` for interactive UI (tools, pills, back control) — see **§12.2.3** | Natural feel |
 | **P2 — CSS scroll-driven reveals** | Progressive enhancement / fallback: `animation-timeline: view()` where supported; Motion `inView` remains the authored path | Perf on low-end |
 | **P1 — Replace custom scramble with Motion+ `scrambleText`** | See **§12.2.1** — [JS scramble example](https://motion.dev/examples/js-scramble-text) / [`scrambleText` docs](https://motion.dev/docs/scramble-text) | Brand motion, less custom JS |
@@ -596,10 +596,10 @@ External references worth tracking: [Motion](https://motion.dev/), [Motion `anim
 ```
 Native VT                         →  page ↔ page morphs
 Adopt Motion (JS, OSS)            →  site animation runtime (animate / inView / stagger / scroll)
-  ├─ inView + stagger             →  scroll reveal (replaces reveal.js / appear-*)
+  ├─ inView + stagger             →  scroll reveal (replaces reveal.ts / appear-*)
   └─ spring physics               →  tools UI + enter animations + cursor follow
 Lenis                             →  page wheel feel (existing)
-Motion+ scrambleText              →  CTA / link scramble (replaces scramble-text.js)
+Motion+ scrambleText              →  CTA / link scramble (replaces scramble-text.ts)
 Circular cursor (desktop)         →  small ring follower (§12.2.4)
 CSS scroll-driven                 →  optional progressive enhancement / reading progress
 ```
@@ -616,7 +616,7 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 | 2 | Add a thin site wrapper (e.g. `src/scripts/scramble-motion.ts`) that: gates on `prefers-reduced-motion` and the existing desktop max-width rule (`NO_SCRAMBLE_MQ`); maps hover / focus-visible on `[data-scramble]` to `scrambleText(el, { duration })`; keeps `data-scramble-variant` only if still needed for color, not for animation engine. |
 | 3 | Match house feel: short duration (~0.4–0.8s), optional `stagger()` from `motion` for letter reveal; prefer alphanumeric / symbol charset close to current `SCRAMBLE_CHARS` (`0+-*\|{}\`/()$&`) via `scrambleText` character options. |
 | 4 | Re-home **available-for** word cycling to call `scrambleText` when swapping labels (same API, not a second algorithm). |
-| 5 | Remove or stub [`scramble-text.js`](../src/scripts/scramble-text.ts) once all call sites (BaseLayout script, available-text) use the wrapper; keep `data-scramble` attributes as the public markup contract. |
+| 5 | Remove or stub [`scramble-text.ts`](../src/scripts/scramble-text.ts) once all call sites (BaseLayout script, available-text) use the wrapper; keep `data-scramble` attributes as the public markup contract. |
 | 6 | Verify keyboard focus-visible still scrambles (a11y parity with hover) and reduced-motion shows final text immediately. |
 
 **Why replace**
@@ -629,7 +629,7 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 
 #### 12.2.2 Scroll reveal with Motion (`inView`)
 
-**Today:** custom [`reveal.js`](../src/scripts/reveal.ts) + `appear-*` classes in [`motion.css`](../src/styles/motion.css).
+**Today:** custom [`reveal.ts`](../src/scripts/reveal.ts) + `appear-*` classes in [`motion.css`](../src/styles/motion.css).
 
 **Target:** free [`motion`](https://motion.dev/) package — `inView` + `animate` + `stagger` (same pattern as the [Motion + Astro guide](https://developers.netlify.com/guides/motion-animation-library-with-astro/); scroll-triggered API: [inView](https://motion.dev/docs/inview), scroll-linked optional: [scroll](https://motion.dev/docs/scroll)).
 
@@ -640,7 +640,7 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 | 3 | On enter viewport (`amount: ~0.2–0.25`), `animate(el, { opacity: [0, 1], y: [24, 0] }, { type: "spring", … })`. For list shells, `animate(children, {…}, { delay: stagger(0.06) })`. |
 | 4 | Gate with `prefers-reduced-motion`: set final styles immediately, skip `inView` animation. |
 | 5 | Keep Lenis; reveals are scroll-**triggered**, not scroll-jacked. Do not bind reveal progress to Lenis unless designing a scrubbed case study. |
-| 6 | Remove or slim `reveal.js` / unused `appear-*` once parity is confirmed on home, projects, blogs. |
+| 6 | Remove or slim `reveal.ts` / unused `appear-*` once parity is confirmed on home, projects, blogs. |
 | 7 | Optional P2: CSS `animation-timeline: view()` as progressive enhancement for simple fades; Motion remains the authored default for stagger/spring. |
 
 **House limits**
@@ -770,7 +770,7 @@ Lenis wins on **desktop wheel feel** and hash navigation polish; native wins on 
 ##### Method (1–2 days)
 
 1. **Branch A** — current Lenis (control).  
-2. **Branch B** — disable Lenis (`smooth-scroll.js` no-op except reduced-motion path / restore helpers still work).  
+2. **Branch B** — disable Lenis (`smooth-scroll.ts` no-op except reduced-motion path / restore helpers still work).  
 3. Optional **Branch E** — only if A vs B is inconclusive and you still want smoothing (document why).  
 4. Record short screen captures (desktop trackpad + mouse wheel + iPhone).  
 5. Score each scenario in a small table (feel / bugs / perf).  
@@ -790,7 +790,7 @@ Lenis wins on **desktop wheel feel** and hash navigation polish; native wins on 
 
 ##### Integration checklist (if dropping Lenis)
 
-- [ ] Remove `lenis` dependency + `smooth-scroll.js` import  
+- [ ] Remove `lenis` dependency + `smooth-scroll.ts` import  
 - [ ] Restore native scroll + `scroll-behavior` only for in-page anchors if desired  
 - [ ] Replace `lenis.scrollTo` / `__lenis` callers (reveal, BaseLayout restore)  
 - [ ] Remove `data-lenis-prevent` (optional cleanup)  
@@ -835,7 +835,7 @@ Do **not** put it in the first viewport as a stat strip beside the brand.
 | Color | `text-text/45`–`/55` (light + dark via opacity; never hard-coded `#888`) |
 | Layout | One centered line; separator `·` (middle dot) with spaces |
 | Chrome | **None** — no pill, border, card, or background bar |
-| Motion | Optional count-up once in view via existing [`count-up.js`](../src/scripts/count-up.ts); respect `prefers-reduced-motion` |
+| Motion | Optional count-up once in view via existing [`count-up.ts`](../src/scripts/count-up.ts); respect `prefers-reduced-motion` |
 
 **Markup sketch**
 
@@ -854,7 +854,7 @@ Do **not** put it in the first viewport as a stat strip beside the brand.
 
 Notes:
 
-- Extend `count-up.js` if decimals aren’t supported yet (`data-count-decimals`); until then, render static formatted strings and only animate integers (e.g. experience years — already live).
+- Extend `count-up.ts` if decimals aren’t supported yet (`data-count-decimals`); until then, render static formatted strings and only animate integers (e.g. experience years — already live).
 - Prefer **static curated numbers** in `author-metadata.json` (e.g. `footer.reach`) updated monthly over live analytics in the browser (keeps the site static, private keys off GitHub Pages).
 - Optional later: a `/tools` private fetcher that prints updated JSON for you to commit — not a public API call on every page view.
 
@@ -956,9 +956,9 @@ Named View Transitions on project/blog · Speculation Rules prefetch · **§12.2
 
 **Phase C — Motion.js where it earns its keep**  
 1. **Adopt Motion (JS)** — install OSS `motion` as the animation runtime  
-2. **§12.2.2 scroll reveal** (`inView` + stagger) replacing `reveal.js` / `appear-*`  
+2. **§12.2.2 scroll reveal** (`inView` + stagger) replacing `reveal.ts` / `appear-*`  
 3. **§12.2.3 spring physics** — shared `springSnappy` / `springSoft` on tools UI + reveals  
-4. Motion+ **[`scrambleText`](https://motion.dev/examples/js-scramble-text)** (§12.2.1) · remove `scramble-text.js`  
+4. Motion+ **[`scrambleText`](https://motion.dev/examples/js-scramble-text)** (§12.2.1) · remove `scramble-text.ts`  
 5. `prefers-reduced-motion` hard gates for all of the above
 
 **Phase D — Product depth**  

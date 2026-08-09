@@ -1,7 +1,7 @@
 # AGENTS.md — project memory
 
 Git-tracked map + durable decisions for humans and coding agents.  
-**Current site version:** `1.0.4` ([`package.json`](package.json) · git tag `v1.0.4`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
+**Current site version:** `1.0.5` ([`package.json`](package.json) · git tag `v1.0.5`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
 **UI source of truth:** [`docs/design-system.md`](docs/design-system.md) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc) · Gallery: `/design`
 
 Keep this file in sync when you ship durable architecture decisions or bump the package version. Prefer linking to long recipes in `docs/` over duplicating them here.
@@ -12,9 +12,9 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 | Field | Value | Notes |
 | --- | --- | --- |
-| **Package** | `1.0.4` | Bump in `package.json` on release |
-| **Git tags** | `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
-| **Memory doc** | `1.0.4` | Same as package after each memory update on a release line |
+| **Package** | `1.0.5` | Bump in `package.json` on release |
+| **Git tags** | `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
+| **Memory doc** | `1.0.5` | Same as package after each memory update on a release line |
 | **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go (required when asked to commit), fold into the version on release |
 | **Node** | `>=22.12` | `engines` in package.json |
 | **Astro** | `^7.2` | Static output · Vite 8 |
@@ -180,6 +180,12 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 
 Versioned notes for **this memory file** and related agent guidance — full product history lives in [`CHANGELOG.md`](CHANGELOG.md). Align the top **Versions** row when the package bumps.
 
+### 1.0.5 — 2026-08-09
+
+- Release bump to `1.0.5`.
+- Mandatory TypeScript (`allowJs: false`, check-on-build); GA4 + production JS obfuscation; reach tool + footer ticker.
+- Agent workflows: commit+changelog and full version-bump rules.
+
 ### 1.0.4 — 2026-08-09
 
 - Release bump to `1.0.4`.
@@ -194,7 +200,7 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 
 - Release bump to `1.0.3`; root `CHANGELOG.md` (Keep a Changelog) for ongoing product notes.
 - Expanded `AGENTS.md`: routes, content/skills/tools map, motion scripts, version table.
-- Gallery: live `preview` mounts + media/logo placeholders + `image-fallback.js`.
+- Gallery: live `preview` mounts + media/logo placeholders + `image-fallback.ts`.
 - Theme toggle clip via `.nav-theme-toggle__clip`; design-system docs + `.cursor/rules/design-system.mdc` synced.
 - Logo placeholder glyph set to letter **A**.
 

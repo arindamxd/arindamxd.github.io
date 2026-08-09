@@ -8,6 +8,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+### Changed
+
+### Fixed
+
+## [1.0.5] — 2026-08-09
+
+### Added
+
 - Cursor rules for version-bump (full release: commit + tag + push) and commit+changelog workflows
 - Google Analytics 4 (shared `GoogleAnalytics` + `src/utils/analytics.ts`) with ClientRouter page views; skipped in local `astro dev`
 - Production JS obfuscation for all published client scripts and inline HTML scripts (`vite-plugins/obfuscate-production-js.ts`)
@@ -22,6 +30,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Reach tool defaults to Realtime fetch and falls back when standard reports are empty
 - Converted all client scripts (`src/scripts/*`), `astro.config`, and the obfuscation Vite plugin to TypeScript
 - `npm run build` runs `astro check` before `astro build`; `npm run check` also asserts no JS under `src/`
+- README, design-system docs, and Cursor design rule synced for v1.0.5 (TypeScript-only scripts, routes, content map)
 
 ### Fixed
 
@@ -52,7 +61,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Added
 
 - Living `/design` gallery with live section/page mounts (`preview`) and dummy data (`design-preview-data.ts`)
-- Gallery media shell + project logo **A** placeholders; site-wide broken-image fallback (`image-fallback.js`)
+- Gallery media shell + project logo **A** placeholders; site-wide broken-image fallback (`image-fallback.ts`)
 - Design system docs + Cursor rule coverage for gallery, nav glass, and theme-toggle clip layer
 - Git-tracked project memory ([`AGENTS.md`](AGENTS.md)) with version table, content/skills/tools map
 - Private `/tools` suite (author, markdown preview, scramble compare) and expanded design-system recipes
@@ -80,7 +89,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 See git tag `v1.0.1` and commit history for earlier notes.
 
-[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.4...HEAD
+[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.1...v1.0.2

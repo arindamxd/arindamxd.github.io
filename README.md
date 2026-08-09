@@ -2,8 +2,7 @@
 
 Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** — Technical Lead, Mobile Engineering. Static Astro site with JSON-driven content, dark/light theme, and intentional motion.
 
-**Live:** [https://arindamxd.github.io](https://arindamxd.github.io)  
-**Repo:** [github.com/arindamxd/arindamxd.github.io](https://github.com/arindamxd/arindamxd.github.io)
+**Version:** `1.0.5` · **Live:** [https://arindamxd.github.io](https://arindamxd.github.io) · **Repo:** [github.com/arindamxd/arindamxd.github.io](https://github.com/arindamxd/arindamxd.github.io) · **Notes:** [CHANGELOG.md](./CHANGELOG.md)
 
 ---
 
@@ -12,24 +11,28 @@ Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** 
 | Layer | Choice |
 | --- | --- |
 | Framework | [Astro](https://astro.build) `^7.2` (static output, Vite 8) |
-| Styling | [Tailwind CSS v4](https://tailwindcss.com) via `@tailwindcss/vite` |
-| Motion | Custom CSS + JS (`motion.css`, hero appear, scroll reveal) + [Lenis](https://github.com/darkroomengineering/lenis) smooth scroll |
+| Language | **TypeScript mandatory** under `src/` — [`tsconfig.json`](./tsconfig.json) (`astro/tsconfigs/strict`, `allowJs: false`) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com) via `@tailwindcss/vite` · tokens in `src/styles/tokens.css` |
+| Motion | Custom CSS + TS (`motion.css`, hero appear, scroll reveal, scramble) + [Lenis](https://github.com/darkroomengineering/lenis) smooth scroll |
 | Content | JSON catalogs + Markdown bodies under `src/content/` (runtime loaders in `src/utils/`) |
 | Runtime | Node `>=22.12` |
 | Deploy | GitHub Pages via Actions (`trunk` branch) |
 | Format | Prettier + `prettier-plugin-astro` + `prettier-plugin-tailwindcss` |
 
-Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.github.io`; override with `SITE_URL`. Dev server runs on **port 3000**.
+Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.github.io`; override with `SITE_URL`. Dev server runs on **port 3000**. Production client JS is obfuscated after build (`vite-plugins/obfuscate-production-js.ts`).
 
 ---
 
 ## Features
 
-- Single-page home with intro hero (badge / lanyard), brands marquee, projects, skills, experience, testimonials (phone slider), and blogs
+- Single-page home: intro hero, skills, experience, credentials, brands marquee, testimonials (phone slider), projects, blogs, GitHub contributions calendar, footer reach ticker
 - Dedicated list + detail routes for **projects** and **blogs**
+- Living `/design` gallery (`noindex`) — live section mounts + preview dummy data
+- Private `/tools` suite (`noindex`): author, markdown preview, scramble compare, analytics reach
 - Dark / light theme (default dark), persisted in `localStorage`, flash-free boot script in `BaseLayout`
 - SEO: meta description, canonical, Open Graph, Twitter card, Person JSON-LD
-- Client motion: Lenis, hero appear, scroll reveal (`data-reveal`), count-up stats — respects `prefers-reduced-motion`
+- GA4 page views in production only (skipped in `astro dev`)
+- Client motion: Lenis, hero appear, scroll reveal (`data-reveal`), count-up, scramble — respects `prefers-reduced-motion`
 - App deep-link verification: `.well-known/assetlinks.json` (CameraX, certification app)
 - Static privacy-policy / app pages under `public/apps/` (Coco, Ensecure); CameraX privacy is `/projects/camerax/privacy-policy`
 
@@ -40,17 +43,18 @@ Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # → ./dist/
+npm run check    # astro check + no-JS-under-src gate
+npm run build    # check, then → ./dist/
 npm run preview  # preview production build
 ```
 
 | Command | Action |
 | --- | --- |
 | `npm run dev` | Local dev server (port 3000) |
-| `npm run build` | Production build to `./dist/` |
+| `npm run check` | `astro check` + assert no `.js` under `src/` |
+| `npm run build` | `astro check`, then production build to `./dist/` |
 | `npm run preview` | Preview the production build |
 | `npm run clean` | Remove `dist`, `.astro`, Vite cache |
-| `npm run check` | `astro check` |
 | `npm run astro -- --help` | Astro CLI help |
 
 ---
@@ -63,6 +67,7 @@ npm run preview  # preview production build
 ├── .well-known/assetlinks.json    # Android App Links
 ├── AGENTS.md                      # Git-tracked agent / project memory
 ├── CHANGELOG.md                   # Product release notes
+├── tsconfig.json                  # Strict TS · allowJs: false
 ├── docs/
 │   ├── design-system.md           # UI/UX source of truth
 │   ├── blog-authoring.md          # Blog JSON catalog + Markdown authoring
@@ -70,30 +75,34 @@ npm run preview  # preview production build
 ├── public/
 │   ├── apps/                      # App landing / privacy pages
 │   └── assets/                    # Fonts, images, icons, project art
+├── scripts/
+│   └── assert-no-js.mjs           # CI gate: no JS under src/
 ├── src/
 │   ├── components/
 │   │   ├── NavBar.astro
 │   │   ├── Footer.astro
 │   │   ├── sections/              # Home / list page sections
-│   │   └── elements/              # Cards, project/blog pages, code block
+│   │   ├── elements/              # Cards, project/blog pages, code block
+│   │   └── tools/                 # ToolsPageShell
 │   ├── content/                   # Site copy (JSON catalogs + blogs|projects|privacy-policies/*.md)
 │   ├── content.config.ts          # Content Layer registration (blogs glob)
+│   ├── env.d.ts                   # Window globals for client scripts
 │   ├── layouts/BaseLayout.astro
 │   ├── pages/
 │   │   ├── index.astro            # Home
 │   │   ├── 404.astro
 │   │   ├── design.astro           # Living design gallery (noindex)
-│   │   ├── tools.astro            # Local MD / catalog authoring helper
+│   │   ├── tools/                 # Private ops tools (noindex)
 │   │   ├── projects.astro
 │   │   ├── projects/[slug]/          # index + privacy-policy
 │   │   ├── blogs.astro
 │   │   └── blogs/[slug].astro
-│   ├── scripts/                   # Client JS (theme, motion, slider, …)
-│   ├── styles/
-│   │   ├── global.css             # Tailwind + design tokens + layout CSS
-│   │   └── motion.css             # Appear / reveal / Lenis helpers
-│   ├── types/                     # blog / project / experience TS types
-│   └── utils/                     # date helpers, blog/project MD loaders
+│   ├── scripts/                   # Client TypeScript (theme, motion, tools, …)
+│   ├── styles/                    # tokens + feature sheets via global.css
+│   ├── types/                     # blog / project / experience (+ ambient pkgs)
+│   └── utils/                     # loaders, SEO, analytics, tools registry, reach
+├── vite-plugins/
+│   └── obfuscate-production-js.ts # Post-build client JS obfuscation
 ├── astro.config.ts
 └── package.json
 ```
@@ -110,7 +119,9 @@ npm run preview  # preview production build
 | `/projects/[slug]/privacy-policy` | `pages/projects/[slug]/privacy-policy.astro` | Optional; `content/privacy-policies/*.md` |
 | `/blogs` | `pages/blogs.astro` | Blog list |
 | `/blogs/[slug]` | `pages/blogs/[slug].astro` | Catalog + `content/blogs/*.md` |
-| `/tools` | `pages/tools.astro` | Author blog/project MD (+ catalog JSON) and download |
+| `/design` | `pages/design.astro` | Living gallery (`noindex`) |
+| `/tools` | `pages/tools/index.astro` | Tools hub (`noindex`) |
+| `/tools/*` | `pages/tools/<slug>.astro` | Author, markdown, scramble-compare, analytics-reach |
 | `/404` | `pages/404.astro` | Custom not-found |
 
 Keep **one metadata entry per slug** so static routes stay unique.
@@ -124,6 +135,7 @@ Edit files in `src/content/`. Sections and detail pages import these at build ti
 | File | Role |
 | --- | --- |
 | `author-metadata.json` | Name, bio, SEO, intro hero, footer, social links |
+| `footer-reach.json` | Curated uniques/views for the footer reach ticker |
 | `projects-metadata.json` | Project list/card + hero `header` + `content` (+ optional `source_code`, `privacy_policy`) |
 | `projects/*.md` | Project body (image groups + `##` content sections) |
 | `privacy-policies/*.md` | Per-project privacy policy pages (`/projects/<slug>/privacy-policy`) |
@@ -132,13 +144,16 @@ Edit files in `src/content/`. Sections and detail pages import these at build ti
 | `brands-metadata.json` | Brand marquee (`title` + `logos[]`) |
 | `skills-metadata.json` | Skills section (`tech.stack`, `tech.tools`) |
 | `experiences-metadata.json` | Work history (`title`, `company`, `start`, `end`) |
+| `credentials-metadata.json` | Credentials accordion |
 | `testimonials-metadata.json` | Phone slider quotes |
+| `contributions-metadata.json` | GitHub contributions section copy + usernames |
 
 ### Types
 
 - `src/types/project.d.ts` — project shape  
 - `src/types/blog.d.ts` — blog + body block union  
 - `src/types/experience.d.ts` — experience row  
+- `src/env.d.ts` — shared `window` globals for client scripts  
 
 ### Adding a blog post
 
@@ -161,15 +176,16 @@ Full reference: **[docs/project-authoring.md](./docs/project-authoring.md)**. Ma
 
 ## Styling & design system
 
-Entry stylesheets (only these two):
+Entry stylesheet:
 
-- `src/styles/global.css` — Tailwind import, `@theme` tokens, fonts, dark overrides, layout CSS
-- `src/styles/motion.css` — hero appear, reveal, Lenis-related helpers
+- `src/styles/global.css` — Tailwind import, feature sheets (`tokens`, `hero`, `projects`, …), fonts, dark overrides
 
-**Tokens** (semantic colors, fonts, breakpoint) live in `@theme` inside `global.css`:
+Page-scoped (not imported into global): `tools.css`, `design.css` — each `@reference`s `global.css` for `@apply`.
+
+**Tokens** (semantic colors, fonts, breakpoint) live in `src/styles/tokens.css`:
 
 - Colors: `bg`, `accent` (`#29ffff`), `primary` (`#2a29ff`), `text`, `surface`, `border`, `active`, …
-- Fonts: **Manrope** (600/700 only — avoid `font-medium` / 500), **Inter**, **Fragment Mono** (self-hosted under `/assets/fonts/`)
+- Fonts: **Manrope** (600/700 only — avoid `font-medium` / 500), **Fragment Mono** (code / raw markdown)
 - Breakpoint: `--breakpoint-narrow: 610px` → use `max-narrow:` for ≤609px mobile styles
 
 Dark mode is **class-based** (`html.dark`), not `prefers-color-scheme`.
@@ -255,6 +271,7 @@ Loaded from `BaseLayout.astro` (TypeScript under `src/scripts/`):
 | `count-up.ts` | Viewport count-up for `data-count-to` |
 | `image-fallback.ts` | Broken image → gallery placeholder |
 | `scramble-text.ts` | Shared `data-scramble` helpers |
+| `analytics.ts` | GA4 bootstrap (production only) |
 
 ---
 
