@@ -276,4 +276,10 @@ Loaded from `BaseLayout.astro`:
 
 ## License
 
-Apache License 2.0 — see [LICENSE](./LICENSE).
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) — see [LICENSE](./LICENSE) and [NOTICE](./NOTICE).
+
+If you clone, fork, or reuse this site’s pages, layout, components, or design, you must provide attribution in this form:
+
+Created by [Arindam Karmakar](https://arindamxd.github.io/)
+
+Omitting that credit violates the license.
