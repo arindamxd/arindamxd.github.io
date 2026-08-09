@@ -1,12 +1,14 @@
 /**
  * /tools hub — search / filter tool list
  */
-function initToolsHub() {
-    const root = document.getElementById('tools-hub');
-    const input = document.getElementById('tools-hub-search');
+function initToolsHub(): void {
+    const rootEl = document.getElementById('tools-hub');
+    const inputEl = document.getElementById('tools-hub-search');
     const clearBtn = document.getElementById('tools-hub-clear');
     const empty = document.getElementById('tools-hub-empty');
-    if (!root || !(input instanceof HTMLInputElement)) return;
+    if (!rootEl || !(inputEl instanceof HTMLInputElement)) return;
+    const root = rootEl;
+    const input = inputEl;
 
     // Drop previous listeners when Astro re-runs this after a transition
     if (root._toolsHubAbort instanceof AbortController) {
@@ -16,7 +18,7 @@ function initToolsHub() {
     root._toolsHubAbort = ac;
     const { signal } = ac;
 
-    function applyFilter() {
+    function applyFilter(): void {
         const q = input.value.trim().toLowerCase();
         const terms = q.split(/\s+/).filter(Boolean);
         let visible = 0;
@@ -24,7 +26,7 @@ function initToolsHub() {
         root.querySelectorAll('.tools-hub-link').forEach((link) => {
             if (!(link instanceof HTMLElement)) return;
             const hay = (link.getAttribute('data-tool-search') || '').toLowerCase();
-            const show = terms.length === 0 || terms.every((term) => hay.includes(term));
+            const show = terms.length === 0 || terms.every((term: string) => hay.includes(term));
             link.toggleAttribute('hidden', !show);
             if (show) visible += 1;
         });

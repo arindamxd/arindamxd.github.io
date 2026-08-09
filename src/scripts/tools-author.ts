@@ -4,27 +4,40 @@
 (function () {
     const STORAGE_KEY = 'tools-author-draft-v1';
 
-    const BLOG_INSERTS = {
+    const BLOG_INSERTS: Record<string, string> = {
         section: '## Section heading\n\nBody paragraph…',
         subtitle: '### Supporting heading\n\n- **Label**: explanation\n- Plain item',
         labeled: '- **Label**: explanation\n- **Another**: explanation',
         code: '```swift\nlet button = UIButton(type: .system)\n```',
     };
 
-    const PROJECT_INSERTS = {
+    const PROJECT_INSERTS: Record<string, string> = {
         pair: '![Image Small Top Left](https://)\n![Image Small Top Right](https://)',
         large: '![Image Large Middle](https://)',
         section: '## Section heading\n\nBody paragraph for this section.',
         trio: '![Image Small Bottom Left](https://)\n![Image Small Bottom Right](https://)\n![Image Large Bottom](https://)',
     };
 
-    function val(form, name) {
+    type FormFieldValue = string | boolean;
+    type FormDataMap = Record<string, FormFieldValue>;
+
+    function isFormControl(
+        el: Element | RadioNodeList | null,
+    ): el is HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement {
+        return (
+            el instanceof HTMLInputElement ||
+            el instanceof HTMLTextAreaElement ||
+            el instanceof HTMLSelectElement
+        );
+    }
+
+    function val(form: HTMLFormElement, name: string): string {
         const el = form.elements.namedItem(name);
-        if (!el) return '';
+        if (!isFormControl(el)) return '';
         return String(el.value ?? '').trim();
     }
 
-    function slugify(raw) {
+    function slugify(raw: unknown): string {
         return String(raw || '')
             .toLowerCase()
             .trim()
@@ -33,11 +46,11 @@
             .replace(/^-+|-+$/g, '');
     }
 
-    function yamlQuote(s) {
+    function yamlQuote(s: unknown): string {
         return `"${String(s ?? '').replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
     }
 
-    function downloadBlob(filename, text, mime) {
+    function downloadBlob(filename: string, text: string, mime?: string): void {
         const blob = new Blob([text], { type: mime || 'text/plain;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -50,7 +63,7 @@
         URL.revokeObjectURL(url);
     }
 
-    function insertAtCursor(textarea, snippet) {
+    function insertAtCursor(textarea: HTMLTextAreaElement | null, snippet: string): void {
         if (!textarea) return;
         const start = textarea.selectionStart ?? textarea.value.length;
         const end = textarea.selectionEnd ?? start;
@@ -72,11 +85,17 @@
         textarea.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
-    function buildBlogMd(form) {
+    function bodyValue(form: HTMLFormElement): string {
+        const el = form.elements.namedItem('body');
+        if (!isFormControl(el)) return '';
+        return String(el.value ?? '').replace(/\s+$/, '');
+    }
+
+    function buildBlogMd(form: HTMLFormElement): string {
         const introTitle = val(form, 'introTitle') || val(form, 'listTitle');
         const description = val(form, 'introDescription');
         const banner = val(form, 'banner');
-        const body = String(form.elements.namedItem('body')?.value ?? '').replace(/\s+$/, '');
+        const body = bodyValue(form);
 
         const lines = [
             '---',
@@ -90,7 +109,7 @@
         return lines.join('\n').replace(/\n{3,}/g, '\n\n') + '\n';
     }
 
-    function buildBlogJson(form, root) {
+    function buildBlogJson(form: HTMLFormElement, root: HTMLElement): string {
         let slug = slugify(val(form, 'slug'));
         if (!slug) slug = slugify(val(form, 'listTitle')) || 'post';
         return (
@@ -112,19 +131,21 @@
         );
     }
 
-    function buildProjectMd(form) {
-        const body = String(form.elements.namedItem('body')?.value ?? '').replace(/\s+$/, '');
+    function buildProjectMd(form: HTMLFormElement): string {
+        const body = bodyValue(form);
         return body ? body + '\n' : '';
     }
 
-    function buildProjectJson(form, root) {
+    function buildProjectJson(form: HTMLFormElement, root: HTMLElement): string {
         let slug = slugify(val(form, 'slug'));
         if (!slug) slug = slugify(val(form, 'title')) || 'project';
 
         const downloads = val(form, 'downloads');
         const link = val(form, 'link');
         const sourceCode = val(form, 'source_code');
-        const privacyPolicy = form.elements.namedItem('privacy_policy')?.checked === true;
+        const privacyEl = form.elements.namedItem('privacy_policy');
+        const privacyPolicy =
+            privacyEl instanceof HTMLInputElement && privacyEl.checked === true;
 
         const entry = {
             slug,
@@ -154,19 +175,22 @@
         return JSON.stringify(entry, null, 4) + '\n';
     }
 
-    function blogSlug(form) {
+    function blogSlug(form: HTMLFormElement): string {
         return slugify(val(form, 'slug')) || slugify(val(form, 'listTitle')) || 'post';
     }
 
-    function projectSlug(form) {
+    function projectSlug(form: HTMLFormElement): string {
         return slugify(val(form, 'slug')) || slugify(val(form, 'title')) || 'project';
     }
 
-    function serializeForm(form) {
-        const data = {};
+    function serializeForm(form: HTMLFormElement): FormDataMap {
+        const data: FormDataMap = {};
         Array.from(form.elements).forEach((el) => {
+            if (!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement)) {
+                return;
+            }
             if (!el.name || el.disabled) return;
-            if (el.type === 'checkbox') {
+            if (el instanceof HTMLInputElement && el.type === 'checkbox') {
                 data[el.name] = el.checked;
                 return;
             }
@@ -175,23 +199,24 @@
         return data;
     }
 
-    function hydrateForm(form, data) {
+    function hydrateForm(form: HTMLFormElement, data: unknown): void {
         if (!data || typeof data !== 'object') return;
-        Object.keys(data).forEach((key) => {
+        const map = data as FormDataMap;
+        Object.keys(map).forEach((key) => {
             const el = form.elements.namedItem(key);
-            if (!el) return;
-            if (el.type === 'checkbox') {
-                el.checked = Boolean(data[key]);
+            if (!isFormControl(el)) return;
+            if (el instanceof HTMLInputElement && el.type === 'checkbox') {
+                el.checked = Boolean(map[key]);
                 return;
             }
-            if ('value' in el) el.value = data[key] ?? '';
+            el.value = String(map[key] ?? '');
         });
     }
 
-    function wireAutoSlug(form, titleName) {
+    function wireAutoSlug(form: HTMLFormElement, titleName: string): void {
         const slugEl = form.elements.namedItem('slug');
         const titleEl = form.elements.namedItem(titleName);
-        if (!slugEl || !titleEl) return;
+        if (!isFormControl(slugEl) || !isFormControl(titleEl)) return;
         let locked = Boolean(String(slugEl.value || '').trim());
         slugEl.addEventListener('input', () => {
             locked = Boolean(String(slugEl.value || '').trim());
@@ -202,24 +227,28 @@
         });
     }
 
-    function init() {
-        const root = document.getElementById('tools-app');
-        if (!root || root.dataset.toolsReady === '1') return;
+    function init(): void {
+        const rootEl = document.getElementById('tools-app');
+        if (!rootEl || rootEl.dataset.toolsReady === '1') return;
+        const root = rootEl;
         root.dataset.toolsReady = '1';
 
-        const formBlog = document.getElementById('form-blog');
-        const formProject = document.getElementById('form-project');
+        const formBlogEl = document.getElementById('form-blog');
+        const formProjectEl = document.getElementById('form-project');
+        const formBlog = formBlogEl instanceof HTMLFormElement ? formBlogEl : null;
+        const formProject = formProjectEl instanceof HTMLFormElement ? formProjectEl : null;
         const panelBlog = document.getElementById('panel-blog');
         const panelProject = document.getElementById('panel-project');
         const previewBlog = document.getElementById('preview-blog');
         const previewProject = document.getElementById('preview-project');
 
-        function refreshPreviews() {
+        function refreshPreviews(): void {
             if (previewBlog && formBlog) previewBlog.textContent = buildBlogMd(formBlog);
             if (previewProject && formProject) previewProject.textContent = buildProjectMd(formProject);
         }
 
-        function setMode(mode) {
+        function setMode(mode: string | null): void {
+            if (mode !== 'blog' && mode !== 'project') return;
             const isBlog = mode === 'blog';
             root.querySelectorAll('[data-tools-tab]').forEach((btn) => {
                 const on = btn.getAttribute('data-tools-tab') === mode;
@@ -230,10 +259,12 @@
             if (panelProject) panelProject.hidden = isBlog;
             try {
                 localStorage.setItem(STORAGE_KEY + ':mode', mode);
-            } catch (_) {}
+            } catch {
+                /* ignore */
+            }
         }
 
-        function saveDrafts() {
+        function saveDrafts(): void {
             try {
                 localStorage.setItem(
                     STORAGE_KEY,
@@ -242,22 +273,31 @@
                         project: formProject ? serializeForm(formProject) : null,
                     })
                 );
-            } catch (_) {}
+            } catch {
+                /* ignore */
+            }
         }
 
-        function loadDrafts() {
+        function loadDrafts(): void {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
-                    const parsed = JSON.parse(raw);
-                    if (formBlog && parsed.blog) hydrateForm(formBlog, parsed.blog);
-                    if (formProject && parsed.project) hydrateForm(formProject, parsed.project);
+                    const parsed: unknown = JSON.parse(raw);
+                    if (parsed && typeof parsed === 'object') {
+                        const draft = parsed as { blog?: unknown; project?: unknown };
+                        if (formBlog && draft.blog) hydrateForm(formBlog, draft.blog);
+                        if (formProject && draft.project) hydrateForm(formProject, draft.project);
+                    }
                 }
-            } catch (_) {}
+            } catch {
+                /* ignore */
+            }
             try {
                 const mode = localStorage.getItem(STORAGE_KEY + ':mode');
                 if (mode === 'blog' || mode === 'project') setMode(mode);
-            } catch (_) {}
+            } catch {
+                /* ignore */
+            }
         }
 
         root.querySelectorAll('[data-tools-tab]').forEach((btn) => {
@@ -268,7 +308,9 @@
             btn.addEventListener('click', () => {
                 const key = btn.getAttribute('data-blog-insert');
                 const ta = formBlog?.elements.namedItem('body');
-                if (ta && BLOG_INSERTS[key]) insertAtCursor(ta, BLOG_INSERTS[key]);
+                if (key && ta instanceof HTMLTextAreaElement && BLOG_INSERTS[key]) {
+                    insertAtCursor(ta, BLOG_INSERTS[key]!);
+                }
             });
         });
 
@@ -276,7 +318,9 @@
             btn.addEventListener('click', () => {
                 const key = btn.getAttribute('data-project-insert');
                 const ta = formProject?.elements.namedItem('body');
-                if (ta && PROJECT_INSERTS[key]) insertAtCursor(ta, PROJECT_INSERTS[key]);
+                if (key && ta instanceof HTMLTextAreaElement && PROJECT_INSERTS[key]) {
+                    insertAtCursor(ta, PROJECT_INSERTS[key]!);
+                }
             });
         });
 
@@ -311,9 +355,9 @@
             btn.addEventListener('click', async () => {
                 const which = btn.getAttribute('data-copy');
                 const text =
-                    which === 'blog'
+                    which === 'blog' && formBlog
                         ? buildBlogMd(formBlog)
-                        : which === 'project'
+                        : which === 'project' && formProject
                           ? buildProjectMd(formProject)
                           : '';
                 if (!text) return;
@@ -324,7 +368,9 @@
                     setTimeout(() => {
                         btn.textContent = prev;
                     }, 1200);
-                } catch (_) {}
+                } catch {
+                    /* ignore */
+                }
             });
         });
 

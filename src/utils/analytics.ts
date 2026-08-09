@@ -2,7 +2,7 @@
  * GA4 config (single source of truth).
  * Measurement ID is XOR-encoded so production HTML/JS does not ship a plain `G-…` string.
  * All client JS chunks (including this loader) are obfuscated on `astro build`
- * via `vite-plugins/obfuscate-production-js.mjs`.
+ * via `vite-plugins/obfuscate-production-js.ts`.
  */
 
 /** XOR key — paired with {@link GA_ID_PAYLOAD}. */

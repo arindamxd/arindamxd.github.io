@@ -9,11 +9,12 @@ import {
     resolveMeasurementId,
 } from "../utils/analytics";
 
-function ensureGtag(measurementId) {
+function ensureGtag(measurementId: string): void {
     window.dataLayer = window.dataLayer || [];
     if (typeof window.gtag !== "function") {
-        window.gtag = function gtag() {
-            window.dataLayer.push(arguments);
+        window.gtag = function gtag(..._args: unknown[]) {
+            // Mirror the official stub: push the Arguments object (not a rest array).
+            window.dataLayer.push(arguments as unknown);
         };
     }
 
@@ -29,7 +30,7 @@ function ensureGtag(measurementId) {
     window.gtag("config", measurementId, { send_page_view: false });
 }
 
-function sendPageView() {
+function sendPageView(): void {
     if (typeof window.gtag !== "function") return;
 
     window.gtag("event", "page_view", {
@@ -39,7 +40,7 @@ function sendPageView() {
     });
 }
 
-function boot() {
+function boot(): void {
     if (!isAnalyticsEnabled()) return;
 
     const measurementId = resolveMeasurementId();

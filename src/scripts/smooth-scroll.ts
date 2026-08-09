@@ -47,18 +47,22 @@ if (!reduced) {
                     y: lenis.scroll,
                 }),
             );
-        } catch (e) {}
+        } catch {
+            /* ignore */
+        }
     });
 
     document.addEventListener(
         'click',
         (e) => {
-            const a = e.target.closest('a[href^="#"]');
+            const target = e.target;
+            if (!(target instanceof Element)) return;
+            const a = target.closest('a[href^="#"]');
             if (!a) return;
             const id = a.getAttribute('href');
             if (!id || id === '#') return;
             const el = document.querySelector(id);
-            if (!el) return;
+            if (!(el instanceof HTMLElement)) return;
             e.preventDefault();
             lenis.scrollTo(el, { offset: -20, duration: 1.2 });
         },

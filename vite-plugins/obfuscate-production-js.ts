@@ -9,6 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import type { AstroIntegration } from "astro";
 import javascriptObfuscator from "javascript-obfuscator";
 
 const { obfuscate } = javascriptObfuscator;
@@ -22,7 +23,7 @@ const OBFUSCATOR_OPTIONS = {
     deadCodeInjectionThreshold: 0.2,
     debugProtection: false,
     disableConsoleOutput: true,
-    identifierNamesGenerator: "hexadecimal",
+    identifierNamesGenerator: "hexadecimal" as const,
     ignoreImports: true,
     log: false,
     numbersToExpressions: true,
@@ -34,32 +35,28 @@ const OBFUSCATOR_OPTIONS = {
     stringArray: true,
     stringArrayCallsTransform: true,
     stringArrayCallsTransformThreshold: 0.85,
-    stringArrayEncoding: ["base64", "rc4"],
+    stringArrayEncoding: ["base64", "rc4"] as ("base64" | "rc4")[],
     stringArrayIndexShift: true,
     stringArrayRotate: true,
     stringArrayShuffle: true,
     stringArrayWrappersCount: 2,
     stringArrayWrappersChainedCalls: true,
     stringArrayWrappersParametersMaxCount: 4,
-    stringArrayWrappersType: "function",
+    stringArrayWrappersType: "function" as const,
     stringArrayThreshold: 0.85,
     transformObjectKeys: true,
     unicodeEscapeSequence: false,
 };
 
-/**
- * @param {string} code
- */
-function obfuscateCode(code) {
+function obfuscateCode(code: string): string {
     return obfuscate(code, OBFUSCATOR_OPTIONS).getObfuscatedCode();
 }
 
-/**
- * @param {string} dir
- * @param {string[]} extensions
- * @param {string[]} [out]
- */
-function walkFiles(dir, extensions, out = []) {
+function walkFiles(
+    dir: string,
+    extensions: string[],
+    out: string[] = [],
+): string[] {
     for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
         const full = path.join(dir, ent.name);
         if (ent.isDirectory()) {
@@ -73,13 +70,10 @@ function walkFiles(dir, extensions, out = []) {
     return out;
 }
 
-/**
- * @param {string} html
- */
-function obfuscateInlineScripts(html) {
+function obfuscateInlineScripts(html: string): string {
     return html.replace(
         /<script(\s[^>]*)?>([\s\S]*?)<\/script>/gi,
-        (match, attrs = "", body) => {
+        (match: string, attrs: string = "", body: string) => {
             if (/\bsrc\s*=/i.test(attrs)) return match;
             if (/type\s*=\s*["']application\/ld\+json["']/i.test(attrs)) {
                 return match;
@@ -103,8 +97,7 @@ function obfuscateInlineScripts(html) {
     );
 }
 
-/** @returns {import('astro').AstroIntegration} */
-export function obfuscateProductionIntegration() {
+export function obfuscateProductionIntegration(): AstroIntegration {
     return {
         name: "obfuscate-production-js",
         hooks: {

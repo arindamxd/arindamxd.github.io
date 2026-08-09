@@ -39,6 +39,7 @@ Cursor rule: [`.cursor/rules/version-bump.mdc`](.cursor/rules/version-bump.mdc).
 ## Stack (short)
 
 - Astro static portfolio · Tailwind v4 · feature CSS via [`global.css`](src/styles/global.css) (layout via `@apply` in sheets; do **not** import `tools.css` / `design.css` into global — those `@reference` global for theme)
+- **TypeScript mandatory** under `src/` — [`tsconfig.json`](tsconfig.json) · `astro check` on build
 - Content: JSON catalogs + Markdown under `src/content/` · loaders in `src/utils/`
 - Motion today: Lenis + custom appear/reveal/scramble/count-up · Motion.js adoption is roadmap in design-system §12
 - Deploy: GitHub Pages from **`trunk`** · live https://arindamxd.github.io
@@ -109,22 +110,34 @@ Shell: [`ToolsPageShell.astro`](src/components/tools/ToolsPageShell.astro) · st
 
 ## Motion & scripts
 
+All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs: false`).
+
 | Script | Role |
 | --- | --- |
-| `theme.js` | Light/dark · `html.dark` · syncs all `[data-theme-toggle]` |
-| `smooth-scroll.js` | Lenis · `data-lenis-prevent` for nested panes |
-| `scramble-text.js` | `data-scramble` / variants |
-| `available-text.js` | Hero “Available for…” cycle |
-| `reveal.js` / `hero-appear.js` / `count-up.js` | Appear, scroll reveal, YoE count |
-| `testimonial-slider.js` | Phone stories · prefers `#testimonials-data` |
-| `image-fallback.js` | Broken `<img>` → media shell or logo mark |
-| Tools scripts | `tools-*.js` for author / markdown / scramble-compare |
+| `theme.ts` | Light/dark · `html.dark` · syncs all `[data-theme-toggle]` |
+| `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
+| `scramble-text.ts` | `data-scramble` / variants |
+| `available-text.ts` | Hero “Available for…” cycle |
+| `reveal.ts` / `hero-appear.ts` / `count-up.ts` | Appear, scroll reveal, YoE count |
+| `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
+| `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
+| `analytics.ts` | GA4 bootstrap + ClientRouter page views |
+| `markdown-fullscreen.ts` | Fullscreen markdown doc panels |
+| Tools scripts | `tools-*.ts` for author / markdown / scramble-compare / analytics-reach |
 
 Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §12 — don’t add GSAP theatre.
 
 ---
 
 ## Durable decisions (gotchas)
+
+### TypeScript (mandatory)
+
+- Root [`tsconfig.json`](tsconfig.json) extends `astro/tsconfigs/strict` with **`allowJs: false`**.
+- No `.js` / `.jsx` / `.mjs` / `.cjs` under `src/` — enforced by `npm run check` (`astro check` + `scripts/assert-no-js.mjs`).
+- `npm run build` runs `astro check` first, then `astro build`.
+- Config: [`astro.config.ts`](astro.config.ts) · obfuscation: [`vite-plugins/obfuscate-production-js.ts`](vite-plugins/obfuscate-production-js.ts).
+- Shared window globals: [`src/env.d.ts`](src/env.d.ts).
 
 ### `/design` gallery
 
@@ -175,6 +188,7 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 - Home contributions calendar + shared `SectionHeading`; gallery preview paths for Skills / Brands / Contributions.
 - Version-bump workflow: when asked to bump version → changelog + package + memory → commit → tag → push (rule: `.cursor/rules/version-bump.mdc`).
 - Commit workflow: when asked to commit → update `CHANGELOG.md` Unreleased first, then commit (rule: `.cursor/rules/commit-changelog.mdc`).
+- Mandatory TypeScript: strict `tsconfig.json`, all `src/scripts` + config as `.ts`, `allowJs: false`, check-on-build.
 
 ### 1.0.3 — 2026-08-09
 

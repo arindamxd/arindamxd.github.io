@@ -7,38 +7,67 @@ import {
     reachAriaLabel,
     reachJsonSnippet,
 } from "../utils/reach";
+import type { FooterReach } from "../utils/reach";
 
 const STORAGE = {
     clientId: "tools-ga-oauth-client-id",
     propertyId: "tools-ga-property-id",
-};
+} as const;
 
 const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
 
+type ReachPeriod = FooterReach["period"];
+
+interface FetchFormElements extends HTMLFormElement {
+    clientId: HTMLInputElement;
+    propertyId: HTMLInputElement;
+    range: HTMLSelectElement | HTMLInputElement;
+}
+
+interface ManualFormElements extends HTMLFormElement {
+    uniques: HTMLInputElement;
+    views: HTMLInputElement;
+    period: HTMLSelectElement | HTMLInputElement;
+}
+
+type GaMetricValue = { value?: string };
+type GaReportRow = { metricValues?: GaMetricValue[] };
+type GaReportPayload = {
+    rows?: GaReportRow[];
+    error?: { message?: string; status?: string };
+};
+
 (function () {
-    /** @type {import('../utils/reach').FooterReach | null} */
-    let currentReach = null;
+    let currentReach: FooterReach | null = null;
     let bound = false;
 
-    function $(sel, root = document) {
+    function $(sel: string, root: ParentNode = document): Element | null {
         return root.querySelector(sel);
     }
 
-    function periodFromRange(range) {
+    function isFetchForm(el: Element | null): el is FetchFormElements {
+        return el instanceof HTMLFormElement;
+    }
+
+    function isManualForm(el: Element | null): el is ManualFormElements {
+        return el instanceof HTMLFormElement;
+    }
+
+    function periodFromRange(range: string): ReachPeriod {
         if (range === "realtime") return "month";
         if (range === "7daysAgo") return "week";
         if (range === "365daysAgo") return "year";
         return "month";
     }
 
-    function setStatus(message, isError = false) {
+    function setStatus(message: string, isError = false): void {
         const el = $("#reach-fetch-status");
         if (!el) return;
         el.textContent = message || "";
         el.classList.toggle("text-primary", Boolean(isError));
     }
 
-    function loadSettings(form) {
+    function loadSettings(form: FetchFormElements): void {
         try {
             const clientId = localStorage.getItem(STORAGE.clientId) || "";
             const propertyId = localStorage.getItem(STORAGE.propertyId) || "";
@@ -49,7 +78,7 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         }
     }
 
-    function saveSettings(form) {
+    function saveSettings(form: FetchFormElements): void {
         try {
             localStorage.setItem(STORAGE.clientId, form.clientId.value.trim());
             localStorage.setItem(
@@ -62,7 +91,7 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         }
     }
 
-    function renderReach(reach) {
+    function renderReach(reach: FooterReach): void {
         currentReach = reach;
         const ticker = $("#reach-ticker");
         const jsonEl = $("#reach-json");
@@ -80,24 +109,29 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         jsonEl.textContent = reachJsonSnippet(reach);
     }
 
-    function applyManual(form) {
+    function applyManual(form: ManualFormElements): void {
         const uniques = Number(form.uniques.value);
         const views = Number(form.views.value);
         if (!Number.isFinite(uniques) || !Number.isFinite(views)) {
             setStatus("Enter numeric uniques and views.", true);
             return;
         }
+        const periodRaw = form.period.value;
+        const period: ReachPeriod =
+            periodRaw === "week" || periodRaw === "year" || periodRaw === "month"
+                ? periodRaw
+                : "month";
         const reach = buildFooterReach({
             uniques,
             views,
-            period: form.period.value,
+            period,
             asOf: new Date().toISOString().slice(0, 10),
         });
         renderReach(reach);
         setStatus("");
     }
 
-    function requestAccessToken(clientId) {
+    function requestAccessToken(clientId: string): Promise<string> {
         return new Promise((resolve, reject) => {
             if (!window.google?.accounts?.oauth2) {
                 reject(
@@ -135,7 +169,12 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         });
     }
 
-    async function postGa(accessToken, propertyId, method, body) {
+    async function postGa(
+        accessToken: string,
+        propertyId: string,
+        method: string,
+        body: Record<string, unknown>,
+    ): Promise<GaReportPayload> {
         const url = `https://analyticsdata.googleapis.com/v1beta/properties/${encodeURIComponent(propertyId)}:${method}`;
         const res = await fetch(url, {
             method: "POST",
@@ -146,18 +185,24 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
             body: JSON.stringify(body),
         });
 
-        const data = await res.json().catch(() => ({}));
+        const data: unknown = await res.json().catch(() => ({}));
+        const payload =
+            data && typeof data === "object" ? (data as GaReportPayload) : {};
         if (!res.ok) {
             const msg =
-                data?.error?.message ||
-                data?.error?.status ||
+                payload.error?.message ||
+                payload.error?.status ||
                 `GA Data API error (${res.status})`;
             throw new Error(msg);
         }
-        return data;
+        return payload;
     }
 
-    function runReport(accessToken, propertyId, startDate) {
+    function runReport(
+        accessToken: string,
+        propertyId: string,
+        startDate: string,
+    ): Promise<GaReportPayload> {
         // Include today — "yesterday" misses brand-new properties that only have Realtime/today traffic.
         return postGa(accessToken, propertyId, "runReport", {
             dateRanges: [{ startDate, endDate: "today" }],
@@ -168,7 +213,10 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         });
     }
 
-    function runRealtimeReport(accessToken, propertyId) {
+    function runRealtimeReport(
+        accessToken: string,
+        propertyId: string,
+    ): Promise<GaReportPayload> {
         return postGa(accessToken, propertyId, "runRealtimeReport", {
             metrics: [
                 { name: "activeUsers" },
@@ -177,16 +225,18 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         });
     }
 
-    function metricsFromReport(data) {
-        const values = data?.rows?.[0]?.metricValues;
+    function metricsFromReport(
+        data: GaReportPayload,
+    ): { uniques: number; views: number } | null {
+        const values = data.rows?.[0]?.metricValues;
         if (!values || values.length < 2) return null;
         return {
-            uniques: Number(values[0].value || 0),
-            views: Number(values[1].value || 0),
+            uniques: Number(values[0]?.value || 0),
+            views: Number(values[1]?.value || 0),
         };
     }
 
-    async function signInAndFetch(form) {
+    async function signInAndFetch(form: FetchFormElements): Promise<void> {
         const clientId = form.clientId.value.trim();
         const propertyId = form.propertyId.value
             .trim()
@@ -204,7 +254,7 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         try {
             const token = await requestAccessToken(clientId);
             const raw = $("#reach-raw");
-            let report;
+            let report: GaReportPayload;
             let source = "standard";
 
             if (range === "realtime") {
@@ -266,12 +316,12 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
             setStatus(
                 `Loaded ${metrics.uniques.toLocaleString()} uniques · ${metrics.views.toLocaleString()} views. (Realtime — last ~30 min)`,
             );
-        } catch (err) {
+        } catch (err: unknown) {
             setStatus(err instanceof Error ? err.message : String(err), true);
         }
     }
 
-    async function copyJson() {
+    async function copyJson(): Promise<void> {
         if (!currentReach) return;
         const text = reachJsonSnippet(currentReach);
         try {
@@ -285,7 +335,7 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         }
     }
 
-    function downloadJson() {
+    function downloadJson(): void {
         if (!currentReach) return;
         const blob = new Blob(
             [JSON.stringify({ reach: currentReach }, null, 4) + "\n"],
@@ -299,7 +349,7 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
         URL.revokeObjectURL(url);
     }
 
-    function bindTabs() {
+    function bindTabs(): void {
         const tabs = document.querySelectorAll("[data-reach-tab]");
         const fetchPanel = $("#panel-fetch");
         const manualPanel = $("#panel-manual");
@@ -312,18 +362,22 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
                     t.classList.toggle("is-active", on);
                     t.setAttribute("aria-selected", on ? "true" : "false");
                 });
-                if (manualPanel) manualPanel.hidden = mode !== "manual";
-                if (fetchPanel) fetchPanel.hidden = mode !== "fetch";
+                if (manualPanel instanceof HTMLElement) {
+                    manualPanel.hidden = mode !== "manual";
+                }
+                if (fetchPanel instanceof HTMLElement) {
+                    fetchPanel.hidden = mode !== "fetch";
+                }
             });
         });
     }
 
-    function init() {
+    function init(): void {
         const app = $("#tools-reach-app");
         if (!app) return;
 
-        const fetchForm = $("#form-fetch");
-        const manualForm = $("#form-manual");
+        const fetchFormEl = $("#form-fetch");
+        const fetchForm = isFetchForm(fetchFormEl) ? fetchFormEl : null;
         if (fetchForm) loadSettings(fetchForm);
 
         if (!bound) {
@@ -331,31 +385,37 @@ const SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
             bindTabs();
 
             document.addEventListener("click", (e) => {
-                const btn = e.target.closest("[data-reach-action]");
+                const target = e.target;
+                if (!(target instanceof Element)) return;
+                const btn = target.closest("[data-reach-action]");
                 if (!btn) return;
                 const action = btn.getAttribute("data-reach-action");
 
-                const liveFetch = $("#form-fetch");
-                const liveManual = $("#form-manual");
+                const liveFetchEl = $("#form-fetch");
+                const liveManualEl = $("#form-manual");
+                const liveFetch = isFetchForm(liveFetchEl) ? liveFetchEl : null;
+                const liveManual = isManualForm(liveManualEl) ? liveManualEl : null;
 
                 if (action === "save-settings" && liveFetch) {
                     saveSettings(liveFetch);
                 }
                 if (action === "sign-in-fetch" && liveFetch) {
-                    signInAndFetch(liveFetch);
+                    void signInAndFetch(liveFetch);
                 }
                 if (action === "apply-manual" && liveManual) {
                     applyManual(liveManual);
                 }
-                if (action === "copy") copyJson();
+                if (action === "copy") void copyJson();
                 if (action === "download") downloadJson();
             });
 
             document.addEventListener("input", (e) => {
-                const form = e.target.closest("#form-manual");
-                if (!form) return;
-                if (form.uniques?.value && form.views?.value) {
-                    applyManual(form);
+                const target = e.target;
+                if (!(target instanceof Element)) return;
+                const formEl = target.closest("#form-manual");
+                if (!isManualForm(formEl)) return;
+                if (formEl.uniques?.value && formEl.views?.value) {
+                    applyManual(formEl);
                 }
             });
         }

@@ -1,0 +1,12 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "allowJs": false,
+    "checkJs": false,
+    "strict": true,
+    "noImplicitAny": true,
+    "types": ["astro/client"]
+  },
+  "include": [".astro/types.d.ts", "src/**/*", "astro.config.ts", "vite-plugins/**/*"],
+  "exclude": ["dist", "node_modules", "public"]
+}

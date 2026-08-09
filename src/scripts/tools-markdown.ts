@@ -44,34 +44,39 @@ marked.setOptions({
     breaks: false,
 });
 
-function init() {
-    const root = document.getElementById('tools-markdown');
-    if (!root || root.dataset.toolsReady === '1') return;
+function init(): void {
+    const rootEl = document.getElementById('tools-markdown');
+    if (!rootEl || rootEl.dataset.toolsReady === '1') return;
+    const root = rootEl;
     root.dataset.toolsReady = '1';
 
-    const source = document.getElementById('md-source');
-    const preview = document.getElementById('md-preview');
+    const sourceEl = document.getElementById('md-source');
+    const previewEl = document.getElementById('md-preview');
     const fileInput = document.getElementById('md-file');
     const filenameEl = document.getElementById('md-filename');
     const fullscreen = document.getElementById('md-fullscreen');
     const fullscreenBody = document.getElementById('md-fullscreen-body');
-    if (!(source instanceof HTMLTextAreaElement) || !(preview instanceof HTMLElement)) return;
+    if (!(sourceEl instanceof HTMLTextAreaElement) || !(previewEl instanceof HTMLElement)) return;
+    const source = sourceEl;
+    const preview = previewEl;
 
     let lastHtml = '';
 
-    function setFilename(name) {
+    function setFilename(name: string): void {
         if (filenameEl) filenameEl.textContent = name || '';
     }
 
-    function emptyPreviewHtml() {
+    function emptyPreviewHtml(): string {
         return '<p class="tools-md-empty">Preview appears here.</p>';
     }
 
-    function render() {
+    function render(): void {
         const text = source.value;
         try {
             localStorage.setItem(STORAGE_KEY, text);
-        } catch (_) {}
+        } catch {
+            /* ignore */
+        }
 
         if (!text.trim()) {
             lastHtml = '';
@@ -81,12 +86,13 @@ function init() {
         }
 
         try {
-            lastHtml = marked.parse(text, { async: false });
+            const parsed = marked.parse(text, { async: false });
+            lastHtml = typeof parsed === 'string' ? parsed : '';
             preview.innerHTML = lastHtml;
             if (fullscreenBody && fullscreen && !fullscreen.hidden) {
                 fullscreenBody.innerHTML = lastHtml;
             }
-        } catch (err) {
+        } catch (err: unknown) {
             lastHtml = '';
             const message = err instanceof Error ? err.message : 'Failed to parse Markdown';
             const errorHtml = `<p class="tools-md-empty">${message}</p>`;
@@ -95,7 +101,7 @@ function init() {
         }
     }
 
-    function openFullscreen() {
+    function openFullscreen(): void {
         if (!(fullscreen instanceof HTMLElement) || !(fullscreenBody instanceof HTMLElement)) return;
         fullscreenBody.innerHTML = lastHtml || emptyPreviewHtml();
         fullscreen.hidden = false;
@@ -103,19 +109,21 @@ function init() {
         fullscreenBody.scrollTop = 0;
     }
 
-    function closeFullscreen() {
+    function closeFullscreen(): void {
         if (!(fullscreen instanceof HTMLElement)) return;
         fullscreen.hidden = true;
         document.body.classList.remove('tools-md-fullscreen-open');
     }
 
-    function loadDraft() {
+    function loadDraft(): void {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved != null && saved !== '') {
                 source.value = saved;
             }
-        } catch (_) {}
+        } catch {
+            /* ignore */
+        }
     }
 
     root.querySelectorAll('[data-md-action]').forEach((btn) => {
@@ -152,7 +160,9 @@ function init() {
                     setTimeout(() => {
                         btn.textContent = prev;
                     }, 1200);
-                } catch (_) {}
+                } catch {
+                    /* ignore */
+                }
             }
         });
     });
@@ -179,7 +189,7 @@ function init() {
 
     source.addEventListener('input', render);
 
-    function syncBoxHeights() {
+    function syncBoxHeights(): void {
         const boxes = root.querySelectorAll('.tools-md-box');
         if (!boxes.length) return;
         const h = Math.round(Math.min(window.innerHeight * 0.7, 720));

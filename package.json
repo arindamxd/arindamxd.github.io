@@ -31,11 +31,11 @@
     },
     "scripts": {
         "dev": "astro dev",
-        "build": "astro build",
+        "build": "astro check && astro build",
         "preview": "astro preview",
         "astro": "astro",
         "clean": "rm -rf dist .astro node_modules/.vite",
-        "check": "astro check",
+        "check": "astro check && node scripts/assert-no-js.mjs",
         "lint": "echo 'No linting configured'",
         "test": "echo 'No tests configured'"
     },

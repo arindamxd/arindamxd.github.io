@@ -2,16 +2,26 @@
  * /tools/scramble-compare — hover + play bake-off:
  * ours | @scrambl/core | scramble-text | scrmbl
  */
-import { wrapElement, playScramble, stopScramble, prefersReducedMotion } from './scramble-text.js';
-import { scramble as scramblCore } from '@scrambl/core';
+import { wrapElement, playScramble, stopScramble, prefersReducedMotion } from './scramble-text';
+import { scramble as scramblCore, type ScrambleInstance } from '@scrambl/core';
 import ScrambleText from 'scramble-text';
-import { scramble as scrmblVanilla } from 'scrmbl';
+import { scramble as scrmblVanilla, type ScrambleController } from 'scrmbl';
 
 const DEFAULT_TEXT = 'Technical Lead · Mobile Engineering';
 
-function init() {
-    const root = document.getElementById('tools-scramble-compare');
-    if (!root) return;
+type EngineId = 'ours' | 'scrambl' | 'scramble-text' | 'scrmbl';
+
+type CompareRuntime = {
+    oursHost: HTMLElement | null;
+    scramblInst: ScrambleInstance | null;
+    scrambleTextInst: ScrambleText | null;
+    scrmblCtrl: ScrambleController | null;
+};
+
+function init(): void {
+    const rootEl = document.getElementById('tools-scramble-compare');
+    if (!rootEl) return;
+    const root = rootEl;
 
     if (root._scrambleCompareAbort instanceof AbortController) {
         root._scrambleCompareAbort.abort();
@@ -21,22 +31,21 @@ function init() {
     const { signal } = ac;
 
     const input = document.getElementById('scramble-sample');
-    const stages = {
+    const stages: Record<EngineId, Element | null> = {
         ours: root.querySelector('[data-scramble-stage="ours"]'),
         scrambl: root.querySelector('[data-scramble-stage="scrambl"]'),
         'scramble-text': root.querySelector('[data-scramble-stage="scramble-text"]'),
         scrmbl: root.querySelector('[data-scramble-stage="scrmbl"]'),
     };
 
-    /** @type {Record<string, any>} */
-    const runtime = {
+    const runtime: CompareRuntime = {
         oursHost: null,
         scramblInst: null,
         scrambleTextInst: null,
         scrmblCtrl: null,
     };
 
-    function sampleText() {
+    function sampleText(): string {
         if (input instanceof HTMLInputElement) {
             const v = input.value.replace(/\s+/g, ' ').trim();
             return v || DEFAULT_TEXT;
@@ -44,40 +53,46 @@ function init() {
         return root.dataset.sample || DEFAULT_TEXT;
     }
 
-    function setPlain(el, text) {
+    function setPlain(el: Element | null, text: string): void {
         if (!(el instanceof HTMLElement)) return;
         el.textContent = text;
         el.removeAttribute('data-scramble-wrapped');
         el.classList.remove('scramble-host');
     }
 
-    function destroyEngines() {
+    function destroyEngines(): void {
         stopScramble(runtime.oursHost);
         runtime.oursHost = null;
 
         try {
             runtime.scramblInst?.destroy?.();
-        } catch (_) {}
+        } catch {
+            /* ignore */
+        }
         runtime.scramblInst = null;
 
         try {
             runtime.scrambleTextInst?.stop?.();
-        } catch (_) {}
+        } catch {
+            /* ignore */
+        }
         runtime.scrambleTextInst = null;
 
         try {
             runtime.scrmblCtrl?.destroy?.();
-        } catch (_) {}
+        } catch {
+            /* ignore */
+        }
         runtime.scrmblCtrl = null;
     }
 
-    function resetAll() {
+    function resetAll(): void {
         destroyEngines();
         const text = sampleText();
         Object.values(stages).forEach((el) => setPlain(el, text));
     }
 
-    function playOurs() {
+    function playOurs(): void {
         const el = stages.ours;
         if (!(el instanceof HTMLElement)) return;
         const text = sampleText();
@@ -91,13 +106,15 @@ function init() {
         playScramble(runtime.oursHost, { allowMobile: true });
     }
 
-    function playScrambl() {
+    function playScrambl(): void {
         const el = stages.scrambl;
         if (!(el instanceof HTMLElement)) return;
         const text = sampleText();
         try {
             runtime.scramblInst?.destroy?.();
-        } catch (_) {}
+        } catch {
+            /* ignore */
+        }
         setPlain(el, text);
         if (prefersReducedMotion()) return;
         runtime.scramblInst = scramblCore(el, {
@@ -108,13 +125,15 @@ function init() {
         });
     }
 
-    function playScrambleTextPkg() {
+    function playScrambleTextPkg(): void {
         const el = stages['scramble-text'];
         if (!(el instanceof HTMLElement)) return;
         const text = sampleText();
         try {
             runtime.scrambleTextInst?.stop?.();
-        } catch (_) {}
+        } catch {
+            /* ignore */
+        }
         setPlain(el, text);
         if (prefersReducedMotion()) return;
         runtime.scrambleTextInst = new ScrambleText(el, {
@@ -124,7 +143,7 @@ function init() {
         runtime.scrambleTextInst.play().start();
     }
 
-    function playScrmbl() {
+    function playScrmbl(): void {
         const el = stages.scrmbl;
         if (!(el instanceof HTMLElement)) return;
         const text = sampleText();
@@ -133,10 +152,12 @@ function init() {
                 runtime.scrmblCtrl.update(text);
                 if (!prefersReducedMotion()) runtime.scrmblCtrl.replay();
                 return;
-            } catch (_) {
+            } catch {
                 try {
                     runtime.scrmblCtrl.destroy();
-                } catch (__) {}
+                } catch {
+                    /* ignore */
+                }
                 runtime.scrmblCtrl = null;
             }
         }
@@ -150,25 +171,30 @@ function init() {
         });
     }
 
-    const players = {
+    const players: Record<EngineId, () => void> = {
         ours: playOurs,
         scrambl: playScrambl,
         'scramble-text': playScrambleTextPkg,
         scrmbl: playScrmbl,
     };
 
-    function playOne(id) {
-        players[id]?.();
+    function isEngineId(id: string): id is EngineId {
+        return id in players;
     }
 
-    function playAll() {
-        Object.keys(players).forEach(playOne);
+    function playOne(id: string): void {
+        if (!isEngineId(id)) return;
+        players[id]();
+    }
+
+    function playAll(): void {
+        (Object.keys(players) as EngineId[]).forEach(playOne);
     }
 
     root.querySelectorAll('.tools-scramble-card').forEach((card) => {
         if (!(card instanceof HTMLElement)) return;
         const id = card.getAttribute('data-engine');
-        if (!id || !players[id]) return;
+        if (!id || !isEngineId(id)) return;
 
         const run = () => playOne(id);
         card.addEventListener('mouseenter', run, { signal });

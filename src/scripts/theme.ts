@@ -2,11 +2,13 @@
 (function () {
     const STORAGE_KEY = 'theme';
 
-    function getTheme() {
+    type Theme = 'dark' | 'light';
+
+    function getTheme(): Theme {
         return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
     }
 
-    function syncChrome(theme) {
+    function syncChrome(theme: Theme): void {
         const meta = document.querySelector('meta[name="theme-color"]');
         if (meta) {
             meta.setAttribute('content', theme === 'dark' ? '#222222' : '#171717');
@@ -22,7 +24,7 @@
         });
     }
 
-    function applyTheme(theme) {
+    function applyTheme(theme: Theme): void {
         document.documentElement.classList.toggle('dark', theme === 'dark');
         try {
             localStorage.setItem(STORAGE_KEY, theme);
@@ -32,11 +34,11 @@
         syncChrome(theme);
     }
 
-    function toggleTheme() {
+    function toggleTheme(): void {
         applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
     }
 
-    function bind() {
+    function bind(): void {
         document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
             btn.addEventListener('click', toggleTheme);
         });

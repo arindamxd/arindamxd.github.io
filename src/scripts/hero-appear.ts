@@ -5,12 +5,12 @@
     let started = false;
     let waitingForLoader = false;
 
-    function settle(el) {
+    function settle(el: Element): void {
         el.classList.remove('is-appearing');
         el.classList.add('is-settled');
     }
 
-    function run() {
+    function run(): void {
         if (started) return;
         started = true;
 
@@ -34,9 +34,10 @@
         }
 
         targets.forEach((el) => {
+            if (!(el instanceof HTMLElement)) return;
             el.classList.remove('is-settled');
             el.classList.add('is-appearing');
-            const onEnd = (ev) => {
+            const onEnd = (ev: Event) => {
                 if (ev.target !== el) return;
                 el.removeEventListener('animationend', onEnd);
                 settle(el);
@@ -51,7 +52,7 @@
         }, 1500);
     }
 
-    function arm() {
+    function arm(): void {
         started = false;
         document.documentElement.classList.add('js-motion');
 

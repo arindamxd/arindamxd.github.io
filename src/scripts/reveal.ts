@@ -5,33 +5,33 @@
 (function () {
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let io = null;
+    let io: IntersectionObserver | null = null;
 
-    function restoreY() {
+    function restoreY(): number {
         return typeof window.__restoreScrollY === 'number' ? window.__restoreScrollY : 0;
     }
 
-    function isBelowFold(el) {
+    function isBelowFold(el: Element): boolean {
         return el.getBoundingClientRect().top > window.innerHeight * 0.98;
     }
 
-    function settle(el) {
+    function settle(el: Element): void {
         el.classList.add('is-revealed', 'reveal-instant');
         el.classList.remove('reveal-prep');
     }
 
-    function prep(el) {
+    function prep(el: Element): void {
         el.classList.remove('is-revealed', 'reveal-instant');
         el.classList.add('reveal-prep');
     }
 
-    function reveal(el) {
+    function reveal(el: Element): void {
         el.classList.remove('reveal-instant');
-        void el.offsetWidth;
+        void (el as HTMLElement).offsetWidth;
         el.classList.add('is-revealed');
     }
 
-    function ensureScrollShown() {
+    function ensureScrollShown(): void {
         if (typeof window.__applyScrollRestore === 'function') {
             window.__applyScrollRestore(true);
         } else {
@@ -44,7 +44,7 @@
         }
     }
 
-    function run() {
+    function run(): void {
         ensureScrollShown();
 
         const nodes = [...document.querySelectorAll('[data-reveal]')];
@@ -64,7 +64,7 @@
         }
 
         // Fresh visit at top: animate only what's in view; observe the rest
-        const pending = [];
+        const pending: Element[] = [];
         document.documentElement.classList.add('reveal-boot');
 
         nodes.forEach((el) => {
@@ -80,24 +80,27 @@
             }
         });
 
-        io = new IntersectionObserver(
+        const observer = new IntersectionObserver(
             (entries) => {
                 for (const entry of entries) {
                     if (!entry.isIntersecting) continue;
-                    reveal(entry.target);
-                    io.unobserve(entry.target);
+                    const target = entry.target;
+                    if (!(target instanceof HTMLElement)) continue;
+                    reveal(target);
+                    observer.unobserve(target);
                 }
             },
             { root: null, rootMargin: '0px 0px -6% 0px', threshold: 0.08 },
         );
-        pending.forEach((el) => io.observe(el));
+        io = observer;
+        pending.forEach((el) => observer.observe(el));
 
         requestAnimationFrame(() => {
             document.documentElement.classList.remove('reveal-boot');
         });
     }
 
-    function arm() {
+    function arm(): void {
         // Wait until scroll-pending is cleared when restoring mid-page
         if (
             document.documentElement.classList.contains('scroll-pending') &&

@@ -7,16 +7,16 @@ const LOGO_PH = '/assets/resources/design-logo-placeholder.svg';
 
 const PLACEHOLDER_RE = /design-(media|logo)-placeholder/;
 
-function isPlaceholderSrc(src) {
+function isPlaceholderSrc(src: unknown): boolean {
     return typeof src === 'string' && PLACEHOLDER_RE.test(src);
 }
 
-function fallbackFor(img) {
+function fallbackFor(img: HTMLImageElement): string {
     if (img.closest('.project-logo')) return LOGO_PH;
     return MEDIA_PH;
 }
 
-function applyImageFallback(img) {
+function applyImageFallback(img: HTMLImageElement): void {
     if (!(img instanceof HTMLImageElement)) return;
     if (img.dataset.imgFallback === '1') return;
 
@@ -40,7 +40,7 @@ function applyImageFallback(img) {
     img.src = next;
 }
 
-function recoverBrokenImages(root = document) {
+function recoverBrokenImages(root: ParentNode = document): void {
     root.querySelectorAll('img').forEach((img) => {
         if (img.dataset.imgFallback === '1') return;
         // Failed or empty decoded frame
@@ -50,12 +50,12 @@ function recoverBrokenImages(root = document) {
     });
 }
 
-function onError(event) {
+function onError(event: Event): void {
     const t = event.target;
     if (t instanceof HTMLImageElement) applyImageFallback(t);
 }
 
-function bind() {
+function bind(): void {
     document.addEventListener('error', onError, true);
     recoverBrokenImages();
 }

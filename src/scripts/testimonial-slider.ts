@@ -1,22 +1,49 @@
 // Testimonial phone slider — re-inits on Astro view transitions
 (async () => {
     try {
-        function readTestimonials() {
+        type Testimonial = {
+            text: string;
+            author: string;
+            position: string;
+            background: string;
+        };
+
+        type BoundControls = {
+            prevButton: HTMLElement;
+            nextButton: HTMLElement;
+            onPrev: () => void;
+            onNext: () => void;
+        };
+
+        function isTestimonial(value: unknown): value is Testimonial {
+            if (!value || typeof value !== 'object') return false;
+            const t = value as Record<string, unknown>;
+            return (
+                typeof t.text === 'string' &&
+                typeof t.author === 'string' &&
+                typeof t.position === 'string' &&
+                typeof t.background === 'string'
+            );
+        }
+
+        function readTestimonials(): Testimonial[] | null {
             const el = document.getElementById('testimonials-data');
             if (!el) return null;
             try {
-                const data = JSON.parse(el.textContent || '[]');
-                return Array.isArray(data) ? data : null;
+                const data: unknown = JSON.parse(el.textContent || '[]');
+                if (!Array.isArray(data)) return null;
+                return data.filter(isTestimonial);
             } catch {
                 return null;
             }
         }
 
-        let testimonials = readTestimonials();
-        if (!testimonials || testimonials.length === 0) {
+        let testimonials: Testimonial[] = readTestimonials() ?? [];
+        if (testimonials.length === 0) {
             // Fallback for pages that still rely on the catalog JSON
             const metadataModule = await import('../content/testimonials-metadata.json');
-            testimonials = metadataModule.default?.data || [];
+            const raw = metadataModule.default?.data;
+            testimonials = Array.isArray(raw) ? raw.filter(isTestimonial) : [];
         }
 
         if (!testimonials || testimonials.length === 0) {
@@ -25,11 +52,11 @@
         }
 
         let currentIndex = 0;
-        let storyInterval = 0;
-        let bound = null;
+        let storyInterval: ReturnType<typeof setInterval> | 0 = 0;
+        let bound: BoundControls | null = null;
         const STORY_DURATION = 5;
 
-        function cleanup() {
+        function cleanup(): void {
             clearInterval(storyInterval);
             storyInterval = 0;
             if (bound) {
@@ -39,7 +66,7 @@
             }
         }
 
-        function init() {
+        function init(): void {
             cleanup();
 
             const next = readTestimonials();
@@ -69,10 +96,13 @@
                 return;
             }
 
+            if (!(screenBg instanceof HTMLImageElement)) return;
+            const bgImage = screenBg;
+
             currentIndex = 0;
 
-            function createProgressBars() {
-                progressBarsContainer.innerHTML = '';
+            function createProgressBars(): void {
+                progressBarsContainer!.innerHTML = '';
                 testimonials.forEach(() => {
                     const segment = document.createElement('div');
                     segment.classList.add('progress-bar-segment');
@@ -86,67 +116,78 @@
                             </div>
                         </div>
                     `;
-                    progressBarsContainer.appendChild(segment);
+                    progressBarsContainer!.appendChild(segment);
                 });
             }
 
-            function updateProgressBars(index) {
-                const segments = progressBarsContainer.children;
+            function updateProgressBars(index: number): void {
+                const segments = progressBarsContainer!.children;
 
                 for (let i = 0; i < segments.length; i++) {
-                    segments[i].classList.remove('active', 'filled');
-                    segments[i].querySelector('.progress-bar-fill').style.transition = 'none';
-                    segments[i].querySelector('.progress-bar-fill').style.width = '0%';
+                    const segment = segments[i];
+                    if (!(segment instanceof HTMLElement)) continue;
+                    segment.classList.remove('active', 'filled');
+                    const fill = segment.querySelector('.progress-bar-fill');
+                    if (!(fill instanceof HTMLElement)) continue;
+                    fill.style.transition = 'none';
+                    fill.style.width = '0%';
                 }
 
                 for (let i = 0; i < index; i++) {
-                    const fill = segments[i].querySelector('.progress-bar-fill');
+                    const segment = segments[i];
+                    if (!(segment instanceof HTMLElement)) continue;
+                    const fill = segment.querySelector('.progress-bar-fill');
+                    if (!(fill instanceof HTMLElement)) continue;
                     fill.style.transition = 'none';
                     fill.style.width = '100%';
-                    segments[i].classList.add('filled');
+                    segment.classList.add('filled');
                 }
 
-                void segments[index].offsetWidth;
+                const activeSegment = segments[index];
+                if (!(activeSegment instanceof HTMLElement)) return;
+                void activeSegment.offsetWidth;
 
-                const currentFill = segments[index].querySelector('.progress-bar-fill');
+                const currentFill = activeSegment.querySelector('.progress-bar-fill');
+                if (!(currentFill instanceof HTMLElement)) return;
                 currentFill.style.transition = `width ${STORY_DURATION}s linear`;
                 currentFill.style.width = '100%';
-                segments[index].classList.add('active');
+                activeSegment.classList.add('active');
             }
 
-            function showTestimonial(index) {
+            function showTestimonial(index: number): void {
                 updateProgressBars(index);
 
                 setTimeout(() => {
                     const testimonial = testimonials[index];
-                    testimonialPerson.style.display = 'flex';
-                    starsIcon.style.display = 'block';
-                    testimonialText.textContent = testimonial.text;
-                    testimonialAuthor.textContent = testimonial.author;
-                    testimonialPosition.textContent = testimonial.position;
-                    screenBg.src = testimonial.background;
+                    if (!testimonial) return;
+                    testimonialPerson!.style.display = 'flex';
+                    starsIcon!.style.display = 'block';
+                    testimonialText!.textContent = testimonial.text;
+                    testimonialAuthor!.textContent = testimonial.author;
+                    testimonialPosition!.textContent = testimonial.position;
+                    bgImage.src = testimonial.background;
                 }, 100);
             }
 
-            function nextTestimonial(click) {
+            function nextTestimonial(click: boolean): void {
                 if (click && currentIndex === testimonials.length - 1) return;
                 currentIndex = (currentIndex + 1) % testimonials.length;
                 showTestimonial(currentIndex);
                 resetInterval();
             }
 
-            function prevTestimonial(click) {
+            function prevTestimonial(click: boolean): void {
                 if (click && currentIndex === 0) return;
                 currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
                 showTestimonial(currentIndex);
                 resetInterval();
             }
 
-            function startInterval() {
+            function startInterval(): void {
                 storyInterval = setInterval(() => nextTestimonial(false), STORY_DURATION * 1000);
             }
 
-            function resetInterval() {
+            function resetInterval(): void {
                 clearInterval(storyInterval);
                 startInterval();
             }
@@ -168,8 +209,10 @@
         } else {
             init();
         }
-    } catch (error) {
+    } catch (error: unknown) {
         console.error('Error initializing testimonial slider:', error);
-        console.error('Error stack:', error.stack);
+        if (error instanceof Error) {
+            console.error('Error stack:', error.stack);
+        }
     }
 })();

@@ -1,5 +1,6 @@
 ---
 import { Code } from "astro:components";
+import type { ComponentProps } from "astro/types";
 
 interface Props {
     code: string;
@@ -43,6 +44,8 @@ const label =
         : labels[langKey] ?? language.charAt(0).toUpperCase() + language.slice(1);
 
 const source = code.replace(/^\n+/, "").replace(/\n+$/, "");
+type CodeLang = NonNullable<ComponentProps<typeof Code>["lang"]>;
+const shikiLang = langKey as CodeLang;
 ---
 
 <figure class="article-code m-0 overflow-hidden rounded-[20px] bg-surface shadow-[inset_0_0_0_1px_var(--color-border)] max-narrow:rounded-[16px]">
@@ -56,7 +59,7 @@ const source = code.replace(/^\n+/, "").replace(/\n+$/, "");
     <div class="article-code__body">
         <Code
             code={source}
-            lang={langKey}
+            lang={shikiLang}
             themes={{ light: "github-light", dark: "github-dark" }}
             defaultColor={false}
         />

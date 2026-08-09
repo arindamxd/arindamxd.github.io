@@ -264,7 +264,8 @@ export const previewProjects: Project[] = [
     },
 ];
 
-export const previewProjectDetail = previewProjects[0];
+export const previewProjectDetail = previewProjects[0]!;
+
 
 export const previewPrivacyFrontmatter = {
     title: "Privacy Policy",
@@ -378,7 +379,7 @@ export const previewBlogs: Blog[] = [
     },
 ];
 
-export const previewBlogDetail = previewBlogs[0];
+export const previewBlogDetail = previewBlogs[0]!;
 
 export const previewSkills = {
     title: "Powered By",

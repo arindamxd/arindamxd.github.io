@@ -302,7 +302,7 @@ const structuredData = home
 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-        <script type="application/ld+json" set:html={JSON.stringify(structuredData.length === 1 ? structuredData[0] : structuredData)} />
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData.length === 1 ? structuredData[0] : structuredData)} />
 
         <GoogleAnalytics />
 
@@ -310,23 +310,23 @@ const structuredData = home
         <ClientRouter />
 
         <!-- Theme toggle -->
-        <script src="../scripts/theme.js" />
+        <script src="../scripts/theme.ts" />
 
         <!-- Broken image → placeholder (media shell / project logo) -->
-        <script src="../scripts/image-fallback.js" />
+        <script src="../scripts/image-fallback.ts" />
 
         <!-- Scramble helpers ([data-scramble] opt-in) + Available for… word cycle -->
-        <script src="../scripts/scramble-text.js" />
-        <script src="../scripts/available-text.js" />
+        <script src="../scripts/scramble-text.ts" />
+        <script src="../scripts/available-text.ts" />
 
         <!-- Testimonial slider script -->
-        <script src="../scripts/testimonial-slider.js" />
+        <script src="../scripts/testimonial-slider.ts" />
 
         <!-- Motion: hero appear + scroll reveal + Lenis + count-up -->
-        <script src="../scripts/hero-appear.js" />
-        <script src="../scripts/reveal.js" />
-        <script src="../scripts/smooth-scroll.js" />
-        <script src="../scripts/count-up.js" />
+        <script src="../scripts/hero-appear.ts" />
+        <script src="../scripts/reveal.ts" />
+        <script src="../scripts/smooth-scroll.ts" />
+        <script src="../scripts/count-up.ts" />
     </head>
 
     <body oncontextmenu="return false;">

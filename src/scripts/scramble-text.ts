@@ -1,7 +1,7 @@
 /**
  * Shared Keel-style scramble text helpers.
  * Opt-in only — call bindScrambleHover / wrapElement explicitly.
- * (Available-for word cycle uses these from available-text.js.)
+ * (Available-for word cycle uses these from available-text.ts.)
  */
 
 export const SCRAMBLE_CHARS = '0+-*|{}`/()$&';
@@ -9,23 +9,33 @@ export const SCRAMBLE_CHARS = '0+-*|{}`/()$&';
 export const NO_SCRAMBLE_MQ = '(max-width: 1080px)';
 export const REDUCED_MOTION_MQ = '(prefers-reduced-motion: reduce)';
 
-const timersByEl = new WeakMap();
-const boundTriggers = new WeakSet();
+export interface PlayScrambleOptions {
+    onComplete?: () => void;
+    allowMobile?: boolean;
+}
 
-export function prefersReducedMotion() {
+export type ScrambleVariantColors = {
+    bg: string;
+    fg: string;
+};
+
+const timersByEl = new WeakMap<Element, number[]>();
+const boundTriggers = new WeakSet<Element>();
+
+export function prefersReducedMotion(): boolean {
     return window.matchMedia(REDUCED_MOTION_MQ).matches;
 }
 
 /** Hover scramble: desktop + motion OK */
-export function canScramble() {
+export function canScramble(): boolean {
     return !window.matchMedia(NO_SCRAMBLE_MQ).matches && !prefersReducedMotion();
 }
 
-export function randomScrambleChar() {
-    return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+export function randomScrambleChar(): string {
+    return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]!;
 }
 
-function escapeHtml(ch) {
+function escapeHtml(ch: string): string {
     if (ch === '&') return '&amp;';
     if (ch === '<') return '&lt;';
     if (ch === '>') return '&gt;';
@@ -34,7 +44,7 @@ function escapeHtml(ch) {
 }
 
 /** Build inner HTML of scramble char spans for a plain string (no HTML). */
-export function wrapWordsHtml(text) {
+export function wrapWordsHtml(text: string): string {
     const words = String(text).replace(/[^\S ]+/g, ' ').trim().split(' ').filter(Boolean);
     return words
         .map(
@@ -49,7 +59,7 @@ export function wrapWordsHtml(text) {
         .join('&nbsp;');
 }
 
-function isTransparent(bg) {
+function isTransparent(bg: string): boolean {
     return (
         !bg ||
         bg === 'transparent' ||
@@ -58,25 +68,25 @@ function isTransparent(bg) {
     );
 }
 
-function parseRgb(color) {
+function parseRgb(color: string): { r: number; g: number; b: number } | null {
     const m = String(color).match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)/i);
     if (!m) return null;
-    return { r: +m[1], g: +m[2], b: +m[3] };
+    return { r: +m[1]!, g: +m[2]!, b: +m[3]! };
 }
 
-function relativeLuminance(color) {
+function relativeLuminance(color: string): number {
     const rgb = parseRgb(color);
     if (!rgb) return 0;
-    const toLin = (c) => {
+    const toLin = (c: number) => {
         const s = c / 255;
         return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
     };
     return 0.2126 * toLin(rgb.r) + 0.7152 * toLin(rgb.g) + 0.0722 * toLin(rgb.b);
 }
 
-export function resolveScrambleBg(host) {
-    let found = null;
-    let node = host;
+export function resolveScrambleBg(host: Element): string {
+    let found: string | null = null;
+    let node: Element | null = host;
     while (node && node !== document.documentElement) {
         const bg = getComputedStyle(node).backgroundColor;
         if (!isTransparent(bg)) {
@@ -106,7 +116,7 @@ export function resolveScrambleBg(host) {
 }
 
 /** Named presets: data-scramble-variant="primary|auto|light|dark" */
-export const SCRAMBLE_VARIANTS = {
+export const SCRAMBLE_VARIANTS: Record<string, ScrambleVariantColors | null> = {
     /** Brand primary block + white glyphs */
     primary: {
         bg: 'var(--color-primary, var(--color-surface))',
@@ -127,13 +137,13 @@ export const SCRAMBLE_VARIANTS = {
 };
 
 /** Optional overrides: data-scramble-bg / data-scramble-fg / data-scramble-variant. */
-function readScrambleAttr(el, name) {
+function readScrambleAttr(el: Element | null, name: string): string {
     if (!(el instanceof Element)) return '';
     return el.getAttribute(`data-scramble-${name}`)?.trim() || '';
 }
 
 /** Map short tokens to CSS values; anything else passes through as-is. */
-function resolveScrambleColorToken(value) {
+function resolveScrambleColorToken(value: string): string {
     const raw = String(value || '').trim();
     if (!raw) return '';
 
@@ -156,12 +166,15 @@ function resolveScrambleColorToken(value) {
     }
 }
 
-function scrambleAttrSource(host) {
+function scrambleAttrSource(host: Element): Element | null {
     if (!(host instanceof Element)) return null;
     return host.closest('[data-scramble]') || host;
 }
 
-function resolveScrambleVariant(source, host) {
+function resolveScrambleVariant(
+    source: Element | null,
+    host: Element,
+): ScrambleVariantColors | null {
     const name = (
         readScrambleAttr(source, 'variant') ||
         readScrambleAttr(host, 'variant') ||
@@ -175,7 +188,7 @@ function resolveScrambleVariant(source, host) {
  * Resolve block + glyph colors.
  * Priority: explicit bg/fg attrs → variant preset → auto bg (no fg).
  */
-export function resolveScrambleVars(host) {
+export function resolveScrambleVars(host: Element): { bg: string; fg: string } {
     const source = scrambleAttrSource(host);
     const variant = resolveScrambleVariant(source, host);
 
@@ -198,22 +211,22 @@ export function resolveScrambleVars(host) {
     return { bg, fg };
 }
 
-export function applyScrambleVars(host) {
-    if (!(host instanceof Element)) return;
+export function applyScrambleVars(host: Element): void {
+    if (!(host instanceof HTMLElement)) return;
     const { bg, fg } = resolveScrambleVars(host);
     host.style.setProperty('--scramble-bg', bg);
     if (fg) host.style.setProperty('--scramble-fg', fg);
     else host.style.removeProperty('--scramble-fg');
 }
 
-function clearTimers(el) {
+function clearTimers(el: Element): void {
     const list = timersByEl.get(el);
     if (!list) return;
     list.forEach(clearTimeout);
     timersByEl.delete(el);
 }
 
-function storeTimer(el, id) {
+function storeTimer(el: Element, id: number): void {
     let list = timersByEl.get(el);
     if (!list) {
         list = [];
@@ -226,11 +239,12 @@ function storeTimer(el, id) {
  * Wrap an element's text with scramble markup (opt-in helper).
  * For <a>/<button>, nests an inner span so layout classes stay intact.
  */
-export function wrapElement(el) {
+export function wrapElement(el: HTMLElement): HTMLElement {
     if (!el || el.dataset.scrambleWrapped === 'true') return el;
     if (el.querySelector(':scope > .scramble-host, .scramble-char')) {
         el.dataset.scrambleWrapped = 'true';
-        return el.querySelector('.scramble-host') || el;
+        const host = el.querySelector('.scramble-host');
+        return host instanceof HTMLElement ? host : el;
     }
 
     const text = el.textContent?.replace(/\s+/g, ' ').trim();
@@ -256,7 +270,10 @@ export function wrapElement(el) {
 }
 
 /** Flash random glyph blocks over scramble chars (Keel timing). */
-export function playScramble(el, { onComplete, allowMobile = false } = {}) {
+export function playScramble(
+    el: Element | null | undefined,
+    { onComplete, allowMobile = false }: PlayScrambleOptions = {},
+): void {
     const allowed = allowMobile ? !prefersReducedMotion() : canScramble();
     if (!el || !allowed) {
         onComplete?.();
@@ -267,6 +284,7 @@ export function playScramble(el, { onComplete, allowMobile = false } = {}) {
 
     const randoms = [...el.querySelectorAll('.scramble-random')];
     randoms.forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
         node.textContent = randomScrambleChar();
         node.style.opacity = '0';
     });
@@ -281,17 +299,18 @@ export function playScramble(el, { onComplete, allowMobile = false } = {}) {
     }
 
     randoms.forEach((node, i) => {
+        if (!(node instanceof HTMLElement)) return;
         const showAt = i * 50;
         const hideAt = 150 + i * 50;
         storeTimer(
             el,
-            setTimeout(() => {
+            window.setTimeout(() => {
                 node.style.opacity = '1';
             }, showAt),
         );
         storeTimer(
             el,
-            setTimeout(() => {
+            window.setTimeout(() => {
                 node.style.opacity = '0';
             }, hideAt),
         );
@@ -300,22 +319,27 @@ export function playScramble(el, { onComplete, allowMobile = false } = {}) {
     const doneAt = 150 + (randoms.length - 1) * 50 + 80;
     storeTimer(
         el,
-        setTimeout(() => onComplete?.(), doneAt),
+        window.setTimeout(() => onComplete?.(), doneAt),
     );
 }
 
-export function stopScramble(el) {
+export function stopScramble(el: Element | null | undefined): void {
     if (!el) return;
     clearTimers(el);
     el.querySelectorAll('.scramble-random').forEach((node) => {
-        node.style.opacity = '0';
+        if (node instanceof HTMLElement) node.style.opacity = '0';
     });
 }
 
 /** Opt-in: bind mouseenter/focus scramble on a trigger for one or more hosts. */
-export function bindScrambleHover(trigger, hosts) {
+export function bindScrambleHover(
+    trigger: Element | null | undefined,
+    hosts: Element | (Element | null | undefined)[] | null | undefined,
+): void {
     if (!trigger || boundTriggers.has(trigger)) return;
-    const targets = (Array.isArray(hosts) ? hosts : [hosts]).filter(Boolean);
+    const targets = (Array.isArray(hosts) ? hosts : [hosts]).filter(
+        (t): t is Element => Boolean(t),
+    );
     if (targets.length === 0) return;
 
     boundTriggers.add(trigger);
@@ -332,17 +356,19 @@ export function bindScrambleHover(trigger, hosts) {
 
 /**
  * Opt-in helper: wrap text in `textEl` (or trigger) and scramble on trigger hover.
- * @param {Element} trigger
- * @param {Element} [textEl]
  */
-export function enableScrambleOn(trigger, textEl = trigger) {
+export function enableScrambleOn(
+    trigger: Element | null | undefined,
+    textEl: Element | null | undefined = trigger,
+): void {
     if (!trigger || !textEl) return;
+    if (!(textEl instanceof HTMLElement)) return;
     const host = wrapElement(textEl);
     bindScrambleHover(trigger, host);
 }
 
 /** Prefer an inner text node (p/span) so button chrome / icons stay untouched. */
-function resolveTextHost(trigger) {
+function resolveTextHost(trigger: Element): Element {
     const marked = trigger.querySelector('[data-scramble-text]');
     if (marked) return marked;
 
@@ -358,14 +384,14 @@ function resolveTextHost(trigger) {
 /**
  * Enable scramble only on elements explicitly marked with [data-scramble].
  */
-export function initMarkedScrambles(root = document) {
+export function initMarkedScrambles(root: ParentNode = document): void {
     root.querySelectorAll('[data-scramble]').forEach((trigger) => {
         if (boundTriggers.has(trigger)) return;
         enableScrambleOn(trigger, resolveTextHost(trigger));
     });
 }
 
-function bootMarked() {
+function bootMarked(): void {
     initMarkedScrambles();
 }
 

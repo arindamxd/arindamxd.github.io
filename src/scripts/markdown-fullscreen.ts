@@ -7,13 +7,11 @@
  * - Optional: class "md-doc-trigger" for inline code-link styling
  */
 
-/** @type {HTMLElement | null} */
-let activePanel = null;
-/** @type {HTMLElement | null} */
-let lastTrigger = null;
+let activePanel: HTMLElement | null = null;
+let lastTrigger: HTMLElement | null = null;
 let escBound = false;
 
-function closeActive() {
+function closeActive(): void {
     if (!(activePanel instanceof HTMLElement)) return;
     activePanel.hidden = true;
     document.body.classList.remove('tools-md-fullscreen-open');
@@ -23,11 +21,7 @@ function closeActive() {
     trigger?.focus?.();
 }
 
-/**
- * @param {string} id
- * @param {HTMLElement | null} trigger
- */
-function openPanel(id, trigger) {
+function openPanel(id: string, trigger: HTMLElement | null): void {
     const panel = document.querySelector(`[data-md-doc-panel="${CSS.escape(id)}"]`);
     if (!(panel instanceof HTMLElement)) return;
 
@@ -47,7 +41,7 @@ function openPanel(id, trigger) {
     if (closeBtn instanceof HTMLElement) closeBtn.focus();
 }
 
-function initMarkdownDocs() {
+function initMarkdownDocs(): void {
     document.querySelectorAll('[data-md-doc]').forEach((el) => {
         if (!(el instanceof HTMLElement) || el.dataset.mdDocBound === '1') return;
         el.dataset.mdDocBound = '1';

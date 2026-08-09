@@ -2,9 +2,14 @@
 (function () {
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let io = null;
+    let io: IntersectionObserver | null = null;
 
-    function readMeta(el) {
+    function readMeta(el: HTMLElement): {
+        to: number;
+        suffix: string;
+        prefix: string;
+        duration: number;
+    } {
         const to = Number(el.getAttribute('data-count-to'));
         const suffix = el.getAttribute('data-count-suffix') || '';
         const prefix = el.getAttribute('data-count-prefix') || '';
@@ -12,7 +17,7 @@
         return { to, suffix, prefix, duration };
     }
 
-    function settle(el) {
+    function settle(el: HTMLElement): void {
         if (el.dataset.countDone === '1') return;
         el.dataset.countDone = '1';
         const { to, suffix, prefix } = readMeta(el);
@@ -20,7 +25,7 @@
         el.textContent = `${prefix}${to}${suffix}`;
     }
 
-    function animate(el) {
+    function animate(el: HTMLElement): void {
         if (el.dataset.countDone === '1') return;
         el.dataset.countDone = '1';
 
@@ -35,7 +40,7 @@
         const start = performance.now();
         const from = 0;
 
-        function frame(now) {
+        function frame(now: number): void {
             const t = Math.min(1, (now - start) / duration);
             const eased = 1 - Math.pow(1 - t, 3);
             const value = Math.round(from + (to - from) * eased);
@@ -46,22 +51,24 @@
         requestAnimationFrame(frame);
     }
 
-    function isFullyAbove(el) {
+    function isFullyAbove(el: Element): boolean {
         return el.getBoundingClientRect().bottom < 0;
     }
 
-    function inView(el) {
+    function inView(el: Element): boolean {
         const r = el.getBoundingClientRect();
         return r.top < window.innerHeight * 0.98 && r.bottom > 0;
     }
 
-    function run() {
+    function run(): void {
         if (io) {
             io.disconnect();
             io = null;
         }
 
-        const nodes = [...document.querySelectorAll('[data-count-to]')];
+        const nodes = [...document.querySelectorAll('[data-count-to]')].filter(
+            (el): el is HTMLElement => el instanceof HTMLElement,
+        );
         if (!nodes.length) return;
 
         nodes.forEach((el) => {
@@ -76,32 +83,35 @@
             return;
         }
 
-        io = new IntersectionObserver(
+        const observer = new IntersectionObserver(
             (entries) => {
                 for (const entry of entries) {
                     if (!entry.isIntersecting) continue;
-                    animate(entry.target);
-                    io.unobserve(entry.target);
+                    const target = entry.target;
+                    if (!(target instanceof HTMLElement)) continue;
+                    animate(target);
+                    observer.unobserve(target);
                 }
             },
             { root: null, rootMargin: '0px 0px -5% 0px', threshold: 0.05 },
         );
+        io = observer;
 
         nodes.forEach((el) => {
             if (el.dataset.countDone === '1') return;
             // Mid-page reload: show final value (do not replay)
             if (typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 80) {
                 if (isFullyAbove(el) || inView(el)) settle(el);
-                else io.observe(el);
+                else observer.observe(el);
                 return;
             }
             if (isFullyAbove(el)) settle(el);
             else if (inView(el)) animate(el);
-            else io.observe(el);
+            else observer.observe(el);
         });
     }
 
-    function arm() {
+    function arm(): void {
         if (
             document.documentElement.classList.contains('scroll-pending') &&
             typeof window.__restoreScrollY === 'number' &&

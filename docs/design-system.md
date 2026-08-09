@@ -257,7 +257,7 @@ Open a project Markdown file in a fullscreen GFM viewer from any control.
 import MarkdownDocPanel from "../components/MarkdownDocPanel.astro";
 <!-- … -->
 <MarkdownDocPanel id="design-system" src="docs/design-system.md" />
-<script src="../scripts/markdown-fullscreen.js" />
+<script src="../scripts/markdown-fullscreen.ts" />
 ```
 
 2. Trigger with matching id:
@@ -327,7 +327,7 @@ Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./
 
 ### Theme toggle
 
-Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. **Do not** put `overflow: hidden` on the glass node — same-element clip + `backdrop-filter` breaks frost in Chrome. Clip on the inner `.nav-theme-toggle__clip` (`overflow: hidden` + `border-radius: inherit`); the sliding `.nav-theme-toggle__track` is `width: 200%` and translates `300ms` with house cubic-bezier under `html.dark`. `data-theme-toggle` (all toggles sync via [`theme.js`](../src/scripts/theme.js)).
+Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. **Do not** put `overflow: hidden` on the glass node — same-element clip + `backdrop-filter` breaks frost in Chrome. Clip on the inner `.nav-theme-toggle__clip` (`overflow: hidden` + `border-radius: inherit`); the sliding `.nav-theme-toggle__track` is `width: 200%` and translates `300ms` with house cubic-bezier under `html.dark`. `data-theme-toggle` (all toggles sync via [`theme.js`](../src/scripts/theme.ts)).
 
 ### `/design` gallery placeholders
 
@@ -338,7 +338,7 @@ Dummy media for `preview` mounts — **not** live Camerax / blog / author photos
 | [`design-media-placeholder.svg`](../public/assets/resources/design-media-placeholder.svg) | Transparent shell; paint via `.design-media-ph` / `img[src*="design-media-placeholder"]` in [`utils.css`](../src/styles/utils.css) — same token gradient as `.design-nav-demo` (surface → primary mix), flips with theme |
 | [`design-logo-placeholder.svg`](../public/assets/resources/design-logo-placeholder.svg) | White **A** in rounded frame for project `thumb` on colored `thumb_bg_color` |
 | [`design-preview-data.ts`](../src/utils/design-preview-data.ts) | Dummy author, experiences, credentials, testimonials, projects, blogs, privacy frontmatter |
-| [`image-fallback.js`](../src/scripts/image-fallback.js) | Capture-phase: broken `<img>` → media shell (or logo mark inside `.project-logo`); loaded from BaseLayout |
+| [`image-fallback.js`](../src/scripts/image-fallback.ts) | Capture-phase: broken `<img>` → media shell (or logo mark inside `.project-logo`); loaded from BaseLayout |
 
 Testimonials phone reads `#testimonials-data` JSON from the section (preview embeds dummy quotes; live home uses the same embed path).
 
@@ -355,7 +355,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 | Intro support | `17→15` under slogan |
 | YoE badge | Micro `11px`, tracking `-0.05em`; fill darker than content bg (`color-mix` with black) + inset `border` — not `surface` |
 | CTAs | Primary Resume + secondary My work |
-| Availability | Green pulse + cycling “Available for…” (`available-text.js` + scramble) |
+| Availability | Green pulse + cycling “Available for…” (`available-text.ts` + scramble) |
 | Location row | Pin + `13→12`; muted “Located in…” + city |
 | Bottom link | Outbound text+arrow (`cardLinkText` / `cardLinkURL`) |
 
@@ -581,7 +581,7 @@ External references worth tracking: [Motion](https://motion.dev/), [Motion `anim
 | **P0 — Motion token scale** | Formalize durations: `120 / 200 / 320 / 520ms` and one house easing (e.g. `cubic-bezier(0.44, 0, 0.56, 1)` already used in nav) as CSS variables | Consistency |
 | **P1 — View Transitions polish** | Named transitions for shared elements (project thumb → detail banner, blog row → article). Astro ClientRouter already enables VT; add `view-transition-name` sparingly — **never on `.nav-glass` / `.nav-bar-container`** (breaks frost) | Native, 0kb |
 | **P1 — Adopt Motion (JS)** | Add open-source [`motion`](https://motion.dev/) **vanilla JS** (not React) as the site animation runtime: `animate`, `inView`, `stagger`, `scroll` as needed. Works with Astro scripts ([Astro guide](https://developers.netlify.com/guides/motion-animation-library-with-astro/)). Foundation for §12.2.2–12.2.3 | Small, MIT |
-| **P1 — Motion scroll reveal (`inView`)** | On top of Adopt Motion (JS): replace custom `appear-*` / [`reveal.js`](../src/scripts/reveal.js) with Motion `inView` + `animate` + `stagger` — see **§12.2.2** | Primary reveal path |
+| **P1 — Motion scroll reveal (`inView`)** | On top of Adopt Motion (JS): replace custom `appear-*` / [`reveal.js`](../src/scripts/reveal.ts) with Motion `inView` + `animate` + `stagger` — see **§12.2.2** | Primary reveal path |
 | **P1 — Motion spring physics** | On top of Adopt Motion (JS): use `animate(..., { type: "spring", ... })` for interactive UI (tools, pills, back control) — see **§12.2.3** | Natural feel |
 | **P2 — CSS scroll-driven reveals** | Progressive enhancement / fallback: `animation-timeline: view()` where supported; Motion `inView` remains the authored path | Perf on low-end |
 | **P1 — Replace custom scramble with Motion+ `scrambleText`** | See **§12.2.1** — [JS scramble example](https://motion.dev/examples/js-scramble-text) / [`scrambleText` docs](https://motion.dev/docs/scramble-text) | Brand motion, less custom JS |
@@ -606,17 +606,17 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 
 #### 12.2.1 Migrate scramble → Motion+ `scrambleText`
 
-**Today:** custom Keel-style helpers in [`src/scripts/scramble-text.js`](../src/scripts/scramble-text.js), opted in via `data-scramble` / `data-scramble-variant` on nav, CTAs, list rows, back links, and the hero “available for” cycle (`available-text.js`).
+**Today:** custom Keel-style helpers in [`src/scripts/scramble-text.ts`](../src/scripts/scramble-text.ts), opted in via `data-scramble` / `data-scramble-variant` on nav, CTAs, list rows, back links, and the hero “available for” cycle (`available-text.ts`).
 
 **Target:** use Motion’s vanilla scramble API from the [js-scramble-text example](https://motion.dev/examples/js-scramble-text) — `scrambleText` from Motion+ ([docs](https://motion.dev/docs/scramble-text)).
 
 | Step | Action |
 | --- | --- |
 | 1 | Obtain [Motion+](https://motion.dev/plus) access token; install per [Motion+ installation](https://motion.dev/docs/motion-plus-installation) (`motion-plus` / `motion-plus-dom` as documented). |
-| 2 | Add a thin site wrapper (e.g. `src/scripts/scramble-motion.js`) that: gates on `prefers-reduced-motion` and the existing desktop max-width rule (`NO_SCRAMBLE_MQ`); maps hover / focus-visible on `[data-scramble]` to `scrambleText(el, { duration })`; keeps `data-scramble-variant` only if still needed for color, not for animation engine. |
+| 2 | Add a thin site wrapper (e.g. `src/scripts/scramble-motion.ts`) that: gates on `prefers-reduced-motion` and the existing desktop max-width rule (`NO_SCRAMBLE_MQ`); maps hover / focus-visible on `[data-scramble]` to `scrambleText(el, { duration })`; keeps `data-scramble-variant` only if still needed for color, not for animation engine. |
 | 3 | Match house feel: short duration (~0.4–0.8s), optional `stagger()` from `motion` for letter reveal; prefer alphanumeric / symbol charset close to current `SCRAMBLE_CHARS` (`0+-*\|{}\`/()$&`) via `scrambleText` character options. |
 | 4 | Re-home **available-for** word cycling to call `scrambleText` when swapping labels (same API, not a second algorithm). |
-| 5 | Remove or stub [`scramble-text.js`](../src/scripts/scramble-text.js) once all call sites (BaseLayout script, available-text) use the wrapper; keep `data-scramble` attributes as the public markup contract. |
+| 5 | Remove or stub [`scramble-text.js`](../src/scripts/scramble-text.ts) once all call sites (BaseLayout script, available-text) use the wrapper; keep `data-scramble` attributes as the public markup contract. |
 | 6 | Verify keyboard focus-visible still scrambles (a11y parity with hover) and reduced-motion shows final text immediately. |
 
 **Why replace**
@@ -629,7 +629,7 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 
 #### 12.2.2 Scroll reveal with Motion (`inView`)
 
-**Today:** custom [`reveal.js`](../src/scripts/reveal.js) + `appear-*` classes in [`motion.css`](../src/styles/motion.css).
+**Today:** custom [`reveal.js`](../src/scripts/reveal.ts) + `appear-*` classes in [`motion.css`](../src/styles/motion.css).
 
 **Target:** free [`motion`](https://motion.dev/) package — `inView` + `animate` + `stagger` (same pattern as the [Motion + Astro guide](https://developers.netlify.com/guides/motion-animation-library-with-astro/); scroll-triggered API: [inView](https://motion.dev/docs/inview), scroll-linked optional: [scroll](https://motion.dev/docs/scroll)).
 
@@ -665,7 +665,7 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 **House spring tokens (suggested — tune once, reuse)**
 
 ```js
-// e.g. src/scripts/motion-tokens.js
+// e.g. src/scripts/motion-tokens.ts
 export const springSnappy = { type: "spring", stiffness: 420, damping: 32, mass: 0.8 };
 export const springSoft   = { type: "spring", stiffness: 180, damping: 28, mass: 1 };
 ```
@@ -734,7 +734,7 @@ Wire after **Adopt Motion (JS)** so the follower can use `springSoft` (§12.2.3)
 
 **Goal:** Confirm Lenis remains the right page-scroll feel for this site — or replace it with evidence — **before** stacking Motion reveals/springs on top of a scroll model we might discard.
 
-**Today:** [`src/scripts/smooth-scroll.js`](../src/scripts/smooth-scroll.js) — Lenis `autoRaf`, `lerp: 0.1`, `smoothWheel`, hash `scrollTo`, Astro swap resize, `data-lenis-prevent` on nested tools panes, gated by `prefers-reduced-motion`.
+**Today:** [`src/scripts/smooth-scroll.ts`](../src/scripts/smooth-scroll.ts) — Lenis `autoRaf`, `lerp: 0.1`, `smoothWheel`, hash `scrollTo`, Astro swap resize, `data-lenis-prevent` on nested tools panes, gated by `prefers-reduced-motion`.
 
 ##### Candidates to compare
 
@@ -835,7 +835,7 @@ Do **not** put it in the first viewport as a stat strip beside the brand.
 | Color | `text-text/45`–`/55` (light + dark via opacity; never hard-coded `#888`) |
 | Layout | One centered line; separator `·` (middle dot) with spaces |
 | Chrome | **None** — no pill, border, card, or background bar |
-| Motion | Optional count-up once in view via existing [`count-up.js`](../src/scripts/count-up.js); respect `prefers-reduced-motion` |
+| Motion | Optional count-up once in view via existing [`count-up.js`](../src/scripts/count-up.ts); respect `prefers-reduced-motion` |
 
 **Markup sketch**
 

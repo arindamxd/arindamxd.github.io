@@ -19,7 +19,7 @@ Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** 
 | Deploy | GitHub Pages via Actions (`trunk` branch) |
 | Format | Prettier + `prettier-plugin-astro` + `prettier-plugin-tailwindcss` |
 
-Site URL is set in `astro.config.mjs`: production defaults to `https://arindamxd.github.io`; override with `SITE_URL`. Dev server runs on **port 3000**.
+Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.github.io`; override with `SITE_URL`. Dev server runs on **port 3000**.
 
 ---
 
@@ -94,7 +94,7 @@ npm run preview  # preview production build
 │   │   └── motion.css             # Appear / reveal / Lenis helpers
 │   ├── types/                     # blog / project / experience TS types
 │   └── utils/                     # date helpers, blog/project MD loaders
-├── astro.config.mjs
+├── astro.config.ts
 └── package.json
 ```
 
@@ -242,17 +242,19 @@ The testimonials phone is a **360×750** mock with a `.mobile-border` that bleed
 
 ## Client scripts
 
-Loaded from `BaseLayout.astro`:
+Loaded from `BaseLayout.astro` (TypeScript under `src/scripts/`):
 
 | Script | Purpose |
 | --- | --- |
-| `theme.js` | Light ↔ dark toggle + `localStorage` |
-| `available-text.js` | Responsive “Available for…” copy on hero |
-| `testimonial-slider.js` | Phone testimonial carousel |
-| `hero-appear.js` | Load-time hero / badge appear |
-| `reveal.js` | Scroll-in sections via `[data-reveal]` |
-| `smooth-scroll.js` | Lenis (skipped when reduced motion) |
-| `count-up.js` | Viewport count-up for `data-count-to` |
+| `theme.ts` | Light ↔ dark toggle + `localStorage` |
+| `available-text.ts` | Responsive “Available for…” copy on hero |
+| `testimonial-slider.ts` | Phone testimonial carousel |
+| `hero-appear.ts` | Load-time hero / badge appear |
+| `reveal.ts` | Scroll-in sections via `[data-reveal]` |
+| `smooth-scroll.ts` | Lenis (skipped when reduced motion) |
+| `count-up.ts` | Viewport count-up for `data-count-to` |
+| `image-fallback.ts` | Broken image → gallery placeholder |
+| `scramble-text.ts` | Shared `data-scramble` helpers |
 
 ---
 
