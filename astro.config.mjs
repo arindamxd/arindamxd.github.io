@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 
 import tailwindcss from '@tailwindcss/vite';
+import { obfuscateProductionIntegration } from './vite-plugins/obfuscate-production-js.mjs';
 
 const SERVER_PORT = 3000;
 const LIVE_URL = 'https://arindamxd.github.io';
@@ -24,6 +25,7 @@ export default defineConfig({
         sitemap({
             filter: (page) => !page.includes('/tools') && !page.includes('/design'),
         }),
+        obfuscateProductionIntegration(),
     ],
     vite: {
         resolve: {

@@ -9,6 +9,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Added
 
 - Cursor rules for version-bump (full release: commit + tag + push) and commit+changelog workflows
+- Google Analytics 4 (shared `GoogleAnalytics` + `src/utils/analytics.ts`) with ClientRouter page views; skipped in local `astro dev`
+- Production JS obfuscation for all published client scripts and inline HTML scripts (`vite-plugins/obfuscate-production-js.mjs`)
 
 ### Changed
 

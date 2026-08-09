@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import PageLoader from "../components/PageLoader.astro";
 import NavBar from "../components/NavBar.astro";
+import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 import {
     absoluteUrl,
     canonicalFromPathname,
@@ -302,6 +303,8 @@ const structuredData = home
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
         <script type="application/ld+json" set:html={JSON.stringify(structuredData.length === 1 ? structuredData[0] : structuredData)} />
+
+        <GoogleAnalytics />
 
         <!-- Soft page transitions; bottom nav persists via transition:persist -->
         <ClientRouter />
