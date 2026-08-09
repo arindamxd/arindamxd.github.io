@@ -61,6 +61,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 | Brands | `src/content/brands-metadata.json` | `SectionBrands` marquee |
 | **Skills** | `src/content/skills-metadata.json` | `SectionSkills` + `SkillElement` (icons under `public/assets/skills/`) |
 | Testimonials | `src/content/testimonials-metadata.json` | Phone slider; DOM `#testimonials-data` |
+| Contributions | `src/content/contributions-metadata.json` | `SectionContributions` + calendar island |
 | Projects catalog | `src/content/projects-metadata.json` | [`projects.ts`](src/utils/projects.ts) |
 | Project bodies | `src/content/projects/*.md` | Merged at build |
 | Privacy policies | `src/content/privacy-policies/*.md` | Project privacy pages |

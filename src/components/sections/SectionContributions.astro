@@ -3,11 +3,12 @@ import GitHubContributionsCalendar from "../elements/GitHubContributionsCalendar
 import SectionHeading from "../elements/SectionHeading.astro";
 
 interface Props {
-    /** One or more GitHub usernames; contribution days are merged by date. */
+    /** Override metadata usernames; contribution days are merged by date. */
     usernames?: string[];
 }
 
-const { usernames = ["arindamxd", "arindamkb"] } = Astro.props;
+const metadata = (await import("../../content/contributions-metadata.json")).default;
+const { usernames = metadata.usernames } = Astro.props;
 
 type ContributionDay = {
     date: string;
@@ -69,10 +70,7 @@ const label = usernames.join(" + ");
     id="contributions"
     class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible p-0 max-narrow:px-2.5"
 >
-    <SectionHeading
-        title="Contributions"
-        description="Public GitHub activity over the last year."
-    />
+    <SectionHeading title={metadata.title} description={metadata.description} />
 
     <div
         data-reveal

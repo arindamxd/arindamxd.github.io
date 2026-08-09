@@ -18,7 +18,7 @@ Technical, craft-forward portfolio. Calm and precise — not loud SaaS marketing
 - Default content width: **`max-w-[550px]`** (home sections, footer, tools hub). Match footer when building hub-like pages.
 - Tools author `~1100px`; markdown split `~1280px`.
 - Breakpoint: `max-narrow:` ≤609px (`--breakpoint-narrow: 610px`).
-- One job per section: one headline + one short muted support line.
+- One job per section: one headline + one short muted support line via [`SectionHeading`](src/components/elements/SectionHeading.astro) on marketing sections.
 - Top padding under nav ≈ `110–120px`.
 
 ## Color (semantic only)
@@ -43,6 +43,7 @@ Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Mini
 ## Recipes to copy
 
 - **CSS home:** page content under `site-root`; feature sheets via `global.css` (`tokens`, `hero`, `projects`, …); layout/type/color in sheets via **`@apply`** (page-scoped `tools.css` / `design.css` need `@reference "./global.css"`); `--site-*` for layout helpers. Tools/gallery stay page-scoped. Nav chrome lives in `BaseLayout` (not per-page).
+- **Section header:** [`SectionHeading`](src/components/elements/SectionHeading.astro) for centered marketing titles (not left-aligned tools/detail H1s).
 - **Back control:** 52px circle + “Back to …” label (see blog/project/tools shell) — not plain “← text”.
 - **Primary CTA:** pill, primary fill, optional scramble (`data-scramble`).
 - **Home / 404 / Project / Blog / Footer:** `/design` mounts live sections/pages with `preview` + dummy copy (`src/utils/design-preview-data.ts`). Media = gradient shell (`design-media-placeholder` + `.design-media-ph`); project thumbs = white **A** logo mark (`design-logo-placeholder`). Broken imgs → `image-fallback.js`.

@@ -12,6 +12,7 @@ import SectionSkills from "../components/sections/SectionSkills.astro";
 import SectionTestimonials from "../components/sections/SectionTestimonials.astro";
 import SectionProjects from "../components/sections/SectionProjects.astro";
 import SectionBlogs from "../components/sections/SectionBlogs.astro";
+import SectionHeading from "../components/elements/SectionHeading.astro";
 import ProjectPage from "../components/elements/ProjectPage.astro";
 import ProjectPrivacyPage from "../components/elements/ProjectPrivacyPage.astro";
 import BlogPage from "../components/elements/BlogPage.astro";
@@ -256,14 +257,11 @@ const typeScale = [
                     </div>
                     <div>
                         <p class="design-label">Section header (marketing · centered)</p>
-                        <div class="flex w-full flex-col items-center gap-3 py-6 text-center">
-                            <h3 class="m-0 font-manrope text-[50px] font-semibold leading-[110%] tracking-[-0.05em] text-text max-narrow:text-[34px]">
-                                Selected work
-                            </h3>
-                            <p class="m-0 max-w-[350px] font-manrope text-[17px] font-semibold leading-[140%] tracking-[-0.04em] text-text opacity-60 max-narrow:text-[15px]">
-                                One short supporting line under the title.
-                            </p>
-                        </div>
+                        <SectionHeading
+                            title="Selected work"
+                            description="One short supporting line under the title."
+                            class="py-6"
+                        />
                     </div>
                 </section>
 

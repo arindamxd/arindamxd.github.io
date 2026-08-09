@@ -119,7 +119,7 @@ Hero / layout CSS is scoped as `.site-root .hero-…` (and similar). Layout help
 **Rhythm**
 
 - Section stack gap: `50px` desktop → `30px` mobile (hero often `gap-20` / `50px`).
-- Section header: title + muted description (`max-w-[350px]`, `opacity-60` or `text-text/60`), usually **centered** on marketing sections; **left** on detail/tools.
+- Section header: use [`SectionHeading`](../src/components/elements/SectionHeading.astro) — title + muted description (`max-w-[350px]`, `opacity-60`), **centered**; bottom margin `30px` / `20px` narrow. **Left** headers stay hand-rolled on detail/tools.
 - Page top offset under floating nav: `~110–120px` padding-top.
 - Horizontal inset on narrow: `px-2.5` when matching the 550px column; tools utility pages may use `px-4` / `px-5`.
 
@@ -226,10 +226,15 @@ Floating glass nav — see **Nav pill (detailed)** below for sizes. Theme toggle
 
 ### Section header (marketing)
 
+Use [`SectionHeading`](../src/components/elements/SectionHeading.astro) (`title`, optional `description`, `class`, `level`).
+
 ```
 h2 50→34, center, tracking -0.05em
 p  17→15, center, max-w 350px, opacity 60%
+gap under description: 30px → 20px narrow (owned by the element)
 ```
+
+`/design` mounts the live element under Layout.
 
 ### List shell
 
