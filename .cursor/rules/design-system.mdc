@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Design system (follow for all UI)
 
-Full reference: [`docs/design-system.md`](docs/design-system.md). Living gallery: `/design` (`src/pages/design.astro`). Tokens: `src/styles/global.css`. Tools styles: `src/styles/tools.css`.
+Full reference: [`docs/design-system.md`](docs/design-system.md). Living gallery: `/design` (`src/pages/design.astro`). Tokens: `src/styles/tokens.css` (via `global.css`). Feature CSS: `hero.css`, `projects.css`, `testimonials.css`, `brands.css`, `skills.css`, `nav.css`, `utils.css`. Tools: `tools.css`. Gallery: `design.css`. Page scope: `site-root` + `--site-*` vars.
 
 ## Personality
 
@@ -25,7 +25,7 @@ Technical, craft-forward portfolio. Calm and precise — not loud SaaS marketing
 
 Use `bg-bg`, `text-text`, `bg-surface`, `border-border`, `bg-primary`, `bg-inactive`, `text-text/60` (and `/50`–`/40` for meta). Primary `#2a29ff` and accent/active stay across themes; surfaces flip in `.dark`.
 
-Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Minimal drop shadows (nav glass is the exception).
+Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Minimal drop shadows (nav glass is the exception — shared `.nav-glass` in `nav.css`; no `transform` / ancestor `overflow: hidden` on the nav shell).
 
 ## Type
 
@@ -42,6 +42,7 @@ Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Mini
 
 ## Recipes to copy
 
+- **CSS home:** page content under `site-root`; feature sheets via `global.css` (`tokens`, `hero`, `projects`, …); `--site-*` for layout helpers. Tools/gallery stay page-scoped. Nav chrome lives in `BaseLayout` (not per-page).
 - **Back control:** 52px circle + “Back to …” label (see blog/project/tools shell) — not plain “← text”.
 - **Primary CTA:** pill, primary fill, optional scramble (`data-scramble`).
 - **Home:** hero ID card + location; skill chips; experience YoE/timeline/rows; credentials accordion; brands marquee; testimonials phone (home-only); footer nested contact shell.

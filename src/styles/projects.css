@@ -1,0 +1,148 @@
+/* Project card caption + logo zoom */
+.projects-card .caption-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    width: 100%;
+    height: min-content;
+    padding: 10px;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+.projects-card .caption-info-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    flex: 1 0 0;
+    width: 1px;
+    height: min-content;
+    gap: 14px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.projects-card .caption-info-logo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    gap: 10px;
+    padding: 0;
+    position: relative;
+}
+
+.projects-card .project-logo {
+    aspect-ratio: 1 / 1;
+    width: 22px;
+    height: var(--site-aspect-ratio-supported, 22px);
+    flex: none;
+    position: relative;
+    overflow: visible;
+}
+
+.projects-card .project-logo img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    max-width: none;
+    margin: -22px 0 0 -22px;
+    border-radius: inherit;
+    object-fit: contain;
+    object-position: center;
+    transform: translateZ(0) scale(0.5);
+    transform-origin: center;
+    backface-visibility: hidden;
+    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projects-card .caption-info-text {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: 1 0 0;
+    width: 1px;
+    height: min-content;
+    gap: 1px;
+    padding: 0 20px 0 0;
+    position: relative;
+    overflow: visible;
+}
+
+.projects-card .caption-info-text-title,
+.projects-card .caption-info-text-description {
+    width: 100%;
+    height: auto;
+    flex: none;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.projects-card .caption-info-text-description {
+    --site-text-wrap-override: balance;
+}
+
+.projects-card .caption-info-arrow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    width: 54px;
+    height: var(--site-aspect-ratio-supported, 54px);
+    gap: 10px;
+    padding: 0;
+    position: relative;
+}
+
+.projects-card .link-icon-circle-bg {
+    width: 12px;
+    height: 12px;
+    flex: none;
+    position: relative;
+    transition: transform 0.3s ease-out;
+}
+
+.projects-card:hover .project-logo img {
+    transform: translateZ(0) scale(0.575);
+}
+
+.projects-card:hover .link-icon-circle-bg {
+    transform: rotate(45deg);
+}
+
+.projects-card .project-background-image {
+    inset: 0;
+    position: absolute;
+    z-index: 0;
+    flex: none;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.projects-card:hover .project-background-image {
+    transform: scale(1.05);
+}

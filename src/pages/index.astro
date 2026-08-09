@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import NavBar from "../components/NavBar.astro";
 import SectionIntro from "../components/sections/SectionIntro.astro";
 import SectionBrands from "../components/sections/SectionBrands.astro";
 import SectionProjects from "../components/sections/SectionProjects.astro";
@@ -14,11 +13,8 @@ import Footer from "../components/Footer.astro";
 
 <BaseLayout home={true} />
 
-    <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-hidden bg-bg p-0">
-        <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">
-            <NavBar />
-        </div>
-        <div class="proton-root contents min-h-screen w-auto">
+    <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
+        <div class="site-root contents min-h-screen w-auto">
             <main class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
                 <SectionIntro />
                 <SectionBrands />

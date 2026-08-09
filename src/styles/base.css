@@ -1,0 +1,71 @@
+/* ---------- Base reset + defaults (Phase 2) ---------- */
+@layer base {
+    :root {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color-scheme: light;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        -webkit-font-smoothing: inherit;
+    }
+
+    html,
+    body,
+    #main {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    figure {
+        margin: 0;
+    }
+
+    body,
+    input,
+    textarea,
+    select,
+    button {
+        font-size: 12px;
+        font-family: sans-serif;
+        -webkit-font-smoothing: inherit;
+    }
+
+    body {
+        --site-will-change-override: none;
+        background: var(--color-bg);
+        color: var(--color-text);
+    }
+
+    img,
+    svg {
+        -webkit-user-drag: none;
+        user-select: none;
+        pointer-events: none;
+    }
+}
+
+@supports (background: -webkit-named-image(i)) and (not (grid-template-rows: subgrid)) {
+    @layer base {
+        body {
+            --site-will-change-override: transform;
+        }
+    }
+}
+
+@supports (aspect-ratio: 1) {
+    body {
+        --site-aspect-ratio-supported: auto;
+    }
+}

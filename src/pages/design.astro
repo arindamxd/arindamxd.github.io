@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import MarkdownDocPanel from "../components/MarkdownDocPanel.astro";
 import BlogCodeBlock from "../components/elements/BlogCodeBlock.astro";
@@ -52,11 +51,7 @@ const typeScale = [
     description="Living style guide for tokens, components, and UX patterns used on this site."
 >
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
-        <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">
-            <NavBar />
-        </div>
-
-        <div class="proton-root contents min-h-screen w-auto">
+        <div class="site-root contents min-h-screen w-auto">
             <main
                 class="relative mx-auto flex h-min w-full max-w-[1100px] flex-none flex-col flex-nowrap content-center items-stretch justify-start gap-16 bg-bg px-5 pb-24 pt-[120px] max-narrow:gap-12 max-narrow:px-4 max-narrow:pt-[100px]"
             >
@@ -130,6 +125,10 @@ const typeScale = [
                         <p class="design-rule">
                             <strong>Match code first</strong>
                             Prefer existing patterns over inventing new chrome.
+                        </p>
+                        <p class="design-rule">
+                            <strong>site-root + feature CSS</strong>
+                            Page content under <code class="tools-code">site-root</code>; custom rules in feature sheets or Tailwind — not orphan stylesheets.
                         </p>
                     </div>
                 </section>
@@ -403,17 +402,17 @@ button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
                     <div>
                         <p class="design-label">Nav pill + theme toggle (anatomy)</p>
                         <div class="design-nav-demo">
-                            <div class="design-nav-pill" aria-hidden="true">
+                            <div class="nav-pill nav-glass" aria-hidden="true" style="pointer-events: none;">
                                 <span class="design-nav-home" />
                                 <span class="design-nav-link">Projects</span>
                                 <span class="design-nav-link">Blogs</span>
                                 <span class="design-nav-contact">Contact</span>
                             </div>
-                            <div class="design-theme-toggle" aria-hidden="true">
+                            <div class="nav-theme-toggle nav-glass flex items-center justify-center" aria-hidden="true" style="pointer-events: none;">
                                 <span class="design-theme-knob" />
                             </div>
                         </div>
-                        <p class="design-hint">Live chrome is in the page header — match sizes: pill 60→52, contact 46→40, toggle circle beside.</p>
+                        <p class="design-hint">Same `.nav-glass` as live chrome (BaseLayout) — pill 60→52, contact 46→40, toggle circle beside.</p>
                     </div>
 
                     <div>
@@ -961,7 +960,7 @@ button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
                     <div class="design-rules">
                         <p class="design-rule design-rule-do">
                             <strong>Do</strong>
-                            Tokens first · Manrope 600 · 550px column · pills for actions · surface shells · scramble on key links · verify light/dark.
+                            Tokens first · Manrope 600 · 550px column · pills for actions · surface shells · scramble on key links · verify light/dark · wrap pages in site-root.
                         </p>
                         <p class="design-rule design-rule-dont">
                             <strong>Don’t</strong>
@@ -969,11 +968,11 @@ button.addTarget(self, action: #selector(didTap), for: .touchUpInside)`}
                         </p>
                         <p class="design-rule design-rule-do">
                             <strong>Do</strong>
-                            Register tools in siteTools · noindex private utilities · data-lenis-prevent on nested scroll.
+                            Register tools in siteTools · noindex private utilities · data-lenis-prevent on nested scroll · put new CSS in the matching feature sheet (--site-* helpers).
                         </p>
                         <p class="design-rule design-rule-dont">
                             <strong>Don’t</strong>
-                            Invent a second scramble/reveal engine · fight Lenis · ship native search cancel · mismatched max-widths vs footer.
+                            Invent a second scramble/reveal engine · fight Lenis · ship native search cancel · mismatched max-widths vs footer · orphan global stylesheets or a second page-root wrapper.
                         </p>
                     </div>
 

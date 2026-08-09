@@ -254,17 +254,7 @@
     gap: 0.75rem;
 }
 
-.design-nav-pill {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    height: 52px;
-    padding: 0 0.55rem 0 0.65rem;
-    border-radius: 9999px;
-    background: rgba(26, 26, 26, 0.85);
-    color: #fff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-}
+/* Demo uses live `.nav-pill.nav-glass` / `.nav-theme-toggle.nav-glass` from nav.css */
 
 .design-nav-home {
     width: 30px;
@@ -279,6 +269,7 @@
     font-weight: 600;
     letter-spacing: -0.04em;
     opacity: 0.9;
+    color: #fff;
 }
 
 .design-nav-contact {
@@ -295,22 +286,12 @@
     letter-spacing: -0.04em;
 }
 
-.design-theme-toggle {
-    width: 52px;
-    height: 52px;
-    border-radius: 9999px;
-    background: rgba(26, 26, 26, 0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-}
-
 .design-theme-knob {
     width: 18px;
     height: 18px;
     border-radius: 9999px;
     background: #fff;
+    margin: auto;
 }
 
 .design-social-circle {

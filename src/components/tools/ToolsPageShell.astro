@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import NavBar from "../NavBar.astro";
 import Footer from "../Footer.astro";
 import "../../styles/tools.css";
 
@@ -21,11 +20,7 @@ const mainMax = wide ? "max-w-[1280px]" : narrow ? "max-w-[550px]" : "max-w-[110
 
 <BaseLayout home={false} title={title} noindex={true} description={description}>
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
-        <div class="nav-bar-container" transition:persist="site-nav" transition:name="site-nav">
-            <NavBar />
-        </div>
-
-        <div class="proton-root contents min-h-screen w-auto">
+        <div class="site-root contents min-h-screen w-auto">
             <main
                 class:list={[
                     "relative mx-auto flex h-min w-full flex-none flex-col flex-nowrap content-center items-stretch justify-start gap-10 bg-bg pb-24 pt-[120px] max-narrow:gap-8 max-narrow:pt-[100px]",

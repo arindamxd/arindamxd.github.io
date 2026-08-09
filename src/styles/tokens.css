@@ -1,0 +1,40 @@
+/* Design tokens — semantic colors, fonts, breakpoints (design-system.md §4–5).
+ * Consumed by Tailwind @theme utilities (bg-bg, text-text, font-manrope, …).
+ * .dark flips stay unlayered so they beat @theme :root. */
+
+/* Class-based dark mode (html.dark) — overrides default prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Colors */
+    --color-bg: #ffffff;
+    --color-accent: #29ffff;
+    --color-primary: #2a29ff;
+    --color-text: #171717;
+    --color-surface: #f6f6f6;
+    --color-border: #e3e3e3;
+    --color-active: #9ef34a;
+    --color-inactive: #efefef;
+
+    /* Font families */
+    --font-manrope: 'Manrope', 'Manrope Placeholder', sans-serif;
+    --font-inter: 'Inter', 'Inter Placeholder', sans-serif;
+    --font-fragment: 'Fragment Mono', monospace;
+
+    /*
+     * Narrow layout breakpoint: max-width 609px.
+     * Tailwind screens are min-width, so `narrow:` = 610px and up
+     * (desktop). Use `max-narrow:` for ≤609px styles.
+     */
+    --breakpoint-narrow: 610px;
+}
+
+/* Dark theme: flip semantic tokens (outside @layer so they beat @theme :root) */
+.dark {
+    color-scheme: dark;
+    --color-bg: #222222;
+    --color-text: #f5f5f5;
+    --color-surface: #2a2a2a;
+    --color-border: #3a3a3a;
+    --color-inactive: #333333;
+}

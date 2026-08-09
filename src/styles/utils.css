@@ -1,0 +1,38 @@
+/* Shared site utilities (presence, scrollbars, overflow fallbacks).
+ * New custom CSS: put it in the matching feature sheet with semantic class names. */
+
+/* Presence & pointer events */
+[data-is-present='false'],
+[data-is-present='false'] * {
+    pointer-events: none !important;
+}
+
+/* SVG & button reset */
+.svg-container svg {
+    display: block;
+}
+
+[data-reset='button'] {
+    border: 0;
+    padding: 0;
+    background: none;
+}
+
+/* Scrollbar hiding */
+[data-hide-scrollbars='true'] {
+    scrollbar-width: none; /* Firefox */
+}
+[data-hide-scrollbars='true']::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+[data-hide-scrollbars='true']::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+/* Overflow fallback */
+@supports not (overflow: clip) {
+    :root {
+        --overflow-clip-fallback: hidden;
+    }
+}

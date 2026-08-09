@@ -1,6 +1,6 @@
 # Design system — arindamxd.github.io
 
-Source of truth for UI/UX architecture on this site. Prefer matching **existing patterns in code** over inventing new ones. Tokens live in [`src/styles/global.css`](../src/styles/global.css); motion in [`src/styles/motion.css`](../src/styles/motion.css).
+Source of truth for UI/UX architecture on this site. Prefer matching **existing patterns in code** over inventing new ones. Tokens live in [`src/styles/tokens.css`](../src/styles/tokens.css) (imported via [`global.css`](../src/styles/global.css)); motion in [`src/styles/motion.css`](../src/styles/motion.css).
 
 **Living preview:** [`/design`](../src/pages/design.astro) (`noindex`) — interactive gallery of tokens, components, and roadmap UX targets.
 
@@ -24,6 +24,7 @@ Source of truth for UI/UX architecture on this site. Prefer matching **existing 
 ```
 BaseLayout          → SEO, theme, ClientRouter, Lenis, page loader
   NavBar            → floating pill (persisted across transitions)
+  .site-root        → page content scope (wraps main sections)
   main / sections   → content
   Footer            → contact shell (max 550px)
 ```
@@ -36,7 +37,69 @@ BaseLayout          → SEO, theme, ClientRouter, Lenis, page loader
 | **Content** (`src/content/`) | JSON catalogs + Markdown bodies |
 | **Utils** (`src/utils/`) | Parse/merge content → typed models |
 | **Scripts** (`src/scripts/`) | Client behavior (scramble, reveal, tools) |
-| **Styles** | Tokens + section-specific CSS; tools share `tools.css` |
+| **Styles** | See CSS architecture below |
+
+### CSS architecture
+
+**Entry:** [`src/styles/global.css`](../src/styles/global.css) — import order **is** the cascade. [`BaseLayout`](../src/layouts/BaseLayout.astro) imports only this file.
+
+```
+global.css
+  → tailwindcss
+  → tokens.css       (@theme + .dark + dark variant)
+  → fonts.css
+  → base.css
+  → motion.css
+  → nav.css · utils.css
+  → hero.css · projects.css · testimonials.css · brands.css · skills.css
+```
+
+| File | Owns |
+| --- | --- |
+| [`tokens.css`](../src/styles/tokens.css) | Semantic colors, fonts, `--breakpoint-narrow` |
+| [`fonts.css`](../src/styles/fonts.css) | `@font-face` |
+| [`base.css`](../src/styles/base.css) | Reset + `--site-will-change-override` / aspect-ratio support |
+| [`motion.css`](../src/styles/motion.css) | Page loader, appear / reveal |
+| [`nav.css`](../src/styles/nav.css) | Floating `.nav-bar-container` |
+| [`utils.css`](../src/styles/utils.css) | Presence, scrollbars, overflow helpers |
+| [`hero.css`](../src/styles/hero.css) | Hero ID card, tie, scramble, location |
+| [`projects.css`](../src/styles/projects.css) | Sticky project media cards |
+| [`testimonials.css`](../src/styles/testimonials.css) | Phone carousel, hand art, gestures |
+| [`brands.css`](../src/styles/brands.css) | Logo marquee |
+| [`skills.css`](../src/styles/skills.css) | Skill chip tooltips |
+| [`tools.css`](../src/styles/tools.css) | **Page-scoped** — tools hub / utilities only |
+| [`design.css`](../src/styles/design.css) | **Page-scoped** — `/design` gallery only |
+
+Do **not** `@import` `tools.css` or `design.css` into `global.css`.
+
+### Naming (`site-root` + `--site-*`)
+
+Page shells wrap content in **`site-root`**:
+
+```html
+<div class="site-root contents min-h-screen w-auto">
+  <!-- sections -->
+</div>
+```
+
+Hero / layout CSS is scoped as `.site-root .hero-…` (and similar). Layout helpers use **`--site-*`** variables (set in `base.css` / consumed in feature sheets):
+
+| Variable | Role |
+| --- | --- |
+| `--site-will-change-override` | Safari-safe `will-change` (default `none`) |
+| `--site-will-change-effect-override` | Transform effect override on animated nodes |
+| `--site-aspect-ratio-supported` | Aspect-ratio fallback height helper |
+| `--site-viewport-height` | Nav position vs viewport (optional override) |
+| `--site-canvas-fixed-position` | Nav `position` override (default `fixed`) |
+| `--site-gap` | Legacy gap token (testimonials) |
+| `--site-paragraph-spacing` | Local paragraph spacing override |
+| `--site-text-wrap-override` | e.g. `balance` on select text blocks |
+
+**Rules**
+
+- Put new custom CSS in the matching feature sheet with **semantic** class names (`.hero-…`, `.projects-card`, `.tools-…`).
+- Prefer Tailwind utilities + design tokens (`bg-bg`, `text-text`, …) when they fit.
+- Do not invent a second root wrapper or a parallel variable namespace.
 
 **Private tools** (`/tools`): hub + one route per tool. Register tools in [`src/utils/tools.ts`](../src/utils/tools.ts). Shell: [`ToolsPageShell.astro`](../src/components/tools/ToolsPageShell.astro).
 
@@ -241,12 +304,12 @@ Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./
 
 ### Nav pill (detailed)
 
-[`NavBar.astro`](../src/components/NavBar.astro) — floating, persisted across View Transitions.
+[`NavBar.astro`](../src/components/NavBar.astro) — floating glass chrome, mounted once from [`BaseLayout.astro`](../src/layouts/BaseLayout.astro) (outside page shells so `backdrop-filter` works). Persisted across View Transitions.
 
 | Piece | Spec |
 | --- | --- |
 | Height | `60px` → `52px` narrow |
-| Fill | Dark translucent glass (`rgba(26,26,26,0.7)`), `backdrop-blur` ~7px, soft shadow |
+| Fill | Shared `.nav-glass` — dark translucent (`rgba(26,26,26,0.7)` / dark `rgba(48,48,48,0.82)`), `backdrop-filter` blur 7px + saturate, soft shadow. Container must not use `transform` or `overflow: hidden` ancestors or frost breaks. |
 | Home control | Circle `34→30` |
 | Links | Manrope `16→14/13`, white, `data-scramble` |
 | Contact chip | Pill `46→40`, white fill → hover `primary` |
@@ -443,8 +506,9 @@ Authoring docs: [`blog-authoring.md`](./blog-authoring.md), [`project-authoring.
 6. **Interaction** — scramble on key links; back control pattern on subpages.
 7. **Theme** — verify light and dark; icons invert correctly.
 8. **Motion** — optional reveal; Lenis-safe nested scroll.
-9. **SEO** — private utilities: `noindex={true}`.
-10. **Registry** — tools go through `siteTools`, not one-off orphan pages.
+9. **CSS home** — page content under `site-root`; new rules in the matching feature sheet (`hero.css`, `projects.css`, …) or Tailwind — not a one-off orphan stylesheet.
+10. **SEO** — private utilities: `noindex={true}`.
+11. **Registry** — tools go through `siteTools`, not one-off orphan pages.
 
 ---
 
@@ -457,6 +521,8 @@ Authoring docs: [`blog-authoring.md`](./blog-authoring.md), [`project-authoring.
 - Scroll chaining inside tools without `data-lenis-prevent`
 - Hard-coding light-only greys that don’t flip in `.dark`
 - Duplicating shell/footer width with a mismatched max-width (use **550px** for hub/footer alignment)
+- New global CSS outside the `global.css` import graph, or dumping page-only tools/design rules into the site-wide bundle
+- A second page-root wrapper or parallel CSS variable namespace instead of `site-root` / `--site-*`
 
 ---
 

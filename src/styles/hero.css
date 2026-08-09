@@ -1,0 +1,745 @@
+/* Hero ID card / tie / slots / scramble / location (+ mobile overrides) */
+.site-root .hero-tie-container {
+    flex: none;
+    width: auto;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%);
+    z-index: 1;
+    will-change: var(--site-will-change-effect-override, transform);
+}
+
+.site-root .hero-badge {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 80px 0 0;
+    overflow: hidden;
+}
+
+.site-root .hero-card {
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    flex: 1 0 0px;
+    /* Chrome pad/gap match footer shell: 9px top+sides (desktop) */
+    gap: 9px;
+    width: 1px;
+    height: min-content;
+    position: relative;
+    padding: 9px 9px 22px;
+    border-radius: 46px;
+    background-color: var(--color-surface);
+}
+
+.site-root .hero-card-hole {
+
+    aspect-ratio: 3.3157894736842106 / 1;
+    flex: none;
+    width: 63px;
+    height: var(--site-aspect-ratio-supported, 19px);
+    position: relative;
+    margin-bottom: 0;
+    border-radius: 46px;
+    background-color: var(--color-bg);
+}
+
+.site-root .hero-card-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: center;
+    flex: none;
+    gap: 40px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: var(--padding, 30px 40px 40px);
+    overflow: hidden;
+    border-radius: 36px;
+    background-color: var(--color-bg);
+    box-shadow: 0 7px 26.5px #00000008;
+    will-change: var(--site-will-change-override, transform);
+}
+
+.site-root .hero-card-slot-container {
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.site-root .hero-card-content-identity {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 36px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+}
+
+.site-root .hero-card-content-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: space-between;
+    flex: none;
+    gap: 20px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+    will-change: var(--site-will-change-effect-override, transform);
+}
+
+.site-root .hero-card-content-top-left {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: 1 1 auto;
+    gap: 18px;
+    min-width: 0;
+    width: auto;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+.site-root .hero-card-content-avatar {
+    aspect-ratio: 1 / 1;
+    flex: none;
+    width: 70px;
+    height: var(--site-aspect-ratio-supported, 70px);
+    position: relative;
+    border-radius: 100px;
+}
+
+.site-root .hero-card-content-main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: 1 0 0px;
+    gap: 12px;
+    width: 1px;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+.site-root .hero-card-content-main-text {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 7px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+.site-root .hero-card-content-main-text-name {
+    --site-paragraph-spacing: 0px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.site-root .hero-card-content-main-text-role {
+    --site-paragraph-spacing: 0px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    opacity: 0.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+
+
+.site-root .hero-card-content-top-available {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: 0 0 auto;
+    gap: 7px;
+    width: max-content;
+    height: min-content;
+    position: relative;
+    margin-left: auto;
+    padding: 4px 0 0;
+    overflow: visible;
+}
+
+.site-root .available-dot-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex: none;
+    gap: 10px;
+    width: min-content;
+    height: min-content;
+    position: relative;
+    padding: 3px 0 0;
+    overflow: visible;
+}
+
+.site-root .available-pulse {
+    aspect-ratio: 1 / 1;
+    flex: none;
+    width: 8px;
+    height: var(--site-aspect-ratio-supported, 8px);
+    position: relative;
+    border-radius: 100%;
+    background-color: var(--color-active);
+
+    /* Add animation */
+    animation: pulseOpacity 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulseOpacity {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.4;
+    }
+}
+
+.site-root .available-text-container,
+.site-root .hero-card-content-badge-text-container,
+.site-root .location-text-container {
+    --site-paragraph-spacing: 0px;
+    flex: none;
+    width: auto;
+    height: auto;
+    position: relative;
+    white-space: pre;
+}
+
+/* Keep both lines left-aligned; reserve width so cycle doesn’t shift the block */
+.site-root .available-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 13ch;
+}
+
+/* Keel-style scramble — used by Available for… (opt-in elsewhere via JS) */
+.available-scramble {
+    display: inline-flex;
+    cursor: pointer;
+    outline: none;
+}
+
+.available-scramble:focus-visible {
+    outline: 1px solid color-mix(in srgb, var(--color-text) 35%, transparent);
+    outline-offset: 2px;
+}
+
+.scramble-host,
+.scramble-word {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.scramble-char {
+    position: relative;
+}
+
+.scramble-random {
+    z-index: 2;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--scramble-fg, currentColor);
+    background-color: var(--scramble-bg, var(--color-surface));
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scramble-random {
+        display: none;
+    }
+}
+
+.site-root .hero-card-content-slogan {
+    --site-paragraph-spacing: 0px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+    will-change: var(--site-will-change-effect-override, transform);
+}
+
+.site-root .hero-card-content-others {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 22px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+    will-change: var(--site-will-change-effect-override, transform);
+}
+
+.hero-card-content-badge {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex: none;
+    gap: 10px;
+    width: min-content;
+    height: min-content;
+    position: relative;
+    padding: 6px 8px 6px 6px;
+    overflow: visible;
+    border-radius: 50px;
+    background-color: var(--color-surface);
+}
+
+.hero-card-content-description {
+    --site-paragraph-spacing: 0px;
+    --site-text-wrap-override: balance;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    opacity: 0.5;
+}
+
+.site-root .hero-card-content-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    flex: none;
+    gap: 10px;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Intro/project card footer — mobile-first compact stack */
+.site-root .hero-card-bottom {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 8px 16px 0;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+.site-root .hero-card-bottom > * {
+    flex: 0 0 auto;
+}
+
+.site-root .hero-card-bottom-location {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    gap: 5px;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    padding: 0;
+}
+
+/* Project detail: 64px gray strip — same as footer “Created by” / View all bars */
+.site-root .hero-card-bottom.hero-card-bottom--project {
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    min-height: 64px;
+    margin-top: -9px; /* cancel hero-card gap so total gray = 64px */
+    padding: 0 50px;
+    overflow: hidden;
+}
+
+.site-root .hero-card:has(.hero-card-bottom--project) {
+    padding-bottom: 0;
+}
+
+.site-root .location-icon {
+    flex: none;
+    width: 13px;
+    height: 14px;
+    position: relative;
+}
+
+.site-root .location-text-container {
+    white-space: nowrap;
+}
+
+.site-root .location-text-container p {
+    letter-spacing: -0.02em;
+}
+
+/* Web: horizontal bar — Bottom: pad 12px 50px 0, ~30px tall */
+@media (min-width: 610px) {
+    .site-root .hero-card-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
+        height: auto;
+        min-height: 30px;
+        padding: 12px 50px 0;
+        overflow: hidden;
+    }
+
+    .site-root .hero-card-bottom-location {
+        justify-content: flex-start;
+        width: min-content;
+    }
+
+    .site-root .location-text-container p {
+        letter-spacing: -0.04em;
+        text-align: left;
+    }
+}
+
+/* ======================================================
+   .hero-card-slot-dev — Horizontal Bar Group
+   ====================================================== */
+
+/* Main container — width fills the card; avoid fixed 432px overflow on phones */
+.hero-card-slot-div.hero-card-slot-centered {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+
+    width: 100%;
+    max-width: 432px;
+    height: min-content;
+    gap: 10px;
+
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+/* Bars */
+.hero-card-slot-div .hero-card-slot-bar-active,
+.hero-card-slot-div .hero-card-slot-bar-inactive {
+    flex: 1 0 0;
+    width: 1px;
+    height: 4px;
+    position: relative;
+    border-radius: 50px;
+    opacity: 1;
+}
+
+.hero-card-slot-bar-active {
+    background-color: var(--color-active);
+}
+.hero-card-slot-bar-inactive {
+    background-color: var(--color-inactive);
+}
+
+/* Safari/WebKit fallback */
+@supports (background: -webkit-named-image(i)) and (not (font-palette: dark)) {
+    .hero-card-slot-div.hero-card-slot-centered {
+        gap: 0;
+    }
+    .hero-card-slot-div.hero-card-slot-centered > * {
+        margin: 0 5px;
+    }
+    .hero-card-slot-div.hero-card-slot-centered > :first-child {
+        margin-left: 0;
+    }
+    .hero-card-slot-div.hero-card-slot-centered > :last-child {
+        margin-right: 0;
+    }
+}
+
+/* ======================================================
+   .hero-tie — Logo/Icon Stack
+   ====================================================== */
+
+/* Main container */
+.hero-tie.hero-tie-centered {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+
+    width: 63px;
+    height: min-content;
+    gap: 0;
+
+    position: relative;
+    padding: 0;
+    overflow: visible;
+}
+
+/* Child elements */
+.hero-tie .hero-tie-stripe {
+    flex: none;
+    width: 53px;
+    height: 30px;
+    position: relative;
+    background-color: var(--color-primary);
+    opacity: 1;
+}
+
+.hero-tie .hero-tie-holder {
+    flex: none;
+    width: 63px;
+    height: var(--site-aspect-ratio-supported, 44px);
+    aspect-ratio: 1.4318 / 1;
+    position: relative;
+}
+
+.hero-tie .hero-tie-box {
+    flex: none;
+    width: 31px;
+    height: var(--site-aspect-ratio-supported, 26px);
+    aspect-ratio: 1.1923 / 1;
+    position: relative;
+}
+
+/* Safari/WebKit fallback */
+@supports (background: -webkit-named-image(i)) and (not (font-palette: dark)) {
+    .hero-tie.hero-tie-centered {
+        gap: 0;
+    }
+    .hero-tie.hero-tie-centered > * {
+        margin: 0;
+    }
+    .hero-tie.hero-tie-centered > :first-child {
+        margin-top: 0;
+    }
+    .hero-tie.hero-tie-centered > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+
+@media (max-width: 609.98px) {
+    .site-root .hero-tie-container {
+        top: -14px;
+        will-change: unset;
+    }
+
+    /* Mobile Badge: pad-top 117px so lanyard shows under nav */
+    .site-root .hero-badge {
+        padding: 117px 0 0;
+        overflow: hidden;
+    }
+
+    /* Mobile Card: chrome matches footer shell (6px top+sides) */
+    .site-root .hero-card {
+        border-radius: 36px;
+        gap: 6px;
+        padding: 6px 6px 18px;
+    }
+
+    .site-root .hero-card-hole {
+        width: 46px;
+        height: var(--site-aspect-ratio-supported, 14px);
+        margin-bottom: 0;
+    }
+
+    /* Mobile White: pad 18×30×30, gap 26 */
+    .site-root .hero-card-content {
+        border-radius: 30px;
+        gap: 26px;
+        padding: 18px 30px 30px;
+    }
+
+    /* Mobile Identity (Top + slogan): gap 24 */
+    .site-root .hero-card-content-identity {
+        gap: 24px;
+    }
+
+    .site-root .hero-card-content-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+        justify-content: flex-start;
+        will-change: unset;
+    }
+
+    .site-root .hero-card-content-top-left {
+        flex: none;
+        order: 1;
+        align-self: stretch;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .site-root .hero-card-content-avatar {
+        width: 60px;
+        height: var(--site-aspect-ratio-supported, 60px);
+    }
+
+    .site-root .hero-card-content-main-text {
+        gap: 4px;
+    }
+
+    .site-root .hero-card-content-top-available {
+        order: 0;
+        align-self: flex-start;
+        margin-left: 0;
+        padding: 0;
+    }
+
+    .site-root .hero-card-content-main-text-name {
+        order: 0;
+    }
+
+    .site-root .hero-card-content-main-text-role {
+        order: 1;
+    }
+
+    .site-root .hero-card-content-slogan,
+    .site-root .hero-card-content-others,
+    .site-root .hero-card-content-buttons {
+        will-change: unset;
+    }
+
+    .site-root .hero-card-content-buttons {
+        align-items: flex-start;
+        align-content: flex-start;
+        flex-direction: column;
+    }
+
+    .hero-card-content-buttons > div:not(:first-child) {
+        display: none !important;
+    }
+
+    /* Mobile Bottom: pad 10×50×0, gap 9, stacked */
+    .site-root .hero-card-bottom {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 10px 50px 0;
+        overflow: hidden;
+    }
+
+    .site-root .hero-card-bottom.hero-card-bottom--project {
+        justify-content: center;
+        align-items: center;
+        height: 64px;
+        min-height: 64px;
+        margin-top: -6px; /* cancel mobile hero-card gap */
+        padding: 0 50px;
+    }
+
+    .site-root .hero-card:has(.hero-card-bottom--project) {
+        padding-bottom: 0;
+    }
+
+
+    .site-root .hand-art {
+        display: none;
+    }
+
+    /* Mobile lanyard: stripe 46×90, clip at ~76px (not full 117 pad) */
+    .hero-tie .hero-tie-stripe {
+        width: 46px;
+        height: 90px;
+    }
+
+    .hero-tie .hero-tie-holder {
+        aspect-ratio: unset;
+        width: 54px;
+        height: 37px;
+    }
+
+    .hero-tie .hero-tie-box {
+        aspect-ratio: unset;
+        width: 24px;
+        height: 17px;
+    }
+
+    .site-root .hero-card-content-top-available {
+        padding: 0;
+    }
+
+}
