@@ -1,7 +1,7 @@
 # AGENTS.md — project memory
 
 Git-tracked map + durable decisions for humans and coding agents.  
-**Current site version:** `1.0.3` ([`package.json`](package.json) · git tag `v1.0.3`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
+**Current site version:** `1.0.4` ([`package.json`](package.json) · git tag `v1.0.4`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
 **UI source of truth:** [`docs/design-system.md`](docs/design-system.md) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc) · Gallery: `/design`
 
 Keep this file in sync when you ship durable architecture decisions or bump the package version. Prefer linking to long recipes in `docs/` over duplicating them here.
@@ -12,9 +12,9 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 | Field | Value | Notes |
 | --- | --- | --- |
-| **Package** | `1.0.3` | Bump in `package.json` on release |
-| **Git tags** | `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
-| **Memory doc** | `1.0.3` | Same as package after each memory update on a release line |
+| **Package** | `1.0.4` | Bump in `package.json` on release |
+| **Git tags** | `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
+| **Memory doc** | `1.0.4` | Same as package after each memory update on a release line |
 | **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go, fold into the version on release |
 | **Node** | `>=22.12` | `engines` in package.json |
 | **Astro** | `^7.2` | Static output · Vite 8 |
@@ -152,6 +152,13 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 ## Changelog (memory)
 
 Versioned notes for **this memory file** and related agent guidance — full product history lives in [`CHANGELOG.md`](CHANGELOG.md). Align the top **Versions** row when the package bumps.
+
+### 1.0.4 — 2026-08-09
+
+- Release bump to `1.0.4`.
+- Feature sheets: Tailwind `@apply` for layout/type/token colors; page-scoped `tools.css` / `design.css` use `@reference` to `global.css`.
+- Design-system docs + Cursor rule + stack blurb synced for `@apply`-in-sheets.
+- Home contributions calendar + shared `SectionHeading`; gallery preview paths for Skills / Brands / Contributions.
 
 ### 1.0.3 — 2026-08-09
 

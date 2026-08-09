@@ -8,6 +8,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+### Changed
+
+### Fixed
+
+## [1.0.4] — 2026-08-09
+
+### Added
+
 - Home GitHub contributions calendar (`react-github-calendar` React island) before footer
 - Shared `SectionHeading` element (centered title + muted description) used across home marketing sections
 - Contributions section copy + usernames in `contributions-metadata.json`
@@ -20,8 +28,6 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Skills, credentials, testimonials, projects, blogs, and contributions sections share `SectionHeading`
 - `/design` Layout sample mounts live `SectionHeading` (no hand mock)
 - Brands metadata shape is `{ title, logos[] }`; credentials accordion binds per-root (multi-instance safe)
-
-### Fixed
 
 ## [1.0.3] — 2026-08-09
 
@@ -56,7 +62,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 See git tag `v1.0.1` and commit history for earlier notes.
 
-[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.4...HEAD
+[1.0.4]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/arindamxd/arindamxd.github.io/releases/tag/v1.0.1
