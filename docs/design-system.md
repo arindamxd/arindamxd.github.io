@@ -2,7 +2,7 @@
 
 Source of truth for UI/UX architecture on this site. Prefer matching **existing patterns in code** over inventing new ones. Tokens live in [`src/styles/tokens.css`](../src/styles/tokens.css) (imported via [`global.css`](../src/styles/global.css)); motion in [`src/styles/motion.css`](../src/styles/motion.css).
 
-**Living preview:** [`/design`](../src/pages/design.astro) (`noindex`) — interactive gallery of tokens, components, and roadmap UX targets.
+**Living preview:** [`/design`](../src/pages/design.astro) (`noindex`) — interactive gallery of tokens, components, and roadmap UX targets. Home / 404 / Project / Blog / Footer mounts use live components with `preview` + dummy copy from [`design-preview-data.ts`](../src/utils/design-preview-data.ts) (gradient media shell + logo mark — not live project/blog assets).
 
 ---
 
@@ -36,7 +36,7 @@ BaseLayout          → SEO, theme, ClientRouter, Lenis, page loader
 | **Elements** (`components/elements/`) | Reusable row/card/page body pieces |
 | **Content** (`src/content/`) | JSON catalogs + Markdown bodies |
 | **Utils** (`src/utils/`) | Parse/merge content → typed models |
-| **Scripts** (`src/scripts/`) | Client behavior (scramble, reveal, tools) |
+| **Scripts** (`src/scripts/`) | Client behavior (scramble, reveal, theme, image-fallback, tools) |
 | **Styles** | See CSS architecture below |
 
 ### CSS architecture
@@ -61,7 +61,7 @@ global.css
 | [`base.css`](../src/styles/base.css) | Reset + `--site-will-change-override` / aspect-ratio support |
 | [`motion.css`](../src/styles/motion.css) | Page loader, appear / reveal |
 | [`nav.css`](../src/styles/nav.css) | `.nav-bar-container`, shared `.nav-glass` / `.nav-pill` / `.nav-theme-toggle` |
-| [`utils.css`](../src/styles/utils.css) | Presence, scrollbars, overflow helpers |
+| [`utils.css`](../src/styles/utils.css) | Presence, scrollbars, overflow helpers; gallery `.design-media-ph` shell |
 | [`hero.css`](../src/styles/hero.css) | Hero ID card, tie, scramble, location |
 | [`projects.css`](../src/styles/projects.css) | Sticky project media cards |
 | [`testimonials.css`](../src/styles/testimonials.css) | Phone carousel, hand art, gestures |
@@ -304,7 +304,9 @@ Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./
 
 ### Nav pill (detailed)
 
-[`NavBar.astro`](../src/components/NavBar.astro) — floating glass chrome, mounted **once** from [`BaseLayout.astro`](../src/layouts/BaseLayout.astro) (direct `body` child, outside page `overflow-x-hidden` shells). Do **not** re-declare the nav in pages / tools / design.
+[`NavBar.astro`](../src/components/NavBar.astro) — floating glass chrome, mounted **once** from [`BaseLayout.astro`](../src/layouts/BaseLayout.astro) (direct `body` child, outside page `overflow-x-hidden` shells). Do **not** re-declare the fixed nav in pages / tools.
+
+**Exception — gallery:** `/design` Components mounts a second, **in-flow** [`NavBar`](../src/components/NavBar.astro) with `preview` (dummy Contact mailto · `#home` / `#project` / `#blog` anchors) inside `.design-nav-demo` so glass reads on the gradient shell. That preview is not `transition:persist` and is not the site chrome.
 
 | Piece | Spec |
 | --- | --- |
@@ -317,11 +319,22 @@ Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./
 | Persist | `transition:persist="site-nav"` only — **never** `transition:name` / `view-transition-name` on the nav (Chromium drops backdrop blur) |
 | Page shells | Prefer `overflow-x-hidden` (not `overflow-hidden`) on the page wrapper so WebKit can still frost |
 
-`/design` Components demo mounts live [`NavBar`](../src/components/NavBar.astro) with `preview` (in-flow, not fixed) — same glass classes as BaseLayout chrome.
-
 ### Theme toggle
 
-Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. Clip the sliding icons on the **inner** `.nav-theme-toggle__track` (`overflow: hidden` + `w-[200%]`), not on the glass node itself — same-element `overflow: hidden` + `backdrop-filter` breaks frost in Chrome. Track slides `300ms` with house cubic-bezier under `html.dark`; `data-theme-toggle`.
+Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. **Do not** put `overflow: hidden` on the glass node — same-element clip + `backdrop-filter` breaks frost in Chrome. Clip on the inner `.nav-theme-toggle__clip` (`overflow: hidden` + `border-radius: inherit`); the sliding `.nav-theme-toggle__track` is `width: 200%` and translates `300ms` with house cubic-bezier under `html.dark`. `data-theme-toggle` (all toggles sync via [`theme.js`](../src/scripts/theme.js)).
+
+### `/design` gallery placeholders
+
+Dummy media for `preview` mounts — **not** live Camerax / blog / author photos:
+
+| Asset / class | Role |
+| --- | --- |
+| [`design-media-placeholder.svg`](../public/assets/resources/design-media-placeholder.svg) | Transparent shell; paint via `.design-media-ph` / `img[src*="design-media-placeholder"]` in [`utils.css`](../src/styles/utils.css) — same token gradient as `.design-nav-demo` (surface → primary mix), flips with theme |
+| [`design-logo-placeholder.svg`](../public/assets/resources/design-logo-placeholder.svg) | White **A** in rounded frame for project `thumb` on colored `thumb_bg_color` |
+| [`design-preview-data.ts`](../src/utils/design-preview-data.ts) | Dummy author, experiences, credentials, testimonials, projects, blogs, privacy frontmatter |
+| [`image-fallback.js`](../src/scripts/image-fallback.js) | Capture-phase: broken `<img>` → media shell (or logo mark inside `.project-logo`); loaded from BaseLayout |
+
+Testimonials phone reads `#testimonials-data` JSON from the section (preview embeds dummy quotes; live home uses the same embed path).
 
 ### Hero ID card (home)
 
@@ -376,15 +389,15 @@ Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. Clip the 
 
 ### Credentials accordion
 
-[`SectionCredentials`](../src/components/sections/SectionCredentials.astro): `data-credentials-accordion`; trigger `20→17` + plus→minus; CSS grid-rows expand `~0.4s`; expanded panel = nested title/org rows; outbound URLs use text+arrow.
+[`SectionCredentials`](../src/components/sections/SectionCredentials.astro): `data-credentials-accordion`; trigger `20→17` + plus→minus; CSS grid-rows expand `~0.4s`; expanded panel = nested title/org rows; outbound URLs use text+arrow. `/design` mounts with `preview`.
 
 ### Testimonials phone
 
-[`SectionTestimonials`](../src/components/sections/SectionTestimonials.astro): phone shell ~360×750 (scaled); `bg-primary` frame; `#prevButton` / `#nextButton` gesture zones; progress bars; quote `22px` white; person chip; side gradient panels. Home-only signature — don’t reuse as generic carousel chrome.
+[`SectionTestimonials`](../src/components/sections/SectionTestimonials.astro): phone shell ~360×750 (scaled); `bg-primary` frame; `#prevButton` / `#nextButton` gesture zones; progress bars; quote `22px` white; person chip; side gradient panels. Home-only signature — don’t reuse as generic carousel chrome. `/design` mounts with `preview` (dummy quotes via embedded `#testimonials-data`).
 
 ### Footer contact shell
 
-[`Footer.astro`](../src/components/Footer.astro) — always `max-w-[550px]`.
+[`Footer.astro`](../src/components/Footer.astro) — always `max-w-[550px]`. `/design` mounts with `preview`.
 
 | Piece | Spec |
 | --- | --- |
@@ -405,6 +418,7 @@ Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. Clip the 
 | Height | `400→280` |
 | Frame | `rounded-[45px]` `p-[9px]` over banner image |
 | Caption | Pill **overlaid** at bottom (`justify-end`): logo disc + title `16→14` + desc `/60` `14→13` + arrow circle on `bg-surface` |
+| Gallery | `/design` → Project list uses `SectionProjects` `preview` + `design-logo-placeholder` / media shell |
 
 ### Project metadata rows
 
@@ -919,7 +933,7 @@ If pursued: stream UI to existing shells (550px), not a second visual system.
 | Enhancement | Notes |
 | --- | --- |
 | **Token CSS variables for motion** | `--ease-standard`, `--duration-fast/mid/slow` |
-| **Component gallery** | Living style guide at [`/design`](../src/pages/design.astro) (`noindex`) — tokens, components, roadmap UX previews |
+| **Component gallery** | Living style guide at [`/design`](../src/pages/design.astro) (`noindex`) — tokens, live `preview` sections, roadmap UX; dummy media via `design-preview-data.ts` |
 | **Lint** | Fail PRs that introduce raw hex outside tokens or Inter as new display usage |
 | **Cursor / agent** | Keep `.cursor/rules/design-system.mdc` in sync when tokens change; optional Motion [AI Kit](https://motion.dev/) if Motion is adopted |
 | **Visual regression** | Lightweight Playwright screenshots for home light/dark |

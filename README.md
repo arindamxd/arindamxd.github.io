@@ -61,7 +61,9 @@ npm run preview  # preview production build
 /
 ├── .github/workflows/deploy.yml   # GitHub Pages (push to trunk)
 ├── .well-known/assetlinks.json    # Android App Links
+├── AGENTS.md                      # Git-tracked agent / project memory
 ├── docs/
+│   ├── design-system.md           # UI/UX source of truth
 │   ├── blog-authoring.md          # Blog JSON catalog + Markdown authoring
 │   └── project-authoring.md       # Project JSON catalog + Markdown body
 ├── public/
@@ -79,6 +81,7 @@ npm run preview  # preview production build
 │   ├── pages/
 │   │   ├── index.astro            # Home
 │   │   ├── 404.astro
+│   │   ├── design.astro           # Living design gallery (noindex)
 │   │   ├── tools.astro            # Local MD / catalog authoring helper
 │   │   ├── projects.astro
 │   │   ├── projects/[slug]/          # index + privacy-policy
@@ -268,6 +271,8 @@ Loaded from `BaseLayout.astro`:
 
 | Doc | What it’s for |
 | --- | --- |
+| [AGENTS.md](./AGENTS.md) | Git-tracked agent / project memory (durable decisions) |
+| [docs/design-system.md](./docs/design-system.md) | UI/UX source of truth · living gallery at `/design` |
 | [docs/blog-authoring.md](./docs/blog-authoring.md) | Blog catalog + Markdown authoring |
 | [docs/project-authoring.md](./docs/project-authoring.md) | Project catalog + Markdown body |
 | [Mobile layout guidelines](#mobile-layout-guidelines) | Screen gutters (`px-2.5` cards / `px-5` text), nav, 360px phone mocks |

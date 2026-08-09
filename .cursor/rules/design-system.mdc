@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Design system (follow for all UI)
 
-Full reference: [`docs/design-system.md`](docs/design-system.md). Living gallery: `/design` (`src/pages/design.astro`). Tokens: `src/styles/tokens.css` (via `global.css`). Feature CSS: `hero.css`, `projects.css`, `testimonials.css`, `brands.css`, `skills.css`, `nav.css`, `utils.css`. Tools: `tools.css`. Gallery: `design.css`. Page scope: `site-root` + `--site-*` vars.
+Full reference: [`docs/design-system.md`](docs/design-system.md). Living gallery: `/design` (`src/pages/design.astro`). Project memory (versions, content/skills/tools map): [`AGENTS.md`](AGENTS.md). Tokens: `src/styles/tokens.css` (via `global.css`). Feature CSS: `hero.css`, `projects.css`, `testimonials.css`, `brands.css`, `skills.css`, `nav.css`, `utils.css`. Tools: `tools.css`. Gallery: `design.css`. Page scope: `site-root` + `--site-*` vars.
 
 ## Personality
 
@@ -45,7 +45,8 @@ Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Mini
 - **CSS home:** page content under `site-root`; feature sheets via `global.css` (`tokens`, `hero`, `projects`, …); `--site-*` for layout helpers. Tools/gallery stay page-scoped. Nav chrome lives in `BaseLayout` (not per-page).
 - **Back control:** 52px circle + “Back to …” label (see blog/project/tools shell) — not plain “← text”.
 - **Primary CTA:** pill, primary fill, optional scramble (`data-scramble`).
-- **Home / 404 / Project / Blog:** `/design` mounts live sections/pages with `preview` + dummy copy (`src/utils/design-preview-data.ts`).
+- **Home / 404 / Project / Blog / Footer:** `/design` mounts live sections/pages with `preview` + dummy copy (`src/utils/design-preview-data.ts`). Media = gradient shell (`design-media-placeholder` + `.design-media-ph`); project thumbs = white **A** logo mark (`design-logo-placeholder`). Broken imgs → `image-fallback.js`.
+- **Nav gallery:** `/design` may mount in-flow `NavBar preview` inside `.design-nav-demo` (not a second fixed chrome). Theme toggle clips on `.nav-theme-toggle__clip`, never on the glass node.
 - **Project:** sticky media cards (not blog list shell); metadata rows; links bar; privacy page type.
 - **Blog article:** left H1 + meta row + hairline + intro; body scale 38/22/18; disc/labeled/numbered bullets; `BlogCodeBlock` for fenced code; inline View all.
 - **Markdown docs:** `data-md-doc="<id>"` + `MarkdownDocPanel`; optional `.md-doc-trigger`.
