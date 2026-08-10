@@ -45,9 +45,10 @@ Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Mini
 - **CSS home:** page content under `site-root`; feature sheets via `global.css` (`tokens`, `hero`, `projects`, …); layout/type/color in sheets via **`@apply`** (page-scoped `tools.css` / `design.css` need `@reference "./global.css"`); `--site-*` for layout helpers. Tools/gallery stay page-scoped. Nav chrome lives in `BaseLayout` (not per-page).
 - **Section header:** [`SectionHeading`](src/components/elements/SectionHeading.astro) for centered marketing titles (not left-aligned tools/detail H1s).
 - **Back control:** 52px circle + “Back to …” label (see blog/project/tools shell) — not plain “← text”.
-- **Primary CTA:** pill, primary fill, optional scramble (`data-scramble`).
+- **Primary CTA:** pill, primary fill, optional scramble (`data-scramble` — hover on fine pointer, tap on touch).
 - **Home / 404 / Project / Blog / Footer:** `/design` mounts live sections/pages with `preview` + dummy copy (`src/utils/design-preview-data.ts`). Media = gradient shell (`design-media-placeholder` + `.design-media-ph`); project thumbs = white **A** logo mark (`design-logo-placeholder`). Broken imgs → `image-fallback.ts`.
-- **Nav gallery:** `/design` may mount in-flow `NavBar preview` inside `.design-nav-demo` (not a second fixed chrome). Theme toggle clips on `.nav-theme-toggle__clip`, never on the glass node.
+- **Nav gallery:** `/design` may mount in-flow `NavBar preview` inside `.design-nav-demo` (not a second fixed chrome). Theme toggle clips on `.nav-theme-toggle__clip`, never on the glass node; clip/track `pointer-events: none`.
+- **Skill chips:** hover tooltip on fine pointer; tap-to-toggle `.is-open` on touch via `skill-tooltips.ts`.
 - **Project:** sticky media cards (not blog list shell); metadata rows; links bar; privacy page type.
 - **Blog article:** left H1 + meta row + hairline + intro; body scale 38/22/18; disc/labeled/numbered bullets; `BlogCodeBlock` for fenced code; inline View all.
 - **Markdown docs:** `data-md-doc="<id>"` + `MarkdownDocPanel`; optional `.md-doc-trigger`.

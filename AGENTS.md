@@ -73,7 +73,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 | Brands | `src/content/brands-metadata.json` | `SectionBrands` marquee (`title` + `logos[]`) |
 | **Skills** | `src/content/skills-metadata.json` | `SectionSkills` + `SkillElement` (icons under `public/assets/skills/`) |
 | Testimonials | `src/content/testimonials-metadata.json` | Phone slider; DOM `#testimonials-data` |
-| Contributions | `src/content/contributions-metadata.json` | `SectionContributions` + calendar island |
+| Contributions | `src/content/contributions-metadata.json` | `SectionContributions` + `GitHubContributionsCalendar` (`client:only="react"`) |
 | Projects catalog | `src/content/projects-metadata.json` | [`projects.ts`](src/utils/projects.ts) |
 | Project bodies | `src/content/projects/*.md` | Merged at build |
 | Privacy policies | `src/content/privacy-policies/*.md` | Project privacy pages |
@@ -89,7 +89,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 - Metadata shape: `title`, `description`, `tech.stack[]` / related groups with `icon`, `label`, `description`
 - Current stack chips include Kotlin, Swift, Python, Flutter, Jetpack Compose, UPI, QR Scanner, Security/RASP; tools include Android Studio, Xcode, VS Code, Cursor, Claude Code, GitKraken (see JSON for truth)
 - `/design` mounts live `SectionSkills` with `preview` dummy catalog
-- Chip recipe: `54px` square, `9px` radius, surface + border, hover lift + tooltip — details in design-system
+- Chip recipe: `54px` square, `9px` radius, surface + border, hover lift + tooltip — details in design-system; touch uses `skill-tooltips.ts` (`.is-open`)
 
 ---
 
@@ -114,7 +114,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 
 | Script | Role |
 | --- | --- |
-| `theme.ts` | Light/dark · `html.dark` · syncs all `[data-theme-toggle]` |
+| `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
 | `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
 | `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` |
@@ -122,7 +122,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `reveal.ts` / `hero-appear.ts` / `count-up.ts` | Appear, scroll reveal, YoE count |
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
 | `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
-| `analytics.ts` | GA4 + Microsoft Clarity bootstrap + ClientRouter page views |
+| `analytics.ts` | GA4 + optional Microsoft Clarity (`CLARITY_ENABLED`) + ClientRouter page views |
 | `markdown-fullscreen.ts` | Fullscreen markdown doc panels |
 | Tools scripts | `tools-*.ts` for author / markdown / scramble-compare / analytics-reach |
 
@@ -151,6 +151,13 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 
 - No `transform`, `view-transition-name`, or **`overflow: hidden` on the same node as `.nav-glass`**.
 - Clip theme icons on **`.nav-theme-toggle__clip`**; track is `.nav-theme-toggle__track` (`width: 200%`, slides under `html.dark`).
+- Decorative clip/track use **`pointer-events: none`** so the `<button>` owns taps (mobile WebKit). Nav container `z-index: 40`. Toggle via document click delegation; `applyTheme` dispatches `themechange`.
+
+### Contributions calendar
+
+- Island: [`GitHubContributionsCalendar.tsx`](src/components/elements/GitHubContributionsCalendar.tsx) via **`client:only="react"`** (surface fallback) — avoids SSR theme guess / hydration mismatch.
+- Theme: `useSyncExternalStore` on `data-theme` / `.dark` + `themechange` / `storage` / `pageshow`; remount with `key={colorScheme}`.
+- Tear down `ActivityCalendar` on `astro:before-preparation` / `astro:before-swap` so head `<style>` cleanup does not `removeChild` after ClientRouter swap.
 
 ### Layout / color
 

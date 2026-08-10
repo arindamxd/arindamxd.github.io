@@ -29,6 +29,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Footer reach ticker figures refreshed (`footer-reach.json`)
 - Scramble: hover on fine pointers; tap scramble on touch via `pointerdown`
 - Contributions calendar uses `client:only="react"` and syncs theme via `useSyncExternalStore` + `themechange`
+- Docs synced: README client-scripts table, AGENTS durable notes (theme/calendar), design-system theme toggle + skill tap tooltips, Cursor design rule
 
 ### Removed
 

@@ -326,7 +326,7 @@ Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./
 
 ### Theme toggle
 
-Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. **Do not** put `overflow: hidden` on the glass node — same-element clip + `backdrop-filter` breaks frost in Chrome. Clip on the inner `.nav-theme-toggle__clip` (`overflow: hidden` + `border-radius: inherit`); the sliding `.nav-theme-toggle__track` is `width: 200%` and translates `300ms` with house cubic-bezier under `html.dark`. `data-theme-toggle` (all toggles sync via [`theme.ts`](../src/scripts/theme.ts)).
+Separate circle beside nav (`60→52`): `.nav-theme-toggle.nav-glass`. **Do not** put `overflow: hidden` on the glass node — same-element clip + `backdrop-filter` breaks frost in Chrome. Clip on the inner `.nav-theme-toggle__clip` (`overflow: hidden` + `border-radius: inherit`); the sliding `.nav-theme-toggle__track` is `width: 200%` and translates `300ms` with house cubic-bezier under `html.dark`. Clip/track are **`pointer-events: none`** (button is the hit target); `touch-action: manipulation`. `data-theme-toggle` syncs via [`theme.ts`](../src/scripts/theme.ts) (click delegation + `themechange`). Nav bar container sits at **`z-index: 40`**.
 
 ### `/design` gallery placeholders
 

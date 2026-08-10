@@ -262,7 +262,7 @@ Loaded from `BaseLayout.astro` (TypeScript under `src/scripts/`):
 
 | Script | Purpose |
 | --- | --- |
-| `theme.ts` | Light ↔ dark toggle + `localStorage` |
+| `theme.ts` | Light ↔ dark toggle + `localStorage` · click delegation · `themechange` event |
 | `available-text.ts` | Responsive “Available for…” copy on hero |
 | `testimonial-slider.ts` | Phone testimonial carousel |
 | `hero-appear.ts` | Load-time hero / badge appear |
@@ -270,8 +270,9 @@ Loaded from `BaseLayout.astro` (TypeScript under `src/scripts/`):
 | `smooth-scroll.ts` | Lenis (skipped when reduced motion) |
 | `count-up.ts` | Viewport count-up for `data-count-to` |
 | `image-fallback.ts` | Broken image → gallery placeholder |
-| `scramble-text.ts` | Shared `data-scramble` helpers |
-| `analytics.ts` | GA4 bootstrap (production only) |
+| `scramble-text.ts` | Shared `data-scramble` helpers · hover (fine pointer) + tap (touch) |
+| `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on touch |
+| `analytics.ts` | GA4 bootstrap (production); optional Microsoft Clarity via `CLARITY_ENABLED` |
 
 ---
 
