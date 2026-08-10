@@ -1,10 +1,16 @@
 // Theme toggle — light ↔ dark slide in circular button
 (function () {
     const STORAGE_KEY = 'theme';
+    /** Ignore duplicate activations within the slide animation window */
+    const TOGGLE_LOCK_MS = 320;
 
     type Theme = 'dark' | 'light';
 
+    let lockedUntil = 0;
+
     function getTheme(): Theme {
+        const attr = document.documentElement.getAttribute('data-theme');
+        if (attr === 'light' || attr === 'dark') return attr;
         return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
     }
 
@@ -32,22 +38,36 @@
             /* ignore quota / private mode */
         }
         syncChrome(theme);
+        // Notify React islands (contributions calendar, etc.) without relying on MutationObserver alone
+        window.dispatchEvent(
+            new CustomEvent('themechange', { detail: { theme } }),
+        );
     }
 
     function toggleTheme(): void {
+        const now = performance.now();
+        if (now < lockedUntil) return;
+        lockedUntil = now + TOGGLE_LOCK_MS;
         applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
     }
 
-    function bind(): void {
-        document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
-            btn.addEventListener('click', toggleTheme);
-        });
+    // Delegation survives ClientRouter swaps + late-mounted /design preview toggles.
+    // Hit target is the <button> itself — decorative track/clip use pointer-events: none.
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (!target.closest('[data-theme-toggle]')) return;
+        toggleTheme();
+    });
+
+    function sync(): void {
         syncChrome(getTheme());
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bind);
+        document.addEventListener('DOMContentLoaded', sync);
     } else {
-        bind();
+        sync();
     }
+    document.addEventListener('astro:page-load', sync);
 })();

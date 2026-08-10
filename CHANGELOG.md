@@ -13,6 +13,9 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Python skill chip (`public/assets/skills/python.svg`) on the home skills stack
 - Author gallery photos under `public/assets/author/gallery/` (`pic01`–`pic03`)
 - Coco and Ensecure project pages with Astro privacy policies at `/projects/<slug>/privacy-policy`
+- Skills tools chips: Cursor, Claude Code, and GitKraken (official logos under `public/assets/skills/`)
+- Skill chip tap-to-toggle tooltips on touch (`skill-tooltips.ts`)
+- Contribution calendar day tooltips (date + count)
 
 ### Changed
 
@@ -24,6 +27,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Project list order via `updated_date`: CameraX → Coco → Ensecure
 - Privacy callouts as highlighted blockquotes (no-analytics / on-device / permissions control)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
+- Scramble: hover on fine pointers; tap scramble on touch via `pointerdown`
+- Contributions calendar uses `client:only="react"` and syncs theme via `useSyncExternalStore` + `themechange`
 
 ### Removed
 
@@ -32,6 +37,9 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Static `public/apps/` Coco/Ensecure privacy HTML (redirects keep old `/apps/*/privacy-policy` URLs until end of 2026)
 
 ### Fixed
+
+- Theme toggle unreliable taps on mobile (track hit-testing + click delegation; nav z-index)
+- Contributions calendar colors sometimes stale after refresh / theme change
 
 ## [1.0.5] — 2026-08-09
 

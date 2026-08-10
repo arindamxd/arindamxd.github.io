@@ -1,4 +1,4 @@
-/* Skill chip tooltips — hidden until hover; single transform (no Tailwind translate) so centering isn't doubled */
+/* Skill chip tooltips — hover (fine pointer) · tap `.is-open` · keyboard `:focus-visible` */
 .skill-chip .skill-tooltip {
     opacity: 0 !important;
     visibility: hidden;
@@ -11,18 +11,42 @@
         visibility 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.skill-chip:hover .skill-tooltip {
+.skill-chip:hover .skill-tooltip,
+.skill-chip.is-open .skill-tooltip,
+.skill-chip:focus-visible .skill-tooltip {
     opacity: 1 !important;
     visibility: visible;
     transform: translate3d(-50%, 0, 0);
 }
 
+/* Touch UIs synthesize sticky :hover — only show via tap class or keyboard focus-visible */
 @media (hover: none) {
-    .skill-chip:hover .skill-tooltip {
+    .skill-chip:hover:not(.is-open):not(:focus-visible) .skill-tooltip {
         opacity: 0 !important;
         visibility: hidden;
         transform: translate3d(-50%, 6px, 0);
     }
+}
+
+/* Tap open: match hover lift (group-hover does not apply without a real hover) */
+.skill-chip.is-open .skill-chip-face {
+    translate: 0 -2px;
+    background-color: var(--color-bg);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+html.dark .skill-chip.is-open .skill-chip-face {
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.skill-chip.is-open .skill-chip-icon {
+    transform: scale(1.1);
+}
+
+.skill-chip:focus-visible {
+    outline: 1px solid color-mix(in srgb, var(--color-text) 35%, transparent);
+    outline-offset: 3px;
+    border-radius: 9px;
 }
 
 @media (prefers-reduced-motion: reduce) {

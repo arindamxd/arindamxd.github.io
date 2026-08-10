@@ -409,12 +409,22 @@ export const previewSkills = {
         ],
         tools: [
             {
-                icon: "/assets/skills/upi.svg",
-                label: "Studio",
+                icon: "/assets/skills/cursor.svg",
+                label: "Cursor",
                 description: "Dummy tool chip for the gallery.",
             },
             {
-                icon: "/assets/skills/rasp.svg",
+                icon: "/assets/skills/claude-code.svg",
+                label: "Claude Code",
+                description: "Dummy tool chip for the gallery.",
+            },
+            {
+                icon: "/assets/skills/gitkraken.svg",
+                label: "GitKraken",
+                description: "Dummy tool chip for the gallery.",
+            },
+            {
+                icon: "/assets/skills/vs-code.svg",
                 label: "Editor",
                 description: "Dummy tool chip for the gallery.",
             },

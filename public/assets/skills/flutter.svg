@@ -1,7 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
-  <path d="M17.2 4.5 6.5 15.2l3.7 3.7L24.6 4.5h-7.4Z" fill="#02569B"/>
-  <path d="M24.6 15.9 17.2 23.3l-3.7-3.7 7.4-7.4 3.7 3.7Z" fill="#02569B"/>
-  <path d="m13.5 26.9 3.7 3.7 3.7-3.7-3.7-3.7-3.7 3.7Z" fill="#027DFD"/>
-  <path d="m13.5 19.6 3.7 3.7 3.7-3.7-3.7-3.7-3.7 3.7Z" fill="#13B9FD"/>
-  <path d="m13.5 26.9 3.7-3.6v7.4l-3.7-3.8Z" fill="#062E56" opacity=".35"/>
+  <!-- Official Flutter logomark from https://flutter.dev/brand (icon_flutter, no wordmark) -->
+  <g transform="translate(4.4 1.2) scale(0.085)">
+    <polygon fill="#54C5F8" points="57.15,242.87 0,185.72 185.72,0 300,0"/>
+    <polygon fill="#54C5F8" points="300,171.43 185.72,171.43 85.73,271.44 142.85,328.57"/>
+    <polygon fill="#01579B" points="142.85,328.57 185.72,371.44 300,371.44 200.01,271.44"/>
+    <polygon fill="#29B6F6" points="85.73,271.44 142.85,328.57 200.01,271.44 142.85,214.3"/>
+  </g>
 </svg>

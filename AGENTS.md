@@ -87,7 +87,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 
 - Section: [`SectionSkills.astro`](src/components/sections/SectionSkills.astro) · chip: [`SkillElement.astro`](src/components/elements/SkillElement.astro) · CSS: [`skills.css`](src/styles/skills.css)
 - Metadata shape: `title`, `description`, `tech.stack[]` / related groups with `icon`, `label`, `description`
-- Current stack chips include Kotlin, Swift, Python, Flutter, Jetpack Compose, UPI, QR Scanner, Security/RASP (see JSON for truth)
+- Current stack chips include Kotlin, Swift, Python, Flutter, Jetpack Compose, UPI, QR Scanner, Security/RASP; tools include Android Studio, Xcode, VS Code, Cursor, Claude Code, GitKraken (see JSON for truth)
 - `/design` mounts live `SectionSkills` with `preview` dummy catalog
 - Chip recipe: `54px` square, `9px` radius, surface + border, hover lift + tooltip — details in design-system
 
@@ -116,7 +116,8 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | --- | --- |
 | `theme.ts` | Light/dark · `html.dark` · syncs all `[data-theme-toggle]` |
 | `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
-| `scramble-text.ts` | `data-scramble` / variants |
+| `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
+| `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` |
 | `available-text.ts` | Hero “Available for…” cycle |
 | `reveal.ts` / `hero-appear.ts` / `count-up.ts` | Appear, scroll reveal, YoE count |
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |

@@ -15,7 +15,8 @@
     width: 100%;
     max-width: 100%;
     height: auto;
-    z-index: 9;
+    /* Above in-page stacking (testimonials gestures z-10, sticky cards) — below tools overlay (80) / loader */
+    z-index: 40;
     box-sizing: border-box;
     pointer-events: none;
     transform: none;
@@ -99,6 +100,7 @@
 }
 
 .nav-theme-toggle {
+    position: relative;
     flex: none;
     width: 60px;
     height: 60px;
@@ -107,6 +109,8 @@
     overflow: visible;
     border-radius: 9999px;
     cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition: background-color 200ms ease-in-out;
 }
 
@@ -116,6 +120,8 @@
     height: 100%;
     overflow: hidden;
     border-radius: inherit;
+    /* Decorative only — 200% sliding track must not own hit-testing (iOS/WebKit) */
+    pointer-events: none;
 }
 
 .nav-theme-toggle__track {
@@ -126,6 +132,7 @@
     transform: translateX(0);
     transition: transform 300ms cubic-bezier(0.44, 0, 0.56, 1);
     will-change: transform;
+    pointer-events: none;
 }
 
 html.dark .nav-theme-toggle__track {

@@ -59,6 +59,21 @@
                 "icon": "/assets/skills/vs-code.svg",
                 "label": "Visual Studio Code",
                 "description": "Lightweight editor for scripts, configs, and side projects."
+            },
+            {
+                "icon": "/assets/skills/cursor.svg",
+                "label": "Cursor",
+                "description": "AI-native IDE for day-to-day coding, refactors, and agent workflows."
+            },
+            {
+                "icon": "/assets/skills/claude-code.svg",
+                "label": "Claude Code",
+                "description": "Anthropic’s coding agent for terminal-first builds and long-running tasks."
+            },
+            {
+                "icon": "/assets/skills/gitkraken.svg",
+                "label": "GitKraken",
+                "description": "Git client for visual history, branching, and day-to-day repo workflows."
             }
         ]
     }

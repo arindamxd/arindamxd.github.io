@@ -379,7 +379,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 
 ### Skill chips
 
-[`SkillElement`](../src/components/elements/SkillElement.astro): square `54px`, radius `9px`, `bg-surface` + `border-border`; hover lift + soft shadow; tooltip `rounded-[12px]` with label + short description + caret.
+[`SkillElement`](../src/components/elements/SkillElement.astro): square `54px`, radius `9px`, `bg-surface` + `border-border`; hover lift + soft shadow; tooltip `rounded-[12px]` with label + short description + caret. Desktop: hover. Touch: tap-to-toggle (`.is-open` via `skill-tooltips.ts`).
 
 ### Experience block
 

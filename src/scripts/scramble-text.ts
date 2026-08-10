@@ -7,6 +7,8 @@
 export const SCRAMBLE_CHARS = '0+-*|{}`/()$&';
 /** Disable hover scramble on small viewports (Keel). Available-for auto-cycle ignores this. */
 export const NO_SCRAMBLE_MQ = '(max-width: 1080px)';
+/** True hover (mouse/trackpad) — not sticky touch hover. */
+export const FINE_HOVER_MQ = '(hover: hover) and (pointer: fine)';
 export const REDUCED_MOTION_MQ = '(prefers-reduced-motion: reduce)';
 
 export interface PlayScrambleOptions {
@@ -26,9 +28,18 @@ export function prefersReducedMotion(): boolean {
     return window.matchMedia(REDUCED_MOTION_MQ).matches;
 }
 
-/** Hover scramble: desktop + motion OK */
+/** Desktop hover/focus scramble: wide viewport + fine pointer + motion OK */
 export function canScramble(): boolean {
-    return !window.matchMedia(NO_SCRAMBLE_MQ).matches && !prefersReducedMotion();
+    return (
+        !window.matchMedia(NO_SCRAMBLE_MQ).matches &&
+        window.matchMedia(FINE_HOVER_MQ).matches &&
+        !prefersReducedMotion()
+    );
+}
+
+/** Touch / coarse UI: scramble on tap (width gate does not apply). */
+export function canTapScramble(): boolean {
+    return !window.matchMedia(FINE_HOVER_MQ).matches && !prefersReducedMotion();
 }
 
 export function randomScrambleChar(): string {
@@ -331,7 +342,7 @@ export function stopScramble(el: Element | null | undefined): void {
     });
 }
 
-/** Opt-in: bind mouseenter/focus scramble on a trigger for one or more hosts. */
+/** Opt-in: bind hover/focus (desktop) + pointerdown tap (touch) scramble. */
 export function bindScrambleHover(
     trigger: Element | null | undefined,
     hosts: Element | (Element | null | undefined)[] | null | undefined,
@@ -345,13 +356,21 @@ export function bindScrambleHover(
     boundTriggers.add(trigger);
     trigger.classList.add('scramble-on-hover');
 
-    const play = () => {
+    const playHover = () => {
         if (!canScramble()) return;
         targets.forEach((t) => playScramble(t));
     };
 
-    trigger.addEventListener('mouseenter', play);
-    trigger.addEventListener('focus', play);
+    /** Touch taps are intermittent via synthetic mouseenter — drive scramble from pointerdown. */
+    const playTap = (event: Event) => {
+        if (!canTapScramble()) return;
+        if (event instanceof PointerEvent && event.pointerType === 'mouse') return;
+        targets.forEach((t) => playScramble(t, { allowMobile: true }));
+    };
+
+    trigger.addEventListener('mouseenter', playHover);
+    trigger.addEventListener('focus', playHover);
+    trigger.addEventListener('pointerdown', playTap);
 }
 
 /**

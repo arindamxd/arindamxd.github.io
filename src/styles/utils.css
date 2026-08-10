@@ -92,6 +92,15 @@ img.design-media-ph[src=''] {
     pointer-events: auto;
 }
 
+/* Floating UI portals tooltips to body — style outside the calendar root */
+.react-activity-calendar__tooltip {
+    font-family: var(--font-manrope);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    border-radius: 8px;
+    padding: 0.35em 0.65em;
+}
+
 /* Credentials accordion — grid open/close state (not expressible as utilities) */
 .credentials-panel {
     display: grid;

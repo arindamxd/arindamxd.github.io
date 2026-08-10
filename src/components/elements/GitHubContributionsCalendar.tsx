@@ -1,14 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { ActivityCalendar, type Activity, type ThemeInput } from "react-activity-calendar";
+import "react-activity-calendar/tooltips.css";
 
 const THEME: ThemeInput = {
     light: ["#efefef", "#c5c4ff", "#8a89ff", "#5554ff", "#2a29ff"],
     dark: ["#2a2a2a", "#3a3999", "#4a49cc", "#3a39e6", "#2a29ff"],
 };
 
-function readScheme(): "light" | "dark" {
+type Scheme = "light" | "dark";
+
+function readScheme(): Scheme {
     if (typeof document === "undefined") return "dark";
+    const attr = document.documentElement.getAttribute("data-theme");
+    if (attr === "light" || attr === "dark") return attr;
     return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
+function subscribeScheme(onStoreChange: () => void): () => void {
+    const root = document.documentElement;
+    const observer = new MutationObserver(onStoreChange);
+    observer.observe(root, { attributes: true, attributeFilter: ["class", "data-theme"] });
+
+    window.addEventListener("themechange", onStoreChange);
+    // Other tabs / bfcache restores can change stored theme without a mutation here
+    window.addEventListener("storage", onStoreChange);
+    window.addEventListener("pageshow", onStoreChange);
+
+    return () => {
+        observer.disconnect();
+        window.removeEventListener("themechange", onStoreChange);
+        window.removeEventListener("storage", onStoreChange);
+        window.removeEventListener("pageshow", onStoreChange);
+    };
 }
 
 type Props = {
@@ -17,22 +40,37 @@ type Props = {
     totalCount?: number;
 };
 
+/**
+ * Mounted via `client:only="react"` (see SectionContributions) so static SSR
+ * never paints a guessed theme. Before Astro ClientRouter swaps the DOM we
+ * unmount ActivityCalendar so its head `<style>` cleanup can `removeChild`
+ * while the node is still under `document.head`.
+ */
 export default function GitHubContributionsCalendar({
     username,
     contributions,
     totalCount,
 }: Props) {
-    const [colorScheme, setColorScheme] = useState<"light" | "dark">(readScheme);
+    const [alive, setAlive] = useState(true);
+    const colorScheme = useSyncExternalStore<Scheme>(
+        subscribeScheme,
+        readScheme,
+        (): Scheme => "dark",
+    );
 
     useEffect(() => {
-        const sync = () => setColorScheme(readScheme());
-        sync();
+        const tearDown = () => setAlive(false);
+        const revive = () => setAlive(true);
+        document.addEventListener("astro:before-preparation", tearDown);
+        document.addEventListener("astro:before-swap", tearDown);
+        // Same island can survive cancelled nav / soft remounts — revive on settle
+        document.addEventListener("astro:page-load", revive);
 
-        const root = document.documentElement;
-        const observer = new MutationObserver(sync);
-        observer.observe(root, { attributes: true, attributeFilter: ["class", "data-theme"] });
-
-        return () => observer.disconnect();
+        return () => {
+            document.removeEventListener("astro:before-preparation", tearDown);
+            document.removeEventListener("astro:before-swap", tearDown);
+            document.removeEventListener("astro:page-load", revive);
+        };
     }, []);
 
     if (!contributions.length) {
@@ -53,18 +91,45 @@ export default function GitHubContributionsCalendar({
             className="github-contributions-calendar w-full"
             aria-label={`${username} GitHub contributions`}
         >
-            <ActivityCalendar
-                data={contributions}
-                colorScheme={colorScheme}
-                theme={THEME}
-                fontSize={11}
-                blockSize={8}
-                blockMargin={2}
-                maxLevel={4}
-                labels={{
-                    totalCount: `${count} contributions in the last 8 months`,
-                }}
-            />
+            {alive ? (
+                <ActivityCalendar
+                    key={colorScheme}
+                    data={contributions}
+                    colorScheme={colorScheme}
+                    theme={THEME}
+                    fontSize={11}
+                    blockSize={8}
+                    blockMargin={2}
+                    maxLevel={4}
+                    labels={{
+                        totalCount: `${count} contributions in the last 8 months`,
+                    }}
+                    tooltips={{
+                        activity: {
+                            text: ({ count: dayCount, date }) => {
+                                const when = new Date(`${date}T12:00:00`).toLocaleDateString(
+                                    undefined,
+                                    {
+                                        weekday: "short",
+                                        month: "short",
+                                        day: "numeric",
+                                        year: "numeric",
+                                    },
+                                );
+                                const noun = dayCount === 1 ? "contribution" : "contributions";
+                                return `${dayCount} ${noun} on ${when}`;
+                            },
+                            placement: "top",
+                            withArrow: true,
+                        },
+                    }}
+                />
+            ) : (
+                <div
+                    className="w-full min-h-[132px] rounded-[14px] bg-surface"
+                    aria-hidden="true"
+                />
+            )}
         </div>
     );
 }

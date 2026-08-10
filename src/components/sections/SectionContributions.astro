@@ -114,10 +114,16 @@ const label = preview ? "preview" : usernames.join(" + ");
         class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center overflow-visible p-0"
     >
         <GitHubContributionsCalendar
-            client:load
+            client:only="react"
             username={label}
             contributions={contributions}
             totalCount={totalCount}
-        />
+        >
+            <div
+                slot="fallback"
+                class="github-contributions-calendar w-full min-h-[132px] rounded-[14px] bg-surface"
+                aria-hidden="true"
+            />
+        </GitHubContributionsCalendar>
     </div>
 </section>
