@@ -13,6 +13,6 @@ When the user asks to **commit** (e.g. “commit this”, “commit the changes�
 2. **Stage** — Include `CHANGELOG.md` with the rest of the intentional commit set (do not commit secrets).
 3. **Commit** — Follow the usual git commit protocol (status/diff/log → HEREDOC message → verify).
 
-Do **not** bump the package version, tag, or push unless the user also asked for a version bump/release (see [`.cursor/rules/version-bump.mdc`](version-bump.mdc)).
+Do **not** bump the package version or create a release tag unless the user also asked for a version bump/release (see [`.cursor/rules/version-bump.mdc`](version-bump.mdc)). **Never push** as part of commit (see [`.cursor/rules/no-push.mdc`](no-push.mdc)).
 
 On release bumps, Unreleased is folded into the version section as part of that workflow — still keep Unreleased accurate between releases by updating it on each “commit this” request.

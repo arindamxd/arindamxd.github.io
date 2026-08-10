@@ -8,6 +8,18 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+- Cursor rule `.cursor/rules/no-push.mdc`: never auto-push; confirm before any `git push`
+
+### Changed
+
+- Version-bump workflow is local-only (changelog → package → memory → commit → tag); push removed from the default release steps
+
+### Fixed
+
+## [1.0.6] — 2026-08-11
+
+### Added
+
 - Microsoft Clarity in production alongside GA4 (XOR-encoded project ID; ClientRouter page hints)
 - Reach tool header shortcuts to Google Console, Google Analytics, and Microsoft Clarity
 - Python skill chip (`public/assets/skills/python.svg`) on the home skills stack
@@ -119,7 +131,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 See git tag `v1.0.1` and commit history for earlier notes.
 
-[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.6...HEAD
+[1.0.6]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.2...v1.0.3

@@ -1,20 +1,21 @@
 ---
-description: When the user asks to bump the project version — full release workflow including commit, tag, and push
+description: When the user asks to bump the project version — local release (changelog, package, commit, tag); never push
 alwaysApply: true
 ---
 
 # Version bump / release
 
-When the user asks to **bump the project version**, **release**, or similar (e.g. “update to 1.0.5”, “bump version”), do the **full release** end-to-end — do not stop after editing files or committing locally unless they explicitly say otherwise (e.g. “bump only, don’t push”).
+When the user asks to **bump the project version**, **release**, or similar (e.g. “update to 1.0.5”, “bump version”), do the **local release** end-to-end — do not stop after editing files unless they explicitly say otherwise (e.g. “bump only, don’t commit”).
 
 ## Required steps (in order)
 
 1. **Changelog** — Move `[Unreleased]` notes in [`CHANGELOG.md`](CHANGELOG.md) into a new `## [X.Y.Z] — YYYY-MM-DD` section; leave empty Unreleased stubs; update compare links at the bottom.
 2. **Package** — Set `version` in [`package.json`](package.json) and the root entries in [`package-lock.json`](package-lock.json).
-3. **Memory** — Sync [`AGENTS.md`](AGENTS.md): header version, **Versions** table (Package / Git tags / Memory doc), and a short memory changelog entry for `X.Y.Z`.
+3. **Memory** — Sync [`AGENTS.md`](AGENTS.md): header version, **Versions** table (Package / Git tags / Memory doc), and a short memory changelog entry for `X.Y.Z`. Also bump the version line in [`README.md`](README.md) when it lists the package version.
 4. **Commit** — Stage those files (and any other intentional release edits) and commit with a message like `Release vX.Y.Z.`
 5. **Tag** — Create annotated tag `vX.Y.Z` on that commit (match package version).
-6. **Push** — `git push` the branch **and** the tag (`git push origin HEAD` and `git push origin vX.Y.Z`, or equivalent with tags).
+
+**Do not push** the branch or the tag. Reminding the user they can push themselves is fine; never run `git push` as part of this workflow. Push policy: [`.cursor/rules/no-push.mdc`](no-push.mdc).
 
 Follow the repo git safety rules (no force-push to main/trunk, no `--no-verify`, no amending unless the usual amend conditions apply).
 

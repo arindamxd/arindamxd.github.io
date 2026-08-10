@@ -1,7 +1,7 @@
 # AGENTS.md — project memory
 
 Git-tracked map + durable decisions for humans and coding agents.  
-**Current site version:** `1.0.5` ([`package.json`](package.json) · git tag `v1.0.5`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
+**Current site version:** `1.0.6` ([`package.json`](package.json) · git tag `v1.0.6`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
 **UI source of truth:** [`docs/design-system.md`](docs/design-system.md) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc) · Gallery: `/design`
 
 Keep this file in sync when you ship durable architecture decisions or bump the package version. Prefer linking to long recipes in `docs/` over duplicating them here.
@@ -12,27 +12,26 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 | Field | Value | Notes |
 | --- | --- | --- |
-| **Package** | `1.0.5` | Bump in `package.json` on release |
-| **Git tags** | `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
-| **Memory doc** | `1.0.5` | Same as package after each memory update on a release line |
+| **Package** | `1.0.6` | Bump in `package.json` on release |
+| **Git tags** | `v1.0.6`, `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
+| **Memory doc** | `1.0.6` | Same as package after each memory update on a release line |
 | **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go (required when asked to commit), fold into the version on release |
 | **Node** | `>=22.12` | `engines` in package.json |
 | **Astro** | `^7.2` | Static output · Vite 8 |
 | **Tailwind** | v4 via `@tailwindcss/vite` | Tokens in `src/styles/tokens.css` |
 | **License** | CC-BY-4.0 | See `LICENSE` |
 
-**When the user asks to bump / release the project version:** run the **full release** (do not stop at local-only steps unless they say so):
+**When the user asks to bump / release the project version:** run the **local release** (do not push):
 
 1. Fold `[Unreleased]` in [`CHANGELOG.md`](CHANGELOG.md) into `## [X.Y.Z] — YYYY-MM-DD` (+ compare links).
 2. Bump `version` in [`package.json`](package.json) and root [`package-lock.json`](package-lock.json).
-3. Sync this file: header version, **Versions** table, memory changelog entry.
+3. Sync this file: header version, **Versions** table, memory changelog entry; bump version line in [`README.md`](README.md) when present.
 4. Commit (`Release vX.Y.Z.`).
 5. Annotated tag `vX.Y.Z`.
-6. Push branch **and** tag to origin.
 
-Cursor rule: [`.cursor/rules/version-bump.mdc`](.cursor/rules/version-bump.mdc).
+**Never push** the branch or tag automatically. If the user asks to push, confirm first, then wait for an explicit yes. Rules: [`.cursor/rules/version-bump.mdc`](version-bump.mdc) · [`.cursor/rules/no-push.mdc`](no-push.mdc).
 
-**When the user asks to commit:** update [`CHANGELOG.md`](CHANGELOG.md) `[Unreleased]` with bullets for that work, stage it with the commit, then commit. Do not version-bump/tag/push unless they also asked for a release. Rule: [`.cursor/rules/commit-changelog.mdc`](.cursor/rules/commit-changelog.mdc).
+**When the user asks to commit:** update [`CHANGELOG.md`](CHANGELOG.md) `[Unreleased]` with bullets for that work, stage it with the commit, then commit. Do not version-bump/tag unless they also asked for a release. Rule: [`.cursor/rules/commit-changelog.mdc`](.cursor/rules/commit-changelog.mdc).
 
 ---
 
@@ -185,6 +184,7 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 | Nav / glass | `src/styles/nav.css`, `src/components/NavBar.astro` |
 | Site README | `README.md` |
 | Version bump / release | [`.cursor/rules/version-bump.mdc`](.cursor/rules/version-bump.mdc) · Versions section above |
+| Never auto-push | [`.cursor/rules/no-push.mdc`](.cursor/rules/no-push.mdc) |
 | Commit + changelog | [`.cursor/rules/commit-changelog.mdc`](.cursor/rules/commit-changelog.mdc) |
 
 ---
@@ -192,6 +192,13 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 ## Changelog (memory)
 
 Versioned notes for **this memory file** and related agent guidance — full product history lives in [`CHANGELOG.md`](CHANGELOG.md). Align the top **Versions** row when the package bumps.
+
+### 1.0.6 — 2026-08-11
+
+- Release bump to `1.0.6`.
+- Durable notes: mobile theme toggle hit-testing / `themechange`; contributions `client:only` + theme store; skill tap tooltips; Cursor / Claude Code / GitKraken tools.
+- Docs + design rule synced for touch scramble/tooltips and Clarity `CLARITY_ENABLED`.
+- Agent git policy: never auto-push; version-bump is local commit+tag only; push requires explicit confirmation (`.cursor/rules/no-push.mdc`).
 
 ### 1.0.5 — 2026-08-09
 
@@ -205,8 +212,9 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 - Feature sheets: Tailwind `@apply` for layout/type/token colors; page-scoped `tools.css` / `design.css` use `@reference` to `global.css`.
 - Design-system docs + Cursor rule + stack blurb synced for `@apply`-in-sheets.
 - Home contributions calendar + shared `SectionHeading`; gallery preview paths for Skills / Brands / Contributions.
-- Version-bump workflow: when asked to bump version → changelog + package + memory → commit → tag → push (rule: `.cursor/rules/version-bump.mdc`).
+- Version-bump workflow: when asked to bump version → changelog + package + memory → commit → tag (local only; no push) (rule: `.cursor/rules/version-bump.mdc`).
 - Commit workflow: when asked to commit → update `CHANGELOG.md` Unreleased first, then commit (rule: `.cursor/rules/commit-changelog.mdc`).
+- Never auto-push to origin; if the user asks to push, confirm and wait for yes (rule: `.cursor/rules/no-push.mdc`).
 - Mandatory TypeScript: strict `tsconfig.json`, all `src/scripts` + config as `.ts`, `allowJs: false`, check-on-build.
 
 ### 1.0.3 — 2026-08-09

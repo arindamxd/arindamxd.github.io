@@ -1,0 +1,28 @@
+---
+description: Never push to origin unless the user confirms after an explicit ask
+alwaysApply: true
+---
+
+# No automatic git push
+
+**Never** run `git push` (branch, tags, `--tags`, upstream `-u`, force, or any remote publish) as part of commit, version-bump, release, PR prep, or “ship it” workflows.
+
+## Default
+
+- Stop after the local commit and/or annotated tag.
+- You may tell the user which commands would publish (`git push origin HEAD`, `git push origin vX.Y.Z`, etc.) — do **not** run them.
+
+## If the user asks to push
+
+Even when they explicitly say “push”, “push to origin”, “publish the tag”, or similar:
+
+1. **Confirm first** — Ask a short confirmation (what will be pushed: branch and/or which tags) and **wait** for a clear affirmative (e.g. “yes”, “confirm”, “go ahead”).
+2. Only then run the push.
+3. Treat ambiguous or casual phrasing (“ship it”, “deploy”, “release”) as **not** authorization to push unless they also confirm after you ask.
+
+## Still forbidden without separate explicit request + confirmation
+
+- Force push (`--force`, `--force-with-lease`) to `main` / `master` / `trunk` — warn and require an unmistakable confirm.
+- Pushing unrelated remotes or rewriting shared history.
+
+Related: [`.cursor/rules/version-bump.mdc`](version-bump.mdc) (local tag only) · [`.cursor/rules/commit-changelog.mdc`](commit-changelog.mdc).
