@@ -4,6 +4,7 @@
  * Obfuscated with the rest of client JS on `astro build`.
  */
 import {
+    CLARITY_ENABLED,
     clarityScriptUrl,
     gtagScriptUrl,
     isAnalyticsEnabled,
@@ -76,8 +77,10 @@ function boot(): void {
     const measurementId = resolveMeasurementId();
     if (measurementId) ensureGtag(measurementId);
 
-    const clarityId = resolveClarityId();
-    if (clarityId) ensureClarity(clarityId);
+    if (CLARITY_ENABLED) {
+        const clarityId = resolveClarityId();
+        if (clarityId) ensureClarity(clarityId);
+    }
 
     if (!window.__gaPageLoadBound) {
         window.__gaPageLoadBound = true;

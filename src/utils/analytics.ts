@@ -16,6 +16,9 @@ const GA_ID_PAYLOAD = [
 /** Encoded bytes for the Clarity project ID. */
 const CLARITY_ID_PAYLOAD = [34, 70, 226, 129, 36, 230, 125, 160, 46, 81] as const;
 
+/** Flip to `true` to load Microsoft Clarity in production (GA4 is independent). */
+export const CLARITY_ENABLED = false;
+
 function decodePayload(payload: readonly number[]): string {
     return payload
         .map(

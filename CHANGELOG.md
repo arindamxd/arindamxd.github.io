@@ -16,6 +16,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Changed
 
+- Microsoft Clarity gated behind `CLARITY_ENABLED` (off by default; GA4 unchanged)
 - `ToolsPageShell` optional `header-actions` slot (top-right of title row)
 - `.tools-chip` works as links (`inline-flex`, no underline)
 - X social icon: use `/assets/socials/x.svg` (renamed from `x-small.svg`)
