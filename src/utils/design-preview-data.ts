@@ -19,6 +19,7 @@ export const previewAuthor = {
     role: "Product Designer",
     subRole: "Mobile · Systems",
     bio: "Dummy bio for the design gallery — not live site content.",
+    email: "hello@example.com",
     canonical: "https://example.com/",
     ogImage: "/assets/resources/og-image.png",
     location: "India",

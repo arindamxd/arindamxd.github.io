@@ -165,16 +165,14 @@ import { bootOnce } from './boot-once';
             function showTestimonial(index: number): void {
                 updateProgressBars(index);
 
-                setTimeout(() => {
-                    const testimonial = testimonials[index];
-                    if (!testimonial) return;
-                    testimonialPerson!.style.display = 'flex';
-                    starsIcon!.style.display = 'block';
-                    testimonialText!.textContent = testimonial.text;
-                    testimonialAuthor!.textContent = testimonial.author;
-                    testimonialPosition!.textContent = testimonial.position;
-                    bgImage.src = testimonial.background;
-                }, 100);
+                const testimonial = testimonials[index];
+                if (!testimonial) return;
+                testimonialPerson!.style.display = 'flex';
+                starsIcon!.style.display = 'block';
+                testimonialText!.textContent = testimonial.text;
+                testimonialAuthor!.textContent = testimonial.author;
+                testimonialPosition!.textContent = testimonial.position;
+                bgImage.src = testimonial.background;
             }
 
             function nextTestimonial(click: boolean): void {

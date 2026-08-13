@@ -4,9 +4,14 @@ import ProjectPage from "../../../components/elements/ProjectPage.astro";
 import SectionProjects from "../../../components/sections/SectionProjects.astro";
 import Footer from "../../../components/Footer.astro";
 import { getProjects } from "../../../utils/projects";
-import { absoluteUrl, siteAuthor, siteOrigin } from "../../../utils/seo";
+import {
+    absoluteUrl,
+    breadcrumbJsonLd,
+    isoDate,
+    siteAuthor,
+    siteOrigin,
+} from "../../../utils/seo";
 
-// props
 const { project } = Astro.props;
 
 export async function getStaticPaths() {
@@ -18,26 +23,51 @@ export async function getStaticPaths() {
 
 const description = project.desc.short || project.desc.long;
 const image = project.images.banner || project.images.thumb;
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: project.title,
-    description: project.desc.long || project.desc.short,
-    image: absoluteUrl(image),
-    applicationCategory: project.header.category,
-    operatingSystem: "Android",
-    author: {
-        "@type": "Person",
-        name: siteAuthor.name,
-        url: siteOrigin + "/",
+const published = isoDate(project.header.released_date);
+const modified = isoDate(project.header.updated_date);
+const canonicalPath = `/projects/${project.slug}/`;
+const pageUrl = absoluteUrl(canonicalPath);
+const jsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: project.title,
+        description: project.desc.long || project.desc.short,
+        image: {
+            "@type": "ImageObject",
+            url: absoluteUrl(image),
+        },
+        applicationCategory: project.header.category,
+        operatingSystem: "Android",
+        inLanguage: "en-US",
+        author: {
+            "@type": "Person",
+            name: siteAuthor.name,
+            url: siteOrigin + "/",
+        },
+        datePublished: published,
+        dateModified: modified,
+        url: project.header.link || pageUrl,
+        ...(project.header.link
+            ? {
+                  installUrl: project.header.link,
+                  offers: {
+                      "@type": "Offer",
+                      price: "0",
+                      priceCurrency: "USD",
+                      availability: "https://schema.org/InStock",
+                      url: project.header.link,
+                  },
+              }
+            : {}),
+        ...(project.source_code ? { codeRepository: project.source_code } : {}),
     },
-    datePublished: project.header.released_date.toISOString(),
-    dateModified: project.header.updated_date.toISOString(),
-    ...(project.header.link
-        ? { url: project.header.link, installUrl: project.header.link }
-        : { url: absoluteUrl(`/projects/${project.slug}/`) }),
-    ...(project.source_code ? { codeRepository: project.source_code } : {}),
-};
+    breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Projects", path: "/projects/" },
+        { name: project.title, path: canonicalPath },
+    ]),
+];
 ---
 
 <BaseLayout
@@ -45,13 +75,16 @@ const jsonLd = {
     title={project.title}
     description={description}
     image={image}
+    imageAlt={project.title}
     type="article"
+    publishedTime={published}
+    modifiedTime={modified}
     jsonLd={jsonLd}
 >
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
         <div class="site-root contents min-h-screen w-auto">
-            <main class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
+            <main id="main" class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
                 <ProjectPage project={project} />
                 <SectionProjects slug={true} limit={true} current={project} />
             </main>

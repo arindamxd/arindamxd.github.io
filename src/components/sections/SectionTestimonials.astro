@@ -14,6 +14,7 @@ const author = preview
 const metadata = preview
     ? previewTestimonials
     : (await import("../../content/testimonials-metadata.json")).default;
+const first = metadata.data[0];
 ---
 
 <section id="testimonials" class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-0 overflow-visible p-0 max-narrow:px-2.5">
@@ -21,7 +22,7 @@ const metadata = preview
     <SectionHeading title={metadata.title} description={metadata.description} />
 
     <!-- Phone stage: hand art + slider CSS in global.css; side art → Tailwind -->
-    <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[60px] overflow-visible px-0 pt-0 pb-[210px] max-narrow:gap-10 max-narrow:pb-0">
+    <div data-reveal class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-[60px] overflow-visible px-0 pt-0 pb-[210px] max-narrow:gap-10 max-narrow:pb-0">
         <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-8 overflow-visible p-0">
 
             <!-- Left Screen Art -->
@@ -60,10 +61,10 @@ const metadata = preview
                             <div id="progressBarsContainer" class="progress-bar"></div>
 
                             <!-- Personal Details -->
-                            <div id="testimonialPerson" class="vertical-stack-top-person" style="display: none;">
+                            <div id="testimonialPerson" class="vertical-stack-top-person" style="display: flex;">
                                 <div class="vertical-stack-top-person-avatar" style="opacity: 1; border-radius: 100%;">
                                     <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0" data-bg-image-wrapper="true">
-                                        <img decoding="async" loading="lazy" sizes="33px" src={author.intro.avatar} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:fill">
+                                        <img decoding="async" loading="lazy" sizes="33px" src={author.intro.avatar} alt={author.name} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:fill">
                                     </div>
                                 </div>
                                 <div class="vertical-stack-top-person-info">
@@ -81,21 +82,21 @@ const metadata = preview
                         <!-- Testimonial Info -->
                         <div class="vertical-stack-info" style="will-change: transform; opacity: 1; transform: none; transform-origin: 50% 50% 0px;">
                             <div class="vertical-stack-info-data" style="transform: none; transform-origin: 50% 50% 0px;">
-                                <div id="starsIcon" class="stars-icon" style="image-rendering: pixelated; flex-shrink: 0; transform: none; transform-origin: 50% 50% 0px; display: none;" aria-hidden="true">
+                                <div id="starsIcon" class="stars-icon" style="image-rendering: pixelated; flex-shrink: 0; transform: none; transform-origin: 50% 50% 0px; display: block;" aria-hidden="true">
                                     <div class="svg-container" style="width:100%;height:100%;aspect-ratio:inherit">
                                         <svg style="width:100%;height:100%;"><use href="#svg8935606026"></use></svg>
                                     </div>
                                 </div>
                                 <div class="vertical-stack-info-recommendation-text" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; transform: none; transform-origin: 50% 50% 0px;">
-                                    <p id="testimonialText" class="m-0 p-0 font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-white"></p>
+                                    <p id="testimonialText" class="m-0 p-0 font-manrope text-[22px] font-semibold leading-[120%] tracking-[-0.04em] text-white">{first?.text ?? ""}</p>
                                 </div>
                             </div>
                             <div class="vertical-stack-info-recommendation-author" style="transform: none; transform-origin: 50% 50% 0px;">
                                 <div class="vertical-stack-info-recommendation-author-name" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; transform: none; transform-origin: 50% 50% 0px;">
-                                    <p id="testimonialAuthor" class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-white"></p>
+                                    <p id="testimonialAuthor" class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-white">{first?.author ?? ""}</p>
                                 </div>
                                 <div class="vertical-stack-info-recommendation-author-role" style="outline: none; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; opacity: 0.6; transform: none; transform-origin: 50% 50% 0px;">
-                                    <p id="testimonialPosition" class="m-0 p-0 font-manrope text-[12px] font-semibold leading-none tracking-[-0.04em] text-left text-white"></p>
+                                    <p id="testimonialPosition" class="m-0 p-0 font-manrope text-[12px] font-semibold leading-none tracking-[-0.04em] text-left text-white">{first?.position ?? ""}</p>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +107,7 @@ const metadata = preview
                     <div class="vertical-stack-image" style="opacity:0.07">
                         <div class="vertical-stack-image-background" style="will-change: transform; opacity: 1; transform: none; border-radius: 60px;">
                             <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0" data-bg-image-wrapper="true">
-                                <img id="screenBg" decoding="async" loading="lazy" alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
+                                <img id="screenBg" decoding="async" loading="lazy" src={first?.background ?? ""} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;">
                             </div>
                         </div>
                     </div>

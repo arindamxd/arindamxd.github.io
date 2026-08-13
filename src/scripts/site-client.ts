@@ -25,6 +25,9 @@ function loadPageWidgets(): void {
     if (document.querySelector('[data-count-to]')) {
         void import('./count-up');
     }
+    if (document.querySelector('[data-credentials-accordion]')) {
+        void import('./credentials-accordion');
+    }
 }
 
 if (bootOnce('site-client-widgets')) {

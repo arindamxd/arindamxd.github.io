@@ -270,13 +270,17 @@
 }
 
 .hero-tie .hero-tie-holder {
-    @apply relative w-[63px] shrink-0;
+    @apply relative w-[63px] shrink-0 rounded-[6px];
+    background-color: #171717;
     height: var(--site-aspect-ratio-supported, 44px);
     aspect-ratio: 1.4318 / 1;
 }
 
 .hero-tie .hero-tie-box {
     @apply relative w-[31px] shrink-0;
+    background: linear-gradient(#070707 0%, #2d2d2d 100%);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
     height: var(--site-aspect-ratio-supported, 26px);
     aspect-ratio: 1.1923 / 1;
 }
@@ -368,6 +372,10 @@
 
     .hero-card-content-buttons > div:not(:first-child) {
         display: none !important;
+    }
+
+    .site-root .available-text-container {
+        @apply min-w-0 flex-row flex-wrap items-baseline gap-x-[0.35em];
     }
 
     .site-root .hero-card-bottom {

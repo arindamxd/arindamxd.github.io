@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
 import tailwindcss from "@tailwindcss/vite";
+import { sitemapFilter, sitemapLastmodByPath } from "./src/utils/seo";
 
 const SERVER_PORT = 3000;
 const LIVE_URL = "https://arindamxd.github.io";
@@ -12,6 +13,13 @@ const LIVE_URL = "https://arindamxd.github.io";
 // Prefer explicit SITE_URL; otherwise always use the live site so sitemap/canonical stay correct in CI.
 const SITE_URL = process.env.SITE_URL?.trim();
 const BASE_URL = SITE_URL || LIVE_URL;
+const lastmodByPath = sitemapLastmodByPath();
+
+function pathnameWithSlash(url: string): string {
+    const path = new URL(url).pathname;
+    if (path === "/") return "/";
+    return path.endsWith("/") ? path : `${path}/`;
+}
 
 export default defineConfig({
     site: BASE_URL,
@@ -31,17 +39,32 @@ export default defineConfig({
     integrations: [
         react(),
         sitemap({
-            filter: (page) => !page.includes("/tools") && !page.includes("/design"),
+            filter: sitemapFilter,
+            serialize(item) {
+                const lastmod = lastmodByPath.get(pathnameWithSlash(item.url));
+                if (lastmod) item.lastmod = lastmod;
+                return item;
+            },
         }),
     ],
     vite: {
         resolve: {
             extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
+            dedupe: ["react", "react-dom"],
         },
         plugins: [tailwindcss()],
         optimizeDeps: {
-            // Keep the contributions island off 504 "Outdated Optimize Dep" after HMR/build
-            include: ["react", "react-dom", "react-activity-calendar"],
+            // Prebundle the calendar only. Vite 8 Rolldown otherwise inlines React's
+            // production jsx-dev-runtime (`jsxDEV = undefined`) and the island crashes
+            // with `_jsxDEV is not a function` in `astro dev`.
+            include: ["react-activity-calendar"],
+            exclude: [
+                "react",
+                "react-dom",
+                "react/jsx-runtime",
+                "react/jsx-dev-runtime",
+                "react-dom/client",
+            ],
         },
         build: {
             // Keep client scripts as `/_astro/*.js` so ClientRouter does not

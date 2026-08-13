@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /tools
 Disallow: /tools/
+Disallow: /design
+Disallow: /design/
 
 Sitemap: https://arindamxd.github.io/sitemap-index.xml

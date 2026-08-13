@@ -1,6 +1,9 @@
 /**
  * Page enter without View Transition snapshots (frost glass freeze).
  * Nav stays. Leave: dissolve up. Enter (reload + in-site): spring rise + blur.
+ *
+ * First load: inline WAAPI in BaseLayout can win before this module parses.
+ * ClientRouter: after-swap always runs playEnter. Both paths share `__pageEnterStarted`.
  */
 import { animate } from "motion";
 import { bootOnce } from "./boot-once";
@@ -90,6 +93,8 @@ if (bootOnce("page-transition")) {
             return;
         }
         if (!el || !shellHasContent(el)) return;
+        if (window.__pageEnterStarted) return;
+        window.__pageEnterStarted = true;
         for (const a of el.getAnimations()) {
             if (typeof CSSTransition !== "undefined" && a instanceof CSSTransition) continue;
             a.cancel();
@@ -108,7 +113,6 @@ if (bootOnce("page-transition")) {
             },
             springPage,
         );
-        window.__pageEnterStarted = true;
         window.dispatchEvent(new CustomEvent("pageenter:start"));
         void playback.then(() => {
             const node = shell();

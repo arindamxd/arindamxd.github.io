@@ -2,20 +2,39 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionProjects from "../components/sections/SectionProjects.astro";
 import Footer from "../components/Footer.astro";
-import { getProjectCatalogMeta } from "../utils/projects";
+import { getProjects } from "../utils/projects";
+import { breadcrumbJsonLd, collectionPageJsonLd } from "../utils/seo";
 
-const meta = getProjectCatalogMeta();
+const projects = getProjects();
+const seoDescription =
+    "Android apps and open-source work by Arindam Karmakar — CameraX, Coco, and Ensecure.";
+const jsonLd = [
+    collectionPageJsonLd({
+        name: "Projects",
+        path: "/projects/",
+        description: seoDescription,
+        items: projects.map((project) => ({
+            name: project.title,
+            path: `/projects/${project.slug}/`,
+        })),
+    }),
+    breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Projects", path: "/projects/" },
+    ]),
+];
 ---
 
 <BaseLayout
     home={false}
     title="Projects"
-    description={meta.description}
+    description={seoDescription}
+    jsonLd={jsonLd}
 >
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
         <div class="site-root contents min-h-screen w-auto">
-            <main class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
+            <main id="main" class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
                 <SectionProjects />
             </main>
         </div>

@@ -62,7 +62,7 @@ const currentYear = new Date().getFullYear();
                         decoding="async"
                         loading="lazy"
                         src={author.footer.avatar}
-                        alt=""
+                        alt={author.name}
                         class="absolute inset-0 size-full object-cover object-center"
                     />
                 </div>
@@ -93,7 +93,7 @@ const currentYear = new Date().getFullYear();
                                         class="group/social relative flex size-full cursor-pointer flex-col content-center items-center justify-center rounded-full bg-surface p-1.5 no-underline"
                                         href={link.url}
                                         target="_blank"
-                                        rel="noopener"
+                                        rel={preview ? "noopener" : "me noopener"}
                                     >
                                         <div class="relative size-[22px] opacity-40 transition-opacity duration-500 group-hover/social:opacity-100">
                                             <img

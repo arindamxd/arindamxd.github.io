@@ -72,7 +72,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 | Brands | `src/content/brands-metadata.json` | `SectionBrands` marquee (`title` + `logos[]`) |
 | **Skills** | `src/content/skills-metadata.json` | `SectionSkills` + `SkillElement` (icons under `public/assets/skills/`) |
 | Testimonials | `src/content/testimonials-metadata.json` | Phone slider; DOM `#testimonials-data` |
-| Contributions | `src/content/contributions-metadata.json` | `SectionContributions` + `GitHubContributionsCalendar` (`client:only="react"`) |
+| Contributions | `src/content/contributions-metadata.json` | `SectionContributions` + `GitHubContributionsCalendar` (`client:visible`) |
 | Projects catalog | `src/content/projects-metadata.json` | [`projects.ts`](src/utils/projects.ts) |
 | Project bodies | `src/content/projects/*.md` | Merged at build |
 | Privacy policies | `src/content/privacy-policies/*.md` | Project privacy pages |
@@ -114,14 +114,15 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | Script | Role |
 | --- | --- |
 | `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
-| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme). Home widgets (`available-text`, testimonials, skill tooltips, count-up) load only when their DOM exists |
+| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme). Home widgets (`available-text`, testimonials, skill tooltips, count-up, credentials accordion) load only when their DOM exists |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
-| `page-transition.ts` | Same shell dissolve + spring rise/blur on reload and ClientRouter (nav stays; no VT snapshot) |
-| `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
+| `page-transition.ts` | ClientRouter shell dissolve + spring rise/blur (nav stays; no VT snapshot). First-load enter can also run from inline WAAPI in `BaseLayout` — both guard on `__pageEnterStarted` |
+| `smooth-scroll.ts` | Lenis on fine-pointer / wheel only · native scroll on coarse touch · `data-lenis-prevent` for nested panes · hash offset 80px on narrow |
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
 | `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` · viewport clamp for edge chips |
-| `available-text.ts` | Hero “Available for…” cycle |
-| `reveal.ts` / `count-up.ts` | Scroll reveal (`inView` + spring); YoE count |
+| `available-text.ts` | Hero “Available for…” cycle (SSR first word; CSS handles mobile one-line) |
+| `reveal.ts` / `count-up.ts` | Scroll reveal (`inView` + spring); YoE count (SSR number; animates when scrolling into view) |
+| `credentials-accordion.ts` | Credentials exclusive accordion (`data-credentials-accordion`) |
 | `motion-tokens.ts` | House easing, `springPage` / `springSoft` / `springSnappy` |
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
 | `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
@@ -162,6 +163,25 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 - Island: [`GitHubContributionsCalendar.tsx`](src/components/elements/GitHubContributionsCalendar.tsx) via **`client:visible`** (surface fallback) — avoids blocking home swaps with React hydrate.
 - Theme: `useSyncExternalStore` on `data-theme` / `.dark` + `themechange` / `storage` / `pageshow`; heatmap uses `useDeferredValue` (do not remount with `key` on the toggle frame).
 - Tear down `ActivityCalendar` on `astro:before-preparation` / `astro:before-swap` so head `<style>` cleanup does not `removeChild` after ClientRouter swap.
+- Vite 8 Rolldown: **do not** `optimizeDeps.include` React / `jsx-dev-runtime` (production CJS has `jsxDEV = undefined` → `_jsxDEV is not a function` in dev). Keep `react-activity-calendar` included; exclude the React entries. Direct dep is `react-activity-calendar`, not `react-github-calendar`.
+
+### Page enter
+
+- First load: inline WAAPI in [`BaseLayout.astro`](src/layouts/BaseLayout.astro) (before the deferred `site-client` bundle). ClientRouter: [`page-transition.ts`](src/scripts/page-transition.ts) on `astro:after-swap`.
+- Both paths share **`window.__pageEnterStarted`** — do not skip inline enter just because the module set `__pageEnterBound`.
+- Call `__tryPageEnter` **after** `.page-shell` slot content so the shell is not animated empty.
+
+### Lenis vs native scroll
+
+- Lenis runs on **fine pointer / wheel** only. Coarse touch (`(hover: none) and (pointer: coarse)`) and `prefers-reduced-motion` use native scroll.
+- In-page hash links: offset **20px** desktop, **80px** on `max-narrow` (top nav). Same handler with or without Lenis.
+
+### SEO
+
+- Helpers live in [`src/utils/seo.ts`](src/utils/seo.ts). Home description = author `bio`. Catalog **layout** descriptions are topic-led; on-page section copy stays in the JSON catalogs.
+- Sitemap: filter `/tools`, `/design`, `/apps`; `lastmod` from blog `date` / project `updated_date`.
+- Share image: `public/assets/resources/og-image.png` must be a real PNG (not AVIF with a `.png` name). Dimensions in `OG_IMAGE_WIDTH` / `OG_IMAGE_HEIGHT`.
+- Skip link: `.skip-link` → `#main` on every page `<main>`.
 
 ### Layout / color
 
@@ -195,6 +215,8 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 | Blog authoring | `docs/blog-authoring.md` |
 | Project authoring | `docs/project-authoring.md` |
 | Skills data | `src/content/skills-metadata.json` |
+| Years of experience | [`src/utils/date.ts`](src/utils/date.ts) `yearsOfExperience()` — intro badge + experiences count |
+| SEO helpers | [`src/utils/seo.ts`](src/utils/seo.ts) — titles, canonical, JSON-LD, sitemap lastmod |
 | Tools registry | `src/utils/tools.ts` |
 | Gallery page / dummy data | `src/pages/design.astro`, `src/utils/design-preview-data.ts` |
 | Tokens | `src/styles/tokens.css` |

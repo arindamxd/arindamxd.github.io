@@ -1,5 +1,7 @@
 ---
 import { Image } from 'astro:assets';
+import { AVAILABLE_WORDS } from "../../utils/available-words";
+import { yearsOfExperience } from "../../utils/date";
 import {
     previewAuthor,
     previewExperiences,
@@ -20,38 +22,19 @@ const experiences = preview
     ? previewExperiences
     : (await import("../../content/experiences-metadata.json")).default;
 
-let years: number;
-if (preview) {
-    years = previewYearsOfExperience;
-} else {
-    const today = new Date();
-    const start =
-        experiences.data.length > 0
-            ? new Date(
-                  experiences.data.reduce((earliest, exp) =>
-                      new Date(exp.start) < new Date(earliest.start) ? exp : earliest,
-                  ).start,
-              )
-            : new Date();
-
-    years = today.getFullYear() - start.getFullYear();
-
-    if (
-        today.getMonth() < start.getMonth() ||
-        (today.getMonth() === start.getMonth() && today.getDate() < start.getDate())
-    ) {
-        years--;
-    }
-}
+const years = preview
+    ? previewYearsOfExperience
+    : yearsOfExperience(experiences.data);
+const availableWord = AVAILABLE_WORDS[0];
 ---
 
 <section class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 overflow-hidden p-0 max-narrow:gap-[50px] max-narrow:px-2.5">
 
-    <div class="hero-tie-container" style="transform: translateX(-50%);">
+    <div class="hero-tie-container">
         <div class="hero-tie hero-tie-centered">
             <div class="hero-tie-stripe"></div>
-            <div class="hero-tie-holder" style="background-color: rgb(23, 23, 23); border-radius: 6px; opacity: 1;"></div>
-            <div class="hero-tie-box" style="background: linear-gradient(rgb(7, 7, 7) 0%, rgb(45, 45, 45) 100%); border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; opacity: 1;"></div>
+            <div class="hero-tie-holder"></div>
+            <div class="hero-tie-box"></div>
         </div>
     </div>
 
@@ -74,7 +57,7 @@ if (preview) {
                         <div class="hero-card-content-top-left">
                             <div class="hero-card-content-avatar">
                                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
-                                    <Image decoding="async" loading="eager" fetchpriority="high" src={author.intro.avatar} alt="" width={70} height={70} style="border-radius:inherit; object-fit:fill;" />
+                                    <Image decoding="async" loading="eager" fetchpriority="high" src={author.intro.avatar} alt={author.name} width={70} height={70} style="border-radius:inherit; object-fit:fill;" />
                                 </div>
                             </div>
                             <div class="hero-card-content-main">
@@ -89,7 +72,7 @@ if (preview) {
                                 <div class="relative flex h-min w-min flex-none flex-row flex-nowrap items-center justify-center gap-2.5 overflow-visible p-0">
                                     {author.intro.social.map((link) => (
                                         <div class="relative aspect-square size-[22px] flex-none">
-                                            <a aria-label={`Link to ${link.name}`} class="group relative flex size-full cursor-pointer flex-col items-center justify-center overflow-visible rounded-full bg-bg no-underline" href={link.url} target="_blank" rel="noopener">
+                                            <a aria-label={`Link to ${link.name}`} class="group relative flex size-full cursor-pointer flex-col items-center justify-center overflow-visible rounded-full bg-bg no-underline" href={link.url} target="_blank" rel={preview ? "noopener" : "me noopener"}>
                                                 <div class="relative size-full flex-1 opacity-40 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
                                                     <div class="absolute inset-0" style="border-radius:inherit">
                                                         <img decoding="async" src={link.icon} alt="" class="block size-full rounded-[inherit] object-cover object-center brightness-0 dark:invert" />
@@ -105,8 +88,11 @@ if (preview) {
                             <div class="available-dot-container">
                                 <div class="available-pulse"></div>
                             </div>
-                            <div class="available-text-container" style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none">
-                                <!-- Content will be populated by available-text.ts -->
+                            <div class="available-text-container" aria-live="polite">
+                                <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-text max-narrow:text-[12px]">Available for</p>
+                                <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.05em] text-text max-narrow:text-[12px]">
+                                    <span class="available-scramble scramble-host text-text/60" data-word={availableWord} data-no-scramble aria-label={`Available for ${availableWord}`}>{availableWord}</span>
+                                </p>
                             </div>
                         </div>
                     </div>

@@ -1,11 +1,13 @@
 ---
+import author from "../content/author-metadata.json";
+
 interface Props {
     /** `/design` gallery — live chrome, dummy Contact / in-page anchors */
     preview?: boolean;
 }
 
 const { preview = false } = Astro.props;
-const contactHref = preview ? "mailto:hello@example.com" : "mailto:arindamxd@gmail.com";
+const contactHref = preview ? "mailto:hello@example.com" : `mailto:${author.email}`;
 ---
 
 <div class="relative flex max-w-full flex-row flex-nowrap items-center justify-start gap-3 max-[389px]:gap-2">

@@ -30,7 +30,7 @@ Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.
 - Living `/design` gallery (`noindex`) — live section mounts + preview dummy data
 - Private `/tools` suite (`noindex`): author, markdown preview, scramble compare, analytics reach
 - Dark / light theme (default dark), persisted in `localStorage`, flash-free boot script in `BaseLayout`
-- SEO: meta description, canonical, Open Graph, Twitter card, Person JSON-LD
+- SEO: meta description, canonical, Open Graph (PNG + size), Twitter card, Person / ProfilePage / CollectionPage JSON-LD, sitemap lastmod
 - GA4 page views in production only (skipped in `astro dev`)
 - Client motion: Lenis, page-shell enter, scroll reveal (`data-reveal`), count-up, scramble — respects `prefers-reduced-motion`
 - App deep-link verification: `public/.well-known/assetlinks.json` (CameraX, certification app)
@@ -243,7 +243,7 @@ Do **not** put text and cards in one shared `px-2.5` wrapper if text must stay a
 
 #### Navbar
 
-- Floating `.nav-bar-container` must keep side clearance on narrow viewports: `max-width: calc(100% - 20px)` (≤609), and `calc(100% - 32px)` (≤389)
+- Floating `.nav-bar-container` keeps side clearance with **`padding-inline: 10px`** (≤609) and **`16px`** (≤389) — not a `max-width: calc(100% - 20px)` on the container
 - On ≤389px, densify the pill (height 52px, gaps, Contact, theme toggle) so the bar still fits inside that max-width
 - Top offset: `+8px` on ≤609, `+11px` on ≤389 — keeps the denser 52px compact nav vertically centered in the top blue / chrome band
 
@@ -253,7 +253,7 @@ The testimonials phone is a **360×750** mock with a `.mobile-border` that bleed
 
 - Shell: `min(360px, calc(100% * 360 / 380))` so body + border fit inside the section gutter
 - Scale with a **unitless** factor: `transform: scale(calc(100cqw / 360px))` — `scale(calc(100cqw / 360))` is invalid (length, not number) and is ignored
-- See `.testimonials-phone-shell` in `global.css`
+- See `.testimonials-phone-shell` in `src/styles/testimonials.css`
 
 #### Checklist before shipping mobile UI
 

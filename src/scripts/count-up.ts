@@ -43,6 +43,8 @@ import { bootOnce } from './boot-once';
         const start = performance.now();
         const from = 0;
 
+        el.textContent = `${prefix}0${suffix}`;
+
         function frame(now: number): void {
             const t = Math.min(1, (now - start) / duration);
             const eased = 1 - Math.pow(1 - t, 3);
@@ -102,12 +104,17 @@ import { bootOnce } from './boot-once';
             const r = el.getBoundingClientRect();
             const above = r.bottom < 0;
             const shown = r.top < window.innerHeight * 0.98 && r.bottom > 0;
+            const painted = Number(el.textContent?.replace(/[^\d.-]/g, ''));
+            const { to } = readMeta(el);
+            const alreadyTo =
+                Number.isFinite(painted) && painted !== 0 && Number.isFinite(to) && painted === to;
             if (restoreMid) {
                 if (above || shown) settleNow.push(el);
                 else watch.push(el);
                 continue;
             }
             if (above) settleNow.push(el);
+            else if (shown && alreadyTo) settleNow.push(el);
             else if (shown) playNow.push(el);
             else watch.push(el);
         }

@@ -371,14 +371,14 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 | Slogan H1 | Display `70→48`, leading ~`90%`, tracking tight |
 | Intro support | `17→15` under slogan |
 | YoE badge | Micro `11px`, tracking `-0.05em`; fill darker than content bg (`color-mix` with black) + inset `border` — not `surface` |
-| CTAs | Primary Resume + secondary My work |
-| Availability | Green pulse + cycling “Available for…” (`available-text.ts` + scramble) |
+| CTAs | Primary Resume + secondary My work (My work hidden on `max-narrow`; Resume keeps `w-min` pill) |
+| Availability | Green pulse + cycling “Available for…” — **SSR first word**; `available-text.ts` enhances; CSS one-line on mobile |
 | Location row | Pin + `13→12`; muted “Located in…” + city |
 | Bottom link | Outbound text+arrow (`cardLinkText` / `cardLinkURL`) |
 
 ### 404 card
 
-[`SectionNotFound`](../src/components/sections/SectionNotFound.astro) — same `.hero-card` surface shell (footer grey gap), tie/hole/bottom chrome as home, **no** slot bars or identity stack. Display `404` at `141px` / tracking `-0.09em`; title + muted support; single primary “Go back home” CTA. `/design` mounts the same component with `preview`.
+[`SectionNotFound`](../src/components/sections/SectionNotFound.astro) — same `.hero-card` surface shell (footer grey gap), tie/hole/bottom chrome as home, **no** slot bars or identity stack. Display `404` at `141px` / tracking `-0.09em`; title + muted support; single primary “Go back home” CTA (`data-scramble` like home Resume). `/design` mounts the same component with `preview`.
 
 ### Project hero card
 
@@ -412,7 +412,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 
 ### Credentials accordion
 
-[`SectionCredentials`](../src/components/sections/SectionCredentials.astro): `data-credentials-accordion`; trigger `20→17` + plus→minus; CSS grid-rows expand `~0.4s`; expanded panel = nested title/org rows; outbound URLs use text+arrow. `/design` mounts with `preview`.
+[`SectionCredentials`](../src/components/sections/SectionCredentials.astro): `data-credentials-accordion`; trigger `20→17` + plus→minus; CSS grid-rows expand `~0.4s`; expanded panel = nested title/org rows; outbound URLs use text+arrow. Script: [`credentials-accordion.ts`](../src/scripts/credentials-accordion.ts) via `site-client` (not an inline Astro `<script>`). `/design` mounts with `preview`.
 
 ### Testimonials phone
 
@@ -513,7 +513,7 @@ Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left*
 | --- | --- |
 | Page loader | First paint hold, then exit slide |
 | **Scroll reveal** | Section / list enter — Motion `inView` + `animate` (`reveal.ts`, §12.2.2). CSS only holds first paint / prep. |
-| Lenis | Smooth page wheel scroll |
+| Lenis | Smooth **wheel** scroll on fine pointer; native on coarse touch |
 | **Spring physics** | Below-fold reveals use `springSoft` (`motion-tokens.ts`). Interactive chrome still CSS `200ms` until tools adopt `springSnappy`. |
 | **Scramble on CTAs** | **target:** [Motion+ `scrambleText`](https://motion.dev/examples/js-scramble-text) (§12.2.1) |
 | Short color/opacity transitions | `200ms` ease-in-out hovers |
@@ -524,7 +524,7 @@ Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left*
 
 - Ship 2–3 intentional motions on visually led surfaces; don’t animate everything.
 - Respect `prefers-reduced-motion` (Lenis, scramble, springs, reveals must no-op).
-- Nested overflow: never fight Lenis — mark scrollables with `data-lenis-prevent`.
+- Nested overflow: never fight Lenis — mark scrollables with `data-lenis-prevent`. Coarse touch does not boot Lenis.
 - Do **not** add a second custom scramble or reveal engine — reveal/appear already use OSS Motion; scramble stays custom until Motion+ (§12.2.1).
 
 ---
@@ -737,7 +737,9 @@ Wire after **Adopt Motion (JS)** so the follower can use `springSoft` (§12.2.3)
 
 **Goal:** Confirm Lenis remains the right page-scroll feel for this site — or replace it with evidence — **before** stacking Motion reveals/springs on top of a scroll model we might discard.
 
-**Today:** [`src/scripts/smooth-scroll.ts`](../src/scripts/smooth-scroll.ts) — Lenis `autoRaf`, `lerp: 0.1`, `smoothWheel`, hash `scrollTo`, Astro swap resize, `data-lenis-prevent` on nested tools panes, gated by `prefers-reduced-motion`.
+**Today:** [`src/scripts/smooth-scroll.ts`](../src/scripts/smooth-scroll.ts) — Lenis `autoRaf`, `lerp: 0.1`, `smoothWheel` on **fine pointer only**. Coarse touch and `prefers-reduced-motion` use native scroll. Hash `scrollTo` (offset 20 desktop / 80 narrow), Astro swap resize, `data-lenis-prevent` on nested tools panes.
+
+**Decision (2026-08-14):** Keep Lenis for desktop wheel feel. Native scroll on `(hover: none) and (pointer: coarse)` — touch rubber-banding and INP stay with the browser. Hash links share one handler either way.
 
 ##### Candidates to compare
 
@@ -920,18 +922,19 @@ If pursued: stream UI to existing shells (550px), not a second visual system.
 | Keyboard path | Nav, theme toggle, scramble links, tools forms, fullscreen tools — full tab order |
 | `prefers-reduced-motion` | Hard gate Lenis, scramble, parallax, springs |
 | `prefers-contrast` / forced colors | Smoke-test Windows high contrast |
-| Skip link | “Skip to content” targeting main |
+| Skip link | Shipped: `.skip-link` in BaseLayout → `#main` |
 | Live regions | Tools search empty state already; extend to copy-to-clipboard confirmations |
 
 ---
 
 ### 12.7 Content, SEO & discoverability
 
+**Today:** [`src/utils/seo.ts`](../src/utils/seo.ts) + [`BaseLayout`](../src/layouts/BaseLayout.astro) — canonical, robots, OG/Twitter (PNG share image + dimensions), Person / WebSite / ProfilePage JSON-LD, CollectionPage + BreadcrumbList on catalogs/detail, sitemap `lastmod` from blog/project dates, `/tools` `/design` `/apps` filtered. Home meta uses the author bio. Catalog pages use topic-led descriptions (on-page headings stay the catalog voice).
+
 | Enhancement | Notes |
 | --- | --- |
 | **FAQ / HowTo JSON-LD** | Mobile engineering topics you already write about |
-| **OG freshness** | Per-blog/project images; tools could generate previews |
-| **Sitemap quality** | Keep `/tools` out; ensure blog/project lastmod |
+| **OG freshness** | Per-blog/project images ship; a dedicated 1200×630 generator is still optional |
 | **Voice / answer-shaped copy** | Section intros that answer “who / what / where” clearly (aids AI overviews without gimmicks) |
 | **i18n** | Only if there’s a real audience need; don’t ship half-translated UI |
 

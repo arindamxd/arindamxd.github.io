@@ -3,6 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Footer from "../../../components/Footer.astro";
 import ProjectPrivacyPage from "../../../components/elements/ProjectPrivacyPage.astro";
 import { getProjectsWithPrivacyPolicy } from "../../../utils/projects";
+import { absoluteUrl, breadcrumbJsonLd, isoDate } from "../../../utils/seo";
 
 const { project } = Astro.props;
 
@@ -46,17 +47,41 @@ export async function getStaticPaths() {
 }
 
 const description = `Privacy Policy for ${frontmatter.app}. Last updated ${frontmatter.lastUpdated}. How ${frontmatter.app} handles data and permissions.`;
+const canonicalPath = `/projects/${project.slug}/privacy-policy/`;
+const jsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: `${project.title} Privacy Policy`,
+        description,
+        url: absoluteUrl(canonicalPath),
+        inLanguage: "en-US",
+        dateModified: isoDate(frontmatter.lastUpdated),
+        about: {
+            "@type": "SoftwareApplication",
+            name: frontmatter.app,
+        },
+    },
+    breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Projects", path: "/projects/" },
+        { name: project.title, path: `/projects/${project.slug}/` },
+        { name: "Privacy Policy", path: canonicalPath },
+    ]),
+];
 ---
 
 <BaseLayout
     home={false}
     title={`${project.title} Privacy Policy`}
     description={description}
+    modifiedTime={isoDate(frontmatter.lastUpdated)}
+    jsonLd={jsonLd}
 >
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
         <div class="site-root contents min-h-screen w-auto">
-            <main class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
+            <main id="main" class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
                 <ProjectPrivacyPage
                     projectTitle={project.title}
                     projectSlug={project.slug}

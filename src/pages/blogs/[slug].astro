@@ -5,9 +5,14 @@ import SectionBlogs from "../../components/sections/SectionBlogs.astro";
 import Footer from "../../components/Footer.astro";
 
 import { getBlogs } from "../../utils/blogs";
-import { absoluteUrl, siteAuthor, siteOrigin } from "../../utils/seo";
+import {
+    absoluteUrl,
+    breadcrumbJsonLd,
+    isoDate,
+    siteAuthor,
+    siteOrigin,
+} from "../../utils/seo";
 
-// props
 const { blog } = Astro.props;
 
 export async function getStaticPaths() {
@@ -19,25 +24,48 @@ export async function getStaticPaths() {
 
 const description = blog.page.intro.paragraph;
 const image = blog.page.intro.banner || blog.thumb;
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: blog.title,
-    description,
-    image: absoluteUrl(image),
-    datePublished: blog.date.toISOString(),
-    author: {
-        "@type": "Person",
-        name: blog.author.name,
-        url: siteOrigin + "/",
+const published = isoDate(blog.date);
+const canonicalPath = `/blogs/${blog.slug}/`;
+const jsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: blog.title,
+        description,
+        image: {
+            "@type": "ImageObject",
+            url: absoluteUrl(image),
+        },
+        datePublished: published,
+        dateModified: published,
+        inLanguage: "en-US",
+        url: absoluteUrl(canonicalPath),
+        author: {
+            "@type": "Person",
+            name: blog.author.name,
+            url: siteOrigin + "/",
+        },
+        publisher: {
+            "@type": "Person",
+            name: siteAuthor.name,
+            url: siteOrigin + "/",
+        },
+        mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": absoluteUrl(canonicalPath),
+        },
+        isPartOf: {
+            "@type": "Blog",
+            name: "Developer’s Log",
+            url: absoluteUrl("/blogs/"),
+        },
     },
-    publisher: {
-        "@type": "Person",
-        name: siteAuthor.name,
-        url: siteOrigin + "/",
-    },
-    mainEntityOfPage: absoluteUrl(`/blogs/${blog.slug}/`),
-};
+    breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Blog", path: "/blogs/" },
+        { name: blog.title, path: canonicalPath },
+    ]),
+];
 ---
 
 <BaseLayout
@@ -45,13 +73,16 @@ const jsonLd = {
     title={blog.title}
     description={description}
     image={image}
+    imageAlt={blog.title}
     type="article"
+    publishedTime={published}
+    modifiedTime={published}
     jsonLd={jsonLd}
 >
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
         <div class="site-root contents min-h-screen w-auto">
-            <main class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
+            <main id="main" class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
                 <BlogPage blog={blog} />
                 <SectionBlogs slug={true} limit={true} current={blog} />
             </main>

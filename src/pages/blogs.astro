@@ -2,20 +2,39 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionBlogs from "../components/sections/SectionBlogs.astro";
 import Footer from "../components/Footer.astro";
-import { getBlogCatalogMeta } from "../utils/blogs";
+import { getBlogs } from "../utils/blogs";
+import { breadcrumbJsonLd, collectionPageJsonLd } from "../utils/seo";
 
-const meta = getBlogCatalogMeta();
+const blogs = getBlogs();
+const seoDescription =
+    "iOS and mobile engineering notes — UPI intent launch, WebRTC with Swift, and UIControl interaction.";
+const jsonLd = [
+    collectionPageJsonLd({
+        name: "Blog",
+        path: "/blogs/",
+        description: seoDescription,
+        items: blogs.map((blog) => ({
+            name: blog.title,
+            path: `/blogs/${blog.slug}/`,
+        })),
+    }),
+    breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Blog", path: "/blogs/" },
+    ]),
+];
 ---
 
 <BaseLayout
     home={false}
     title="Blog"
-    description={meta.description}
+    description={seoDescription}
+    jsonLd={jsonLd}
 >
 
     <div class="relative flex h-min min-h-screen w-auto flex-col flex-nowrap content-center items-center justify-start gap-0 overflow-x-hidden bg-bg p-0">
         <div class="site-root contents min-h-screen w-auto">
-            <main class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
+            <main id="main" class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center gap-20 bg-bg p-0 max-narrow:gap-[50px]">
                 <SectionBlogs />
             </main>
         </div>

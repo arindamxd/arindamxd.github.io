@@ -10,6 +10,10 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 - OSS Motion (`motion`) for page-shell enter and scroll reveal (`inView`, `animate`, `stagger`)
 - Shared SVG sprite in `BaseLayout` (persist across ClientRouter; unused Framer marks dropped)
+- SSR first paint for hero “Available for…”, testimonials quote, and years-of-experience count
+- Credentials accordion as `src/scripts/credentials-accordion.ts` (loaded from `site-client` when the section exists)
+- Skip-to-content link targeting `#main`
+- Article `published_time` / `modified_time` and Twitter `site`/`creator` on share tags
 
 ### Changed
 
@@ -21,10 +25,16 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Page enter is a single shell rise+blur (no stacked Y)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
 - Preload self-hosted Manrope; drop dead Google Fonts preconnect
-- Home widgets (available-for, testimonials, skill tooltips, count-up) load only when their DOM exists
+- Home widgets (available-for, testimonials, skill tooltips, count-up, credentials) load only when their DOM exists
 - Images decode async; hero avatar `fetchpriority="high"`; brand logos lazy with width/height
 - Surface shells (hero, 404, project detail, blogs list) use the footer grey gap on mobile: `border-border` + 6px pad (not inset box-shadow)
 - Experience year timeline on mobile: even 3-column spacing, aligned with job rows (desktop unchanged)
+- Mobile hero: hide My work; Resume stays the original `w-min` pill (not full-width)
+- Lenis only on fine-pointer / wheel; native scroll on coarse touch; hash offset 80px under the top nav
+- Page-enter race: inline WAAPI and Motion share `__pageEnterStarted`; enter script runs after `.page-shell` slot content
+- Hero ID-card tie colors live in `hero.css` (physical dark clip; not theme-flipped)
+- `robots.txt` disallows `/design` as well as `/tools`
+- SEO: home description uses the author bio; blog/project catalog meta is topic-led; OG image is a real PNG with width/height; sitemap lastmod from content dates; Person / ProfilePage / CollectionPage / Breadcrumb JSON-LD
 
 ### Fixed
 
@@ -33,7 +43,11 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Theme toggle no longer no-ops after several ClientRouter visits (single `site-client.ts` layout entry)
 - Home from a project no longer freezes: skip native View Transition snapshots (frost + large images); CSS content fade instead; contributions calendar hydrates when visible
 - Contributions calendar hydrate no longer dies on a stale Vite optimize-deps 504 after HMR/build
+- Contributions calendar no longer crashes in `astro dev` (`_jsxDEV is not a function`): Vite 8 was prebundling production `react/jsx-dev-runtime`
 - Skill chip tooltips on edge chips stay in the viewport (home `overflow-x-hidden` no longer clips them)
+- Testimonials no longer flash an empty phone while the slider boots
+- 404 primary CTA matches home scramble + full-width mobile treatment
+- Default OG image was AVIF saved as `.png` (social crawlers often reject it) — now a real PNG
 
 ## [1.0.7] — 2026-08-13
 
