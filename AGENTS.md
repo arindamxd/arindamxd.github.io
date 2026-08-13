@@ -116,7 +116,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
 | `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme) |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
-| `page-transition.ts` | CSS content fade on ClientRouter (nav stays; no VT snapshot) |
+| `page-transition.ts` | CSS dissolve + rise on ClientRouter (nav stays; no VT snapshot) |
 | `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
 | `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` |

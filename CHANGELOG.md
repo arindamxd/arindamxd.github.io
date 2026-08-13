@@ -10,6 +10,9 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Changed
 
+- In-site navigation: nav stays, old content fades up, new page rises in and sharpens (no View Transition snapshot)
+- Footer reach ticker figures refreshed (`footer-reach.json`)
+
 ### Fixed
 
 - Theme toggle no longer no-ops after several ClientRouter visits (single `site-client.ts` layout entry)

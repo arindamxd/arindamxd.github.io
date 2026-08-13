@@ -331,26 +331,49 @@ html.js-motion [data-reveal].reveal-instant {
     will-change: auto;
 }
 
-/* ---------- Page fade (CSS only — do not snapshot via View Transitions) ---------- */
-html.is-page-leaving body > :not(.nav-bar-container):not(#page-loader),
-html.is-page-entering body > :not(.nav-bar-container):not(#page-loader) {
+/* ---------- Page dissolve + rise (nav stays; no VT snapshot) ---------- */
+.page-shell {
+    display: flow-root;
+}
+
+html.is-page-leaving .page-shell {
     opacity: 0;
+    filter: none;
+    translate: 0 -10px;
+    pointer-events: none;
+    transition:
+        opacity 200ms cubic-bezier(0.44, 0, 0.56, 1),
+        translate 200ms cubic-bezier(0.44, 0, 0.56, 1);
 }
 
-html.is-page-leaving body > :not(.nav-bar-container):not(#page-loader) {
-    transition: opacity 140ms cubic-bezier(0.44, 0, 0.56, 1);
+html.is-page-entering .page-shell,
+.page-shell.page-shell--from {
+    opacity: 0;
+    filter: blur(6px);
+    translate: 0 32px;
 }
 
-html.is-page-ready body > :not(.nav-bar-container):not(#page-loader) {
+html.is-page-ready .page-shell,
+.page-shell.page-shell--in {
     opacity: 1;
-    transition: opacity 140ms cubic-bezier(0.44, 0, 0.56, 1);
+    filter: blur(0);
+    translate: 0 0;
+    transition:
+        opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
+        translate 480ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html.is-page-leaving body > :not(.nav-bar-container):not(#page-loader),
-    html.is-page-entering body > :not(.nav-bar-container):not(#page-loader),
-    html.is-page-ready body > :not(.nav-bar-container):not(#page-loader) {
+    html.is-page-leaving .page-shell,
+    html.is-page-entering .page-shell,
+    html.is-page-ready .page-shell,
+    .page-shell.page-shell--from,
+    .page-shell.page-shell--in {
         opacity: 1 !important;
+        filter: none !important;
+        transform: none !important;
+        translate: none !important;
         transition: none !important;
     }
 }
