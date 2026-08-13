@@ -114,7 +114,9 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | Script | Role |
 | --- | --- |
 | `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
+| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme) |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
+| `page-transition.ts` | CSS content fade on ClientRouter (nav stays; no VT snapshot) |
 | `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
 | `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` |
@@ -156,7 +158,7 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 
 ### Contributions calendar
 
-- Island: [`GitHubContributionsCalendar.tsx`](src/components/elements/GitHubContributionsCalendar.tsx) via **`client:only="react"`** (surface fallback) — avoids SSR theme guess / hydration mismatch.
+- Island: [`GitHubContributionsCalendar.tsx`](src/components/elements/GitHubContributionsCalendar.tsx) via **`client:visible`** (surface fallback) — avoids blocking home swaps with React hydrate.
 - Theme: `useSyncExternalStore` on `data-theme` / `.dark` + `themechange` / `storage` / `pageshow`; heatmap uses `useDeferredValue` (do not remount with `key` on the toggle frame).
 - Tear down `ActivityCalendar` on `astro:before-preparation` / `astro:before-swap` so head `<style>` cleanup does not `removeChild` after ClientRouter swap.
 

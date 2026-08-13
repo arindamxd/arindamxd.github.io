@@ -17,17 +17,11 @@ function readScheme(): Scheme {
 }
 
 function subscribeScheme(onStoreChange: () => void): () => void {
-    const root = document.documentElement;
-    const observer = new MutationObserver(onStoreChange);
-    observer.observe(root, { attributes: true, attributeFilter: ["class", "data-theme"] });
-
     window.addEventListener("themechange", onStoreChange);
-    // Other tabs / bfcache restores can change stored theme without a mutation here
     window.addEventListener("storage", onStoreChange);
     window.addEventListener("pageshow", onStoreChange);
 
     return () => {
-        observer.disconnect();
         window.removeEventListener("themechange", onStoreChange);
         window.removeEventListener("storage", onStoreChange);
         window.removeEventListener("pageshow", onStoreChange);
@@ -41,10 +35,9 @@ type Props = {
 };
 
 /**
- * Mounted via `client:only="react"` (see SectionContributions) so static SSR
- * never paints a guessed theme. Before Astro ClientRouter swaps the DOM we
- * unmount ActivityCalendar so its head `<style>` cleanup can `removeChild`
- * while the node is still under `document.head`.
+ * Mounted via `client:visible` so returning home does not hydrate React on the
+ * swap frame. Before ClientRouter swaps we unmount ActivityCalendar so its
+ * head `<style>` cleanup can `removeChild` while still under `document.head`.
  */
 export default function GitHubContributionsCalendar({
     username,
@@ -52,6 +45,7 @@ export default function GitHubContributionsCalendar({
     totalCount,
 }: Props) {
     const [alive, setAlive] = useState(true);
+    const [mounted, setMounted] = useState(false);
     const colorScheme = useSyncExternalStore<Scheme>(
         subscribeScheme,
         readScheme,
@@ -59,6 +53,10 @@ export default function GitHubContributionsCalendar({
     );
     // Paint html.dark immediately; rebuild the heatmap when the main thread is free
     const calendarScheme = useDeferredValue(colorScheme);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         const tearDown = () => setAlive(false);
@@ -93,7 +91,7 @@ export default function GitHubContributionsCalendar({
             className="github-contributions-calendar w-full"
             aria-label={`${username} GitHub contributions`}
         >
-            {alive ? (
+            {alive && mounted ? (
                 <ActivityCalendar
                     data={contributions}
                     colorScheme={calendarScheme}

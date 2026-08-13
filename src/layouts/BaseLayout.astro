@@ -94,7 +94,7 @@ const structuredData = home
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="dark" data-theme="dark">
+<html lang="en" class="dark" data-theme="dark" transition:animate="none">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -308,30 +308,10 @@ const structuredData = home
 
         <GoogleAnalytics />
 
-        <!-- Soft page transitions; bottom nav persists via transition:persist -->
+        <!-- SPA swaps; content fade is CSS (page-transition.ts) — native VT snapshots freeze glass + images -->
         <ClientRouter />
 
-        <!-- Theme toggle -->
-        <script src="../scripts/theme.ts" />
-
-        <!-- Broken image → placeholder (media shell / project logo) -->
-        <script src="../scripts/image-fallback.ts" />
-
-        <!-- Scramble helpers ([data-scramble] opt-in) + Available for… word cycle -->
-        <script src="../scripts/scramble-text.ts" />
-        <script src="../scripts/available-text.ts" />
-
-        <!-- Skill chip tooltips (tap-to-toggle on touch) -->
-        <script src="../scripts/skill-tooltips.ts" />
-
-        <!-- Testimonial slider script -->
-        <script src="../scripts/testimonial-slider.ts" />
-
-        <!-- Motion: hero appear + scroll reveal + Lenis + count-up -->
-        <script src="../scripts/hero-appear.ts" />
-        <script src="../scripts/reveal.ts" />
-        <script src="../scripts/smooth-scroll.ts" />
-        <script src="../scripts/count-up.ts" />
+        <script src="../scripts/site-client.ts"></script>
     </head>
 
     <body oncontextmenu="return false;">

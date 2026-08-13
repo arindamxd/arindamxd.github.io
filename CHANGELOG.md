@@ -12,6 +12,9 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Fixed
 
+- Theme toggle no longer no-ops after several ClientRouter visits (single `site-client.ts` layout entry)
+- Home from a project no longer freezes: skip native View Transition snapshots (frost + large images); CSS content fade instead; contributions calendar hydrates when visible
+
 ## [1.0.7] — 2026-08-13
 
 ### Added

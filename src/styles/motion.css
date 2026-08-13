@@ -331,37 +331,33 @@ html.js-motion [data-reveal].reveal-instant {
     will-change: auto;
 }
 
-/* ---------- Page transitions ---------- */
-@keyframes page-fade-out {
-    to {
-        opacity: 0;
-        transform: translate3d(0, -10px, 0);
+/* ---------- Page fade (CSS only — do not snapshot via View Transitions) ---------- */
+html.is-page-leaving body > :not(.nav-bar-container):not(#page-loader),
+html.is-page-entering body > :not(.nav-bar-container):not(#page-loader) {
+    opacity: 0;
+}
+
+html.is-page-leaving body > :not(.nav-bar-container):not(#page-loader) {
+    transition: opacity 140ms cubic-bezier(0.44, 0, 0.56, 1);
+}
+
+html.is-page-ready body > :not(.nav-bar-container):not(#page-loader) {
+    opacity: 1;
+    transition: opacity 140ms cubic-bezier(0.44, 0, 0.56, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.is-page-leaving body > :not(.nav-bar-container):not(#page-loader),
+    html.is-page-entering body > :not(.nav-bar-container):not(#page-loader),
+    html.is-page-ready body > :not(.nav-bar-container):not(#page-loader) {
+        opacity: 1 !important;
+        transition: none !important;
     }
 }
 
-@keyframes page-fade-in {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 14px, 0);
-    }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    ::view-transition-old(root) {
-        animation: page-fade-out 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    ::view-transition-new(root) {
-        animation: page-fade-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-}
-
-/* Snapshotting frost glass + full home DOM is too expensive on narrow viewports */
-@media (max-width: 609.98px) {
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-        animation: none !important;
-    }
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none !important;
 }
 
 /* Stagger-in under a reveal parent (skills + CMS lists) */

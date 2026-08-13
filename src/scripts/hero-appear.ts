@@ -7,6 +7,11 @@ import { bootOnce } from './boot-once';
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let started = false;
     let waitingForLoader = false;
+    let swapped = false;
+
+    document.addEventListener('astro:after-swap', () => {
+        swapped = true;
+    });
 
     function settle(el: Element): void {
         el.classList.remove('is-appearing');
@@ -31,7 +36,7 @@ import { bootOnce } from './boot-once';
         const midRestore =
             typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 80;
 
-        if (reduced || midRestore) {
+        if (reduced || midRestore || swapped) {
             targets.forEach(settle);
             return;
         }

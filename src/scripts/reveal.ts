@@ -8,7 +8,12 @@ import { bootOnce } from './boot-once';
     if (!bootOnce('reveal')) return;
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let swapped = false;
     let io: IntersectionObserver | null = null;
+
+    document.addEventListener('astro:after-swap', () => {
+        swapped = true;
+    });
 
     function restoreY(): number {
         return typeof window.__restoreScrollY === 'number' ? window.__restoreScrollY : 0;
@@ -60,8 +65,8 @@ import { bootOnce } from './boot-once';
 
         document.documentElement.classList.add('js-motion');
 
-        // Mid-page reload: content is already "appeared" — never re-prep / flicker
-        if (reduced || restoreY() > 80 || !('IntersectionObserver' in window)) {
+        // ClientRouter: show in-view content immediately (no second intro fade)
+        if (reduced || restoreY() > 80 || swapped || !('IntersectionObserver' in window)) {
             nodes.forEach(settle);
             return;
         }

@@ -35,19 +35,15 @@ import { bootOnce } from './boot-once';
     }
 
     function applyTheme(theme: Theme): void {
-        document.documentElement.classList.toggle('dark', theme === 'dark');
+        const root = document.documentElement;
+        root.classList.toggle('dark', theme === 'dark');
         try {
             localStorage.setItem(STORAGE_KEY, theme);
         } catch {
             /* ignore quota / private mode */
         }
         syncChrome(theme);
-        // Defer island work so the toggle slide is not blocked on React remounts
-        requestAnimationFrame(() => {
-            window.dispatchEvent(
-                new CustomEvent('themechange', { detail: { theme } }),
-            );
-        });
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
     }
 
     function toggleTheme(): void {

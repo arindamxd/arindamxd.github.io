@@ -114,7 +114,7 @@ const label = preview ? "preview" : usernames.join(" + ");
         class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center overflow-visible p-0"
     >
         <GitHubContributionsCalendar
-            client:only="react"
+            client:visible={{ rootMargin: "200px" }}
             username={label}
             contributions={contributions}
             totalCount={totalCount}
