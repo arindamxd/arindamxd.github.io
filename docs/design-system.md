@@ -494,9 +494,9 @@ Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left*
 | Mechanism | When |
 | --- | --- |
 | Page loader | First paint hold, then exit slide |
-| **Scroll reveal** | Section / list enter — **target:** Motion `inView` + spring (§12.2.2); today: `appear-*` / `reveal.ts` |
+| **Scroll reveal** | Section / list enter — Motion `inView` + `animate` (`reveal.ts`, §12.2.2). CSS only holds first paint / prep. |
 | Lenis | Smooth page wheel scroll |
-| **Spring physics** | Interactive UI + reveals — **target:** Motion `type: "spring"` (§12.2.3) |
+| **Spring physics** | Below-fold reveals use `springSoft` (`motion-tokens.ts`). Interactive chrome still CSS `200ms` until tools adopt `springSnappy`. |
 | **Scramble on CTAs** | **target:** [Motion+ `scrambleText`](https://motion.dev/examples/js-scramble-text) (§12.2.1) |
 | Short color/opacity transitions | `200ms` ease-in-out hovers |
 | **Circular cursor** | Desktop ring follower — **target:** §12.2.4 (after Adopt Motion) |
@@ -507,7 +507,7 @@ Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left*
 - Ship 2–3 intentional motions on visually led surfaces; don’t animate everything.
 - Respect `prefers-reduced-motion` (Lenis, scramble, springs, reveals must no-op).
 - Nested overflow: never fight Lenis — mark scrollables with `data-lenis-prevent`.
-- Do **not** add a second custom scramble or reveal engine — migrate to Motion (§12.2.1–12.2.3).
+- Do **not** add a second custom scramble or reveal engine — reveal/appear already use OSS Motion; scramble stays custom until Motion+ (§12.2.1).
 
 ---
 
@@ -572,16 +572,16 @@ External references worth tracking: [Motion](https://motion.dev/), [Motion `anim
 
 ### 12.2 Motion & interaction
 
-**Today:** Lenis smooth scroll, custom `appear-*` / reveal, scramble text, page loader, Astro `ClientRouter`.
+**Today:** Lenis; OSS Motion for page-shell enter (`springPage` rise + blur) and below-fold reveal (`springSoft`); scramble still custom. First paint: `is-page-entering`. Mid-page restore: `scroll-pending`.
 
 | Enhancement | Approach | Fit |
 | --- | --- | --- |
 | **P0 — Reduced-motion contract** | Audit every animation; provide CSS/`matchMedia('(prefers-reduced-motion: reduce)')` no-ops for scramble, Lenis, reveals | Accessibility baseline |
 | **P0 — Motion token scale** | Formalize durations: `120 / 200 / 320 / 520ms` and one house easing (e.g. `cubic-bezier(0.44, 0, 0.56, 1)` already used in nav) as CSS variables | Consistency |
 | **P1 — View Transitions polish** | Named transitions for shared elements (project thumb → detail banner, blog row → article). Astro ClientRouter already enables VT; add `view-transition-name` sparingly — **never on `.nav-glass` / `.nav-bar-container`** (breaks frost) | Native, 0kb |
-| **P1 — Adopt Motion (JS)** | Add open-source [`motion`](https://motion.dev/) **vanilla JS** (not React) as the site animation runtime: `animate`, `inView`, `stagger`, `scroll` as needed. Works with Astro scripts ([Astro guide](https://developers.netlify.com/guides/motion-animation-library-with-astro/)). Foundation for §12.2.2–12.2.3 | Small, MIT |
-| **P1 — Motion scroll reveal (`inView`)** | On top of Adopt Motion (JS): replace custom `appear-*` / [`reveal.ts`](../src/scripts/reveal.ts) with Motion `inView` + `animate` + `stagger` — see **§12.2.2** | Primary reveal path |
-| **P1 — Motion spring physics** | On top of Adopt Motion (JS): use `animate(..., { type: "spring", ... })` for interactive UI (tools, pills, back control) — see **§12.2.3** | Natural feel |
+| **P1 — Adopt Motion (JS)** | **Done (appear + reveal):** OSS [`motion`](https://motion.dev/) vanilla JS — `animate`, `inView`, `stagger`. Tokens in [`motion-tokens.ts`](../src/scripts/motion-tokens.ts). Not React. | Small, MIT |
+| **P1 — Motion scroll reveal (`inView`)** | **Done:** [`reveal.ts`](../src/scripts/reveal.ts) uses `inView` + `animate` + `stagger`. Keep CSS prep/instant + reload/ClientRouter skip. See **§12.2.2** | Primary reveal path |
+| **P1 — Motion spring physics** | Reveals use `springSoft`. Tools/pills still CSS — see **§12.2.3** | Natural feel |
 | **P2 — CSS scroll-driven reveals** | Progressive enhancement / fallback: `animation-timeline: view()` where supported; Motion `inView` remains the authored path | Perf on low-end |
 | **P1 — Replace custom scramble with Motion+ `scrambleText`** | See **§12.2.1** — [JS scramble example](https://motion.dev/examples/js-scramble-text) / [`scrambleText` docs](https://motion.dev/docs/scramble-text) | Brand motion, less custom JS |
 | **P2 — `animateView()`** | Use Motion’s [`animateView`](https://motion.dev/docs/animate-view) where native VT is awkward (springs, interruption) — e.g. tools hub → tool morph, theme toggle continuity | Escalation path |
@@ -628,19 +628,11 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 
 #### 12.2.2 Scroll reveal with Motion (`inView`)
 
-**Today:** custom [`reveal.ts`](../src/scripts/reveal.ts) + `appear-*` classes in [`motion.css`](../src/styles/motion.css).
+**Today:** OSS [`motion`](https://motion.dev/) in [`reveal.ts`](../src/scripts/reveal.ts) for below-fold sections. Page enter is the shared `.page-shell` rise + blur on every route (home included). CSS holds `.reveal-prep` start pose.
 
-**Target:** free [`motion`](https://motion.dev/) package — `inView` + `animate` + `stagger` (same pattern as the [Motion + Astro guide](https://developers.netlify.com/guides/motion-animation-library-with-astro/); scroll-triggered API: [inView](https://motion.dev/docs/inview), scroll-linked optional: [scroll](https://motion.dev/docs/scroll)).
+**Keep:** first-paint CSS hold, mid-page in-view settle, ClientRouter skip, `prefers-reduced-motion`. Do not reintroduce a parallel IO/CSS-keyframe reveal engine.
 
-| Step | Action |
-| --- | --- |
-| 1 | `npm install motion` (OSS). Tree-shake: `import { animate, inView, stagger } from "motion"`. |
-| 2 | Mark sections/rows with a stable hook (e.g. `data-reveal` or `.scrolling-section`) — reuse existing markup where possible. |
-| 3 | On enter viewport (`amount: ~0.2–0.25`), `animate(el, { opacity: [0, 1], y: [24, 0] }, { type: "spring", … })`. For list shells, `animate(children, {…}, { delay: stagger(0.06) })`. |
-| 4 | Gate with `prefers-reduced-motion`: set final styles immediately, skip `inView` animation. |
-| 5 | Keep Lenis; reveals are scroll-**triggered**, not scroll-jacked. Do not bind reveal progress to Lenis unless designing a scrubbed case study. |
-| 6 | Remove or slim `reveal.ts` / unused `appear-*` once parity is confirmed on home, projects, blogs. |
-| 7 | Optional P2: CSS `animation-timeline: view()` as progressive enhancement for simple fades; Motion remains the authored default for stagger/spring. |
+Page enter is the shared `.page-shell` rise + blur (`springPage`). Below-fold sections use `springSoft`. List shells (`data-reveal-stagger`) stagger children with `stagger(0.05)`.
 
 **House limits**
 
@@ -650,7 +642,7 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 
 #### 12.2.3 Spring physics with Motion
 
-**Today:** mostly CSS transitions (`200ms ease-in-out`) and custom appear curves; no shared spring config.
+**Today:** page enter uses `springPage` on `.page-shell`; scroll reveals use `springSoft`. Interactive chrome still CSS `200ms`. Tokens live in [`motion-tokens.ts`](../src/scripts/motion-tokens.ts).
 
 **Target:** Motion `animate` / transitions with `type: "spring"` for **interactive** UI that should feel physical ([Motion springs](https://motion.dev/docs/react-transitions) apply the same spring model in JS).
 
@@ -661,20 +653,13 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 | List-row / section scroll reveal enter | Lenis page scroll (keep Lenis) |
 | Modal / command-palette enter+exit | Layout that must stay 1:1 with reduced-motion instant |
 
-**House spring tokens (suggested — tune once, reuse)**
-
-```js
-// e.g. src/scripts/motion-tokens.ts
-export const springSnappy = { type: "spring", stiffness: 420, damping: 32, mass: 0.8 };
-export const springSoft   = { type: "spring", stiffness: 180, damping: 28, mass: 1 };
-```
+**House spring tokens** — [`motion-tokens.ts`](../src/scripts/motion-tokens.ts) (`springSnappy` / `springSoft`).
 
 | Step | Action |
 | --- | --- |
-| 1 | Centralize `springSnappy` / `springSoft` (or CSS-variable documentation if mirrored later). |
-| 2 | Wire snappy springs to tools chrome (fullscreen, chips) and soft springs to scroll reveals (§12.2.2). |
-| 3 | Never spring infinite loops or scroll position; springs are for discrete UI state changes + enter animations. |
-| 4 | Under `prefers-reduced-motion`, jump to end state (`animate` with `duration: 0` or set styles directly). |
+| 1 | Tokens centralized. Soft springs on scroll reveals. Snappy springs for tools chrome still open. |
+| 2 | Never spring infinite loops or scroll position; springs are for discrete UI state changes + enter animations. |
+| 3 | Under `prefers-reduced-motion`, jump to end state. |
 
 **Do not** adopt Motion React / layout `layout={true}` site-wide — this stack is Astro + vanilla JS unless a future island needs it.
 

@@ -9,7 +9,6 @@ import './scramble-text';
 import './available-text';
 import './skill-tooltips';
 import './testimonial-slider';
-import './hero-appear';
 import './reveal';
 import './smooth-scroll';
 import './count-up';

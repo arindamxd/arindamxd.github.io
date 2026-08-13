@@ -40,7 +40,7 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 - Astro static portfolio · Tailwind v4 · feature CSS via [`global.css`](src/styles/global.css) (layout via `@apply` in sheets; do **not** import `tools.css` / `design.css` into global — those `@reference` global for theme)
 - **TypeScript mandatory** under `src/` — [`tsconfig.json`](tsconfig.json) · `astro check` on build
 - Content: JSON catalogs + Markdown under `src/content/` · loaders in `src/utils/`
-- Motion today: Lenis + custom appear/reveal/scramble/count-up · Motion.js adoption is roadmap in design-system §12
+- Motion today: Lenis + OSS [`motion`](https://motion.dev/) for page-shell enter + scroll reveal · custom scramble/count-up · tokens in [`src/scripts/motion-tokens.ts`](src/scripts/motion-tokens.ts)
 - Deploy: GitHub Pages from **`trunk`** · live https://arindamxd.github.io
 - Dev: `npm run dev` → http://localhost:3000 · `npm run build` → `./dist/`
 
@@ -116,19 +116,20 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
 | `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme) |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
-| `page-transition.ts` | CSS dissolve + rise on ClientRouter (nav stays; no VT snapshot) |
+| `page-transition.ts` | Same shell dissolve + spring rise/blur on reload and ClientRouter (nav stays; no VT snapshot) |
 | `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
 | `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` |
 | `available-text.ts` | Hero “Available for…” cycle |
-| `reveal.ts` / `hero-appear.ts` / `count-up.ts` | Appear (fade-up), scroll reveal, YoE count |
+| `reveal.ts` / `count-up.ts` | Scroll reveal (`inView` + spring); YoE count |
+| `motion-tokens.ts` | House easing, `springPage` / `springSoft` / `springSnappy` |
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
 | `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
 | `analytics.ts` | GA4 + optional Microsoft Clarity (`CLARITY_ENABLED`) + ClientRouter page views |
 | `markdown-fullscreen.ts` | Fullscreen markdown doc panels |
 | Tools scripts | `tools-*.ts` for author / markdown / scramble-compare / analytics-reach |
 
-Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §12 — don’t add GSAP theatre.
+Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP theatre.
 
 ---
 

@@ -47,6 +47,9 @@ declare global {
         __restoreScrollY?: number;
         __scrollRestoreDone?: boolean;
         __pageLoaderDone?: boolean;
+        __pageEnterStarted?: boolean;
+        __pageEnterBound?: boolean;
+        __tryPageEnter?: () => void;
         __pageLoaderScript?: boolean;
         __layoutInlineBoot?: boolean;
         __scriptBoot?: Record<string, boolean>;

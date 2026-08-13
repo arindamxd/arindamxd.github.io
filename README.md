@@ -13,7 +13,7 @@ Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** 
 | Framework | [Astro](https://astro.build) `^7.2` (static output, Vite 8) |
 | Language | **TypeScript mandatory** under `src/` — [`tsconfig.json`](./tsconfig.json) (`astro/tsconfigs/strict`, `allowJs: false`) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) via `@tailwindcss/vite` · tokens in `src/styles/tokens.css` |
-| Motion | Custom CSS + TS (`motion.css`, hero appear, scroll reveal, scramble) + [Lenis](https://github.com/darkroomengineering/lenis) smooth scroll |
+| Motion | Page-shell enter + scroll reveal (`motion` / `motion.css`) + scramble + [Lenis](https://github.com/darkroomengineering/lenis) |
 | Content | JSON catalogs + Markdown bodies under `src/content/` (runtime loaders in `src/utils/`) |
 | Runtime | Node `>=22.12` |
 | Deploy | GitHub Pages via Actions (`trunk` branch) |
@@ -32,7 +32,7 @@ Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.
 - Dark / light theme (default dark), persisted in `localStorage`, flash-free boot script in `BaseLayout`
 - SEO: meta description, canonical, Open Graph, Twitter card, Person JSON-LD
 - GA4 page views in production only (skipped in `astro dev`)
-- Client motion: Lenis, hero appear, scroll reveal (`data-reveal`), count-up, scramble — respects `prefers-reduced-motion`
+- Client motion: Lenis, page-shell enter, scroll reveal (`data-reveal`), count-up, scramble — respects `prefers-reduced-motion`
 - App deep-link verification: `public/.well-known/assetlinks.json` (CameraX, certification app)
 - Project privacy policies at `/projects/<slug>/privacy-policy` (CameraX, Coco, Ensecure); old `/apps/*/privacy-policy` URLs redirect
 
@@ -263,7 +263,7 @@ Loaded from `BaseLayout.astro` (TypeScript under `src/scripts/`):
 | `theme.ts` | Light ↔ dark toggle + `localStorage` · click delegation · `themechange` event |
 | `available-text.ts` | Responsive “Available for…” copy on hero |
 | `testimonial-slider.ts` | Phone testimonial carousel |
-| `hero-appear.ts` | Load-time hero / badge appear |
+| `page-transition.ts` | Page-shell dissolve + spring rise/blur (every route) |
 | `reveal.ts` | Scroll-in sections via `[data-reveal]` |
 | `smooth-scroll.ts` | Lenis (skipped when reduced motion) |
 | `count-up.ts` | Viewport count-up for `data-count-to` |

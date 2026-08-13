@@ -151,175 +151,16 @@ html.is-loading body {
     }
 }
 
-/* Hold appear until loader unlocks */
-html.js-motion:not(.is-loaded) .appear-hero-card,
-html.js-motion:not(.is-loaded) .appear-hero-tie,
-html.js-motion:not(.is-loaded) .appear-fade-up,
-html.js-motion:not(.is-loaded) .appear-fade-up-sm,
-html.js-motion:not(.is-loaded) .appear-rise {
-    opacity: 0;
-    animation: none !important;
-}
-
-/* First paint: already at rest-offset (no visible→hidden flash on reload) */
-html.appear-pending .appear-hero-card:not(.is-appearing):not(.is-settled) {
-    opacity: 0;
-    transform: translate3d(0, 30px, 0);
-}
-
-html.appear-pending .appear-hero-tie:not(.is-appearing):not(.is-settled) {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-}
-
-html.appear-pending .appear-fade-up:not(.is-appearing):not(.is-settled),
-html.appear-pending .appear-fade-up-sm:not(.is-appearing):not(.is-settled) {
-    opacity: 0;
-    transform: translate3d(0, 20px, 0);
-}
-
-html.appear-pending .appear-rise:not(.is-appearing):not(.is-settled) {
-    opacity: 0;
-    transform: translate3d(0, 60px, 0);
-}
-
-@keyframes hero-card-appear {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 30px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-@keyframes hero-tie-appear {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-}
-
-@keyframes appear-fade-up {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 20px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-@keyframes appear-fade-up-sm {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 20px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-@keyframes appear-rise {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 60px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-html.js-motion .appear-hero-card.is-appearing {
-    animation: hero-card-appear 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-    will-change: transform, opacity;
-}
-
-html.js-motion .appear-hero-card.is-settled {
-    opacity: 1;
-    transform: none;
-    animation: none;
-    will-change: auto;
-}
-
-html.js-motion .appear-hero-tie.is-appearing {
-    animation: hero-tie-appear 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-    will-change: transform, opacity;
-}
-
-html.js-motion .appear-hero-tie.is-settled {
-    opacity: 1;
-    transform: translateX(-50%);
-    animation: none;
-    will-change: auto;
-}
-
-html.js-motion .appear-fade-up.is-appearing,
-html.js-motion .appear-fade-up-sm.is-appearing {
-    animation: appear-fade-up 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-    will-change: transform, opacity;
-}
-
-html.js-motion .appear-rise.is-appearing {
-    animation: appear-rise 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-    will-change: transform, opacity;
-}
-
-html.js-motion .appear-fade-up.is-settled,
-html.js-motion .appear-fade-up-sm.is-settled,
-html.js-motion .appear-rise.is-settled {
-    opacity: 1;
-    transform: none;
-    animation: none;
-    will-change: auto;
-}
-
-html.js-motion .appear-delay-1.is-appearing {
-    animation-delay: 0.18s;
-}
-html.js-motion .appear-delay-2.is-appearing {
-    animation-delay: 0.24s;
-}
-html.js-motion .appear-delay-3.is-appearing {
-    animation-delay: 0.32s;
-}
-html.js-motion .appear-delay-4.is-appearing {
-    animation-delay: 0.4s;
-}
-html.js-motion .appear-delay-5.is-appearing {
-    animation-delay: 0.48s;
-}
-
-/* Scroll reveal — only hidden when JS adds .reveal-prep (safe default: visible) */
+/* Scroll reveal — hidden only when JS adds .reveal-prep; Motion animates in */
 html.js-motion .reveal-prep:not(.is-revealed) {
     opacity: 0;
     transform: translate3d(0, 40px, 0);
-    transition:
-        opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform, opacity;
 }
 
 html.js-motion .reveal-prep.is-revealed,
 html.js-motion [data-reveal].is-revealed {
     opacity: 1;
     transform: translate3d(0, 0, 0);
-    transition:
-        opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Boot frame: apply prep without fading visible → hidden */
-html.js-motion.reveal-boot .reveal-prep {
-    transition: none !important;
 }
 
 /* Already scrolled past / failsafe settle */
@@ -340,29 +181,28 @@ html.js-motion [data-reveal].reveal-instant {
 html.is-page-leaving .page-shell {
     opacity: 0;
     filter: none;
-    translate: 0 -10px;
+    transform: translate3d(0, -10px, 0);
     pointer-events: none;
     transition:
-        opacity 200ms cubic-bezier(0.44, 0, 0.56, 1),
-        translate 200ms cubic-bezier(0.44, 0, 0.56, 1);
+        opacity 160ms cubic-bezier(0.44, 0, 0.56, 1),
+        transform 160ms cubic-bezier(0.44, 0, 0.56, 1);
 }
 
 html.is-page-entering .page-shell,
 .page-shell.page-shell--from {
     opacity: 0;
     filter: blur(6px);
-    translate: 0 32px;
+    transform: translate3d(0, 32px, 0);
+    /* Viewport-sized layer so home (long) matches catalog enter cost */
+    height: 100vh;
+    overflow: hidden;
 }
 
 html.is-page-ready .page-shell,
 .page-shell.page-shell--in {
     opacity: 1;
     filter: blur(0);
-    translate: 0 0;
-    transition:
-        opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
-        translate 480ms cubic-bezier(0.22, 1, 0.36, 1),
-        filter 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -376,6 +216,8 @@ html.is-page-ready .page-shell,
         transform: none !important;
         translate: none !important;
         transition: none !important;
+        height: auto !important;
+        overflow: visible !important;
     }
 }
 
@@ -390,17 +232,6 @@ html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) {
     transform: none;
 }
 
-@keyframes cms-stagger-in {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 14px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
 html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) .skill-chip > :first-child,
 html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) .cms-item {
     opacity: 0;
@@ -409,8 +240,6 @@ html.js-motion [data-reveal-stagger].reveal-prep:not(.is-revealed) .cms-item {
 html.js-motion [data-reveal-stagger].is-revealed .skill-chip > :first-child,
 html.js-motion [data-reveal-stagger].is-revealed .cms-item {
     opacity: 1;
-    animation: cms-stagger-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: var(--stagger-delay, var(--skill-delay, 0ms));
 }
 
 html.js-motion [data-reveal-stagger].reveal-instant .skill-chip > :first-child,
@@ -440,25 +269,5 @@ html.js-motion [data-reveal-stagger].reveal-instant .cms-item {
     ::view-transition-old(root),
     ::view-transition-new(root) {
         animation: none !important;
-    }
-
-    html.appear-pending .appear-hero-card,
-    html.appear-pending .appear-hero-tie,
-    html.appear-pending .appear-fade-up,
-    html.appear-pending .appear-fade-up-sm,
-    html.appear-pending .appear-rise,
-    html.js-motion .appear-hero-card.is-appearing,
-    html.js-motion .appear-hero-tie.is-appearing,
-    html.js-motion .appear-fade-up.is-appearing,
-    html.js-motion .appear-fade-up-sm.is-appearing,
-    html.js-motion .appear-rise.is-appearing {
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-    }
-
-    html.js-motion .appear-hero-tie,
-    html.js-motion .appear-hero-tie.is-settled {
-        transform: translateX(-50%) !important;
     }
 }

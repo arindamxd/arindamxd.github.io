@@ -169,7 +169,9 @@ const structuredData = home
                         docEl.classList.add('is-loaded', 'loader-skip');
                     }
                     docEl.classList.add('js-motion');
-                    docEl.classList.remove('appear-pending');
+                    if (!reducedMotion) {
+                        docEl.classList.add('is-page-entering');
+                    }
                 });
 
                 // Manual scroll restore — hide page content until mid-page offset is applied
@@ -187,13 +189,104 @@ const structuredData = home
                     }
                 } catch (err) {}
 
-                // Top-of-page load: hide appear layers before first paint (no visible→hidden flash)
-                if (
-                    !reducedMotion &&
-                    !(typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 80)
-                ) {
-                    document.documentElement.classList.add('appear-pending');
+                // Full load / reload: hold the page shell in the enter pose (nav stays)
+                if (!reducedMotion) {
+                    document.documentElement.classList.add('is-page-entering');
                 }
+
+                // Start shell enter as soon as `.page-shell` exists — do not wait for
+                // the deferred site-client bundle (home HTML is large and delayed it ~1s).
+                function pageEnterReady() {
+                    if (!document.querySelector('.page-shell')) return false;
+                    if (
+                        document.documentElement.classList.contains('is-loading') &&
+                        !window.__pageLoaderDone
+                    ) {
+                        return false;
+                    }
+                    if (
+                        document.documentElement.classList.contains('scroll-pending') &&
+                        !window.__scrollRestoreDone
+                    ) {
+                        return false;
+                    }
+                    return true;
+                }
+
+                function finishPageEnter(el, anim) {
+                    document.documentElement.classList.remove(
+                        'is-page-leaving',
+                        'is-page-entering',
+                        'is-page-ready',
+                    );
+                    if (el) {
+                        el.classList.remove('page-shell--from', 'page-shell--in');
+                    }
+                    if (anim && typeof anim.cancel === 'function') {
+                        try {
+                            anim.cancel();
+                        } catch (err) {}
+                    }
+                    if (el) {
+                        el.style.removeProperty('opacity');
+                        el.style.removeProperty('transform');
+                        el.style.removeProperty('filter');
+                    }
+                }
+
+                function playReloadEnter() {
+                    if (window.__pageEnterStarted || window.__pageEnterBound) return;
+                    var el = document.querySelector('.page-shell');
+                    if (!el) return;
+                    window.__pageEnterStarted = true;
+                    window.dispatchEvent(new CustomEvent('pageenter:start'));
+                    if (reducedMotion) {
+                        finishPageEnter(el, null);
+                        return;
+                    }
+                    el.classList.add('page-shell--from');
+                    var anim = el.animate(
+                        [
+                            {
+                                opacity: 0,
+                                transform: 'translate3d(0, 32px, 0)',
+                                filter: 'blur(6px)',
+                            },
+                            {
+                                opacity: 1,
+                                transform: 'translate3d(0, 0, 0)',
+                                filter: 'blur(0px)',
+                            },
+                        ],
+                        {
+                            duration: 620,
+                            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                            fill: 'forwards',
+                        },
+                    );
+                    var done = function () {
+                        finishPageEnter(el, anim);
+                    };
+                    if (anim && anim.finished && typeof anim.finished.then === 'function') {
+                        anim.finished.then(done).catch(done);
+                    } else {
+                        window.setTimeout(done, 620);
+                    }
+                }
+
+                window.__tryPageEnter = function () {
+                    if (window.__pageEnterStarted || window.__pageEnterBound) return;
+                    if (!pageEnterReady()) {
+                        window.addEventListener('pageloader:done', window.__tryPageEnter, {
+                            once: true,
+                        });
+                        window.addEventListener('scrollrestore:done', window.__tryPageEnter, {
+                            once: true,
+                        });
+                        return;
+                    }
+                    playReloadEnter();
+                };
 
                 function saveScroll() {
                     try {
@@ -281,7 +374,7 @@ const structuredData = home
                     } catch (err) {}
                     window.__restoreScrollY = 0;
                     window.__scrollRestoreDone = true;
-                    document.documentElement.classList.remove('scroll-pending', 'appear-pending');
+                    document.documentElement.classList.remove('scroll-pending');
                 });
             })();
         </script>
@@ -294,22 +387,12 @@ const structuredData = home
             html.scroll-pending footer {
                 visibility: hidden !important;
             }
-            html.appear-pending .appear-hero-card:not(.is-appearing):not(.is-settled) {
+            html.is-page-entering .page-shell {
                 opacity: 0;
-                transform: translate3d(0, 30px, 0);
-            }
-            html.appear-pending .appear-hero-tie:not(.is-appearing):not(.is-settled) {
-                opacity: 0;
-                transform: translateX(-50%) translateY(20px);
-            }
-            html.appear-pending .appear-fade-up:not(.is-appearing):not(.is-settled),
-            html.appear-pending .appear-fade-up-sm:not(.is-appearing):not(.is-settled) {
-                opacity: 0;
-                transform: translate3d(0, 20px, 0);
-            }
-            html.appear-pending .appear-rise:not(.is-appearing):not(.is-settled) {
-                opacity: 0;
-                transform: translate3d(0, 60px, 0);
+                filter: blur(6px);
+                transform: translate3d(0, 32px, 0);
+                height: 100vh;
+                overflow: hidden;
             }
             .page-loader {
                 position: fixed; inset: 0; z-index: 9999;
@@ -373,6 +456,12 @@ const structuredData = home
             )
         }
         <div class="page-shell">
+            <script is:inline>
+                (function () {
+                    if (window.__pageEnterBound) return;
+                    if (typeof window.__tryPageEnter === 'function') window.__tryPageEnter();
+                })();
+            </script>
             <slot />
         </div>
     </body>

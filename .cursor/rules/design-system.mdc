@@ -59,6 +59,6 @@ Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Mini
 
 ## Motion
 
-Lenis page scroll; scramble on key CTAs; short `200ms` hovers; optional `appear-*` / reveal. Don’t add motion noise. Honor reduced motion.
+Lenis page scroll; OSS Motion (`animate` / `inView` / `stagger`) for page-shell enter + scroll reveal; scramble on key CTAs; short `200ms` hovers. Don’t add motion noise. Honor reduced motion.
 
-**Enhancements:** **Adopt Motion (JS)** (OSS `motion`) as the animation runtime. Use it for **scroll reveal** (`inView`, §12.2.2), **spring physics** (§12.2.3), and optional **circular custom cursor** (§12.2.4). **Verify Lenis vs native scroll** before locking the stack (§12.2.5). Prefer native View Transitions for page morphs. Replace custom scramble with Motion+ [`scrambleText`](https://motion.dev/examples/js-scramble-text) (§12.2.1) only with a membership. Keep at most one smooth-scroll approach; no GSAP theatre.
+**Enhancements:** Motion tokens in `src/scripts/motion-tokens.ts`. Springs on interactive tools chrome still open (§12.2.3). **Verify Lenis vs native scroll** before locking the stack (§12.2.5). Prefer native View Transitions for page morphs. Replace custom scramble with Motion+ [`scrambleText`](https://motion.dev/examples/js-scramble-text) (§12.2.1) only with a membership. Keep at most one smooth-scroll approach; no GSAP theatre.

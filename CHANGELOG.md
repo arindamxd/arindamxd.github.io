@@ -8,11 +8,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+- OSS Motion (`motion`) for page-shell enter and scroll reveal (`inView`, `animate`, `stagger`)
+
 ### Changed
 
-- Hero intro: fade-up (no hinge/blur); brands block rises after a short stagger
+- Home enter matches projects/blogs: page-shell rise+blur only (hero appear script removed)
+- Reload enter starts as soon as `.page-shell` exists (home no longer waits ~1s for the motion bundle)
 - Mid-page reload: in-view sections stay visible; below-fold still fades up on scroll
-- In-site navigation: nav stays, old content fades up, new page rises in and sharpens (no View Transition snapshot)
+- Page enter is a single shell rise+blur (no stacked Y)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
 
 ### Fixed
