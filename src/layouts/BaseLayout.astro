@@ -130,6 +130,14 @@ const structuredData = home
                     document.documentElement.setAttribute('data-theme', 'dark');
                 }
 
+                document.documentElement.classList.add('js-motion');
+                var reducedMotion = false;
+                try {
+                    reducedMotion =
+                        window.matchMedia &&
+                        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                } catch (e) {}
+
                 var seen = false;
                 try {
                     seen = sessionStorage.getItem('page-loader-seen') === '1';
@@ -160,6 +168,8 @@ const structuredData = home
                         docEl.classList.remove('is-loading');
                         docEl.classList.add('is-loaded', 'loader-skip');
                     }
+                    docEl.classList.add('js-motion');
+                    docEl.classList.remove('appear-pending');
                 });
 
                 // Manual scroll restore — hide page content until mid-page offset is applied
@@ -176,6 +186,14 @@ const structuredData = home
                         }
                     }
                 } catch (err) {}
+
+                // Top-of-page load: hide appear layers before first paint (no visible→hidden flash)
+                if (
+                    !reducedMotion &&
+                    !(typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 80)
+                ) {
+                    document.documentElement.classList.add('appear-pending');
+                }
 
                 function saveScroll() {
                     try {
@@ -263,7 +281,7 @@ const structuredData = home
                     } catch (err) {}
                     window.__restoreScrollY = 0;
                     window.__scrollRestoreDone = true;
-                    document.documentElement.classList.remove('scroll-pending');
+                    document.documentElement.classList.remove('scroll-pending', 'appear-pending');
                 });
             })();
         </script>
@@ -275,6 +293,23 @@ const structuredData = home
             html.scroll-pending .site-root,
             html.scroll-pending footer {
                 visibility: hidden !important;
+            }
+            html.appear-pending .appear-hero-card:not(.is-appearing):not(.is-settled) {
+                opacity: 0;
+                transform: translate3d(0, 30px, 0);
+            }
+            html.appear-pending .appear-hero-tie:not(.is-appearing):not(.is-settled) {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            html.appear-pending .appear-fade-up:not(.is-appearing):not(.is-settled),
+            html.appear-pending .appear-fade-up-sm:not(.is-appearing):not(.is-settled) {
+                opacity: 0;
+                transform: translate3d(0, 20px, 0);
+            }
+            html.appear-pending .appear-rise:not(.is-appearing):not(.is-settled) {
+                opacity: 0;
+                transform: translate3d(0, 60px, 0);
             }
             .page-loader {
                 position: fixed; inset: 0; z-index: 9999;

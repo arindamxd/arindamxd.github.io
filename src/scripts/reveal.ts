@@ -65,13 +65,13 @@ import { bootOnce } from './boot-once';
 
         document.documentElement.classList.add('js-motion');
 
-        // ClientRouter: show in-view content immediately (no second intro fade)
-        if (reduced || restoreY() > 80 || swapped || !('IntersectionObserver' in window)) {
+        // ClientRouter / reduced: show everything immediately (no second intro fade)
+        if (reduced || swapped || !('IntersectionObserver' in window)) {
             nodes.forEach(settle);
             return;
         }
 
-        // Fresh visit at top: animate only what's in view; observe the rest
+        // Top load and mid-page reload: in-view stays visible; below-fold still fades up
         const pending: Element[] = [];
         document.documentElement.classList.add('reveal-boot');
 

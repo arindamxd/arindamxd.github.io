@@ -10,6 +10,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Changed
 
+- Hero intro: fade-up (no hinge/blur); brands block rises after a short stagger
+- Mid-page reload: in-view sections stay visible; below-fold still fades up on scroll
 - In-site navigation: nav stays, old content fades up, new page rises in and sharpens (no View Transition snapshot)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
 

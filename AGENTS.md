@@ -121,7 +121,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
 | `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` |
 | `available-text.ts` | Hero “Available for…” cycle |
-| `reveal.ts` / `hero-appear.ts` / `count-up.ts` | Appear, scroll reveal, YoE count |
+| `reveal.ts` / `hero-appear.ts` / `count-up.ts` | Appear (fade-up), scroll reveal, YoE count |
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
 | `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
 | `analytics.ts` | GA4 + optional Microsoft Clarity (`CLARITY_ENABLED`) + ClientRouter page views |

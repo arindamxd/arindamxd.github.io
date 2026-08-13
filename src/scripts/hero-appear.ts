@@ -1,4 +1,4 @@
-// Hero appear — badge hinge feel (after page loader)
+// Hero appear — fade-up (opacity + translateY) after page loader
 import { bootOnce } from './boot-once';
 
 (function () {
@@ -11,6 +11,7 @@ import { bootOnce } from './boot-once';
 
     document.addEventListener('astro:after-swap', () => {
         swapped = true;
+        document.documentElement.classList.remove('appear-pending');
     });
 
     function settle(el: Element): void {
@@ -24,20 +25,24 @@ import { bootOnce } from './boot-once';
 
         const targets = [
             ...document.querySelectorAll(
-                '.appear-hero-card, .appear-hero-tie, .appear-fade-up, .appear-fade-up-sm',
+                '.appear-hero-card, .appear-hero-tie, .appear-fade-up, .appear-fade-up-sm, .appear-rise',
             ),
         ];
 
         document.documentElement.classList.add('js-motion');
 
-        if (!targets.length) return;
+        if (!targets.length) {
+            document.documentElement.classList.remove('appear-pending');
+            return;
+        }
 
-        // Mid-page reload — skip hero entrance (user isn't at the top)
+        // Mid-page reload — skip intro (user isn't at the top)
         const midRestore =
             typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 80;
 
         if (reduced || midRestore || swapped) {
             targets.forEach(settle);
+            document.documentElement.classList.remove('appear-pending');
             return;
         }
 
@@ -53,11 +58,13 @@ import { bootOnce } from './boot-once';
             el.addEventListener('animationend', onEnd);
         });
 
+        document.documentElement.classList.remove('appear-pending');
+
         window.setTimeout(() => {
             targets.forEach((el) => {
                 if (!el.classList.contains('is-settled')) settle(el);
             });
-        }, 1500);
+        }, 2000);
     }
 
     function arm(): void {
