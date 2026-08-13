@@ -8,6 +8,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+### Changed
+
+### Fixed
+
+## [1.0.7] — 2026-08-13
+
+### Added
+
 - Cursor rule `.cursor/rules/no-push.mdc`: never auto-push; confirm before any `git push`
 
 ### Changed
@@ -137,7 +145,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 See git tag `v1.0.1` and commit history for earlier notes.
 
-[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.6...HEAD
+[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.7...HEAD
+[1.0.7]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.3...v1.0.4

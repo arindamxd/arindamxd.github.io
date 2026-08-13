@@ -1,7 +1,7 @@
 # AGENTS.md — project memory
 
 Git-tracked map + durable decisions for humans and coding agents.  
-**Current site version:** `1.0.6` ([`package.json`](package.json) · git tag `v1.0.6`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
+**Current site version:** `1.0.7` ([`package.json`](package.json) · git tag `v1.0.7`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
 **UI source of truth:** [`docs/design-system.md`](docs/design-system.md) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc) · Gallery: `/design`
 
 Keep this file in sync when you ship durable architecture decisions or bump the package version. Prefer linking to long recipes in `docs/` over duplicating them here.
@@ -12,9 +12,9 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 | Field | Value | Notes |
 | --- | --- | --- |
-| **Package** | `1.0.6` | Bump in `package.json` on release |
-| **Git tags** | `v1.0.6`, `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
-| **Memory doc** | `1.0.6` | Same as package after each memory update on a release line |
+| **Package** | `1.0.7` | Bump in `package.json` on release |
+| **Git tags** | `v1.0.7`, `v1.0.6`, `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
+| **Memory doc** | `1.0.7` | Same as package after each memory update on a release line |
 | **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go (required when asked to commit), fold into the version on release |
 | **Node** | `>=22.12` | `engines` in package.json |
 | **Astro** | `^7.2` | Static output · Vite 8 |
@@ -195,11 +195,15 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 
 Versioned notes for **this memory file** and related agent guidance — full product history lives in [`CHANGELOG.md`](CHANGELOG.md). Align the top **Versions** row when the package bumps.
 
+### 1.0.7 — 2026-08-13
+
+- Release bump to `1.0.7`.
+- No post-build JS obfuscation (Vite minify only); `bootOnce` for ClientRouter listener stacking; calendar `useDeferredValue` for theme.
+
 ### 1.0.6 — 2026-08-11
 
 - Release bump to `1.0.6`.
 - Durable notes: mobile theme toggle hit-testing / `themechange`; contributions `client:only` + theme store; skill tap tooltips; Cursor / Claude Code / GitKraken tools.
-- No post-build JS obfuscation (Vite minify only); `bootOnce` for ClientRouter listener stacking; calendar `useDeferredValue` for theme.
 - Docs + design rule synced for touch scramble/tooltips and Clarity `CLARITY_ENABLED`.
 - Agent git policy: never auto-push; version-bump is local commit+tag only; push requires explicit confirmation (`.cursor/rules/no-push.mdc`).
 
