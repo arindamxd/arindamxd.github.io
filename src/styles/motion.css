@@ -155,27 +155,43 @@ html.is-loading body {
 html.js-motion .reveal-prep:not(.is-revealed) {
     opacity: 0;
     transform: translate3d(0, 40px, 0);
+    will-change: transform, opacity;
 }
 
 html.js-motion .reveal-prep.is-revealed,
 html.js-motion [data-reveal].is-revealed {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: none;
 }
 
 /* Already scrolled past / failsafe settle */
+html.js-motion .reveal-instant,
+html.js-motion [data-reveal].reveal-instant,
+html.js-motion [data-reveal].is-revealed {
+    will-change: auto;
+}
+
 html.js-motion .reveal-instant,
 html.js-motion [data-reveal].reveal-instant {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
     animation: none !important;
-    will-change: auto;
 }
 
 /* ---------- Page dissolve + rise (nav stays; no VT snapshot) ---------- */
 .page-shell {
     display: flow-root;
+}
+
+html.is-page-leaving .page-shell,
+html.is-page-entering .page-shell,
+.page-shell.page-shell--from {
+    /* Paint only the viewport box — blur must not rasterize the full home tree */
+    contain: layout paint;
+    isolation: isolate;
+    backface-visibility: hidden;
+    will-change: transform, opacity, filter;
 }
 
 html.is-page-leaving .page-shell {
@@ -218,6 +234,10 @@ html.is-page-ready .page-shell,
         transition: none !important;
         height: auto !important;
         overflow: visible !important;
+        contain: none !important;
+        will-change: auto !important;
+        isolation: auto !important;
+        backface-visibility: visible !important;
     }
 }
 

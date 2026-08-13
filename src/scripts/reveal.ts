@@ -8,10 +8,13 @@ import { clearMotionStyles, springSoft, staggerList } from "./motion-tokens";
     const reduced =
         window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let stopInView: (() => void) | null = null;
+    let stopLoops: (() => void) | null = null;
 
     document.addEventListener("astro:after-swap", () => {
         stopInView?.();
         stopInView = null;
+        stopLoops?.();
+        stopLoops = null;
     });
 
     function restoreY(): number {
@@ -87,8 +90,55 @@ import { clearMotionStyles, springSoft, staggerList } from "./motion-tokens";
         }
     }
 
+    /** Pause looping CSS (brand marquee) when offscreen or the tab is hidden. */
+    function armLooping(): void {
+        stopLoops?.();
+        stopLoops = null;
+        const tracks = [...document.querySelectorAll(".logo-track, .design-marquee-track")];
+        if (!tracks.length) return;
+
+        const onscreen = new Set<Element>();
+
+        const apply = (): void => {
+            const hidden = document.hidden;
+            for (const el of tracks) {
+                el.classList.toggle("is-paused", hidden || !onscreen.has(el));
+            }
+        };
+
+        document.addEventListener("visibilitychange", apply);
+
+        if (reduced || !("IntersectionObserver" in window)) {
+            tracks.forEach((el) => onscreen.add(el));
+            apply();
+            stopLoops = () => {
+                document.removeEventListener("visibilitychange", apply);
+            };
+            return;
+        }
+
+        const io = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) onscreen.add(entry.target);
+                    else onscreen.delete(entry.target);
+                }
+                apply();
+            },
+            { root: null, rootMargin: "80px 0px", threshold: 0 },
+        );
+        tracks.forEach((el) => io.observe(el));
+        apply();
+
+        stopLoops = () => {
+            io.disconnect();
+            document.removeEventListener("visibilitychange", apply);
+        };
+    }
+
     function run(): void {
         ensureScrollShown();
+        armLooping();
 
         const nodes = [...document.querySelectorAll("[data-reveal]")];
         if (!nodes.length) return;
@@ -104,18 +154,19 @@ import { clearMotionStyles, springSoft, staggerList } from "./motion-tokens";
         }
 
         const pending: Element[] = [];
+        const visible: Element[] = [];
 
-        nodes.forEach((el) => {
+        // Measure first, then mutate — avoid layout thrash on home
+        for (const el of nodes) {
             if (el.classList.contains("is-revealed") && !el.classList.contains("reveal-prep")) {
-                return;
+                continue;
             }
-            if (isBelowFold(el)) {
-                prep(el);
-                pending.push(el);
-                return;
-            }
-            settle(el);
-        });
+            if (isBelowFold(el)) pending.push(el);
+            else visible.push(el);
+        }
+
+        visible.forEach(settle);
+        pending.forEach(prep);
 
         if (pending.length) {
             stopInView = inView(

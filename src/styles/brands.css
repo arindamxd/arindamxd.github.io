@@ -6,16 +6,26 @@
     animation: scroll var(--animation-duration) linear infinite;
 }
 
+.logo-track.is-paused {
+    animation-play-state: paused;
+}
+
 @keyframes scroll {
     0% {
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
     100% {
-        transform: translateX(calc(var(--logo-width) * var(--logo-count) * -1));
+        transform: translate3d(calc(var(--logo-width) * var(--logo-count) * -1), 0, 0);
     }
 }
 
 .logo-item {
     @apply flex shrink-0 items-center justify-center;
     width: var(--logo-width);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logo-track {
+        animation: none;
+    }
 }

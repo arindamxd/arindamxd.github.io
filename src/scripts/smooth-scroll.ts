@@ -42,18 +42,22 @@ function bootLenis(): void {
         window.dispatchEvent(new CustomEvent('scrollrestore:done'));
     }
 
+    let scrollSaveTimer = 0;
     lenis.on('scroll', () => {
-        try {
-            sessionStorage.setItem(
-                '__restoreScroll',
-                JSON.stringify({
-                    path: location.pathname + location.search,
-                    y: lenis.scroll,
-                }),
-            );
-        } catch {
-            /* ignore */
-        }
+        window.clearTimeout(scrollSaveTimer);
+        scrollSaveTimer = window.setTimeout(() => {
+            try {
+                sessionStorage.setItem(
+                    '__restoreScroll',
+                    JSON.stringify({
+                        path: location.pathname + location.search,
+                        y: lenis.scroll,
+                    }),
+                );
+            } catch {
+                /* ignore */
+            }
+        }, 120);
     });
 
     document.addEventListener(

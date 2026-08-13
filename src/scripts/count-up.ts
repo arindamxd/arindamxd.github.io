@@ -54,15 +54,6 @@ import { bootOnce } from './boot-once';
         requestAnimationFrame(frame);
     }
 
-    function isFullyAbove(el: Element): boolean {
-        return el.getBoundingClientRect().bottom < 0;
-    }
-
-    function inView(el: Element): boolean {
-        const r = el.getBoundingClientRect();
-        return r.top < window.innerHeight * 0.98 && r.bottom > 0;
-    }
-
     function run(): void {
         if (io) {
             io.disconnect();
@@ -100,18 +91,30 @@ import { bootOnce } from './boot-once';
         );
         io = observer;
 
-        nodes.forEach((el) => {
-            if (el.dataset.countDone === '1') return;
-            // Mid-page reload: show final value (do not replay)
-            if (typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 80) {
-                if (isFullyAbove(el) || inView(el)) settle(el);
-                else observer.observe(el);
-                return;
+        const restoreMid =
+            typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 80;
+        const settleNow: HTMLElement[] = [];
+        const playNow: HTMLElement[] = [];
+        const watch: HTMLElement[] = [];
+
+        for (const el of nodes) {
+            if (el.dataset.countDone === '1') continue;
+            const r = el.getBoundingClientRect();
+            const above = r.bottom < 0;
+            const shown = r.top < window.innerHeight * 0.98 && r.bottom > 0;
+            if (restoreMid) {
+                if (above || shown) settleNow.push(el);
+                else watch.push(el);
+                continue;
             }
-            if (isFullyAbove(el)) settle(el);
-            else if (inView(el)) animate(el);
-            else observer.observe(el);
-        });
+            if (above) settleNow.push(el);
+            else if (shown) playNow.push(el);
+            else watch.push(el);
+        }
+
+        settleNow.forEach(settle);
+        playNow.forEach(animate);
+        watch.forEach((el) => observer.observe(el));
     }
 
     function arm(): void {

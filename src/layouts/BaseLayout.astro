@@ -194,10 +194,20 @@ const structuredData = home
                     document.documentElement.classList.add('is-page-entering');
                 }
 
-                // Start shell enter as soon as `.page-shell` exists — do not wait for
-                // the deferred site-client bundle (home HTML is large and delayed it ~1s).
+                // Start shell enter as soon as `.page-shell` has page content — do not
+                // wait for the deferred site-client bundle, but never animate an empty shell
+                // (a self-closing layout leaves slot content outside `.page-shell`).
+                function shellHasContent(el) {
+                    if (!el) return false;
+                    for (var n = el.firstElementChild; n; n = n.nextElementSibling) {
+                        if (n.tagName !== 'SCRIPT') return true;
+                    }
+                    return false;
+                }
+
                 function pageEnterReady() {
-                    if (!document.querySelector('.page-shell')) return false;
+                    var el = document.querySelector('.page-shell');
+                    if (!shellHasContent(el)) return false;
                     if (
                         document.documentElement.classList.contains('is-loading') &&
                         !window.__pageLoaderDone
@@ -231,6 +241,7 @@ const structuredData = home
                         el.style.removeProperty('opacity');
                         el.style.removeProperty('transform');
                         el.style.removeProperty('filter');
+                        el.style.removeProperty('will-change');
                     }
                 }
 
@@ -277,6 +288,17 @@ const structuredData = home
                 window.__tryPageEnter = function () {
                     if (window.__pageEnterStarted || window.__pageEnterBound) return;
                     if (!pageEnterReady()) {
+                        var el = document.querySelector('.page-shell');
+                        if (el && !shellHasContent(el) && !window.__pageEnterObserve) {
+                            window.__pageEnterObserve = true;
+                            var obs = new MutationObserver(function () {
+                                if (shellHasContent(el)) {
+                                    obs.disconnect();
+                                    window.__tryPageEnter();
+                                }
+                            });
+                            obs.observe(el, { childList: true });
+                        }
                         window.addEventListener('pageloader:done', window.__tryPageEnter, {
                             once: true,
                         });
@@ -393,6 +415,9 @@ const structuredData = home
                 transform: translate3d(0, 32px, 0);
                 height: 100vh;
                 overflow: hidden;
+                contain: layout paint;
+                isolation: isolate;
+                will-change: transform, opacity, filter;
             }
             .page-loader {
                 position: fixed; inset: 0; z-index: 9999;

@@ -34,4 +34,5 @@ export function clearMotionStyles(el: Element): void {
     el.style.removeProperty("transform");
     el.style.removeProperty("translate");
     el.style.removeProperty("filter");
+    el.style.removeProperty("will-change");
 }

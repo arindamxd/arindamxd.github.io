@@ -92,6 +92,12 @@
     }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .site-root .available-pulse {
+        animation: none;
+    }
+}
+
 .site-root .available-text-container,
 .site-root .hero-card-content-badge-text-container,
 .site-root .location-text-container {

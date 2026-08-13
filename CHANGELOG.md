@@ -13,13 +13,17 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Changed
 
 - Home enter matches projects/blogs: page-shell rise+blur only (hero appear script removed)
-- Reload enter starts as soon as `.page-shell` exists (home no longer waits ~1s for the motion bundle)
+- Reload enter waits until `.page-shell` has real content (not an empty wrapper)
+- Page-shell enter paints a contained viewport layer; marquees pause offscreen or in a hidden tab
+- Lenis scroll restore and available-for resize no longer run every frame
 - Mid-page reload: in-view sections stay visible; below-fold still fades up on scroll
 - Page enter is a single shell rise+blur (no stacked Y)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
 
 ### Fixed
 
+- Home reload enter was static: `index.astro` self-closed `BaseLayout`, so the page sat outside `.page-shell`
+- Skipping native View Transitions no longer logs `AbortError: Transition was skipped`
 - Theme toggle no longer no-ops after several ClientRouter visits (single `site-client.ts` layout entry)
 - Home from a project no longer freezes: skip native View Transition snapshots (frost + large images); CSS content fade instead; contributions calendar hydrates when visible
 

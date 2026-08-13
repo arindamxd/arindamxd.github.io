@@ -472,6 +472,10 @@
     animation: design-marquee 18s linear infinite;
 }
 
+.design-marquee-track.is-paused {
+    animation-play-state: paused;
+}
+
 .design-marquee-track span {
     @apply h-7 w-[72px] rounded-lg;
     background: color-mix(in srgb, var(--color-text) 12%, transparent);

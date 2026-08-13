@@ -119,6 +119,9 @@ function init(): void {
 }
 
 if (bootOnce('available-text')) {
+    let lastMobile = window.matchMedia(MOBILE_MQ).matches;
+    let resizeTimer = 0;
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
@@ -127,7 +130,15 @@ if (bootOnce('available-text')) {
 
     document.addEventListener('astro:page-load', init);
 
-    window.addEventListener('resize', updateAvailableText);
+    window.addEventListener('resize', () => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(() => {
+            const mobile = window.matchMedia(MOBILE_MQ).matches;
+            if (mobile === lastMobile) return;
+            lastMobile = mobile;
+            if (document.querySelector('.available-text-container')) updateAvailableText();
+        }, 160);
+    });
 
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {

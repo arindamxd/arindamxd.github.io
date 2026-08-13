@@ -12,10 +12,40 @@ type PrepEvent = Event & {
     loader?: () => Promise<void>;
 };
 
+type ViewTransitionLike = {
+    skipTransition?: () => void;
+    ready?: Promise<unknown>;
+    finished?: Promise<unknown>;
+    updateCallbackDone?: Promise<unknown>;
+};
+
 type SwapEvent = Event & {
     newDocument?: Document;
-    viewTransition?: { skipTransition?: () => void };
+    viewTransition?: ViewTransitionLike;
 };
+
+function isSkippedTransition(err: unknown): boolean {
+    const name =
+        err && typeof err === "object" && "name" in err ? String(err.name) : "";
+    const msg = err instanceof Error ? err.message : String(err ?? "");
+    return name === "AbortError" && msg.includes("Transition was skipped");
+}
+
+/** Native VT snapshots freeze nav glass — skip, and don't leak AbortError to the console. */
+function skipViewTransition(vt?: ViewTransitionLike): void {
+    if (!vt) return;
+    const ignore = (err: unknown) => {
+        if (!isSkippedTransition(err)) console.error(err);
+    };
+    void vt.ready?.catch(ignore);
+    void vt.finished?.catch(ignore);
+    void vt.updateCallbackDone?.catch(ignore);
+    try {
+        vt.skipTransition?.();
+    } catch (err) {
+        if (!isSkippedTransition(err)) console.error(err);
+    }
+}
 
 if (bootOnce("page-transition")) {
     window.__pageEnterBound = true;
@@ -28,12 +58,26 @@ if (bootOnce("page-transition")) {
 
     const shell = (): HTMLElement | null => document.querySelector(".page-shell");
 
+    function shellHasContent(el: HTMLElement | null): boolean {
+        if (!el) return false;
+        for (let n = el.firstElementChild; n; n = n.nextElementSibling) {
+            if (n.tagName !== "SCRIPT") return true;
+        }
+        return false;
+    }
+
     function clearEnter(): void {
         const root = document.documentElement;
         const el = shell();
         root.classList.remove("is-page-leaving", "is-page-entering", "is-page-ready");
         el?.classList.remove("page-shell--from", "page-shell--in");
-        if (el) clearMotionStyles(el);
+        if (el) {
+            for (const a of el.getAnimations()) {
+                if (typeof CSSTransition !== "undefined" && a instanceof CSSTransition) continue;
+                a.cancel();
+            }
+            clearMotionStyles(el);
+        }
     }
 
     function playEnter(): void {
@@ -45,7 +89,11 @@ if (bootOnce("page-transition")) {
             window.dispatchEvent(new CustomEvent("pageenter:start"));
             return;
         }
-        if (!el) return;
+        if (!el || !shellHasContent(el)) return;
+        for (const a of el.getAnimations()) {
+            if (typeof CSSTransition !== "undefined" && a instanceof CSSTransition) continue;
+            a.cancel();
+        }
         root.classList.remove("is-page-leaving");
         root.classList.add("is-page-entering");
         el.classList.add("page-shell--from");
@@ -103,7 +151,7 @@ if (bootOnce("page-transition")) {
         }
         const tryPlay = (): void => {
             if (skipNextLoadEnter || loadEnterDone || window.__pageEnterStarted) return;
-            if (!pageShown() || !shell()) {
+            if (!pageShown() || !shellHasContent(shell())) {
                 window.addEventListener("scrollrestore:done", tryPlay, { once: true });
                 window.addEventListener("pageloader:done", tryPlay, { once: true });
                 window.setTimeout(tryPlay, 400);
@@ -132,9 +180,13 @@ if (bootOnce("page-transition")) {
         };
     });
 
+    window.addEventListener("unhandledrejection", (event) => {
+        if (isSkippedTransition(event.reason)) event.preventDefault();
+    });
+
     document.addEventListener("astro:before-swap", (event) => {
         const ev = event as SwapEvent;
-        ev.viewTransition?.skipTransition?.();
+        skipViewTransition(ev.viewTransition);
         const next = ev.newDocument?.documentElement;
         if (!next) return;
         next.classList.remove("is-page-leaving", "is-page-ready");

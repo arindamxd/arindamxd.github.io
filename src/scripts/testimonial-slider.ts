@@ -57,11 +57,16 @@ import { bootOnce } from './boot-once';
         let currentIndex = 0;
         let storyInterval: ReturnType<typeof setInterval> | 0 = 0;
         let bound: BoundControls | null = null;
+        let onVisibility: (() => void) | null = null;
         const STORY_DURATION = 5;
 
         function cleanup(): void {
             clearInterval(storyInterval);
             storyInterval = 0;
+            if (onVisibility) {
+                document.removeEventListener('visibilitychange', onVisibility);
+                onVisibility = null;
+            }
             if (bound) {
                 bound.prevButton.removeEventListener('click', bound.onPrev);
                 bound.nextButton.removeEventListener('click', bound.onNext);
@@ -204,6 +209,16 @@ import { bootOnce } from './boot-once';
             createProgressBars();
             showTestimonial(currentIndex);
             startInterval();
+
+            onVisibility = () => {
+                if (document.hidden) {
+                    clearInterval(storyInterval);
+                    storyInterval = 0;
+                } else if (!storyInterval) {
+                    startInterval();
+                }
+            };
+            document.addEventListener('visibilitychange', onVisibility);
         }
 
         document.addEventListener('astro:page-load', init);
