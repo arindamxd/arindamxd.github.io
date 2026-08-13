@@ -119,7 +119,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `page-transition.ts` | Same shell dissolve + spring rise/blur on reload and ClientRouter (nav stays; no VT snapshot) |
 | `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
-| `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` |
+| `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` · viewport clamp for edge chips |
 | `available-text.ts` | Hero “Available for…” cycle |
 | `reveal.ts` / `count-up.ts` | Scroll reveal (`inView` + spring); YoE count |
 | `motion-tokens.ts` | House easing, `springPage` / `springSoft` / `springSnappy` |
@@ -168,6 +168,13 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 - Default column **`max-w-[550px]`** (home, footer, tools hub).
 - Semantic tokens only (`bg-bg`, `text-text`, …). Match existing section recipes.
 
+### Surface shell grey gap
+
+- **Footer** is the source of truth for padding from the outer border to the inner content box: `border border-border` + `p-[9→6]` (`pb-[18]` when a bottom bar sits in the shell).
+- **Must match:** `.hero-card` (home intro, 404, project detail) and the blogs list wrapper.
+- **Do not** use `shadow-[inset_0_0_0_1px_…]` on those shells (inset sits inside the padding and looks tighter). Inset rings stay OK on small chrome (back circle, chips, hole, code).
+- Full recipe: [`docs/design-system.md`](docs/design-system.md) § Surface shell (grey gap) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc).
+
 ### SVG sprite
 
 - One [`SvgSprite.astro`](src/components/SvgSprite.astro) in [`BaseLayout`](src/layouts/BaseLayout.astro), **outside** `.page-shell`, with `transition:persist="svg-sprite"`.
@@ -208,6 +215,8 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 
 - Release bump to `1.0.7`.
 - No post-build JS obfuscation (Vite minify only); `bootOnce` for ClientRouter listener stacking; calendar `useDeferredValue` for theme.
+- Surface-shell grey gap follows footer (`border-border` + `p-[9→6]`); hero / 404 / project / blogs list match; inset rings not for those shells. Docs + design rule + README mobile guidelines synced.
+- Experience timeline: mobile 3 even columns aligned with job rows. Skill tooltips clamp to the viewport on edge chips.
 
 ### 1.0.6 — 2026-08-11
 

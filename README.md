@@ -218,6 +218,16 @@ Apply to:
 <section class="… max-w-[550px] max-narrow:px-2.5">…</section>
 ```
 
+#### Inside-card grey gap (shell padding)
+
+The strip of `bg-surface` from the card **border** to the inner `bg-bg` box (or list row / project banner). **Footer** is the source of truth:
+
+- Hairline: **`border border-border`** (not inset `box-shadow` — that makes the gap look tighter)
+- Pad: **`p-[9px]`** desktop → **`p-1.5` (6px)** on `max-narrow:` (`pb-[18px]` when a bottom bar sits in the shell)
+- Same chrome on `.hero-card` (home intro, 404, project detail) and the blogs list wrapper
+
+Full recipe: [docs/design-system.md](./docs/design-system.md) § Surface shell (grey gap).
+
 #### Text blocks (wider inset)
 
 Standalone copy stays on the original text gutter: **`max-narrow:px-5`** (20px).
@@ -248,9 +258,10 @@ The testimonials phone is a **360×750** mock with a `.mobile-border` that bleed
 #### Checklist before shipping mobile UI
 
 1. Compare side margin of new cards to home intro / footer at **360** and **412**
-2. Keep text at `px-5` when it was designed that way; don’t force it to card gutter
-3. Never ship a hard `width: 360px` (or similar) without a scale/fit strategy for viewports ≤ that width
-4. Prefer `px-*` wrappers over `mx-*` on `w-full` flex children
+2. Compare **inside-card grey gap** (border → inner box) to the footer shell — not an inset-shadow shell
+3. Keep text at `px-5` when it was designed that way; don’t force it to card gutter
+4. Never ship a hard `width: 360px` (or similar) without a scale/fit strategy for viewports ≤ that width
+5. Prefer `px-*` wrappers over `mx-*` on `w-full` flex children
 
 ---
 
@@ -269,7 +280,7 @@ Loaded from `BaseLayout.astro` via `site-client.ts` (TypeScript under `src/scrip
 | `count-up.ts` | Viewport count-up for `data-count-to` |
 | `image-fallback.ts` | Broken image → gallery placeholder |
 | `scramble-text.ts` | Shared `data-scramble` helpers · hover (fine pointer) + tap (touch) |
-| `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on touch |
+| `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on touch · viewport clamp for edge chips |
 | `analytics.ts` | GA4 bootstrap (production); optional Microsoft Clarity via `CLARITY_ENABLED` |
 
 ---
@@ -292,10 +303,10 @@ Loaded from `BaseLayout.astro` via `site-client.ts` (TypeScript under `src/scrip
 | --- | --- |
 | [AGENTS.md](./AGENTS.md) | Git-tracked agent / project memory (durable decisions) |
 | [CHANGELOG.md](./CHANGELOG.md) | Product release notes (Keep a Changelog) |
-| [docs/design-system.md](./docs/design-system.md) | UI/UX source of truth · living gallery at `/design` |
+| [docs/design-system.md](./docs/design-system.md) | UI/UX source of truth · living gallery at `/design` · surface-shell grey gap (footer) |
 | [docs/blog-authoring.md](./docs/blog-authoring.md) | Blog catalog + Markdown authoring |
 | [docs/project-authoring.md](./docs/project-authoring.md) | Project catalog + Markdown body |
-| [Mobile layout guidelines](#mobile-layout-guidelines) | Screen gutters (`px-2.5` cards / `px-5` text), nav, 360px phone mocks |
+| [Mobile layout guidelines](#mobile-layout-guidelines) | Screen gutters (`px-2.5` cards / `px-5` text), inside-card grey gap, nav, 360px phone mocks |
 
 ---
 

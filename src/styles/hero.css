@@ -11,7 +11,7 @@
 }
 
 .site-root .hero-card {
-    @apply relative flex h-min w-px flex-1 flex-col flex-nowrap content-center items-center justify-start gap-[9px] rounded-[46px] bg-surface pt-[9px] px-[9px] pb-[22px];
+    @apply relative flex h-min w-px flex-1 flex-col flex-nowrap content-center items-center justify-start gap-[9px] rounded-[46px] border border-border bg-surface pt-[9px] px-[9px] pb-[22px];
 }
 
 .site-root .hero-card-hole {
@@ -317,7 +317,7 @@
     }
 
     .site-root .hero-card-content {
-        @apply gap-[26px] rounded-[30px] pt-[18px] px-[30px] pb-[30px];
+        @apply gap-[26px] rounded-[32px] pt-[18px] px-[30px] pb-[30px];
     }
 
     .site-root .hero-card-content-identity {

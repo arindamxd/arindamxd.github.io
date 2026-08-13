@@ -23,6 +23,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Preload self-hosted Manrope; drop dead Google Fonts preconnect
 - Home widgets (available-for, testimonials, skill tooltips, count-up) load only when their DOM exists
 - Images decode async; hero avatar `fetchpriority="high"`; brand logos lazy with width/height
+- Surface shells (hero, 404, project detail, blogs list) use the footer grey gap on mobile: `border-border` + 6px pad (not inset box-shadow)
+- Experience year timeline on mobile: even 3-column spacing, aligned with job rows (desktop unchanged)
 
 ### Fixed
 
@@ -31,6 +33,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Theme toggle no longer no-ops after several ClientRouter visits (single `site-client.ts` layout entry)
 - Home from a project no longer freezes: skip native View Transition snapshots (frost + large images); CSS content fade instead; contributions calendar hydrates when visible
 - Contributions calendar hydrate no longer dies on a stale Vite optimize-deps 504 after HMR/build
+- Skill chip tooltips on edge chips stay in the viewport (home `overflow-x-hidden` no longer clips them)
 
 ## [1.0.7] — 2026-08-13
 

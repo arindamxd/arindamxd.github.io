@@ -142,7 +142,7 @@ Semantic tokens (use these — not raw hex in new UI):
 | `--color-bg` / `bg-bg` | `#ffffff` | `#222222` | Page background |
 | `--color-text` / `text-text` | `#171717` | `#f5f5f5` | Primary text / icons |
 | `--color-surface` / `bg-surface` | `#f6f6f6` | `#2a2a2a` | Shells, inputs, secondary buttons |
-| `--color-border` / `border-border` | `#e3e3e3` | `#3a3a3a` | Hairlines, inset rings |
+| `--color-border` / `border-border` | `#e3e3e3` | `#3a3a3a` | Shell hairlines (`border`); small-chrome inset rings |
 | `--color-primary` / `bg-primary` | `#2a29ff` | same | Primary CTA fill / hover accents |
 | `--color-accent` | `#29ffff` | same | Rare accent (brand cyan) |
 | `--color-active` | `#9ef34a` | same | Availability / success pulse |
@@ -154,7 +154,7 @@ Semantic tokens (use these — not raw hex in new UI):
 - Supporting: `/60` or `opacity-60`
 - Meta / quiet: `/50`–`/40`
 
-**Borders:** prefer `border border-border` or inset ring `shadow-[inset_0_0_0_1px_var(--color-border)]` over heavy drop shadows.
+**Borders:** surface shells (footer, `.hero-card`, blogs list) use a **layout** `border border-border` — that is the grey-gap hairline. Inset ring `shadow-[inset_0_0_0_1px_var(--color-border)]` is for **small chrome only** (back circle, skill chips, `.hero-card-hole`, code blocks). Do not put an inset ring on a surface shell: it sits inside the padding and makes the gap look tighter than the footer.
 
 **Icons / logos:** monochrome with `brightness-0 dark:invert`; hover often `opacity-40 → 100%`.
 
@@ -190,13 +190,14 @@ Reset margins on text: `m-0 p-0` is the house style.
 | Pattern | Radius | Notes |
 | --- | --- | --- |
 | Pills / CTAs / nav / search | `rounded-full` | Default for **interactive** chrome |
-| Soft content shell | `rounded-[45px]`–`[46px]` → mobile `[36px]` | Projects/blogs list wrappers, footer |
-| Inner list rows | `rounded-[41px]` | Blog/project rows on `bg-bg` inside surface shell |
+| Soft content shell | `rounded-[45px]`–`[46px]` → mobile `[36px]` | Footer / `.hero-card`; blogs list stays `45px` on narrow |
+| Inner solid box | `rounded-[40px]` → mobile `[32px]` | Footer inner, `.hero-card-content` |
+| Inner list rows | `rounded-[41px]` | Blog/project metadata rows on `bg-bg` inside surface shell |
 | Media | `rounded-[30px]` → mobile `[20px]` | Banners / screenshots |
 | Utility inputs (tools forms) | `14px` or full pill when search-like | See `tools.css` |
 | Icon button | Circle `52px` / `34px` | Back control, nav home |
 
-**Elevation:** almost none. Depth = surface contrast + 1px border/inset ring. Nav is the exception: shared `.nav-glass` (`backdrop-filter` blur 16px + soft shadow). Do not sprinkle glass elsewhere.
+**Elevation:** almost none. Depth = surface contrast + 1px **layout** border on shells (footer recipe below). Nav is the exception: shared `.nav-glass` (`backdrop-filter` blur 16px + soft shadow). Do not sprinkle glass elsewhere.
 
 **Cards:** not the default metaphor. Use **surface shells** and **rows**. Cards only when they wrap a clear interaction (e.g. tools hub links).
 
@@ -237,10 +238,25 @@ gap under description: 30px → 20px narrow (owned by the element)
 
 `/design` mounts the live element under Layout.
 
+### Surface shell (grey gap)
+
+**Source of truth:** [`Footer.astro`](../src/components/Footer.astro) contact chrome. The grey gap is the `bg-surface` strip from the outer **border** to the inner `bg-bg` box (or list row / project banner).
+
+| Piece | Desktop | Mobile (`max-narrow:` / ≤609px) |
+| --- | --- | --- |
+| Outer | `bg-surface` `rounded-[46px]` `border border-border` | `rounded-[36px]` (blogs list keeps `45px`) |
+| Grey-gap pad | `p-[9px]` / `px-[9px] pt-[9px]` | **`p-1.5` (6px)**; `pb-[18px]` when a bottom bar sits in the shell |
+| Inner solid box | `bg-bg` `rounded-[40px]` (hero content `36px`) | `rounded-[32px]` |
+| Inner rows | `bg-bg` `rounded-[41px]` | same |
+
+**Must match this gap:** footer, `.hero-card` (home intro, 404, project detail), blogs list wrapper.
+
+**Do not** use `shadow-[inset_0_0_0_1px_var(--color-border)]` on those shells. Inset rings remain OK on small chrome: back circle, skill chips, `.hero-card-hole`, `BlogCodeBlock`, YoE badge.
+
 ### List shell
 
-- Outer: `bg-surface`, large radius, `p-[9px]`, inset border.
-- Rows: `bg-bg`, large radius, horizontal padding; scramble on title links.
+- Uses the **surface shell** recipe (`border-border`, `p-[9→6]`).
+- Rows: `bg-bg`, `rounded-[41px]`, horizontal padding; scramble on title links.
 
 ### Form controls (tools)
 
@@ -349,7 +365,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 
 | Piece | Spec |
 | --- | --- |
-| Tie / shell | `.hero-tie` above card; soft shell + inset border; `.hero-card-hole` |
+| Tie / shell | `.hero-tie` above card; `.hero-card` = **surface shell** (footer grey gap: `border-border` + `p-[9→6]`); hole keeps an inset ring |
 | Identity | Avatar ~`70px`; name `22→19`; role `14→13`; social icons `22px` `opacity-40→100` |
 | Slot bars | Active / inactive indicator bars in card header |
 | Slogan H1 | Display `70→48`, leading ~`90%`, tracking tight |
@@ -362,15 +378,15 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 
 ### 404 card
 
-[`SectionNotFound`](../src/components/sections/SectionNotFound.astro) — same tie/hole/card/bottom chrome as home, **no** slot bars or identity stack. Display `404` at `141px` / tracking `-0.09em`; title + muted support; single primary “Go back home” CTA. `/design` mounts the same component with `preview`.
+[`SectionNotFound`](../src/components/sections/SectionNotFound.astro) — same `.hero-card` surface shell (footer grey gap), tie/hole/bottom chrome as home, **no** slot bars or identity stack. Display `404` at `141px` / tracking `-0.09em`; title + muted support; single primary “Go back home” CTA. `/design` mounts the same component with `preview`.
 
 ### Project hero card
 
-[`ProjectPage`](../src/components/elements/ProjectPage.astro) reuses tie/hole/card chrome but **not** the home identity stack.
+[`ProjectPage`](../src/components/elements/ProjectPage.astro) reuses `.hero-card` (footer grey gap) + tie/hole chrome but **not** the home identity stack.
 
 | Piece | Spec |
 | --- | --- |
-| Media | Banner image inside card (`rounded-[40→30]`) |
+| Media | Banner image inside card (`rounded-[40→30]`) — gap to shell matches footer; radius is the image frame, not the footer inner `32px` |
 | Metadata rows | Organization / Category / Released (see below) |
 | Live Preview | Bottom text+arrow when `header.link` is set |
 | After card | Left H1 `50→34` + long desc `18→16` `/60`, **then** back control (blog is back → H1) |
@@ -381,7 +397,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 
 ### Skill chips
 
-[`SkillElement`](../src/components/elements/SkillElement.astro): square `54px`, radius `9px`, `bg-surface` + `border-border`; hover lift + soft shadow; tooltip `rounded-[12px]` with label + short description + caret. Desktop: hover. Touch: tap-to-toggle (`.is-open` via `skill-tooltips.ts`).
+[`SkillElement`](../src/components/elements/SkillElement.astro): square `54px`, radius `9px`, `bg-surface` + `border-border`; hover lift + soft shadow; tooltip `rounded-[12px]` with label + short description + caret. Desktop: hover. Touch: tap-to-toggle (`.is-open` via `skill-tooltips.ts`). Edge chips shift the bubble (and caret) so it stays in the viewport — home `overflow-x-hidden` would clip a centered tooltip.
 
 ### Experience block
 
@@ -390,7 +406,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 | Piece | Spec |
 | --- | --- |
 | YoE banner | `bg-primary` shell `rounded-[40→32]`; count `65→48` white + `data-count-to`; ladder SVG; labels white `/60`–`/90` at `14px`. `/design` mounts `SectionExperiences` with `preview`. |
-| Year timeline | Hairline + current-year primary dot `14px` + past `#cacaca` `10px`; **now** year `52→44`; past years `18→15` `/40`; edge fade |
+| Year timeline | Hairline + current-year primary dot `14px` + past `#cacaca` `10px`; **now** year `52→44`; past years `18→15` `/40`; edge fade. Mobile: 3 even columns (now + 2 past); years align with job rows (no extra nested gutter). Desktop unchanged. |
 | Mid-header | Left H3 `24→22` + support `17→15` `/50` between timeline and rows |
 | Employment rows | 3-col `title / company / years`; top hairline; `16→14` / `14→13` / `opacity-60` |
 
@@ -408,7 +424,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 
 | Piece | Spec |
 | --- | --- |
-| Outer | `rounded-[46→36]` `bg-surface` `border-border` `p-[9px]` |
+| Outer | **Grey-gap source of truth** — `rounded-[46→36]` `bg-surface` `border-border` `p-[9→6]` `pb-[18]` |
 | Inner | `bg-bg` `rounded-[40→32]` `px-[60→30]` `py-[50→40/30]` |
 | Heading | Centered H2 `50→34` + support `17→15` (`max-w-[277px]` `/60`) |
 | Person | Avatar `70→56`; name `22→19`; role `14→13` `/60` |
@@ -423,7 +439,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 | --- | --- |
 | Stick | `sticky top-[110px]` |
 | Height | `400→280` |
-| Frame | `rounded-[45px]` `p-[9px]` over banner image |
+| Frame | `rounded-[45px]` `p-[9→6]` over banner image (photo inset, not the footer surface-shell chrome) |
 | Caption | Pill **overlaid** at bottom (`justify-end`): logo disc + title `16→14` + desc `/60` `14→13` + arrow circle on `bg-surface` |
 | Gallery | `/design` → Project list uses `SectionProjects` `preview` + `design-logo-placeholder` / media shell |
 
@@ -531,7 +547,7 @@ Authoring docs: [`blog-authoring.md`](./blog-authoring.md), [`project-authoring.
 1. **Tokens first** — `bg-bg`, `text-text`, `bg-surface`, `border-border`, `bg-primary`.
 2. **Type** — Manrope 600, correct size/tracking from the scale; Fragment Mono for code only.
 3. **Width** — default 550px column unless the feature is a multi-pane tool.
-4. **Shape** — pills for actions; soft shells for groups; no generic card grids.
+4. **Shape** — pills for actions; surface shells follow **footer grey gap** (`border-border` + `p-[9→6]`); no generic card grids.
 5. **Hierarchy** — one headline + one muted support line per section.
 6. **Interaction** — scramble on key links; back control pattern on subpages.
 7. **Theme** — verify light and dark; icons invert correctly.
@@ -551,6 +567,7 @@ Authoring docs: [`blog-authoring.md`](./blog-authoring.md), [`project-authoring.
 - Scroll chaining inside tools without `data-lenis-prevent`
 - Hard-coding light-only greys that don’t flip in `.dark`
 - Duplicating shell/footer width with a mismatched max-width (use **550px** for hub/footer alignment)
+- Inset box-shadow as the hairline on footer / `.hero-card` / blogs list shells (grey gap will look tighter than the footer)
 - New global CSS outside the `global.css` import graph, or dumping page-only tools/design rules into the site-wide bundle
 - A second page-root wrapper or parallel CSS variable namespace instead of `site-root` / `--site-*`
 

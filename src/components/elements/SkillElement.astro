@@ -39,7 +39,7 @@ const hasTip = Boolean(description);
         <div
             id={tipId}
             role="tooltip"
-            class="skill-tooltip pointer-events-none absolute bottom-[calc(100%+12px)] left-1/2 z-30 w-max max-w-[220px] rounded-[12px] border border-border bg-bg px-3.5 py-2.5 text-left shadow-[0_12px_28px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
+            class="skill-tooltip pointer-events-none absolute bottom-[calc(100%+12px)] left-1/2 z-30 w-max max-w-[min(220px,calc(100vw-20px))] rounded-[12px] border border-border bg-bg px-3.5 py-2.5 text-left shadow-[0_12px_28px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
         >
             <p class="m-0 p-0 font-manrope text-[13px] font-semibold leading-[120%] tracking-[-0.04em] text-text">
                 {label}
@@ -48,7 +48,7 @@ const hasTip = Boolean(description);
                 {description}
             </p>
             <span
-                class="absolute top-full left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-r border-b border-border bg-bg"
+                class="skill-tooltip-caret absolute top-full size-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-r border-b border-border bg-bg"
                 aria-hidden="true"
             ></span>
         </div>

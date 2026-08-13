@@ -1,20 +1,55 @@
 /**
  * Skill chip tooltips: hover on fine pointers; tap-to-toggle on touch.
  * CSS alone cannot show tooltips reliably on (hover: none) — sticky :hover is flaky.
+ * Edge chips shift `--tip-shift` / `--caret-shift` so the bubble stays in the viewport
+ * (home `overflow-x-hidden` would otherwise clip a centered tooltip).
  */
 import { bootOnce } from './boot-once';
 
 const OPEN = 'is-open';
+const VIEW_PAD = 10;
+const CARET_INSET = 14;
 
 function isTouchUi(): boolean {
     return window.matchMedia('(hover: none)').matches;
 }
 
-function tipFor(chip: Element): Element | null {
-    return chip.querySelector('.skill-tooltip');
+function tipFor(chip: Element): HTMLElement | null {
+    const el = chip.querySelector('.skill-tooltip');
+    return el instanceof HTMLElement ? el : null;
+}
+
+function placeTip(chip: HTMLElement): void {
+    const tip = tipFor(chip);
+    if (!tip) return;
+
+    const tipWidth = tip.offsetWidth;
+    if (tipWidth === 0) return;
+
+    const chipRect = chip.getBoundingClientRect();
+    const vw = document.documentElement.clientWidth;
+    const center = chipRect.left + chipRect.width / 2;
+    const unshiftedLeft = center - tipWidth / 2;
+    const unshiftedRight = center + tipWidth / 2;
+
+    let shift = 0;
+    if (unshiftedLeft < VIEW_PAD) shift = VIEW_PAD - unshiftedLeft;
+    else if (unshiftedRight > vw - VIEW_PAD) shift = vw - VIEW_PAD - unshiftedRight;
+
+    const maxCaret = Math.max(0, tipWidth / 2 - CARET_INSET);
+    const caret = Math.max(-maxCaret, Math.min(maxCaret, -shift));
+    tip.style.setProperty('--tip-shift', `${shift}px`);
+    tip.style.setProperty('--caret-shift', `${caret}px`);
+}
+
+function placeAll(root: ParentNode = document): void {
+    root.querySelectorAll('.skill-chip').forEach((el) => {
+        if (el instanceof HTMLElement) placeTip(el);
+    });
 }
 
 function setOpen(chip: HTMLElement, open: boolean): void {
+    if (open) placeTip(chip);
     chip.classList.toggle(OPEN, open);
     chip.setAttribute('aria-expanded', open ? 'true' : 'false');
     if (!open && document.activeElement === chip) chip.blur();
@@ -35,6 +70,10 @@ function bindChip(chip: HTMLElement): void {
     if (!chip.hasAttribute('aria-expanded')) {
         chip.setAttribute('aria-expanded', 'false');
     }
+
+    chip.addEventListener('pointerenter', () => {
+        placeTip(chip);
+    });
 
     chip.addEventListener('click', () => {
         if (!isTouchUi()) return;
@@ -72,6 +111,7 @@ export function initSkillTooltips(root: ParentNode = document): void {
     root.querySelectorAll('.skill-chip').forEach((el) => {
         if (el instanceof HTMLElement) bindChip(el);
     });
+    requestAnimationFrame(() => placeAll(root));
 }
 
 function boot(): void {
@@ -86,4 +126,5 @@ if (typeof document !== 'undefined' && bootOnce('skill-tooltips')) {
     }
     document.addEventListener('astro:page-load', boot);
     document.addEventListener('pointerdown', onPointerDownOutside, true);
+    window.addEventListener('resize', () => placeAll(), { passive: true });
 }
