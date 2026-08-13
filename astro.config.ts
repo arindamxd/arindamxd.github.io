@@ -39,6 +39,10 @@ export default defineConfig({
             extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
         },
         plugins: [tailwindcss()],
+        optimizeDeps: {
+            // Keep the contributions island off 504 "Outdated Optimize Dep" after HMR/build
+            include: ["react", "react-dom", "react-activity-calendar"],
+        },
         build: {
             // Keep client scripts as `/_astro/*.js` so ClientRouter does not
             // re-execute inlined IIFEs (stacked theme/Lenis listeners).

@@ -74,7 +74,7 @@ if (preview) {
                         <div class="hero-card-content-top-left">
                             <div class="hero-card-content-avatar">
                                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0">
-                                    <Image decoding="async" loading="eager" src={author.intro.avatar} alt="" width={70} height={70} style="border-radius:inherit; object-fit:fill;" />
+                                    <Image decoding="async" loading="eager" fetchpriority="high" src={author.intro.avatar} alt="" width={70} height={70} style="border-radius:inherit; object-fit:fill;" />
                                 </div>
                             </div>
                             <div class="hero-card-content-main">
@@ -92,7 +92,7 @@ if (preview) {
                                             <a aria-label={`Link to ${link.name}`} class="group relative flex size-full cursor-pointer flex-col items-center justify-center overflow-visible rounded-full bg-bg no-underline" href={link.url} target="_blank" rel="noopener">
                                                 <div class="relative size-full flex-1 opacity-40 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
                                                     <div class="absolute inset-0" style="border-radius:inherit">
-                                                        <img decoding="auto" src={link.icon} alt="" class="block size-full rounded-[inherit] object-cover object-center brightness-0 dark:invert" />
+                                                        <img decoding="async" src={link.icon} alt="" class="block size-full rounded-[inherit] object-cover object-center brightness-0 dark:invert" />
                                                     </div>
                                                 </div>
                                             </a>

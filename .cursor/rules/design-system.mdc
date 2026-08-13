@@ -42,7 +42,7 @@ Borders: `border-border` or `shadow-[inset_0_0_0_1px_var(--color-border)]`. Mini
 
 ## Recipes to copy
 
-- **CSS home:** page content under `site-root`; feature sheets via `global.css` (`tokens`, `hero`, `projects`, …); layout/type/color in sheets via **`@apply`** (page-scoped `tools.css` / `design.css` need `@reference "./global.css"`); `--site-*` for layout helpers. Tools/gallery stay page-scoped. Nav chrome lives in `BaseLayout` (not per-page).
+- **CSS home:** page content under `site-root`; feature sheets via `global.css` (`tokens`, `hero`, `projects`, …); layout/type/color in sheets via **`@apply`** (page-scoped `tools.css` / `design.css` need `@reference "./global.css"`); `--site-*` for layout helpers. Tools/gallery stay page-scoped. Nav chrome + SVG sprite live in `BaseLayout` (not per-page).
 - **Section header:** [`SectionHeading`](src/components/elements/SectionHeading.astro) for centered marketing titles (not left-aligned tools/detail H1s).
 - **Back control:** 52px circle + “Back to …” label (see blog/project/tools shell) — not plain “← text”.
 - **Primary CTA:** pill, primary fill, optional scramble (`data-scramble` — hover on fine pointer, tap on touch).

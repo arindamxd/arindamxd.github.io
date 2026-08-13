@@ -256,7 +256,7 @@ The testimonials phone is a **360×750** mock with a `.mobile-border` that bleed
 
 ## Client scripts
 
-Loaded from `BaseLayout.astro` (TypeScript under `src/scripts/`):
+Loaded from `BaseLayout.astro` via `site-client.ts` (TypeScript under `src/scripts/`). Home-only widgets load when their DOM is present:
 
 | Script | Purpose |
 | --- | --- |

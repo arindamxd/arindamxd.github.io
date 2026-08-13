@@ -24,9 +24,11 @@ Source of truth for UI/UX architecture on this site. Prefer matching **existing 
 ```
 BaseLayout          → SEO, theme, ClientRouter, Lenis, page loader
   NavBar            → floating glass pill (mounted here once; `transition:persist` only)
-  .site-root        → page content scope (wraps main sections)
-  main / sections   → content
-  Footer            → contact shell (max 550px)
+  SvgSprite         → shared `<use>` icons (persist; outside `.page-shell`)
+  .page-shell       → leave/enter motion target
+    .site-root      → page content scope (wraps main sections)
+    main / sections → content
+    Footer          → contact shell (max 550px)
 ```
 
 | Layer | Responsibility |

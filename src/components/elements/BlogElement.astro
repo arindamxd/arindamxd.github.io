@@ -14,7 +14,7 @@ const delayMs = Math.min(Number(index) * 55, 360);
         <div class="relative aspect-square h-[54px] w-[54px] flex-none overflow-hidden rounded-[50px] transition-transform duration-300 ease-out will-change-transform group-hover:scale-110">
             <div class="absolute inset-0 z-[1] aspect-square h-[54px] rounded-[50px]">
                 <div class="absolute inset-0" style="border-radius:inherit;">
-                    <img decoding="auto" loading="lazy" src={blog.thumb} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                    <img decoding="async" loading="lazy" src={blog.thumb} alt="" style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                 </div>
             </div>
         </div>

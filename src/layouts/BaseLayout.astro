@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import PageLoader from "../components/PageLoader.astro";
 import NavBar from "../components/NavBar.astro";
+import SvgSprite from "../components/SvgSprite.astro";
 import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 import {
     absoluteUrl,
@@ -109,6 +110,7 @@ const structuredData = home
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/resources/favicon-32.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/resources/apple-touch-icon.png" />
+        <link rel="preload" href="/assets/fonts/Manrope.woff2" as="font" type="font/woff2" crossorigin />
 
         <meta name="theme-color" content="#171717" />
         <meta name="color-scheme" content="light dark" />
@@ -445,8 +447,6 @@ const structuredData = home
         <meta name="twitter:image" content={ogImage} />
         <meta name="twitter:image:alt" content={fullTitle} />
 
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
         <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData.length === 1 ? structuredData[0] : structuredData)} />
 
         <GoogleAnalytics />
@@ -480,6 +480,7 @@ const structuredData = home
                 </div>
             )
         }
+        <SvgSprite />
         <div class="page-shell">
             <script is:inline>
                 (function () {

@@ -9,6 +9,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Added
 
 - OSS Motion (`motion`) for page-shell enter and scroll reveal (`inView`, `animate`, `stagger`)
+- Shared SVG sprite in `BaseLayout` (persist across ClientRouter; unused Framer marks dropped)
 
 ### Changed
 
@@ -19,6 +20,9 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Mid-page reload: in-view sections stay visible; below-fold still fades up on scroll
 - Page enter is a single shell rise+blur (no stacked Y)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
+- Preload self-hosted Manrope; drop dead Google Fonts preconnect
+- Home widgets (available-for, testimonials, skill tooltips, count-up) load only when their DOM exists
+- Images decode async; hero avatar `fetchpriority="high"`; brand logos lazy with width/height
 
 ### Fixed
 
@@ -26,6 +30,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Skipping native View Transitions no longer logs `AbortError: Transition was skipped`
 - Theme toggle no longer no-ops after several ClientRouter visits (single `site-client.ts` layout entry)
 - Home from a project no longer freezes: skip native View Transition snapshots (frost + large images); CSS content fade instead; contributions calendar hydrates when visible
+- Contributions calendar hydrate no longer dies on a stale Vite optimize-deps 504 after HMR/build
 
 ## [1.0.7] — 2026-08-13
 

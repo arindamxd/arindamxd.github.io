@@ -114,7 +114,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | Script | Role |
 | --- | --- |
 | `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
-| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme) |
+| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme). Home widgets (`available-text`, testimonials, skill tooltips, count-up) load only when their DOM exists |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
 | `page-transition.ts` | Same shell dissolve + spring rise/blur on reload and ClientRouter (nav stays; no VT snapshot) |
 | `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
@@ -168,6 +168,11 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 - Default column **`max-w-[550px]`** (home, footer, tools hub).
 - Semantic tokens only (`bg-bg`, `text-text`, …). Match existing section recipes.
 
+### SVG sprite
+
+- One [`SvgSprite.astro`](src/components/SvgSprite.astro) in [`BaseLayout`](src/layouts/BaseLayout.astro), **outside** `.page-shell`, with `transition:persist="svg-sprite"`.
+- Do **not** copy `#svg-templates` into pages. Add icons there only when a `<use href="#id">` exists.
+
 ### Legacy `/apps/*/privacy-policy` redirects
 
 - [`astro.config.ts`](astro.config.ts) redirects `/apps/coco|ensecure/privacy-policy` → `/projects/<slug>/privacy-policy` for old Play Console / bookmark links.
@@ -187,6 +192,7 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 | Gallery page / dummy data | `src/pages/design.astro`, `src/utils/design-preview-data.ts` |
 | Tokens | `src/styles/tokens.css` |
 | Nav / glass | `src/styles/nav.css`, `src/components/NavBar.astro` |
+| SVG sprite | [`src/components/SvgSprite.astro`](src/components/SvgSprite.astro) — mount from BaseLayout only |
 | Site README | `README.md` |
 | Version bump / release | [`.cursor/rules/version-bump.mdc`](.cursor/rules/version-bump.mdc) · Versions section above |
 | Never auto-push | [`.cursor/rules/no-push.mdc`](.cursor/rules/no-push.mdc) |
