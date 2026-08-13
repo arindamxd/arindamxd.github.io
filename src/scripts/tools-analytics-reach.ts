@@ -2,6 +2,7 @@
  * /tools/analytics-reach — format GA4 metrics into footer.reach JSON for author-metadata.
  * OAuth tokens stay in the browser; nothing is sent to a custom backend.
  */
+import { bootOnce } from "./boot-once";
 import {
     buildFooterReach,
     reachAriaLabel,
@@ -38,6 +39,7 @@ type GaReportPayload = {
 };
 
 (function () {
+    if (!bootOnce("tools-analytics-reach")) return;
     let currentReach: FooterReach | null = null;
     let bound = false;
 

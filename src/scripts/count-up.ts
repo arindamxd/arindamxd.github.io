@@ -1,5 +1,8 @@
 // Count-up numbers when they enter the viewport
+import { bootOnce } from './boot-once';
+
 (function () {
+    if (!bootOnce('count-up')) return;
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let io: IntersectionObserver | null = null;

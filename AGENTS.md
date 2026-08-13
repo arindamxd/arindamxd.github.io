@@ -113,6 +113,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 
 | Script | Role |
 | --- | --- |
+| `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
 | `smooth-scroll.ts` | Lenis · `data-lenis-prevent` for nested panes |
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
@@ -136,7 +137,8 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 - Root [`tsconfig.json`](tsconfig.json) extends `astro/tsconfigs/strict` with **`allowJs: false`**.
 - No `.js` / `.jsx` / `.mjs` / `.cjs` under `src/` — enforced by `npm run check` (`astro check` + `scripts/assert-no-js.mjs`).
 - `npm run build` runs `astro check` first, then `astro build`.
-- Config: [`astro.config.ts`](astro.config.ts) · obfuscation: [`vite-plugins/obfuscate-production-js.ts`](vite-plugins/obfuscate-production-js.ts).
+- Config: [`astro.config.ts`](astro.config.ts) (Vite minify in production; no post-build JS obfuscation).
+- Client scripts register window listeners via [`bootOnce`](src/scripts/boot-once.ts) so ClientRouter cannot stack theme/Lenis/motion handlers. Inline layout/loader scripts use `window.__layoutInlineBoot` / `__pageLoaderScript`.
 - Shared window globals: [`src/env.d.ts`](src/env.d.ts).
 
 ### `/design` gallery
@@ -150,12 +152,12 @@ Honor `prefers-reduced-motion`. Roadmap: adopt Motion (JS) per design-system §1
 
 - No `transform`, `view-transition-name`, or **`overflow: hidden` on the same node as `.nav-glass`**.
 - Clip theme icons on **`.nav-theme-toggle__clip`**; track is `.nav-theme-toggle__track` (`width: 200%`, slides under `html.dark`).
-- Decorative clip/track use **`pointer-events: none`** so the `<button>` owns taps (mobile WebKit). Nav container `z-index: 40`. Toggle via document click delegation; `applyTheme` dispatches `themechange`.
+- Decorative clip/track use **`pointer-events: none`** so the `<button>` owns taps (mobile WebKit). Nav container `z-index: 40`. Toggle via document click delegation (`bootOnce('theme')`); `applyTheme` dispatches `themechange` on the next frame so islands do not block the icon slide.
 
 ### Contributions calendar
 
 - Island: [`GitHubContributionsCalendar.tsx`](src/components/elements/GitHubContributionsCalendar.tsx) via **`client:only="react"`** (surface fallback) — avoids SSR theme guess / hydration mismatch.
-- Theme: `useSyncExternalStore` on `data-theme` / `.dark` + `themechange` / `storage` / `pageshow`; remount with `key={colorScheme}`.
+- Theme: `useSyncExternalStore` on `data-theme` / `.dark` + `themechange` / `storage` / `pageshow`; heatmap uses `useDeferredValue` (do not remount with `key` on the toggle frame).
 - Tear down `ActivityCalendar` on `astro:before-preparation` / `astro:before-swap` so head `<style>` cleanup does not `removeChild` after ClientRouter swap.
 
 ### Layout / color
@@ -197,6 +199,7 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 
 - Release bump to `1.0.6`.
 - Durable notes: mobile theme toggle hit-testing / `themechange`; contributions `client:only` + theme store; skill tap tooltips; Cursor / Claude Code / GitKraken tools.
+- No post-build JS obfuscation (Vite minify only); `bootOnce` for ClientRouter listener stacking; calendar `useDeferredValue` for theme.
 - Docs + design rule synced for touch scramble/tooltips and Clarity `CLARITY_ENABLED`.
 - Agent git policy: never auto-push; version-bump is local commit+tag only; push requires explicit confirmation (`.cursor/rules/no-push.mdc`).
 

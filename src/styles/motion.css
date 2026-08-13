@@ -348,13 +348,20 @@ html.js-motion [data-reveal].reveal-instant {
 
 @media (prefers-reduced-motion: no-preference) {
     ::view-transition-old(root) {
-        animation: page-fade-out 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation: page-fade-out 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     ::view-transition-new(root) {
-        animation: page-fade-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation: page-fade-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
+}
 
+/* Snapshotting frost glass + full home DOM is too expensive on narrow viewports */
+@media (max-width: 609.98px) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
+    }
 }
 
 /* Stagger-in under a reveal parent (skills + CMS lists) */

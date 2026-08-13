@@ -2,7 +2,10 @@
 // - Hero uses separate appear script (load only)
 // - Mid-page sections: fade-up once when scrolled into view
 // - Mid-page RELOAD: show in-view content immediately (no re-hide / no intro flash)
+import { bootOnce } from './boot-once';
+
 (function () {
+    if (!bootOnce('reveal')) return;
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let io: IntersectionObserver | null = null;

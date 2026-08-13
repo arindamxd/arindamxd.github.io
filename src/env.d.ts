@@ -47,6 +47,9 @@ declare global {
         __restoreScrollY?: number;
         __scrollRestoreDone?: boolean;
         __pageLoaderDone?: boolean;
+        __pageLoaderScript?: boolean;
+        __layoutInlineBoot?: boolean;
+        __scriptBoot?: Record<string, boolean>;
         __lenis?: Lenis;
         __applyScrollRestore?: (reveal: boolean) => void;
         google?: {

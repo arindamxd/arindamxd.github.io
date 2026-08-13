@@ -5,7 +5,6 @@ import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
 import tailwindcss from "@tailwindcss/vite";
-import { obfuscateProductionIntegration } from "./vite-plugins/obfuscate-production-js";
 
 const SERVER_PORT = 3000;
 const LIVE_URL = "https://arindamxd.github.io";
@@ -25,18 +24,26 @@ export default defineConfig({
         "/apps/coco/privacy-policy": "/projects/coco/privacy-policy",
         "/apps/ensecure/privacy-policy": "/projects/ensecure/privacy-policy",
     },
+    prefetch: {
+        prefetchAll: true,
+        defaultStrategy: "hover",
+    },
     integrations: [
         react(),
         sitemap({
             filter: (page) => !page.includes("/tools") && !page.includes("/design"),
         }),
-        obfuscateProductionIntegration(),
     ],
     vite: {
         resolve: {
             extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
         },
         plugins: [tailwindcss()],
+        build: {
+            // Keep client scripts as `/_astro/*.js` so ClientRouter does not
+            // re-execute inlined IIFEs (stacked theme/Lenis listeners).
+            assetsInlineLimit: 0,
+        },
     },
     devToolbar: {
         enabled: false,

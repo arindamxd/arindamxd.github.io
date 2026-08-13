@@ -1,12 +1,19 @@
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
+import { bootOnce } from './boot-once';
 
-const reduced =
-    typeof window !== 'undefined' &&
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (bootOnce('lenis')) {
+    bootLenis();
+}
 
-if (!reduced) {
+function bootLenis(): void {
+    const reduced =
+        typeof window !== 'undefined' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduced) return;
+
     const restoreY =
         typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 0
             ? window.__restoreScrollY
@@ -18,7 +25,6 @@ if (!reduced) {
         lerp: 0.1,
         wheelMultiplier: 1,
         touchMultiplier: 1.2,
-        // Start at restored offset so Lenis doesn't paint from 0
         ...(restoreY > 0 ? { syncTouch: true } : {}),
     });
 
@@ -28,7 +34,6 @@ if (!reduced) {
         lenis.scrollTo(restoreY, { immediate: true });
     }
 
-    // Uncover page only after Lenis is at the restored offset
     if (typeof window.__applyScrollRestore === 'function') {
         window.__applyScrollRestore(true);
     } else {
@@ -37,7 +42,6 @@ if (!reduced) {
         window.dispatchEvent(new CustomEvent('scrollrestore:done'));
     }
 
-    // Persist scroll while Lenis is driving it
     lenis.on('scroll', () => {
         try {
             sessionStorage.setItem(
@@ -64,13 +68,15 @@ if (!reduced) {
             const el = document.querySelector(id);
             if (!(el instanceof HTMLElement)) return;
             e.preventDefault();
-            lenis.scrollTo(el, { offset: -20, duration: 1.2 });
+            window.__lenis?.scrollTo(el, { offset: -20, duration: 1.2 });
         },
         true,
     );
 
     document.addEventListener('astro:after-swap', () => {
-        lenis.resize();
-        lenis.scrollTo(0, { immediate: true });
+        const instance = window.__lenis;
+        if (!instance) return;
+        instance.resize();
+        instance.scrollTo(0, { immediate: true });
     });
 }

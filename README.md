@@ -19,7 +19,7 @@ Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** 
 | Deploy | GitHub Pages via Actions (`trunk` branch) |
 | Format | Prettier + `prettier-plugin-astro` + `prettier-plugin-tailwindcss` |
 
-Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.github.io`; override with `SITE_URL`. Dev server runs on **port 3000**. Production client JS is obfuscated after build (`vite-plugins/obfuscate-production-js.ts`).
+Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.github.io`; override with `SITE_URL`. Dev server runs on **port 3000**. Production JS is minified by Vite (no post-build obfuscation).
 
 ---
 
@@ -101,8 +101,6 @@ npm run preview  # preview production build
 │   ├── styles/                    # tokens + feature sheets via global.css
 │   ├── types/                     # blog / project / experience (+ ambient pkgs)
 │   └── utils/                     # loaders, SEO, analytics, tools registry, reach
-├── vite-plugins/
-│   └── obfuscate-production-js.ts # Post-build client JS obfuscation
 ├── astro.config.ts
 └── package.json
 ```

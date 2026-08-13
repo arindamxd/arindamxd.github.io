@@ -1,5 +1,8 @@
 // Testimonial phone slider — re-inits on Astro view transitions
+import { bootOnce } from './boot-once';
+
 (async () => {
+    if (!bootOnce('testimonials')) return;
     try {
         type Testimonial = {
             text: string;

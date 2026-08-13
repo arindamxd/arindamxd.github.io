@@ -1,5 +1,8 @@
 // Hero appear — badge hinge feel (after page loader)
+import { bootOnce } from './boot-once';
+
 (function () {
+    if (!bootOnce('hero-appear')) return;
     const reduced =
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let started = false;

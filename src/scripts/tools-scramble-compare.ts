@@ -2,6 +2,7 @@
  * /tools/scramble-compare — hover + play bake-off:
  * ours | @scrambl/core | scramble-text | scrmbl
  */
+import { bootOnce } from './boot-once';
 import { wrapElement, playScramble, stopScramble, prefersReducedMotion } from './scramble-text';
 import { scramble as scramblCore, type ScrambleInstance } from '@scrambl/core';
 import ScrambleText from 'scramble-text';
@@ -240,5 +241,7 @@ function init(): void {
     resetAll();
 }
 
-init();
-document.addEventListener('astro:page-load', init);
+if (bootOnce('tools-scramble-compare')) {
+    init();
+    document.addEventListener('astro:page-load', init);
+}

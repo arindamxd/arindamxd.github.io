@@ -33,6 +33,8 @@ const firstName = author.name.split(/\s+/)[0] ?? author.name;
 <!-- Inline: must run immediately (Astro module scripts were not loading this file) -->
 <script is:inline>
     (function () {
+        if (window.__pageLoaderScript) return;
+        window.__pageLoaderScript = true;
         var loader = document.getElementById('page-loader');
 
         function markSeen() {

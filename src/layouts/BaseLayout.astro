@@ -116,6 +116,8 @@ const structuredData = home
         <!-- Apply saved theme + skip loader after first visit this session -->
         <script is:inline>
             (function () {
+                if (window.__layoutInlineBoot) return;
+                window.__layoutInlineBoot = true;
                 try {
                     var stored = localStorage.getItem('theme');
                     var theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
@@ -336,6 +338,8 @@ const structuredData = home
         <!-- Apply restored scroll before content paints (pairs with html.scroll-pending) -->
         <script is:inline>
             (function () {
+                if (window.__scriptBoot && window.__scriptBoot['scroll-restore-inline']) return;
+                (window.__scriptBoot = window.__scriptBoot || {})['scroll-restore-inline'] = true;
                 // Position only — keep scroll-pending until Lenis/load reveals
                 if (typeof window.__applyScrollRestore === 'function') {
                     window.__applyScrollRestore(false);

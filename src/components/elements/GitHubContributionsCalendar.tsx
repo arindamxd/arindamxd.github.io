@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useDeferredValue, useEffect, useState, useSyncExternalStore } from "react";
 import { ActivityCalendar, type Activity, type ThemeInput } from "react-activity-calendar";
 import "react-activity-calendar/tooltips.css";
 
@@ -57,6 +57,8 @@ export default function GitHubContributionsCalendar({
         readScheme,
         (): Scheme => "dark",
     );
+    // Paint html.dark immediately; rebuild the heatmap when the main thread is free
+    const calendarScheme = useDeferredValue(colorScheme);
 
     useEffect(() => {
         const tearDown = () => setAlive(false);
@@ -93,9 +95,8 @@ export default function GitHubContributionsCalendar({
         >
             {alive ? (
                 <ActivityCalendar
-                    key={colorScheme}
                     data={contributions}
-                    colorScheme={colorScheme}
+                    colorScheme={calendarScheme}
                     theme={THEME}
                     fontSize={11}
                     blockSize={8}

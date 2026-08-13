@@ -1,6 +1,7 @@
 /**
  * /tools/markdown — live Markdown → HTML preview
  */
+import { bootOnce } from './boot-once';
 import { marked } from 'marked';
 
 const STORAGE_KEY = 'tools-markdown-draft-v1';
@@ -209,5 +210,7 @@ function init(): void {
     render();
 }
 
-init();
-document.addEventListener('astro:page-load', init);
+if (bootOnce('tools-markdown')) {
+    init();
+    document.addEventListener('astro:page-load', init);
+}

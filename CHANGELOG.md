@@ -13,8 +13,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Changed
 
 - Version-bump workflow is local-only (changelog → package → memory → commit → tag); push removed from the default release steps
+- Dropped post-build JS obfuscation (it bloated HTML to ~1.3MB and made ClientRouter + theme toggle hang). Vite minify remains; GA/Clarity IDs stay XOR-encoded. Hover prefetch for in-site links.
 
 ### Fixed
+
+- Theme toggle stacking extra click listeners on each ClientRouter navigation (appeared stuck after even-numbered visits)
+- Testimonials `#testimonials-data` JSON island no longer rewritten as obfuscated JS
+- Lenis / motion / tools scripts boot once; contributions calendar defers theme paint off the toggle frame
+- Shorter page view transitions; none on narrow viewports (frost glass snapshot cost)
 
 ## [1.0.6] — 2026-08-11
 

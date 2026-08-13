@@ -1,6 +1,7 @@
 /**
  * /tools hub — search / filter tool list
  */
+import { bootOnce } from './boot-once';
 function initToolsHub(): void {
     const rootEl = document.getElementById('tools-hub');
     const inputEl = document.getElementById('tools-hub-search');
@@ -64,5 +65,7 @@ function initToolsHub(): void {
     applyFilter();
 }
 
-initToolsHub();
-document.addEventListener('astro:page-load', initToolsHub);
+if (bootOnce('tools-hub')) {
+    initToolsHub();
+    document.addEventListener('astro:page-load', initToolsHub);
+}

@@ -1,5 +1,9 @@
 // Theme toggle — light ↔ dark slide in circular button
+import { bootOnce } from './boot-once';
+
 (function () {
+    if (!bootOnce('theme')) return;
+
     const STORAGE_KEY = 'theme';
     /** Ignore duplicate activations within the slide animation window */
     const TOGGLE_LOCK_MS = 320;
@@ -38,10 +42,12 @@
             /* ignore quota / private mode */
         }
         syncChrome(theme);
-        // Notify React islands (contributions calendar, etc.) without relying on MutationObserver alone
-        window.dispatchEvent(
-            new CustomEvent('themechange', { detail: { theme } }),
-        );
+        // Defer island work so the toggle slide is not blocked on React remounts
+        requestAnimationFrame(() => {
+            window.dispatchEvent(
+                new CustomEvent('themechange', { detail: { theme } }),
+            );
+        });
     }
 
     function toggleTheme(): void {

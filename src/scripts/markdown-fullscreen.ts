@@ -7,6 +7,8 @@
  * - Optional: class "md-doc-trigger" for inline code-link styling
  */
 
+import { bootOnce } from './boot-once';
+
 let activePanel: HTMLElement | null = null;
 let lastTrigger: HTMLElement | null = null;
 let escBound = false;
@@ -83,5 +85,7 @@ function initMarkdownDocs(): void {
     }
 }
 
-initMarkdownDocs();
-document.addEventListener('astro:page-load', initMarkdownDocs);
+if (bootOnce('markdown-docs')) {
+    initMarkdownDocs();
+    document.addEventListener('astro:page-load', initMarkdownDocs);
+}

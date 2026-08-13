@@ -1,8 +1,6 @@
 /**
  * Site analytics config (GA4 + Microsoft Clarity).
  * IDs are XOR-encoded so production HTML/JS does not ship plain literals.
- * All client JS chunks (including this loader) are obfuscated on `astro build`
- * via `vite-plugins/obfuscate-production-js.ts`.
  */
 
 /** XOR key — shared by GA + Clarity payloads. */

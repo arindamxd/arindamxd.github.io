@@ -2,6 +2,7 @@
  * Swap broken <img> tags for gallery placeholders (media shell or project logo mark).
  * Capture-phase so it runs even when handlers aren't on the element.
  */
+import { bootOnce } from './boot-once';
 const MEDIA_PH = '/assets/resources/design-media-placeholder.svg';
 const LOGO_PH = '/assets/resources/design-logo-placeholder.svg';
 
@@ -60,6 +61,8 @@ function bind(): void {
     recoverBrokenImages();
 }
 
-bind();
-document.addEventListener('astro:page-load', () => recoverBrokenImages());
-document.addEventListener('astro:after-swap', () => recoverBrokenImages());
+if (bootOnce('image-fallback')) {
+    bind();
+    document.addEventListener('astro:page-load', () => recoverBrokenImages());
+    document.addEventListener('astro:after-swap', () => recoverBrokenImages());
+}

@@ -2,6 +2,7 @@
  * Skill chip tooltips: hover on fine pointers; tap-to-toggle on touch.
  * CSS alone cannot show tooltips reliably on (hover: none) — sticky :hover is flaky.
  */
+import { bootOnce } from './boot-once';
 
 const OPEN = 'is-open';
 
@@ -77,7 +78,7 @@ function boot(): void {
     initSkillTooltips();
 }
 
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined' && bootOnce('skill-tooltips')) {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', boot);
     } else {

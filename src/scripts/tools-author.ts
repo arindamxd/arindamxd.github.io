@@ -1,7 +1,10 @@
 /**
  * /tools/author — blog & project markdown authoring + download
  */
+import { bootOnce } from './boot-once';
+
 (function () {
+    if (!bootOnce('tools-author')) return;
     const STORAGE_KEY = 'tools-author-draft-v1';
 
     const BLOG_INSERTS: Record<string, string> = {

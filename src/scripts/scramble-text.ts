@@ -3,6 +3,7 @@
  * Opt-in only — call bindScrambleHover / wrapElement explicitly.
  * (Available-for word cycle uses these from available-text.ts.)
  */
+import { bootOnce } from './boot-once';
 
 export const SCRAMBLE_CHARS = '0+-*|{}`/()$&';
 /** Disable hover scramble on small viewports (Keel). Available-for auto-cycle ignores this. */
@@ -414,7 +415,7 @@ function bootMarked(): void {
     initMarkedScrambles();
 }
 
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined' && bootOnce('scramble')) {
     // ClientRouter soft navigations replace page DOM — re-bind [data-scramble]
     // on every page-load (same pattern as available-text / reveal / count-up).
     if (document.readyState === 'loading') {

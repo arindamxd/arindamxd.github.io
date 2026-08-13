@@ -1,7 +1,7 @@
 /**
  * GA4 + Microsoft Clarity bootstrap.
  * Loaded only in production via GoogleAnalytics.astro.
- * Obfuscated with the rest of client JS on `astro build`.
+ * Measurement IDs are XOR-encoded in source (see `src/utils/analytics.ts`).
  */
 import {
     CLARITY_ENABLED,

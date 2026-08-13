@@ -1,6 +1,7 @@
 /**
  * "Available for …" — auto-cycles words with Keel-style scramble on an interval.
  */
+import { bootOnce } from './boot-once';
 import {
     prefersReducedMotion,
     wrapWordsHtml,
@@ -117,20 +118,22 @@ function init(): void {
     updateAvailableText();
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
-
-document.addEventListener('astro:page-load', init);
-
-window.addEventListener('resize', updateAvailableText);
-
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        stopCycle();
-    } else if (getTarget()) {
-        startCycle();
+if (bootOnce('available-text')) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
     }
-});
+
+    document.addEventListener('astro:page-load', init);
+
+    window.addEventListener('resize', updateAvailableText);
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopCycle();
+        } else if (getTarget()) {
+            startCycle();
+        }
+    });
+}
