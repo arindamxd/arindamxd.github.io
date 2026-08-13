@@ -1,7 +1,7 @@
 # AGENTS.md — project memory
 
 Git-tracked map + durable decisions for humans and coding agents.  
-**Current site version:** `1.0.7` ([`package.json`](package.json) · git tag `v1.0.7`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
+**Current site version:** `1.0.8` ([`package.json`](package.json) · git tag `v1.0.8`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
 **UI source of truth:** [`docs/design-system.md`](docs/design-system.md) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc) · Gallery: `/design`
 
 Keep this file in sync when you ship durable architecture decisions or bump the package version. Prefer linking to long recipes in `docs/` over duplicating them here.
@@ -12,9 +12,9 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 | Field | Value | Notes |
 | --- | --- | --- |
-| **Package** | `1.0.7` | Bump in `package.json` on release |
-| **Git tags** | `v1.0.7`, `v1.0.6`, `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
-| **Memory doc** | `1.0.7` | Same as package after each memory update on a release line |
+| **Package** | `1.0.8` | Bump in `package.json` on release |
+| **Git tags** | `v1.0.8`, `v1.0.7`, `v1.0.6`, `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
+| **Memory doc** | `1.0.8` | Same as package after each memory update on a release line |
 | **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go (required when asked to commit), fold into the version on release |
 | **Node** | `>=22.12` | `engines` in package.json |
 | **Astro** | `^7.2` | Static output · Vite 8 |
@@ -232,6 +232,14 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 ## Changelog (memory)
 
 Versioned notes for **this memory file** and related agent guidance — full product history lives in [`CHANGELOG.md`](CHANGELOG.md). Align the top **Versions** row when the package bumps.
+
+### 1.0.8 — 2026-08-14
+
+- Release bump to `1.0.8`.
+- SSR first paint for available-for, testimonials, and YoE; credentials accordion as `credentials-accordion.ts`.
+- SEO: real PNG OG image, skip link, JSON-LD, sitemap lastmod, topic-led catalog descriptions.
+- Vite 8 Rolldown: do not prebundle React / `jsx-dev-runtime` (dev `jsxDEV` crash); direct dep `react-activity-calendar`.
+- Lenis on fine pointer only; page-enter race shared via `__pageEnterStarted`; mobile hero hides My work.
 
 ### 1.0.7 — 2026-08-13
 

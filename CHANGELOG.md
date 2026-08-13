@@ -8,6 +8,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+### Changed
+
+### Fixed
+
+## [1.0.8] — 2026-08-14
+
+### Added
+
 - OSS Motion (`motion`) for page-shell enter and scroll reveal (`inView`, `animate`, `stagger`)
 - Shared SVG sprite in `BaseLayout` (persist across ClientRouter; unused Framer marks dropped)
 - SSR first paint for hero “Available for…”, testimonials quote, and years-of-experience count
@@ -182,7 +190,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 See git tag `v1.0.1` and commit history for earlier notes.
 
-[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.7...HEAD
+[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.8...HEAD
+[1.0.8]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.7...v1.0.8
 [1.0.7]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.4...v1.0.5
