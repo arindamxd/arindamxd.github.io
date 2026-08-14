@@ -1,6 +1,7 @@
 ---
 import { formatDate } from "../../utils/date";
 import type { ProjectBodyBlock } from "../../types/project";
+import ProjectLightboxImage from "./ProjectLightboxImage.astro";
 
 // props
 const { project } = Astro.props;
@@ -158,14 +159,10 @@ const body = project.page.body as ProjectBodyBlock[];
                 <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-narrow:px-2.5">
                     <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-narrow:flex-col">
                         <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
-                            <div class="absolute inset-0" style="border-radius:inherit;">
-                                <img decoding="async" loading="lazy" src={block.left.src} alt={block.left.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                            </div>
+                            <ProjectLightboxImage src={block.left.src} alt={block.left.alt} />
                         </div>
                         <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
-                            <div class="absolute inset-0" style="border-radius:inherit;">
-                                <img decoding="async" loading="lazy" src={block.right.src} alt={block.right.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                            </div>
+                            <ProjectLightboxImage src={block.right.src} alt={block.right.alt} />
                         </div>
                     </div>
                 </div>
@@ -189,9 +186,7 @@ const body = project.page.body as ProjectBodyBlock[];
             return (
                 <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-narrow:px-2.5">
                     <div class="relative aspect-[1.463768115942029] h-auto w-px max-w-[1180px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
-                        <div class="absolute inset-0" style="border-radius:inherit;">
-                            <img decoding="async" loading="lazy" src={block.image.src} alt={block.image.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                        </div>
+                        <ProjectLightboxImage src={block.image.src} alt={block.image.alt} />
                     </div>
                 </div>
             );
@@ -202,20 +197,14 @@ const body = project.page.body as ProjectBodyBlock[];
                 <div class="relative flex h-min w-full max-w-[1180px] flex-none flex-col flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden px-[30px] py-0 max-narrow:px-2.5">
                     <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden p-0 max-narrow:flex-col">
                         <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
-                            <div class="absolute inset-0" style="border-radius:inherit;">
-                                <img decoding="async" loading="lazy" src={block.left.src} alt={block.left.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                            </div>
+                            <ProjectLightboxImage src={block.left.src} alt={block.left.alt} />
                         </div>
                         <div class="relative aspect-[1.3295454545454546] h-auto w-px max-w-[1100px] flex-1 overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:w-full max-narrow:flex-none max-narrow:aspect-[1.3295454545454546]">
-                            <div class="absolute inset-0" style="border-radius:inherit;">
-                                <img decoding="async" loading="lazy" src={block.right.src} alt={block.right.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                            </div>
+                            <ProjectLightboxImage src={block.right.src} alt={block.right.alt} />
                         </div>
                     </div>
                     <div class="relative aspect-[1.463768115942029] h-[376px] w-full max-w-[1180px] flex-none overflow-hidden rounded-[30px] max-narrow:h-[278px] max-narrow:aspect-[1.3295454545454546]">
-                        <div class="absolute inset-0" style="border-radius:inherit;">
-                            <img decoding="async" loading="lazy" src={block.large.src} alt={block.large.alt} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
-                        </div>
+                        <ProjectLightboxImage src={block.large.src} alt={block.large.alt} />
                     </div>
                 </div>
             );

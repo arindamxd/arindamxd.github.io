@@ -28,6 +28,9 @@ function loadPageWidgets(): void {
     if (document.querySelector('[data-credentials-accordion]')) {
         void import('./credentials-accordion');
     }
+    if (document.querySelector('[data-project-lightbox]')) {
+        void import('./project-lightbox');
+    }
 }
 
 if (bootOnce('site-client-widgets')) {

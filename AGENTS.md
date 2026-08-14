@@ -114,7 +114,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | Script | Role |
 | --- | --- |
 | `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
-| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme). Home widgets (`available-text`, testimonials, skill tooltips, count-up, credentials accordion) load only when their DOM exists |
+| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme). Page widgets (`available-text`, testimonials, skill tooltips, count-up, credentials accordion, project lightbox) load only when their DOM exists |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
 | `page-transition.ts` | ClientRouter shell dissolve + spring rise/blur (nav stays; no VT snapshot). First-load enter can also run from inline WAAPI in `BaseLayout` — both guard on `__pageEnterStarted` |
 | `smooth-scroll.ts` | Lenis on fine-pointer / wheel only · native scroll on coarse touch · `data-lenis-prevent` for nested panes · hash offset 80px on narrow |
@@ -126,6 +126,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `motion-tokens.ts` | House easing, `springPage` / `springSoft` / `springSnappy` |
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
 | `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
+| `project-lightbox.ts` | Project body screenshots (not hero banner) → body-mounted fullscreen overlay (Motion spring; `site-client` when triggers exist) |
 | `analytics.ts` | GA4 + optional Microsoft Clarity (`CLARITY_ENABLED`) + ClientRouter page views |
 | `markdown-fullscreen.ts` | Fullscreen markdown doc panels |
 | Tools scripts | `tools-*.ts` for author / markdown / scramble-compare / analytics-reach |

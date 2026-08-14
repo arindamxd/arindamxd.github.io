@@ -1,0 +1,20 @@
+---
+interface Props {
+    src: string;
+    alt: string;
+}
+
+const { src, alt } = Astro.props;
+const label = alt.trim() ? `View ${alt}` : "View image";
+---
+
+<button
+    type="button"
+    class="project-lightbox-trigger"
+    data-project-lightbox
+    aria-haspopup="dialog"
+    aria-controls="project-lightbox-root"
+    aria-label={label}
+>
+    <img decoding="async" loading="lazy" src={src} alt={alt} />
+</button>

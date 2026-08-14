@@ -251,7 +251,7 @@ gap under description: 30px → 20px narrow (owned by the element)
 
 **Must match this gap:** footer, `.hero-card` (home intro, 404, project detail), blogs list wrapper.
 
-**Do not** use `shadow-[inset_0_0_0_1px_var(--color-border)]` on those shells. Inset rings remain OK on small chrome: back circle, skill chips, `.hero-card-hole`, `BlogCodeBlock`, YoE badge.
+**Do not** use `shadow-[inset_0_0_0_1px_var(--color-border)]` on those shells. Inset rings remain OK on small chrome: back circle, skill chips, `.hero-card-hole`, `BlogCodeBlock`.
 
 ### List shell
 
@@ -370,7 +370,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 | Slot bars | Active / inactive indicator bars in card header |
 | Slogan H1 | Display `70→48`, leading ~`90%`, tracking tight |
 | Intro support | `17→15` under slogan |
-| YoE badge | Micro `11px`, tracking `-0.05em`; fill darker than content bg (`color-mix` with black) + inset `border` — not `surface` |
+| YoE badge | Micro `11px`, tracking `-0.05em`; fill matches hero grey gap (`surface`) |
 | CTAs | Primary Resume + secondary My work (My work hidden on `max-narrow`; Resume keeps `w-min` pill) |
 | Availability | Green pulse + cycling “Available for…” — **SSR first word**; `available-text.ts` enhances; CSS one-line on mobile |
 | Location row | Pin + `13→12`; muted “Located in…” + city |
@@ -457,7 +457,7 @@ Height `64px`, `rounded-[46→36]` `bg-surface` `border-border`; evenly spaced t
 
 ### Project body media
 
-Content title `26→24`; body `18→16` `/60`. Media up to `~1180px`, `rounded-[30→20]`. Layouts: `image-large`, `images-pair`, `images-pair-then-large` — see [`project-authoring.md`](./project-authoring.md).
+Content title `26→24`; body `18→16` `/60`. Media up to `~1180px`, `rounded-[30→20]`. Layouts: `image-large`, `images-pair`, `images-pair-then-large` — see [`project-authoring.md`](./project-authoring.md). Body shots are buttons (`data-project-lightbox`) that open a body-mounted fullscreen overlay (`project-lightbox.ts`, Motion spring; Escape / scrim / close). Hero banner, catalog cards, and decorative icons stay unchanged.
 
 ### Detail page H1 (left)
 

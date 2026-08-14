@@ -8,7 +8,11 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+- Project detail body screenshots open a fullscreen image lightbox (Motion spring; ClientRouter-safe body overlay; hero banner excluded)
+
 ### Changed
+
+- Intro YoE chip fill matches the hero grey gap (`surface`) in light and dark, matching Framer
 
 ### Fixed
 
