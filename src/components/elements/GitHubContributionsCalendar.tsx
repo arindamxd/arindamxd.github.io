@@ -1,4 +1,11 @@
-import { useDeferredValue, useEffect, useState, useSyncExternalStore } from "react";
+import {
+    useDeferredValue,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+    useSyncExternalStore,
+} from "react";
 import { ActivityCalendar, type Activity, type ThemeInput } from "react-activity-calendar";
 import "react-activity-calendar/tooltips.css";
 
@@ -6,6 +13,18 @@ const THEME: ThemeInput = {
     light: ["#efefef", "#c5c4ff", "#8a89ff", "#5554ff", "#2a29ff"],
     dark: ["#2a2a2a", "#3a3999", "#4a49cc", "#3a39e6", "#2a29ff"],
 };
+
+/** Footer HTML size. Month labels are SVG and need this inverted by stretch. */
+const CALENDAR_FONT_PX = 11;
+
+function syncMonthLabelSize(root: HTMLElement) {
+    const svg = root.querySelector<SVGSVGElement>("svg.react-activity-calendar__calendar");
+    if (!svg) return;
+    const vb = svg.viewBox.baseVal.width;
+    const cssW = svg.getBoundingClientRect().width;
+    if (vb <= 0 || cssW <= 0) return;
+    root.style.setProperty("--contrib-month-fs", `${(CALENDAR_FONT_PX * vb) / cssW}px`);
+}
 
 type Scheme = "light" | "dark";
 
@@ -44,6 +63,7 @@ export default function GitHubContributionsCalendar({
     contributions,
     totalCount,
 }: Props) {
+    const rootRef = useRef<HTMLDivElement>(null);
     const [alive, setAlive] = useState(true);
     const [mounted, setMounted] = useState(false);
     const colorScheme = useSyncExternalStore<Scheme>(
@@ -57,6 +77,21 @@ export default function GitHubContributionsCalendar({
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    useLayoutEffect(() => {
+        const root = rootRef.current;
+        if (!root || !alive || !mounted) return;
+
+        const sync = () => syncMonthLabelSize(root);
+        sync();
+
+        const ro = new ResizeObserver(sync);
+        ro.observe(root);
+        const svg = root.querySelector("svg.react-activity-calendar__calendar");
+        if (svg) ro.observe(svg);
+
+        return () => ro.disconnect();
+    }, [alive, mounted, contributions, calendarScheme]);
 
     useEffect(() => {
         const tearDown = () => setAlive(false);
@@ -88,6 +123,7 @@ export default function GitHubContributionsCalendar({
 
     return (
         <div
+            ref={rootRef}
             className="github-contributions-calendar w-full"
             aria-label={`${username} GitHub contributions`}
         >
@@ -96,9 +132,9 @@ export default function GitHubContributionsCalendar({
                     data={contributions}
                     colorScheme={calendarScheme}
                     theme={THEME}
-                    fontSize={11}
-                    blockSize={8}
-                    blockMargin={2}
+                    fontSize={CALENDAR_FONT_PX}
+                    blockSize={12}
+                    blockMargin={4}
                     maxLevel={4}
                     labels={{
                         totalCount: `${count} contributions in the last 8 months`,

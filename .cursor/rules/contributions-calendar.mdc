@@ -1,0 +1,23 @@
+---
+description: Home GitHub heatmap stack — react-activity-calendar + jogruber API, not Kibo UI / Echo.
+globs: src/components/elements/GitHubContributionsCalendar.tsx,src/components/sections/SectionContributions.astro,src/content/contributions-metadata.json,src/shims/react-jsx-dev-runtime.ts
+alwaysApply: false
+---
+
+# Contributions calendar
+
+This site’s heatmap is **[`react-activity-calendar`](https://github.com/grubersjoe/react-activity-calendar)** (direct dep), not `react-github-calendar` and **not** [Kibo UI Contribution Graph](https://www.kibo-ui.com/components/contribution-graph).
+
+## Do not swap
+
+The [Echo Astro template](https://echo-astro-template.vercel.app/projects/echo-ui) uses Kibo UI (`npx kibo-ui add contribution-graph` / Shadcnblocks `@shadcnblocks/contribution-graph/contribution-graph-standard-1`): copy-paste shadcn SVG + Radix tooltip (`<rect data-level>`, `data-slot="tooltip-trigger"`). Visualization only. Echo’s demo bakes static 2024 dummy days — no live GitHub fetch. **Do not replace** this island with that block.
+
+## This site
+
+- Island: `GitHubContributionsCalendar.tsx` via `client:visible` (surface fallback).
+- Data: build fetch in `SectionContributions.astro` from `https://github-contributions-api.jogruber.de/v4/{username}?y=last`. Last **8 months**. Merge `usernames[]` from `contributions-metadata.json` by date. `/design` uses `previewContributionDays()` (no network).
+- Theme: `useSyncExternalStore` + `useDeferredValue` — do not remount with `key` on the toggle frame.
+- Tear down `ActivityCalendar` on `astro:before-preparation` / `astro:before-swap`.
+- Vite 8: include `react-activity-calendar` in `optimizeDeps`; **do not** include React / `jsx-dev-runtime`. Dev alias `react/jsx-dev-runtime` → `src/shims/react-jsx-dev-runtime.ts`.
+
+Full notes: [`AGENTS.md`](AGENTS.md) § Contributions calendar.

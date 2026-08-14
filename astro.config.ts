@@ -1,11 +1,17 @@
 // astro.config.ts
 
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
 import tailwindcss from "@tailwindcss/vite";
 import { sitemapFilter, sitemapLastmodByPath } from "./src/utils/seo";
+
+/** Dev-only: Vite 8 may prebundle production `jsxDEV = undefined`. */
+const reactJsxDevRuntimeShim = fileURLToPath(
+    new URL("./src/shims/react-jsx-dev-runtime.ts", import.meta.url),
+);
 
 const SERVER_PORT = 3000;
 const LIVE_URL = "https://arindamxd.github.io";
@@ -52,7 +58,22 @@ export default defineConfig({
             extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
             dedupe: ["react", "react-dom"],
         },
-        plugins: [tailwindcss()],
+        plugins: [
+            {
+                name: "react-jsx-dev-runtime-shim",
+                apply: "serve",
+                config() {
+                    return {
+                        resolve: {
+                            alias: {
+                                "react/jsx-dev-runtime": reactJsxDevRuntimeShim,
+                            },
+                        },
+                    };
+                },
+            },
+            tailwindcss(),
+        ],
         optimizeDeps: {
             // Prebundle the calendar only. Vite 8 Rolldown otherwise inlines React's
             // production jsx-dev-runtime (`jsxDEV = undefined`) and the island crashes

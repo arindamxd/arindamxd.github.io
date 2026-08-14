@@ -72,7 +72,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 | Brands | `src/content/brands-metadata.json` | `SectionBrands` marquee (`title` + `logos[]`) |
 | **Skills** | `src/content/skills-metadata.json` | `SectionSkills` + `SkillElement` (icons under `public/assets/skills/`) |
 | Testimonials | `src/content/testimonials-metadata.json` | Phone slider; DOM `#testimonials-data` |
-| Contributions | `src/content/contributions-metadata.json` | `SectionContributions` + `GitHubContributionsCalendar` (`client:visible`) |
+| Contributions | `src/content/contributions-metadata.json` | `SectionContributions` (build fetch) + `GitHubContributionsCalendar` (`react-activity-calendar`, `client:visible`) |
 | Projects catalog | `src/content/projects-metadata.json` | [`projects.ts`](src/utils/projects.ts) |
 | Project bodies | `src/content/projects/*.md` | Merged at build |
 | Privacy policies | `src/content/privacy-policies/*.md` | Project privacy pages |
@@ -161,10 +161,12 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 
 ### Contributions calendar
 
-- Island: [`GitHubContributionsCalendar.tsx`](src/components/elements/GitHubContributionsCalendar.tsx) via **`client:visible`** (surface fallback) — avoids blocking home swaps with React hydrate.
+- **This site:** [`react-activity-calendar`](https://github.com/grubersjoe/react-activity-calendar) (direct dep — **not** `react-github-calendar`). Island [`GitHubContributionsCalendar.tsx`](src/components/elements/GitHubContributionsCalendar.tsx) via **`client:visible`** (surface fallback) so home ClientRouter swaps are not blocked on React hydrate. Cursor rule: [`.cursor/rules/contributions-calendar.mdc`](.cursor/rules/contributions-calendar.mdc).
+- **Data:** fetched at **build** in [`SectionContributions.astro`](src/components/sections/SectionContributions.astro) from Jonathan Gruber’s [GitHub Contributions API](https://github.com/grubersjoe/github-contributions-api) (`https://github-contributions-api.jogruber.de/v4/{username}?y=last`). Filter to the last **8 months**, merge counts by date across `usernames[]` in [`contributions-metadata.json`](src/content/contributions-metadata.json). `/design` uses `previewContributionDays()` (no network).
 - Theme: `useSyncExternalStore` on `data-theme` / `.dark` + `themechange` / `storage` / `pageshow`; heatmap uses `useDeferredValue` (do not remount with `key` on the toggle frame).
 - Tear down `ActivityCalendar` on `astro:before-preparation` / `astro:before-swap` so head `<style>` cleanup does not `removeChild` after ClientRouter swap.
-- Vite 8 Rolldown: **do not** `optimizeDeps.include` React / `jsx-dev-runtime` (production CJS has `jsxDEV = undefined` → `_jsxDEV is not a function` in dev). Keep `react-activity-calendar` included; exclude the React entries. Direct dep is `react-activity-calendar`, not `react-github-calendar`.
+- Vite 8 Rolldown: **do not** `optimizeDeps.include` React / `jsx-dev-runtime` (production CJS has `jsxDEV = undefined` → `_jsxDEV is not a function` in dev). Keep `react-activity-calendar` included; exclude the React entries. In `astro dev`, alias `react/jsx-dev-runtime` to [`src/shims/react-jsx-dev-runtime.ts`](src/shims/react-jsx-dev-runtime.ts) so a stale Vite prebundle cannot blank the heatmap.
+- **Not Echo / Kibo:** the [Echo Astro template](https://echo-astro-template.vercel.app/projects/echo-ui) heatmap is [Kibo UI Contribution Graph](https://www.kibo-ui.com/components/contribution-graph) (`npx kibo-ui add contribution-graph` / Shadcnblocks `@shadcnblocks/contribution-graph/contribution-graph-standard-1`). Copy-paste shadcn SVG + Radix tooltip (`<rect data-level>` / `data-slot="tooltip-trigger"`). Visualization only — Echo’s demo bakes static 2024 dummy days (no live GitHub fetch). **Do not replace** this island with Kibo / shadcnblocks.
 
 ### Page enter
 
@@ -229,6 +231,7 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 | Version bump / release | [`.cursor/rules/version-bump.mdc`](.cursor/rules/version-bump.mdc) · Versions section above |
 | Never auto-push | [`.cursor/rules/no-push.mdc`](.cursor/rules/no-push.mdc) |
 | Commit + changelog | [`.cursor/rules/commit-changelog.mdc`](.cursor/rules/commit-changelog.mdc) |
+| Contributions calendar | [`GitHubContributionsCalendar.tsx`](src/components/elements/GitHubContributionsCalendar.tsx) · [`SectionContributions.astro`](src/components/sections/SectionContributions.astro) · [`.cursor/rules/contributions-calendar.mdc`](.cursor/rules/contributions-calendar.mdc) — `react-activity-calendar` + jogruber API; not Kibo UI / Echo |
 
 ---
 
@@ -243,6 +246,7 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 - SEO: real PNG OG image, skip link, JSON-LD, sitemap lastmod, topic-led catalog descriptions.
 - Vite 8 Rolldown: do not prebundle React / `jsx-dev-runtime` (dev `jsxDEV` crash); direct dep `react-activity-calendar`.
 - Lenis on fine pointer only; page-enter race shared via `__pageEnterStarted`; mobile hero hides My work.
+- Contributions stack recorded: this site is `react-activity-calendar` + jogruber API (build fetch, last 8 months). Echo / Shadcnblocks uses Kibo UI Contribution Graph (static dummy on their demo) — do not swap. Rule: `.cursor/rules/contributions-calendar.mdc`.
 
 ### 1.0.7 — 2026-08-13
 

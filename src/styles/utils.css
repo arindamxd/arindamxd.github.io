@@ -92,6 +92,20 @@ img.design-media-ph[src=''] {
     pointer-events: auto;
 }
 
+/* Month labels are SVG; --contrib-month-fs keeps them at the footer size after stretch. */
+.github-contributions-calendar .react-activity-calendar__legend-month {
+    font-family: var(--font-manrope);
+    font-size: var(--contrib-month-fs, 11px);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+
+.github-contributions-calendar .react-activity-calendar__footer {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+
 /* Floating UI portals tooltips to body — style outside the calendar root */
 .react-activity-calendar__tooltip {
     font-family: var(--font-manrope);
