@@ -591,7 +591,7 @@ External references worth tracking: [Motion](https://motion.dev/), [Motion `anim
 
 ### 12.2 Motion & interaction
 
-**Today:** Lenis; OSS Motion for page-shell enter (`springPage` rise + blur) and below-fold reveal (`springSoft`); scramble still custom. First paint: `is-page-entering`. Mid-page restore: `scroll-pending`.
+**Today:** Lenis; OSS Motion for page-shell enter (`springPage` rise + blur) and below-fold reveal (`springSoft`); scramble still custom. First paint: CSS-hold `is-page-entering`; reload and ClientRouter play Motion (no WAAPI tween). Mid-page reload: `scroll-pending` + `is-page-restore` + `is-scroll-hold` (uncover only after opacity is pinned).
 
 | Enhancement | Approach | Fit |
 | --- | --- | --- |
@@ -647,11 +647,11 @@ CSS scroll-driven                 →  optional progressive enhancement / readin
 
 #### 12.2.2 Scroll reveal with Motion (`inView`)
 
-**Today:** OSS [`motion`](https://motion.dev/) in [`reveal.ts`](../src/scripts/reveal.ts) for below-fold sections. Page enter is the shared `.page-shell` rise + blur on every route (home included). CSS holds `.reveal-prep` start pose.
+**Today:** OSS [`motion`](https://motion.dev/) in [`reveal.ts`](../src/scripts/reveal.ts) for below-fold sections. Page enter is the shared `.page-shell` rise + blur on every route (home included), Motion `springPage` for reload and ClientRouter. CSS holds `.reveal-prep` start pose.
 
 **Keep:** first-paint CSS hold, mid-page in-view settle, ClientRouter skip, `prefers-reduced-motion`. Do not reintroduce a parallel IO/CSS-keyframe reveal engine.
 
-Page enter is the shared `.page-shell` rise + blur (`springPage`). Below-fold sections use `springSoft`. List shells (`data-reveal-stagger`) stagger children with `stagger(0.05)`.
+Page enter is the shared `.page-shell` rise + blur (`springPage`) on reload and in-site nav. Below-fold sections use `springSoft`. List shells (`data-reveal-stagger`) stagger children with `stagger(0.05)`. Do not stagger every hero typographic node on enter.
 
 **House limits**
 

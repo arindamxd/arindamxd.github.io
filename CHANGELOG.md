@@ -13,8 +13,11 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Changed
 
 - Intro YoE chip fill matches the hero grey gap (`surface`) in light and dark, matching Framer
+- Page enter (reload and ClientRouter) is Motion `springPage` only; first paint CSS-holds `is-page-entering` (no WAAPI tween)
 
 ### Fixed
+
+- Mid-page reload restores the saved scroll offset and still plays Motion `springPage` without a content flash (`is-scroll-hold` until opacity is pinned)
 
 ## [1.0.8] — 2026-08-14
 

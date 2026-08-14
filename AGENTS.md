@@ -116,7 +116,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
 | `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme). Page widgets (`available-text`, testimonials, skill tooltips, count-up, credentials accordion, project lightbox) load only when their DOM exists |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
-| `page-transition.ts` | ClientRouter shell dissolve + spring rise/blur (nav stays; no VT snapshot). First-load enter can also run from inline WAAPI in `BaseLayout` — both guard on `__pageEnterStarted` |
+| `page-transition.ts` | Page-shell dissolve + Motion `springPage` rise/blur (reload and ClientRouter). First paint CSS-holds via `is-page-entering`; `__pageEnterStarted` when enter actually runs |
 | `smooth-scroll.ts` | Lenis on fine-pointer / wheel only · native scroll on coarse touch · `data-lenis-prevent` for nested panes · hash offset 80px on narrow |
 | `scramble-text.ts` | `data-scramble` / variants · hover (fine pointer) + tap (touch) |
 | `skill-tooltips.ts` | Skill chip tooltips · tap-to-toggle on `(hover: none)` · viewport clamp for edge chips |
@@ -168,9 +168,11 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 
 ### Page enter
 
-- First load: inline WAAPI in [`BaseLayout.astro`](src/layouts/BaseLayout.astro) (before the deferred `site-client` bundle). ClientRouter: [`page-transition.ts`](src/scripts/page-transition.ts) on `astro:after-swap`.
-- Both paths share **`window.__pageEnterStarted`** — do not skip inline enter just because the module set `__pageEnterBound`.
-- Call `__tryPageEnter` **after** `.page-shell` slot content so the shell is not animated empty.
+- First paint: inline CSS hold in [`BaseLayout.astro`](src/layouts/BaseLayout.astro) (`html.is-page-entering` on `.page-shell`). No WAAPI tween.
+- Reload and ClientRouter both play Motion `springPage` from [`page-transition.ts`](src/scripts/page-transition.ts) (`animate` on `.page-shell`). Wait until the shell has non-script children, the loader is done, and scroll restore has applied.
+- Set **`window.__pageEnterStarted`** only when enter runs (or reduced-motion skip). `__pageEnterBound` means the Motion module parsed — do not treat that as “enter already played”.
+- Mid-page reload: `is-page-restore` (no `100vh` clip) so scroll can land; `is-scroll-hold` keeps `scroll-pending` until Motion pins opacity 0, then `springPage` plays. Do not lift `scroll-pending` from Lenis/load/timeout or the page flashes. In-view reveals settle; below-fold still fades up.
+- If the bundle never binds, a short inline timeout uncovers the shell so the page is not stuck.
 
 ### Lenis vs native scroll
 

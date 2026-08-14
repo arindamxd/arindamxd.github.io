@@ -178,126 +178,42 @@ const structuredData = home
                     }
                 } catch (err) {}
 
-                // Full load / reload: hold the page shell in the enter pose (nav stays)
+                // Full load / reload: CSS-hold the enter pose until Motion plays.
+                // Mid-page uses `is-page-restore` so the shell stays full height (scrollTo can land).
+                var midPageRestore =
+                    typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 0;
                 if (!reducedMotion) {
                     document.documentElement.classList.add('is-page-entering');
+                    if (midPageRestore) {
+                        document.documentElement.classList.add('is-page-restore');
+                        // Keep scroll-pending until Motion pins opacity 0 (avoids a visible flash).
+                        document.documentElement.classList.add('is-scroll-hold');
+                    }
                 }
 
-                // Start shell enter as soon as `.page-shell` has page content — do not
-                // wait for the deferred site-client bundle, but never animate an empty shell
-                // (a self-closing layout leaves slot content outside `.page-shell`).
-                function shellHasContent(el) {
-                    if (!el) return false;
-                    for (var n = el.firstElementChild; n; n = n.nextElementSibling) {
-                        if (n.tagName !== 'SCRIPT') return true;
-                    }
-                    return false;
-                }
-
-                function pageEnterReady() {
-                    var el = document.querySelector('.page-shell');
-                    if (!shellHasContent(el)) return false;
-                    if (
-                        document.documentElement.classList.contains('is-loading') &&
-                        !window.__pageLoaderDone
-                    ) {
-                        return false;
-                    }
-                    if (
-                        document.documentElement.classList.contains('scroll-pending') &&
-                        !window.__scrollRestoreDone
-                    ) {
-                        return false;
-                    }
-                    return true;
-                }
-
-                function finishPageEnter(el, anim) {
+                // If the Motion bundle never binds, uncover so the page is not stuck.
+                window.setTimeout(function () {
+                    if (window.__pageEnterBound || window.__pageEnterStarted) return;
+                    window.__pageEnterStarted = true;
                     document.documentElement.classList.remove(
                         'is-page-leaving',
                         'is-page-entering',
                         'is-page-ready',
+                        'is-page-restore',
+                        'is-scroll-hold',
+                        'scroll-pending',
                     );
-                    if (el) {
-                        el.classList.remove('page-shell--from', 'page-shell--in');
+                    var stuck = document.querySelector('.page-shell');
+                    if (stuck) {
+                        stuck.classList.remove('page-shell--from', 'page-shell--in');
+                        stuck.style.removeProperty('opacity');
+                        stuck.style.removeProperty('transform');
+                        stuck.style.removeProperty('translate');
+                        stuck.style.removeProperty('filter');
+                        stuck.style.removeProperty('will-change');
                     }
-                    if (anim && typeof anim.cancel === 'function') {
-                        try {
-                            anim.cancel();
-                        } catch (err) {}
-                    }
-                    if (el) {
-                        el.style.removeProperty('opacity');
-                        el.style.removeProperty('transform');
-                        el.style.removeProperty('filter');
-                        el.style.removeProperty('will-change');
-                    }
-                }
-
-                function playReloadEnter() {
-                    if (window.__pageEnterStarted) return;
-                    var el = document.querySelector('.page-shell');
-                    if (!el) return;
-                    window.__pageEnterStarted = true;
                     window.dispatchEvent(new CustomEvent('pageenter:start'));
-                    if (reducedMotion) {
-                        finishPageEnter(el, null);
-                        return;
-                    }
-                    el.classList.add('page-shell--from');
-                    var anim = el.animate(
-                        [
-                            {
-                                opacity: 0,
-                                transform: 'translate3d(0, 32px, 0)',
-                                filter: 'blur(6px)',
-                            },
-                            {
-                                opacity: 1,
-                                transform: 'translate3d(0, 0, 0)',
-                                filter: 'blur(0px)',
-                            },
-                        ],
-                        {
-                            duration: 620,
-                            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-                            fill: 'forwards',
-                        },
-                    );
-                    var done = function () {
-                        finishPageEnter(el, anim);
-                    };
-                    if (anim && anim.finished && typeof anim.finished.then === 'function') {
-                        anim.finished.then(done).catch(done);
-                    } else {
-                        window.setTimeout(done, 620);
-                    }
-                }
-
-                window.__tryPageEnter = function () {
-                    if (window.__pageEnterStarted) return;
-                    if (!pageEnterReady()) {
-                        var el = document.querySelector('.page-shell');
-                        if (el && !shellHasContent(el) && !window.__pageEnterObserve) {
-                            window.__pageEnterObserve = true;
-                            var obs = new MutationObserver(function () {
-                                if (shellHasContent(el)) {
-                                    obs.disconnect();
-                                    window.__tryPageEnter();
-                                }
-                            });
-                            obs.observe(el, { childList: true });
-                        }
-                        window.addEventListener('pageloader:done', window.__tryPageEnter, {
-                            once: true,
-                        });
-                        window.addEventListener('scrollrestore:done', window.__tryPageEnter, {
-                            once: true,
-                        });
-                        return;
-                    }
-                    playReloadEnter();
-                };
+                }, 2500);
 
                 function saveScroll() {
                     try {
@@ -340,10 +256,12 @@ const structuredData = home
                             } catch (e) {}
                         }
                     }
-                    // Only uncover content when asked (Lenis ready / load / timeout)
-                    // Early calls just position scroll while still hidden.
+                    // Position scroll. Do not lift scroll-pending while `is-scroll-hold`
+                    // is set — uncovering visibility before Motion pins opacity 0 flashes content.
                     if (show || !(typeof y === 'number' && y > 0)) {
-                        document.documentElement.classList.remove('scroll-pending');
+                        if (!document.documentElement.classList.contains('is-scroll-hold')) {
+                            document.documentElement.classList.remove('scroll-pending');
+                        }
                         if (!window.__scrollRestoreDone) {
                             window.__scrollRestoreDone = true;
                             window.dispatchEvent(new CustomEvent('scrollrestore:done'));
@@ -393,15 +311,20 @@ const structuredData = home
         <!-- Critical loader shell (before CSS) -->
         <style is:inline>
             html.is-loading, html.is-loading body { overflow: hidden; }
-            /* Mid-page reload: keep nav, hide page until scrollY is restored (no intro flash) */
+            /* Mid-page reload: hide content until scroll is restored AND enter opacity is pinned */
             html.scroll-pending .site-root,
             html.scroll-pending footer {
-                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
             }
+            /* CSS hold until Motion springPage plays (reload + ClientRouter) */
             html.is-page-entering .page-shell {
                 opacity: 0;
-                filter: blur(6px);
                 transform: translate3d(0, 32px, 0);
+                will-change: transform, opacity;
+            }
+            html.is-page-entering:not(.is-page-restore) .page-shell {
+                filter: blur(6px);
                 height: 100vh;
                 overflow: hidden;
                 contain: layout paint;
@@ -479,11 +402,6 @@ const structuredData = home
         <SvgSprite />
         <div class="page-shell">
             <slot />
-            <script is:inline>
-                (function () {
-                    if (typeof window.__tryPageEnter === 'function') window.__tryPageEnter();
-                })();
-            </script>
         </div>
     </body>
 </html>

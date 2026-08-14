@@ -9,11 +9,13 @@ if (bootOnce('lenis')) {
 function revealRestoredScroll(): void {
     if (typeof window.__applyScrollRestore === 'function') {
         window.__applyScrollRestore(true);
-    } else {
-        document.documentElement.classList.remove('scroll-pending');
-        window.__scrollRestoreDone = true;
-        window.dispatchEvent(new CustomEvent('scrollrestore:done'));
+        return;
     }
+    if (!document.documentElement.classList.contains('is-scroll-hold')) {
+        document.documentElement.classList.remove('scroll-pending');
+    }
+    window.__scrollRestoreDone = true;
+    window.dispatchEvent(new CustomEvent('scrollrestore:done'));
 }
 
 function hashNavOffset(): number {

@@ -185,13 +185,18 @@ html.js-motion [data-reveal].reveal-instant {
 }
 
 html.is-page-leaving .page-shell,
-html.is-page-entering .page-shell,
-.page-shell.page-shell--from {
+html.is-page-entering:not(.is-page-restore) .page-shell,
+html:not(.is-page-restore) .page-shell.page-shell--from {
     /* Paint only the viewport box — blur must not rasterize the full home tree */
     contain: layout paint;
     isolation: isolate;
     backface-visibility: hidden;
     will-change: transform, opacity, filter;
+}
+
+html.is-page-entering.is-page-restore .page-shell {
+    backface-visibility: hidden;
+    will-change: transform, opacity;
 }
 
 html.is-page-leaving .page-shell {
@@ -207,8 +212,12 @@ html.is-page-leaving .page-shell {
 html.is-page-entering .page-shell,
 .page-shell.page-shell--from {
     opacity: 0;
-    filter: blur(6px);
     transform: translate3d(0, 32px, 0);
+}
+
+html.is-page-entering:not(.is-page-restore) .page-shell,
+html:not(.is-page-restore) .page-shell.page-shell--from {
+    filter: blur(6px);
     /* Viewport-sized layer so home (long) matches catalog enter cost */
     height: 100vh;
     overflow: hidden;
@@ -225,6 +234,7 @@ html.is-page-ready .page-shell,
     html.is-page-leaving .page-shell,
     html.is-page-entering .page-shell,
     html.is-page-ready .page-shell,
+    html.is-page-restore .page-shell,
     .page-shell.page-shell--from,
     .page-shell.page-shell--in {
         opacity: 1 !important;

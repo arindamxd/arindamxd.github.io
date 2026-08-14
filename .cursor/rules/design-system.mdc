@@ -63,4 +63,6 @@ Borders: surface shells (footer, `.hero-card`, blogs list) use **`border border-
 
 Lenis page scroll on fine pointer (native on coarse touch); OSS Motion (`animate` / `inView` / `stagger`) for page-shell enter + scroll reveal; scramble on key CTAs; short `200ms` hovers. Don’t add motion noise. Honor reduced motion.
 
+**Page enter:** CSS-hold first paint (`is-page-entering`); Motion `springPage` on `.page-shell` for reload and ClientRouter. Mid-page reload uses `is-page-restore` (no `100vh` clip) plus `is-scroll-hold` so scroll restore cannot uncover before opacity is pinned. Do not add a second WAAPI/CSS-keyframe enter.
+
 **Enhancements:** Motion tokens in `src/scripts/motion-tokens.ts`. Springs on interactive tools chrome still open (§12.2.3). **Verify Lenis vs native scroll** before locking the stack (§12.2.5). Prefer native View Transitions for page morphs. Replace custom scramble with Motion+ [`scrambleText`](https://motion.dev/examples/js-scramble-text) (§12.2.1) only with a membership. Keep at most one smooth-scroll approach; no GSAP theatre.
