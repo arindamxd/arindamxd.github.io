@@ -11,8 +11,8 @@
             },
             "images": {
                 "thumb": "/assets/projects/camerax/logo.svg",
-                "thumb_bg_color": "rgb(42, 41, 255)",
-                "banner": "/assets/projects/camerax/screenshot-4.png"
+                "thumb_bg_color": "rgb(47, 123, 128)",
+                "banner": "/assets/projects/camerax/banner.jpg"
             },
             "header": {
                 "organization": "Personal",
@@ -36,7 +36,7 @@
             "images": {
                 "thumb": "/assets/projects/coco/logo.svg",
                 "thumb_bg_color": "rgb(42, 41, 255)",
-                "banner": "https://play-lh.googleusercontent.com/Xkj3lXP5qefsHAgIWBc_j5ZIN0V7rmsatAkbH1znuSxXB2o37OvzxCcrY5jL-9KjbuY=w480-h960-rw"
+                "banner": "/assets/projects/coco/banner.jpg"
             },
             "header": {
                 "organization": "Personal",
@@ -58,7 +58,7 @@
             "images": {
                 "thumb": "/assets/projects/ensecure/logo.svg",
                 "thumb_bg_color": "rgb(42, 41, 255)",
-                "banner": "https://play-lh.googleusercontent.com/Fw_C84pMKcBMyZGAam76dAXn5WGZC7feEO7zQKJQ60p3GR6PHG0BIcT2dqnOQqLuK14=w480-h960-rw"
+                "banner": "/assets/projects/ensecure/banner.jpg"
             },
             "header": {
                 "organization": "Personal",
