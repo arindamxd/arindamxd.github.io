@@ -16,13 +16,13 @@ Keep list/card and hero meta here. Do **not** put body layout copy or gallery im
   "slug": "camerax",
   "title": "CameraX",
   "desc": {
-    "short": "Card subtitle",
+    "short": "Card subtitle (max 60 characters)",
     "long": "Intro paragraph under the page h1"
   },
   "images": {
-    "thumb": "/assets/projects/camerax/logo.svg",
-    "thumb_bg_color": "rgb(42, 41, 255)",
-    "banner": "https://… wide hero image"
+    "thumb": "/assets/projects/camerax/logo.png",
+    "thumb_bg_color": "rgb(206, 232, 230)",
+    "banner": "/assets/projects/camerax/banner.jpg"
   },
   "header": {
     "organization": "Personal",
@@ -39,6 +39,31 @@ Keep list/card and hero meta here. Do **not** put body layout copy or gallery im
 ```
 
 `content` is relative to `src/content/`. Optional fields after `content`: `source_code`, then `privacy_policy`.
+
+### Card copy
+
+| Field | Rule |
+| --- | --- |
+| `desc.short` | **≤ 60 characters.** Caption subtitle on the project card. Author tool enforces `maxlength="60"`. |
+| `desc.long` | Intro under the detail-page H1 — no character cap beyond keeping it one tight paragraph. |
+
+### Images (card thumb + banner)
+
+| Field | Rule |
+| --- | --- |
+| `thumb` | App/store icon as a **circular PNG** at `/assets/projects/<slug>/logo.png`. Clip the square Play asset to a circle (transparent corners). CSS always clips the 22px mark to a circle (hover **26px**). Do **not** scale the icon to fill the 54px disc. |
+| `thumb_bg_color` | A **light tint** of the logo’s identity hue (or a complementary light accent) so the 22px mark contrasts with the disc. **Do not** use the logo’s own fill color — the mark vanishes. **Do not** default every card to primary unless the mark is a white glyph on a colored disc. |
+| `banner` | Download locally to `public/assets/projects/<slug>/banner.jpg`. Prefer local files over hotlinking Unsplash or Play. |
+
+Current disc tints (keep as the starting point when editing these three):
+
+| Project | `thumb_bg_color` | Why |
+| --- | --- | --- |
+| CameraX | `rgb(206, 232, 230)` | Light seafoam behind the dark teal camera |
+| Coco | `rgb(228, 240, 214)` | Pale lime behind the green chip |
+| Ensecure | `rgb(245, 234, 204)` | Pale gold behind the slate / yellow gears |
+
+Card hover (logo, banner zoom, arrow) shares **`transform 0.3s ease-in-out`** in [`projects.css`](../src/styles/projects.css) — do not put the thumb on a separate Motion spring.
 
 ### Header fields
 

@@ -159,7 +159,7 @@ import { bootOnce } from './boot-once';
             },
             images: {
                 thumb: val(form, 'thumb'),
-                thumb_bg_color: val(form, 'thumbBg') || 'rgb(42, 41, 255)',
+                thumb_bg_color: val(form, 'thumbBg') || 'rgb(206, 232, 230)',
                 banner: val(form, 'banner'),
             },
             header: {

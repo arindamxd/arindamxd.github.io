@@ -90,6 +90,15 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 - `/design` mounts live `SectionSkills` with `preview` dummy catalog
 - Chip recipe: `54px` square, `9px` radius, surface + border, hover lift + tooltip — details in design-system; touch uses `skill-tooltips.ts` (`.is-open`)
 
+### Projects
+
+- Catalog: [`src/content/projects-metadata.json`](src/content/projects-metadata.json) · bodies: `src/content/projects/*.md` · merge: [`projects.ts`](src/utils/projects.ts)
+- **`desc.short` ≤ 60 characters** (author tool `maxlength="60"`)
+- Thumbs: circular store PNG (22px mark in a 54px disc, hover 26px; CSS clips to a circle). **`thumb_bg_color`** is a **light tint** that contrasts with the icon fill — not the logo’s own color, not primary-by-default. Current: CameraX `rgb(206, 232, 230)` · Coco `rgb(228, 240, 214)` · Ensecure `rgb(245, 234, 204)`
+- Banners: local `/assets/projects/<slug>/banner.jpg` (download; don’t hotlink)
+- Card hover: logo / banner / arrow share `0.3s ease-in-out` — no separate Motion spring on the thumb
+- Authoring: [`docs/project-authoring.md`](docs/project-authoring.md) · Cursor rule: [`.cursor/rules/project-authoring.mdc`](.cursor/rules/project-authoring.mdc)
+
 ---
 
 ## Tools
@@ -218,7 +227,7 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 | --- | --- |
 | Full UI recipes | `docs/design-system.md` |
 | Blog authoring | `docs/blog-authoring.md` |
-| Project authoring | `docs/project-authoring.md` |
+| Project authoring | [`docs/project-authoring.md`](docs/project-authoring.md) · [`.cursor/rules/project-authoring.mdc`](.cursor/rules/project-authoring.mdc) |
 | Skills data | `src/content/skills-metadata.json` |
 | Years of experience | [`src/utils/date.ts`](src/utils/date.ts) `yearsOfExperience()` — intro badge + experiences count |
 | SEO helpers | [`src/utils/seo.ts`](src/utils/seo.ts) — titles, canonical, JSON-LD, sitemap lastmod |
@@ -238,6 +247,10 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 ## Changelog (memory)
 
 Versioned notes for **this memory file** and related agent guidance — full product history lives in [`CHANGELOG.md`](CHANGELOG.md). Align the top **Versions** row when the package bumps.
+
+### Unreleased
+
+- Project catalog: `desc.short` ≤ 60 characters; circular Play thumbs (22px in the 54px disc); light tint `thumb_bg_color` (not the logo fill); local banners; card hover 22→26px shares `0.3s ease-in-out` with banner/arrow. Rule: [`.cursor/rules/project-authoring.mdc`](.cursor/rules/project-authoring.mdc).
 
 ### 1.0.8 — 2026-08-14
 

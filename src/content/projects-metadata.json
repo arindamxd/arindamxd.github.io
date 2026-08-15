@@ -6,12 +6,12 @@
             "slug": "camerax",
             "title": "CameraX",
             "desc": {
-                "short": "Open-source Android camera demo built with CameraX APIs in Kotlin",
+                "short": "Open-source Android camera demo in Kotlin",
                 "long": "CameraX aims to demonstrate how to use CameraX APIs written in Kotlin. It is a Jetpack support library that makes camera app development easier, with a consistent API across most Android devices and backward-compatibility to Android 5.0 (API level 21). Built on camera2 with a simpler, lifecycle-aware use-case approach, it resolves many device compatibility issues for you. Optional Extensions unlock experiences like Portrait, HDR, Night, and Beauty on supported devices."
             },
             "images": {
-                "thumb": "/assets/projects/camerax/logo.svg",
-                "thumb_bg_color": "rgb(47, 123, 128)",
+                "thumb": "/assets/projects/camerax/logo.png",
+                "thumb_bg_color": "rgb(206, 232, 230)",
                 "banner": "/assets/projects/camerax/banner.jpg"
             },
             "header": {
@@ -34,8 +34,8 @@
                 "long": "Coco is a personal Android project published on Google Play. See the store listing for features and updates, and the privacy policy for how anonymous diagnostics are handled."
             },
             "images": {
-                "thumb": "/assets/projects/coco/logo.svg",
-                "thumb_bg_color": "rgb(42, 41, 255)",
+                "thumb": "/assets/projects/coco/logo.png",
+                "thumb_bg_color": "rgb(228, 240, 214)",
                 "banner": "/assets/projects/coco/banner.jpg"
             },
             "header": {
@@ -56,8 +56,8 @@
                 "long": "Ensecure is a personal Android project published on Google Play. See the store listing for features and updates, and the privacy policy for how anonymous diagnostics are handled."
             },
             "images": {
-                "thumb": "/assets/projects/ensecure/logo.svg",
-                "thumb_bg_color": "rgb(42, 41, 255)",
+                "thumb": "/assets/projects/ensecure/logo.png",
+                "thumb_bg_color": "rgb(245, 234, 204)",
                 "banner": "/assets/projects/ensecure/banner.jpg"
             },
             "header": {

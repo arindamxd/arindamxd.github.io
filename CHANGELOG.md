@@ -18,7 +18,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Contributions calendar month labels match the footer size at every width (SVG stretch no longer blows them up on desktop)
 - Experience year timeline on mobile: current year plus three past years, even content-sized gaps; last year clips under the edge fade (desktop unchanged)
 - Credentials: diploma lists DYCTC; ACE Award sits above the Google Developers Directory feature
-- Project cards: CameraX camera mark on a teal chip; local banners for CameraX, Coco, and Ensecure
+- Project cards: circular Play Store icons in light-tint discs; local banners; short desc ≤60 characters; thumb hover 22→26px in sync with banner and arrow
 
 ### Fixed
 

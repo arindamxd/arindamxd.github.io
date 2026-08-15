@@ -1,4 +1,4 @@
-/* Project card caption + logo zoom — layout via @apply; hover transforms stay plain */
+/* Project card caption + logo — layout via @apply; hover transforms 0.3s ease-in-out */
 
 .projects-card .caption-info {
     @apply relative z-[1] flex h-min w-full flex-row flex-nowrap content-center items-center justify-between overflow-visible p-2.5;
@@ -13,18 +13,14 @@
 }
 
 .projects-card .project-logo {
-    @apply relative aspect-square w-[22px] shrink-0 overflow-visible;
+    @apply relative aspect-square w-[22px] shrink-0 overflow-hidden rounded-full;
     height: var(--site-aspect-ratio-supported, 22px);
+    transform-origin: center;
+    transition: transform 0.3s ease-in-out;
 }
 
 .projects-card .project-logo img {
-    @apply absolute top-1/2 left-1/2 h-11 w-11 max-w-none rounded-[inherit] object-contain object-center;
-    margin: -22px 0 0 -22px;
-    transform: translateZ(0) scale(0.5);
-    transform-origin: center;
-    backface-visibility: hidden;
-    will-change: transform;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    @apply absolute inset-0 size-full max-w-none rounded-full object-cover object-center;
 }
 
 .projects-card .caption-info-text {
@@ -48,11 +44,11 @@
 
 .projects-card .link-icon-circle-bg {
     @apply relative h-3 w-3 shrink-0;
-    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-in-out;
 }
 
-.projects-card:hover .project-logo img {
-    transform: translateZ(0) scale(0.575);
+.projects-card:hover .project-logo {
+    transform: scale(calc(26 / 22));
 }
 
 .projects-card:hover .link-icon-circle-bg {
@@ -230,6 +226,9 @@ body.project-lightbox-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .projects-card .project-logo,
+    .projects-card .link-icon-circle-bg,
+    .projects-card .project-background-image,
     .project-lightbox-trigger img {
         transition: none;
     }

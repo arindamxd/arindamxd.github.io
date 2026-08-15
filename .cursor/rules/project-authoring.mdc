@@ -1,0 +1,32 @@
+---
+description: Project catalog cards — short desc ≤60, circular thumbs, light tint discs, local banners.
+globs: src/content/projects-metadata.json,src/content/projects/**,src/content/privacy-policies/**,public/assets/projects/**,src/utils/projects.ts,src/types/project.d.ts,src/components/elements/Project*.astro,docs/project-authoring.md,src/pages/tools/author.astro,src/scripts/tools-author.ts
+alwaysApply: false
+---
+
+# Project catalog
+
+Full recipe: [`docs/project-authoring.md`](docs/project-authoring.md) · memory: [`AGENTS.md`](AGENTS.md).
+
+## `desc.short`
+
+**Max 60 characters** (author tool `maxlength="60"`). Card subtitle only — not the long intro.
+
+## Thumb (54px disc + 22px mark)
+
+- Store / app icons: circular PNG at `/assets/projects/<slug>/logo.png`. Mark stays **22px** in the disc (hover **26px**); CSS always clips it to a circle. Do **not** fill the 54px chip.
+- **`thumb_bg_color`:** a **light tint** of the logo’s identity (or a complementary light accent) so the circular mark contrasts with the disc. **Do not** reuse the logo’s own fill (the 22px mark disappears). **Do not** default every card to primary unless the mark is a white glyph.
+- Current tints: CameraX seafoam `rgb(206, 232, 230)` · Coco pale lime `rgb(228, 240, 214)` · Ensecure pale gold `rgb(245, 234, 204)`.
+- `/design` preview still uses the white **A** placeholder on `thumb_bg_color`.
+
+## Banner
+
+Download locally to `public/assets/projects/<slug>/banner.jpg`. Prefer that over hotlinking Unsplash / Play.
+
+## Card hover
+
+Logo, banner zoom, and arrow share **`transform 0.3s ease-in-out`**. Do not put the thumb on a separate Motion spring.
+
+## Assets
+
+Keep files under `public/assets/projects/<slug>/`. Card chrome: [`projects.css`](src/styles/projects.css) · [`ProjectElement.astro`](src/components/elements/ProjectElement.astro).

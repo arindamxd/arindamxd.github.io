@@ -440,7 +440,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 | Stick | `sticky top-[110px]` |
 | Height | `400→280` |
 | Frame | `rounded-[45px]` `p-[9→6]` over banner image (photo inset, not the footer surface-shell chrome) |
-| Caption | Pill **overlaid** at bottom (`justify-end`): logo disc + title `16→14` + desc `/60` `14→13` + arrow circle on `bg-surface` |
+| Caption | Pill **overlaid** at bottom (`justify-end`): 54px logo disc (light tint `thumb_bg_color`, not the icon fill) + 22px circular mark (hover 26px, same 0.3s `ease-in-out` as banner/arrow) + title `16→14` + desc `/60` `14→13` (short ≤60 chars) + arrow circle on `bg-surface` |
 | Gallery | `/design` → Project list uses `SectionProjects` `preview` + `design-logo-placeholder` / media shell |
 
 ### Project metadata rows
