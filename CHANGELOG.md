@@ -16,11 +16,13 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Page enter (reload and ClientRouter) is Motion `springPage` only; first paint CSS-holds `is-page-entering` (no WAAPI tween)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
 - Contributions calendar month labels match the footer size at every width (SVG stretch no longer blows them up on desktop)
+- Experience year timeline on mobile: current year plus three past years, even content-sized gaps; last year clips under the edge fade (desktop unchanged)
 
 ### Fixed
 
 - Mid-page reload restores the saved scroll offset and still plays Motion `springPage` without a content flash (`is-scroll-hold` until opacity is pinned)
 - Contributions heatmap no longer vanishes in `astro dev` after Vite re-prebundles React (`jsxDEV` shim)
+- Experience year labels no longer overflow past the mobile edge fade when the row is squeezed
 
 ## [1.0.8] — 2026-08-14
 

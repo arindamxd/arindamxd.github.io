@@ -406,7 +406,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 | Piece | Spec |
 | --- | --- |
 | YoE banner | `bg-primary` shell `rounded-[40→32]`; count `65→48` white + `data-count-to`; ladder SVG; labels white `/60`–`/90` at `14px`. `/design` mounts `SectionExperiences` with `preview`. |
-| Year timeline | Hairline + current-year primary dot `14px` + past `#cacaca` `10px`; **now** year `52→44`; past years `18→15` `/40`; edge fade. Mobile: 3 even columns (now + 2 past); years align with job rows (no extra nested gutter). Desktop unchanged. |
+| Year timeline | Hairline + current-year primary dot `14px` + past `#cacaca` `10px`; **now** year `52→44`; past years `18px` `/40`; edge fade (`130→56`). Mobile: now + 3 past at content width, `justify-between` with a `16px` minimum gap; last year clips under the fade. Desktop unchanged. |
 | Mid-header | Left H3 `24→22` + support `17→15` `/50` between timeline and rows |
 | Employment rows | 3-col `title / company / years`; top hairline; `16→14` / `14→13` / `opacity-60` |
 

@@ -253,7 +253,7 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 - Release bump to `1.0.7`.
 - No post-build JS obfuscation (Vite minify only); `bootOnce` for ClientRouter listener stacking; calendar `useDeferredValue` for theme.
 - Surface-shell grey gap follows footer (`border-border` + `p-[9→6]`); hero / 404 / project / blogs list match; inset rings not for those shells. Docs + design rule + README mobile guidelines synced.
-- Experience timeline: mobile 3 even columns aligned with job rows. Skill tooltips clamp to the viewport on edge chips.
+- Experience timeline: mobile now + 3 past years at content width, `justify-between` with a `16px` minimum gap; last year clips under the edge fade. Skill tooltips clamp to the viewport on edge chips.
 
 ### 1.0.6 — 2026-08-11
 
