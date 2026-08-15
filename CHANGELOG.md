@@ -17,6 +17,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Footer reach ticker figures refreshed (`footer-reach.json`)
 - Contributions calendar month labels match the footer size at every width (SVG stretch no longer blows them up on desktop)
 - Experience year timeline on mobile: current year plus three past years, even content-sized gaps; last year clips under the edge fade (desktop unchanged)
+- Credentials: diploma lists DYCTC; ACE Award sits above the Google Developers Directory feature
 
 ### Fixed
 
