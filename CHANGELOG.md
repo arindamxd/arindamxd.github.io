@@ -8,14 +8,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
-- View-only media overlay (`data-media-viewer`) for credentials `file` (ACE Award PDF) and project body screenshots (hero banner excluded). Images, PDF, and text; no download chrome.
+- View-only media overlay (`data-media-viewer`) for credentials `file` (ACE Award and Associate Android Developer PDFs) and project body screenshots (hero banner excluded). Images, PDF, and text; no download chrome.
 - Media viewer loading: pulse dot + title over a delayed ghost page (cached screenshots skip it)
 - Share icon on blog and project detail: copy link plus Bluesky, Facebook, LinkedIn, Threads, and X
 - Public RSS at `/rss.xml`; blog/project JSON-LD (BlogPosting / SoftwareApplication + WebPage) and per-page OG images; optional blog `tags`
 
 ### Changed
 
-- Credentials licenses drop placeholder certs and outbound URLs; rows are title/org only (no link arrow). ACE Award still opens the PDF viewer
+- Credentials licenses drop placeholder certs and outbound URLs; rows are title/org only (no link arrow). ACE Award and Associate Android Developer open the PDF viewer
 - Article inline `` `code` `` renders as a Fragment Mono chip
 - Intro YoE chip fill matches the hero grey gap (`surface`) in light and dark, matching Framer
 - Page enter (reload and ClientRouter) is Motion `springPage` only; first paint CSS-holds `is-page-entering` (no WAAPI tween)
