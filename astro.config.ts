@@ -104,6 +104,9 @@ export default defineConfig({
                 "react/jsx-runtime",
                 "react/jsx-dev-runtime",
                 "react-dom/client",
+                // Hashed Vite prebundles 504 in Cursor Simple Browser after re-optimize.
+                "pdfjs-dist",
+                "pdfjs-dist/build/pdf.worker.min.mjs",
             ],
         },
         build: {

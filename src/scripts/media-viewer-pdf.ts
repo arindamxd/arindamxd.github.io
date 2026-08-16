@@ -2,9 +2,10 @@
  * Lazy PDF.js renderer for the media viewer.
  * Pages are painted to canvas only — no text layer, iframe, or download chrome.
  *
- * Cursor / VS Code Simple Browser often cannot start a module Worker.
- * Importing the worker on the main thread lets pdf.js use its fake-worker path.
+ * Cursor / VS Code Simple Browser often cannot start a module Worker and may
+ * miss Promise.withResolvers. Polyfill first, then run pdf.js on the main thread.
  */
+import "./pdf-polyfill";
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import { WorkerMessageHandler } from "pdfjs-dist/build/pdf.worker.min.mjs";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";

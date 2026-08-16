@@ -10,6 +10,7 @@
  * This hides download/print chrome and blocks save shortcuts while open.
  * It is not DRM — the file is still fetched by the browser.
  */
+import "./pdf-polyfill";
 import { animate } from "motion";
 import { bootOnce } from "./boot-once";
 import { revealCredentialsContaining } from "./credentials-accordion";
@@ -34,6 +35,7 @@ type MediaKind = "image" | "pdf" | "text" | "unsupported";
 let lastTrigger: HTMLElement | null = null;
 let closing = false;
 let open = false;
+let opening = false;
 let loadToken = 0;
 let abort: AbortController | null = null;
 let skeletonTimer = 0;
@@ -298,16 +300,11 @@ async function fillFrame(
         return true;
     }
 
-    const response = await fetch(src.href, {
-        signal,
-        credentials: "same-origin",
-    });
-    if (!response.ok) throw new Error("fetch");
+    const data = await readSameOriginBytes(src.href, signal);
     if (token !== loadToken) return false;
 
     if (kind === "text") {
-        const text = await response.text();
-        if (token !== loadToken) return false;
+        const text = new TextDecoder().decode(data);
         const pre = document.createElement("pre");
         pre.className = "media-viewer-text";
         pre.textContent = text;
@@ -315,17 +312,78 @@ async function fillFrame(
         return true;
     }
 
-    const data = await response.arrayBuffer();
-    if (token !== loadToken) return false;
-    const { renderPdfPages } = await import("./media-viewer-pdf");
+    const { renderPdfPages } = await loadPdfRenderer();
     if (token !== loadToken) return false;
     await renderPdfPages(frame, data, signal, stageContentBox(root));
     return token === loadToken;
 }
 
+function isAbort(error: unknown): boolean {
+    if (error instanceof DOMException && error.name === "AbortError") return true;
+    return error instanceof Error && error.name === "AbortError";
+}
+
+function errorDetail(error: unknown): string {
+    if (error instanceof Error) {
+        const msg = error.message.trim();
+        if (msg && msg.length <= 140) return msg;
+    }
+    return "Couldn’t open this file.";
+}
+
+async function readSameOriginBytes(url: string, signal: AbortSignal): Promise<ArrayBuffer> {
+    try {
+        const response = await fetch(url, { signal, credentials: "omit" });
+        if (!response.ok) throw new Error(`Couldn’t fetch file (${response.status})`);
+        return await response.arrayBuffer();
+    } catch (error) {
+        if (isAbort(error) || signal.aborted) throw error;
+        return readBytesViaXhr(url, signal);
+    }
+}
+
+function readBytesViaXhr(url: string, signal: AbortSignal): Promise<ArrayBuffer> {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        const onAbort = (): void => xhr.abort();
+        signal.addEventListener("abort", onAbort, { once: true });
+        xhr.onload = () => {
+            signal.removeEventListener("abort", onAbort);
+            if (xhr.status >= 200 && xhr.status < 300 && xhr.response instanceof ArrayBuffer) {
+                resolve(xhr.response);
+                return;
+            }
+            reject(new Error(`Couldn’t fetch file (${xhr.status || 0})`));
+        };
+        xhr.onerror = () => {
+            signal.removeEventListener("abort", onAbort);
+            reject(new Error("Couldn’t fetch file"));
+        };
+        xhr.onabort = () => {
+            signal.removeEventListener("abort", onAbort);
+            reject(new DOMException("Aborted", "AbortError"));
+        };
+        xhr.send();
+    });
+}
+
+async function loadPdfRenderer(): Promise<typeof import("./media-viewer-pdf")> {
+    try {
+        return await import("./media-viewer-pdf");
+    } catch {
+        await new Promise<void>((resolve) => {
+            window.setTimeout(resolve, 400);
+        });
+        return await import("./media-viewer-pdf");
+    }
+}
+
 async function openFrom(trigger: HTMLElement): Promise<void> {
     const src = resolveSrc(triggerSrc(trigger));
-    if (!src || open || closing) return;
+    if (!src || open || closing || opening) return;
+    opening = true;
 
     const inner = trigger.querySelector("img");
     const title =
@@ -359,10 +417,12 @@ async function openFrom(trigger: HTMLElement): Promise<void> {
         setBusy(root, "ready");
     } catch (error) {
         if (token !== loadToken) return;
-        if (error instanceof DOMException && error.name === "AbortError") return;
+        if (isAbort(error)) return;
         console.warn("[media-viewer]", error);
         clearFrame(root);
-        setBusy(root, "error");
+        setBusy(root, "error", errorDetail(error));
+    } finally {
+        if (token === loadToken) opening = false;
     }
 }
 
@@ -491,6 +551,7 @@ function onContextMenu(event: Event): void {
 function resetForNavigation(): void {
     closing = false;
     open = false;
+    opening = false;
     lastTrigger = null;
     cancelLoad();
     lockScroll(false);
