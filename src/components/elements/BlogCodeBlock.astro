@@ -80,13 +80,12 @@ const shikiLang = langKey as CodeLang;
     }
 
     /*
-      Equal top/bottom padding is owned by the wrapper.
-      pre/code get line-height:0 + white-space:normal so Shiki's
-      newline text nodes and the pre strut cannot add asymmetric space.
-      Each .line restores its own font metrics.
+      Vertical padding on the scroller. Horizontal padding on `.line`
+      with width: max-content so long lines expand the scroll width —
+      padding-right on an overflow-x box is otherwise ignored.
     */
     .article-code__body {
-        padding: 16px 18px;
+        padding: 16px 0;
         box-sizing: border-box;
         overflow-x: auto;
     }
@@ -124,8 +123,10 @@ const shikiLang = langKey as CodeLang;
     .article-code__body .astro-code .line,
     .article-code__body .shiki .line {
         display: block;
+        width: max-content;
+        box-sizing: content-box;
         margin: 0;
-        padding: 0;
+        padding: 0 18px;
         min-height: 1.55em;
         font-size: 13px;
         font-weight: 500;
@@ -165,12 +166,13 @@ const shikiLang = langKey as CodeLang;
         }
 
         .article-code__body {
-            padding: 14px;
+            padding: 14px 0;
         }
 
         .article-code__body .astro-code .line,
         .article-code__body .shiki .line {
             font-size: 12px;
+            padding: 0 14px;
         }
     }
 </style>

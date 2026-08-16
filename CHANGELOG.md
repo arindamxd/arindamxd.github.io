@@ -20,12 +20,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Experience year timeline on mobile: current year plus three past years, even content-sized gaps; last year clips under the edge fade (desktop unchanged)
 - Credentials: diploma lists DYCTC; ACE Award sits above the Google Developers Directory feature
 - Project cards: circular Play Store icons in light-tint discs; local banners; short desc ≤60 characters; thumb hover 22→26px in sync with banner and arrow
+- Project card frame and caption use `rounded-[44→42]` (was 45 / pill 50)
 
 ### Fixed
 
 - Mid-page reload restores the saved scroll offset and still plays Motion `springPage` without a content flash (`is-scroll-hold` until opacity is pinned)
 - Contributions heatmap no longer vanishes in `astro dev` after Vite re-prebundles React (`jsxDEV` shim)
 - Experience year labels no longer overflow past the mobile edge fade when the row is squeezed
+- Blog code blocks keep the same end padding as the start when a line overflows horizontally
 
 ## [1.0.8] — 2026-08-14
 
