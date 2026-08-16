@@ -1,7 +1,7 @@
 # AGENTS.md — project memory
 
 Git-tracked map + durable decisions for humans and coding agents.  
-**Current site version:** `1.0.8` ([`package.json`](package.json) · git tag `v1.0.8`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
+**Current site version:** `1.0.9` ([`package.json`](package.json) · git tag `v1.0.9`) · product notes: [`CHANGELOG.md`](CHANGELOG.md)  
 **UI source of truth:** [`docs/design-system.md`](docs/design-system.md) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc) · Gallery: `/design`
 
 Keep this file in sync when you ship durable architecture decisions or bump the package version. Prefer linking to long recipes in `docs/` over duplicating them here.
@@ -12,9 +12,9 @@ Keep this file in sync when you ship durable architecture decisions or bump the 
 
 | Field | Value | Notes |
 | --- | --- | --- |
-| **Package** | `1.0.8` | Bump in `package.json` on release |
-| **Git tags** | `v1.0.8`, `v1.0.7`, `v1.0.6`, `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
-| **Memory doc** | `1.0.8` | Same as package after each memory update on a release line |
+| **Package** | `1.0.9` | Bump in `package.json` on release |
+| **Git tags** | `v1.0.9`, `v1.0.8`, `v1.0.7`, `v1.0.6`, `v1.0.5`, `v1.0.4`, `v1.0.3`, `v1.0.2`, `v1.0.1` | Match package when tagging |
+| **Memory doc** | `1.0.9` | Same as package after each memory update on a release line |
 | **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Keep a Changelog · append under Unreleased as you go (required when asked to commit), fold into the version on release |
 | **Node** | `>=22.12` | `engines` in package.json |
 | **Astro** | `^7.2` | Static output · Vite 8 |
@@ -137,7 +137,8 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
 | `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
 | `share-bar.ts` | Blog/project share icon — hover/tap menu (copy + social intents) (`data-share-bar`) |
-| `media-viewer.ts` | View-only overlay for images / PDF / text (`data-media-viewer`). Credentials `file` and project body screenshots (not hero banner). PDF via lazy `media-viewer-pdf.ts`. Deep link `?media=<id>` / `#<id>` (file basename). Not DRM. |
+| `media-viewer.ts` | View-only overlay for images / PDF / text (`data-media-viewer`). Credentials `file` and project body screenshots (not hero banner). PDF via lazy `media-viewer-pdf.ts` + [`pdf-polyfill.ts`](src/scripts/pdf-polyfill.ts). Deep link `?media=<id>` / `#<id>` (file basename). Not DRM. |
+| `inspect-guard.ts` | Production-only desktop context menu / DevTools shortcut deterrent; off on localhost and `astro dev` |
 | `analytics.ts` | GA4 + optional Microsoft Clarity (`CLARITY_ENABLED`) + ClientRouter page views |
 | `markdown-fullscreen.ts` | Fullscreen markdown doc panels |
 | Tools scripts | `tools-*.ts` for author / markdown / scramble-compare / analytics-reach |
@@ -225,6 +226,7 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 - **Not DRM.** The browser still fetches the file. Do not use an `<iframe>` / `<embed>` of a PDF (native toolbar has Download).
 - Consumers: credentials optional `file`; project body shots via [`ProjectLightboxImage`](src/components/elements/ProjectLightboxImage.astro) (hero banner stays plain). `url` on credentials stays outbound.
 - **Share URL:** `/?media=<id>` or `/#<id>` on home opens that preview (`ace-award`, `associate-android-developer`). Gallery `#credentials-preview` is skipped.
+- pdf.js 6 on Cursor / VS Code Simple Browser: [`pdf-polyfill.ts`](src/scripts/pdf-polyfill.ts) (`Promise.withResolvers`, `URL.parse`, `Map.getOrInsertComputed`); main-thread worker (`globalThis.pdfjsWorker`); exclude `pdfjs-dist` from Vite `optimizeDeps` (hashed prebundles 504 after re-optimize).
 
 ### SVG sprite
 
@@ -267,16 +269,14 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 
 ### Unreleased
 
-- Performance: `npm run optimize-images` keeps public rasters to display size (hero avatar 280px, blog list `thumb.jpg` 162px, banners ≤1400/1180). Lenis is a dynamic chunk on fine pointer only; scramble loads as a page widget; gtag.js waits for idle. First-visit loader uses Manrope so home does not download Fragment Mono.
-- Contributions heatmap in `astro dev`: `@astrojs/react` re-includes `react/jsx-dev-runtime` in `optimizeDeps`; strip it in `configResolved` so Vite does not prebundle production `jsxDEV = undefined`.
+### 1.0.9 — 2026-08-17
 
-- Blog authoring: labeled bullets need `- **Label**:` (colon); inline `` `code` `` chips in labels and body; catalog `content` path required with `blogs/<slug>.md` fallback; `getBlogs()` sorts by date. [`docs/blog-authoring.md`](docs/blog-authoring.md).
-- `/blogs` catalog SEO is topic-led (KMP, Context, Hilt, processors, UPI, WebRTC, UIControl). Article meta from frontmatter `description` via `metaDescription`.
-- Share icon on blog and project detail (top right): hover/tap dropdown with copy link plus Bluesky, Facebook, LinkedIn, Threads, and X. [`ShareBar`](src/components/elements/ShareBar.astro) · [`share-bar.ts`](src/scripts/share-bar.ts).
-- Blog/project SEO: per-page OG MIME, WebPage + BlogPosting / SoftwareApplication JSON-LD, project meta from `desc.long`, blog `tags`, `/rss.xml`.
-- Shared view-only media overlay (`data-media-viewer`, `media-viewer.ts`): credentials `file` (ACE Award PDF) and project body screenshots. Hero banner excluded. PDFs render to canvas (no download bar). License rows are title/org only (no outbound URLs or link arrows). Share: `/?media=ace-award` or `/#ace-award`.
-- Production inspect guard (`inspect-guard.ts`): desktop context menu + DevTools / view-source shortcuts blocked site-wide; localhost / `astro dev` stay inspectable. Not DRM.
-- Project catalog: `desc.short` ≤ 60 characters; circular Play thumbs (22px in the 54px disc); light tint `thumb_bg_color` (not the logo fill); local banners; card hover 22→26px shares `0.3s ease-in-out` with banner/arrow. Rule: [`.cursor/rules/project-authoring.mdc`](.cursor/rules/project-authoring.mdc).
+- Release bump to `1.0.9`.
+- Shareable credential previews: `/?media=<id>` or `/#<id>` on home (`ace-award`, `associate-android-developer`).
+- pdf.js in Cursor Simple Browser: [`pdf-polyfill.ts`](src/scripts/pdf-polyfill.ts) (`Map.getOrInsertComputed`, `Promise.withResolvers`); main-thread worker; exclude `pdfjs-dist` from Vite `optimizeDeps`.
+- Production inspect guard (`inspect-guard.ts`): desktop context menu + DevTools shortcuts off on the live site; localhost / `astro dev` stay inspectable.
+- Performance: `npm run optimize-images` keeps public rasters to display size. Lenis is a dynamic chunk on fine pointer only; scramble loads as a page widget; gtag.js waits for idle.
+- Contributions heatmap in `astro dev`: strip `react/jsx-dev-runtime` from `optimizeDeps` after `@astrojs/react` re-includes it.
 
 ### 1.0.8 — 2026-08-14
 

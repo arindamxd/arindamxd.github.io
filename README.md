@@ -2,7 +2,7 @@
 
 Personal portfolio site for **[Arindam Karmakar](https://arindamxd.github.io)** — Technical Lead, Mobile Engineering. Static Astro site with JSON-driven content, dark/light theme, and intentional motion.
 
-**Version:** `1.0.8` · **Live:** [https://arindamxd.github.io](https://arindamxd.github.io) · **Repo:** [github.com/arindamxd/arindamxd.github.io](https://github.com/arindamxd/arindamxd.github.io) · **Notes:** [CHANGELOG.md](./CHANGELOG.md)
+**Version:** `1.0.9` · **Live:** [https://arindamxd.github.io](https://arindamxd.github.io) · **Repo:** [github.com/arindamxd/arindamxd.github.io](https://github.com/arindamxd/arindamxd.github.io) · **Notes:** [CHANGELOG.md](./CHANGELOG.md)
 
 ---
 

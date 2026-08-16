@@ -8,6 +8,14 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+### Changed
+
+### Fixed
+
+## [1.0.9] — 2026-08-17
+
+### Added
+
 - Three Developer’s Log posts: Kotlin Multiplatform architecture, Android annotation processors, and constructor injection at the Activity edge (Hilt / Koin)
 - Developer’s Log post on Activity vs application Context
 - View-only media overlay (`data-media-viewer`) for credentials `file` (ACE Award and Associate Android Developer PDFs) and project body screenshots (hero banner excluded). Images, PDF, and text; no download chrome.
@@ -227,7 +235,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 See git tag `v1.0.1` and commit history for earlier notes.
 
-[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.8...HEAD
+[Unreleased]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.9...HEAD
+[1.0.9]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.8...v1.0.9
 [1.0.8]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.7...v1.0.8
 [1.0.7]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/arindamxd/arindamxd.github.io/compare/v1.0.5...v1.0.6
