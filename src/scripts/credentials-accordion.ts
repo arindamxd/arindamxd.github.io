@@ -16,6 +16,17 @@ function setCredentialsOpen(item: Element, open: boolean): void {
     }
 }
 
+/** Expand the group that contains `el` so a deep-linked file row is not inert. */
+export function revealCredentialsContaining(el: Element): void {
+    const item = el.closest(".credentials-item");
+    const root = item?.closest("[data-credentials-accordion]");
+    if (!item || !(root instanceof HTMLElement)) return;
+    const items = [...root.querySelectorAll(".credentials-item")];
+    items.forEach((other) => {
+        setCredentialsOpen(other, other === item);
+    });
+}
+
 function bindCredentialsAccordion(root: HTMLElement): void {
     if (root.dataset.bound === "true") return;
     root.dataset.bound = "true";

@@ -471,7 +471,7 @@ Fullscreen overlay for credentials `file` and project body screenshots (`data-me
 | Text (`txt` `md` `json` …) | Fragment Mono `<pre>` |
 | Other | Status line only — no download link |
 
-View-only UX: no download button, context menu / drag / ⌘S / ⌘P blocked while open, print hides the overlay. Not DRM — the file is still requested by the browser. Credentials: optional `file` in [`credentials-metadata.json`](../src/content/credentials-metadata.json). Project shots: [`ProjectLightboxImage`](../src/components/elements/ProjectLightboxImage.astro) (hero banner stays plain). Overlay: [`media-viewer.ts`](../src/scripts/media-viewer.ts) · [`viewer.css`](../src/styles/viewer.css).
+View-only UX: no download button, context menu / drag / ⌘S / ⌘P blocked while open, print hides the overlay. Not DRM — the file is still requested by the browser. Production also blocks the desktop context menu and DevTools / view-source shortcuts **site-wide** ([`inspect-guard.ts`](../src/scripts/inspect-guard.ts)); `astro dev` and localhost stay inspectable. Credentials: optional `file` in [`credentials-metadata.json`](../src/content/credentials-metadata.json). Project shots: [`ProjectLightboxImage`](../src/components/elements/ProjectLightboxImage.astro) (hero banner stays plain). Overlay: [`media-viewer.ts`](../src/scripts/media-viewer.ts) · [`viewer.css`](../src/styles/viewer.css). Deep link: `/?media=<id>` or `/#<id>` where `id` is the file basename (`ace-award`, `associate-android-developer`); home only (gallery preview is skipped).
 
 ### Detail page H1 (left)
 

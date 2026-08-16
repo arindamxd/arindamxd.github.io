@@ -36,6 +36,7 @@
         "astro": "astro",
         "clean": "rm -rf dist .astro node_modules/.vite",
         "check": "astro check && node scripts/assert-no-js.mjs",
+        "optimize-images": "node scripts/optimize-images.mjs",
         "lint": "echo 'No linting configured'",
         "test": "echo 'No tests configured'"
     },

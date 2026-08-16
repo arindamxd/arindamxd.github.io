@@ -2,17 +2,20 @@
  * Single layout entry so ClientRouter cannot drop individual scripts
  * (theme.ts was missing after multi-page visits).
  *
- * Core motion/theme always load. Page widgets load when their DOM exists.
+ * Core motion/theme/inspect-guard always load. Page widgets load when their DOM exists.
  */
 import { bootOnce } from './boot-once';
+import './inspect-guard';
 import './page-transition';
 import './theme';
 import './image-fallback';
-import './scramble-text';
 import './reveal';
 import './smooth-scroll';
 
 function loadPageWidgets(): void {
+    if (document.querySelector('[data-scramble]')) {
+        void import('./scramble-text');
+    }
     if (document.querySelector('.available-text-container')) {
         void import('./available-text');
     }

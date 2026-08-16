@@ -53,7 +53,7 @@ Keep list/card and hero meta here. Do **not** put body layout copy or gallery im
 | --- | --- |
 | `thumb` | App/store icon as a **circular PNG** at `/assets/projects/<slug>/logo.png`. Clip the square Play asset to a circle (transparent corners). CSS always clips the 22px mark to a circle (hover **26px**). Do **not** scale the icon to fill the 54px disc. |
 | `thumb_bg_color` | A **light tint** of the logo’s identity hue (or a complementary light accent) so the 22px mark contrasts with the disc. **Do not** use the logo’s own fill color — the mark vanishes. **Do not** default every card to primary unless the mark is a white glyph on a colored disc. |
-| `banner` | Download locally to `public/assets/projects/<slug>/banner.jpg`. Prefer local files over hotlinking Unsplash or Play. |
+| `banner` | Download locally to `public/assets/projects/<slug>/banner.jpg` (max **1400px** wide). Prefer local files over hotlinking Unsplash or Play. |
 
 Current disc tints (keep as the starting point when editing these three):
 
@@ -126,6 +126,6 @@ Typical CameraX-style page: **pair → content → large → content → pair-th
 - Keep images in a group on consecutive lines (or blank-line-separated paragraphs that are image-only).
 - Every `##` heading must be followed by a description paragraph.
 - Alt text on `![alt](url)` becomes the image `alt`.
-- Put assets under `public/assets/projects/<slug>/` or use absolute URLs.
+- Put assets under `public/assets/projects/<slug>/` or use absolute URLs. Photographic shots work better as JPEG (~1080px); flat UI chrome can stay PNG. Re-run `npm run optimize-images` after adding rasters.
 
 Types live in `src/types/project.d.ts`. The renderer is `src/components/elements/ProjectPage.astro`.

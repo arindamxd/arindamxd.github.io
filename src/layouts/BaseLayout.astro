@@ -46,6 +46,8 @@ interface Props {
     section?: string;
     /** Open Graph article tags. */
     tags?: string[];
+    /** Same-origin LCP image to preload (hero avatar, article/project banner). */
+    preloadImage?: string;
 }
 
 const {
@@ -62,6 +64,7 @@ const {
     jsonLd,
     section,
     tags,
+    preloadImage,
 } = Astro.props as Props;
 
 const fullTitle = pageTitle(pageTitleProp, home);
@@ -118,6 +121,11 @@ const structuredData = home
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/resources/favicon-32.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/resources/apple-touch-icon.png" />
         <link rel="preload" href="/assets/fonts/Manrope.woff2" as="font" type="font/woff2" crossorigin />
+        {
+            preloadImage && (
+                <link rel="preload" href={preloadImage} as="image" fetchpriority="high" />
+            )
+        }
 
         <meta name="theme-color" content="#171717" />
         <meta name="color-scheme" content="light dark" />

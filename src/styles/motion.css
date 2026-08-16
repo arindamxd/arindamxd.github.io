@@ -82,9 +82,9 @@ html.is-loading body {
 
 .page-loader-label {
     margin: 0;
-    font-family: var(--font-fragment);
+    font-family: var(--font-manrope);
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: color-mix(in srgb, var(--color-text) 45%, transparent);

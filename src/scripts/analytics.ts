@@ -12,6 +12,10 @@ import {
     resolveMeasurementId,
 } from "../utils/analytics";
 
+function whenIdle(fn: () => void): void {
+    window.requestIdleCallback(fn, { timeout: 2500 });
+}
+
 function ensureGtag(measurementId: string): void {
     window.dataLayer = window.dataLayer || [];
     if (typeof window.gtag !== "function") {
@@ -21,16 +25,18 @@ function ensureGtag(measurementId: string): void {
         };
     }
 
-    if (!document.querySelector(`script[data-ga-loader="1"]`)) {
+    window.gtag("js", new Date());
+    window.gtag("config", measurementId, { send_page_view: false });
+
+    // Queue hits immediately; fetch gtag.js after first paint so it stays off the critical path.
+    whenIdle(() => {
+        if (document.querySelector(`script[data-ga-loader="1"]`)) return;
         const script = document.createElement("script");
         script.async = true;
         script.dataset.gaLoader = "1";
         script.src = gtagScriptUrl(measurementId);
         document.head.appendChild(script);
-    }
-
-    window.gtag("js", new Date());
-    window.gtag("config", measurementId, { send_page_view: false });
+    });
 }
 
 function ensureClarity(projectId: string): void {
@@ -46,14 +52,15 @@ function ensureClarity(projectId: string): void {
         window.clarity = clarityStub;
     }
 
-    if (!document.querySelector(`script[data-clarity-loader="1"]`)) {
+    whenIdle(() => {
+        if (document.querySelector(`script[data-clarity-loader="1"]`)) return;
         const script = document.createElement("script");
         script.async = true;
         script.dataset.clarityLoader = "1";
         script.src = clarityScriptUrl(projectId);
         const first = document.getElementsByTagName("script")[0];
         first?.parentNode?.insertBefore(script, first);
-    }
+    });
 }
 
 function sendPageView(): void {

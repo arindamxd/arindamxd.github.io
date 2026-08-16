@@ -1,9 +1,7 @@
-import Lenis from 'lenis';
-import 'lenis/dist/lenis.css';
 import { bootOnce } from './boot-once';
 
 if (bootOnce('lenis')) {
-    bootLenis();
+    void bootLenis();
 }
 
 function revealRestoredScroll(): void {
@@ -48,7 +46,7 @@ function bindHashLinks(smooth: boolean): void {
     );
 }
 
-function bootLenis(): void {
+async function bootLenis(): Promise<void> {
     const reduced =
         typeof window !== 'undefined' &&
         window.matchMedia &&
@@ -63,6 +61,11 @@ function bootLenis(): void {
         revealRestoredScroll();
         return;
     }
+
+    const [{ default: Lenis }] = await Promise.all([
+        import('lenis'),
+        import('lenis/dist/lenis.css'),
+    ]);
 
     const restoreY =
         typeof window.__restoreScrollY === 'number' && window.__restoreScrollY > 0

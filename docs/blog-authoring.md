@@ -15,7 +15,7 @@ Keep list fields here. Do **not** put article copy in JSON — only a path to th
 {
   "slug": "my-post",
   "title": "Post title (list + page h1)",
-  "thumb": "/assets/… or https://…",
+  "thumb": "/assets/blogs/my-post/thumb.jpg",
   "author": { "name": "…", "avatar": "/assets/…" },
   "date": "2024-03-29",
   "content": "blogs/my-post.md",
@@ -25,7 +25,14 @@ Keep list fields here. Do **not** put article copy in JSON — only a path to th
 
 `content` is relative to `src/content/` and **required** in the catalog (the loader falls back to `blogs/<slug>.md` if it is missing, but list that path anyway). Optional `tags` are topic keywords for Open Graph `article:tag` and BlogPosting JSON-LD — keep them short (e.g. `iOS`, `UPI`).
 
-Newest posts first is not required in the JSON array — [`getBlogs()`](../src/utils/blogs.ts) sorts by `date` descending. Thumb and banner should be a local JPEG under `public/assets/blogs/<slug>/banner.jpg` (about **1180px** wide, display max).
+Thumb and banner should be local JPEGs under `public/assets/blogs/<slug>/`:
+
+| File | Use | Size |
+|------|-----|------|
+| `thumb.jpg` | List/card (54px circle) | **162px** square crop |
+| `banner.jpg` | Article hero + OG | about **1180px** wide |
+
+Catalog `thumb` points at `thumb.jpg`. Frontmatter `banner` stays the wide image. Re-run `npm run optimize-images` after dropping new photos.
 
 ## Article file (Markdown)
 
@@ -61,7 +68,7 @@ let button = UIButton(type: .system)
 |-------|------------|
 | `title` | Intro lead under the meta row (not the list/h1 title in JSON) |
 | `description` | Intro supporting copy **and** the SERP / OG snippet (keep ≤160 characters) |
-| `banner` | Full-width article banner (same path as catalog `thumb`) |
+| `banner` | Full-width article banner (wide JPEG; catalog `thumb` is the 162px list crop) |
 
 ### Body → blocks
 

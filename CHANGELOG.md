@@ -11,9 +11,12 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Three Developer’s Log posts: Kotlin Multiplatform architecture, Android annotation processors, and constructor injection at the Activity edge (Hilt / Koin)
 - Developer’s Log post on Activity vs application Context
 - View-only media overlay (`data-media-viewer`) for credentials `file` (ACE Award and Associate Android Developer PDFs) and project body screenshots (hero banner excluded). Images, PDF, and text; no download chrome.
+- Shareable media preview URLs: `/?media=ace-award` (or `/#ace-award`) opens the ACE Award overlay on home; same pattern for other credential files (`associate-android-developer`)
+- Production inspect guard: desktop right-click and DevTools / view-source shortcuts blocked site-wide; localhost and `astro dev` stay inspectable
 - Media viewer loading: pulse dot + title over a delayed ghost page (cached screenshots skip it)
 - Share icon on blog and project detail: copy link plus Bluesky, Facebook, LinkedIn, Threads, and X
 - Public RSS at `/rss.xml`; blog/project JSON-LD (BlogPosting / SoftwareApplication + WebPage) and per-page OG images; optional blog `tags`
+- `npm run optimize-images` to resize public rasters to display size (hero avatar 280px, blog list `thumb.jpg` 162px, banners ≤1400/1180)
 
 ### Changed
 
@@ -31,6 +34,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Credentials: diploma lists DYCTC; ACE Award sits above the Google Developers Directory feature
 - Project cards: circular Play Store icons in light-tint discs; local banners; short desc ≤60 characters; thumb hover 22→26px in sync with banner and arrow
 - Project card frame and caption use `rounded-[44→42]` (was 45 / pill 50)
+- Images, fonts, and first-party JS off the critical path: LCP avatar preload (~16KB), Lenis only on fine pointer, scramble as a page widget, gtag after idle, first-visit loader on Manrope (home skips Fragment Mono)
 
 ### Fixed
 

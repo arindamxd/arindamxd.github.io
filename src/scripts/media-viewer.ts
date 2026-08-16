@@ -2,15 +2,17 @@
  * Fullscreen view-only overlay for images, PDFs, and plain text.
  *
  * Markup contract:
- * - Trigger: [data-media-viewer][data-src] (optional data-title, data-kind)
+ * - Trigger: [data-media-viewer][data-src] (optional data-title, data-kind, data-media-id)
  * - A wrapped <img> is enough for project screenshots (currentSrc is reused)
  * - Overlay: created in JS and mounted on document.body (survives ClientRouter)
+ * - Deep link: `?media=<id>` or `#<id>` (id = file basename, e.g. ace-award)
  *
  * This hides download/print chrome and blocks save shortcuts while open.
  * It is not DRM — the file is still fetched by the browser.
  */
 import { animate } from "motion";
 import { bootOnce } from "./boot-once";
+import { revealCredentialsContaining } from "./credentials-accordion";
 import { clearMotionStyles, easeOut, springSoft } from "./motion-tokens";
 
 const ROOT_ID = "media-viewer-root";
@@ -504,6 +506,82 @@ function resetForNavigation(): void {
     setBusy(root, "ready");
 }
 
+function mediaIdFromSrc(src: string): string {
+    try {
+        const path = new URL(src, window.location.origin).pathname;
+        const base = path.split("/").pop() || "";
+        const dot = base.lastIndexOf(".");
+        return (dot > 0 ? base.slice(0, dot) : base).toLowerCase();
+    } catch {
+        return "";
+    }
+}
+
+function requestedMediaId(): string {
+    const fromQuery = new URLSearchParams(window.location.search).get("media")?.trim() || "";
+    if (fromQuery) return fromQuery.toLowerCase();
+    const hash = window.location.hash.replace(/^#/, "").trim();
+    if (!hash) return "";
+    if (hash.toLowerCase().startsWith("media=")) return hash.slice(6).toLowerCase();
+    return hash.toLowerCase();
+}
+
+function findMediaTrigger(id: string): HTMLElement | null {
+    const byAttr = document.querySelector(`[data-media-id="${CSS.escape(id)}"]`);
+    if (byAttr instanceof HTMLElement) return byAttr;
+    for (const el of document.querySelectorAll("[data-media-viewer]")) {
+        if (!(el instanceof HTMLElement)) continue;
+        const explicit = el.dataset.mediaId?.trim().toLowerCase() || "";
+        if (explicit === id) return el;
+        if (mediaIdFromSrc(triggerSrc(el)) === id) return el;
+    }
+    return null;
+}
+
+function scrollTriggerSection(trigger: HTMLElement): void {
+    const section = trigger.closest("section");
+    if (!(section instanceof HTMLElement)) return;
+    const offset = window.matchMedia("(max-width: 609.98px)").matches ? 80 : 20;
+    const lenis = window.__lenis;
+    if (lenis) {
+        lenis.scrollTo(section, { offset: -offset, immediate: true });
+        return;
+    }
+    const top = section.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "auto" });
+}
+
+function afterScrollRestore(fn: () => void): void {
+    let ran = false;
+    const run = (): void => {
+        if (ran) return;
+        ran = true;
+        window.removeEventListener("scrollrestore:done", run);
+        fn();
+    };
+    if (window.__scrollRestoreDone) {
+        run();
+        return;
+    }
+    window.addEventListener("scrollrestore:done", run);
+    window.setTimeout(run, 400);
+}
+
+function tryOpenFromLocation(): void {
+    if (open || closing) return;
+    const id = requestedMediaId();
+    if (!id) return;
+    const trigger = findMediaTrigger(id);
+    if (!trigger || trigger.closest("#credentials-preview")) return;
+    revealCredentialsContaining(trigger);
+    // Overlay is body-mounted — do not wait on scroll restore or the dialog never opens.
+    void openFrom(trigger);
+    afterScrollRestore(() => {
+        if (!open) return;
+        scrollTriggerSection(trigger);
+    });
+}
+
 if (bootOnce("media-viewer")) {
     document.addEventListener("click", onDocumentClick, true);
     document.addEventListener("keydown", onKeydown, true);
@@ -513,6 +591,10 @@ if (bootOnce("media-viewer")) {
     document.addEventListener("astro:page-load", () => {
         closing = false;
         if (!open) ensureRoot();
+        tryOpenFromLocation();
     });
     document.addEventListener("astro:before-swap", resetForNavigation);
+    window.addEventListener("hashchange", tryOpenFromLocation);
+    window.addEventListener("popstate", tryOpenFromLocation);
+    tryOpenFromLocation();
 }
