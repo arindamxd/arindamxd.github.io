@@ -28,6 +28,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Contributions heatmap no longer vanishes in `astro dev` after Vite re-prebundles React (`jsxDEV` shim)
 - Experience year labels no longer overflow past the mobile edge fade when the row is squeezed
 - Blog code blocks keep the same end padding as the start when a line overflows horizontally
+- Article disc and numbered bullets sit on the vertical center of the first line
 
 ## [1.0.8] — 2026-08-14
 

@@ -111,16 +111,18 @@ function bulletParts(item: BlogBullet): { label?: string; text: string } {
                                     <li class="m-0 flex flex-row flex-nowrap items-start gap-3">
                                         {numbered ? (
                                             <span
-                                                class="w-5 shrink-0 pt-px font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-text/40 tabular-nums max-narrow:text-[16px]"
+                                                class="flex h-[1.55em] w-5 shrink-0 items-center font-manrope text-[18px] font-semibold tracking-[-0.04em] text-text/40 tabular-nums max-narrow:text-[16px]"
                                                 aria-hidden="true"
                                             >
-                                                {index + 1}.
+                                                <span class="leading-none">{index + 1}.</span>
                                             </span>
                                         ) : (
                                             <span
-                                                class="mt-[0.65em] size-[5px] shrink-0 rounded-full bg-text/40"
+                                                class="flex h-[1.55em] w-[5px] shrink-0 items-center justify-center font-manrope text-[18px] max-narrow:text-[16px]"
                                                 aria-hidden="true"
-                                            />
+                                            >
+                                                <span class="size-[5px] rounded-full bg-text/40" />
+                                            </span>
                                         )}
                                         <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-narrow:text-[16px]">
                                             {label ? (
