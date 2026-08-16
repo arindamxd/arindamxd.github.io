@@ -1,0 +1,80 @@
+---
+import { absoluteUrl } from "../../utils/seo";
+import { SHARE_NETWORKS, shareIntentUrls } from "../../utils/share";
+
+interface Props {
+    title: string;
+    /** Site-relative path or absolute URL. */
+    url: string;
+    text?: string;
+}
+
+const { title, url, text } = Astro.props;
+const abs = /^https?:\/\//i.test(url) ? url : absoluteUrl(url);
+const shareText = (text || title).trim() || title;
+const intents = shareIntentUrls({ url: abs, title, text: shareText });
+---
+
+<div
+    class="share-bar relative z-30 flex-none overflow-visible"
+    data-share-bar
+    data-share-url={abs}
+    data-share-title={title}
+    data-share-text={shareText}
+>
+    <button
+        type="button"
+        class="share-bar__trigger"
+        data-share-trigger
+        aria-haspopup="menu"
+        aria-expanded="false"
+        aria-label="Share"
+        title="Share"
+    >
+        <span class="share-bar__trigger-icon">
+            <svg class="size-full" aria-hidden="true"><use href="#share-trigger"></use></svg>
+        </span>
+    </button>
+
+    <div class="share-menu" role="menu" aria-label="Share">
+        <button
+            type="button"
+            class="share-menu__item"
+            role="menuitem"
+            data-share-copy
+        >
+            <span class="share-menu__glyph share-icon--copy">
+                <svg class="size-full" aria-hidden="true"><use href="#share-link"></use></svg>
+            </span>
+            <span class="share-menu__glyph share-icon--copied">
+                <svg class="size-full" aria-hidden="true"><use href="#share-copied"></use></svg>
+            </span>
+            <span class="share-menu__label" data-share-copy-label>Copy link</span>
+        </button>
+
+        <div class="share-menu__rule" role="separator"></div>
+
+        {
+            SHARE_NETWORKS.map((network) => (
+                <a
+                    class="share-menu__item"
+                    role="menuitem"
+                    href={intents[network.id]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="share-menu__glyph">
+                        <svg class="size-full" aria-hidden="true">
+                            <use href={`#${network.icon}`}></use>
+                        </svg>
+                    </span>
+                    <span class="share-menu__label">{network.label}</span>
+                </a>
+            ))
+        }
+
+        <span class="share-menu__caret" aria-hidden="true"></span>
+    </div>
+
+    <span data-share-status aria-live="polite"></span>
+</div>

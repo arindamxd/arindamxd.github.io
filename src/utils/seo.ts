@@ -55,8 +55,51 @@ export function isoDate(value: Date | string): string {
     return Number.isNaN(d.getTime()) ? String(value) : d.toISOString();
 }
 
-const PERSON_ID = `${SITE}/#person`;
-const WEBSITE_ID = `${SITE}/#website`;
+export const PERSON_ID = `${SITE}/#person`;
+export const WEBSITE_ID = `${SITE}/#website`;
+
+/** MIME type for OG/Twitter images from a path or URL. */
+export function imageMimeType(pathOrUrl: string): string {
+    const path = pathOrUrl.split("?")[0]?.toLowerCase() ?? "";
+    if (path.endsWith(".jpg") || path.endsWith(".jpeg")) return "image/jpeg";
+    if (path.endsWith(".webp")) return "image/webp";
+    if (path.endsWith(".gif")) return "image/gif";
+    if (path.endsWith(".svg")) return "image/svg+xml";
+    if (path.endsWith(".avif")) return "image/avif";
+    return OG_IMAGE_TYPE;
+}
+
+export function uniqueKeywords(
+    ...groups: (string | string[] | undefined | null)[]
+): string[] {
+    const out: string[] = [];
+    const seen = new Set<string>();
+    for (const group of groups) {
+        const items = Array.isArray(group) ? group : group ? [group] : [];
+        for (const raw of items) {
+            const value = raw.trim();
+            if (!value) continue;
+            const key = value.toLowerCase();
+            if (seen.has(key)) continue;
+            seen.add(key);
+            out.push(value);
+        }
+    }
+    return out;
+}
+
+/** Topic keywords from a project category string like "Productivity / Camera App". */
+export function keywordsFromCategory(category: string): string[] {
+    return uniqueKeywords(category.split(/[/,&]+/).map((part) => part.trim()));
+}
+
+function schemaSoftwareCategory(category: string): string {
+    const c = category.toLowerCase();
+    if (c.includes("camera") || c.includes("photo")) return "MultimediaApplication";
+    if (c.includes("security")) return "SecurityApplication";
+    if (c.includes("productiv")) return "BusinessApplication";
+    return "MobileApplication";
+}
 
 export function personJsonLd(): Record<string, unknown> {
     const sameAs = [
@@ -128,10 +171,14 @@ export function profilePageJsonLd(): Record<string, unknown> {
 
 export type Breadcrumb = { name: string; path: string };
 
-export function breadcrumbJsonLd(crumbs: Breadcrumb[]): Record<string, unknown> {
+export function breadcrumbJsonLd(
+    crumbs: Breadcrumb[],
+    id?: string,
+): Record<string, unknown> {
     return {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
+        ...(id ? { "@id": id } : {}),
         itemListElement: crumbs.map((crumb, index) => ({
             "@type": "ListItem",
             position: index + 1,
@@ -146,15 +193,17 @@ export function collectionPageJsonLd(opts: {
     path: string;
     description: string;
     items: { name: string; path: string }[];
+    extraType?: string;
 }): Record<string, unknown> {
     return {
         "@context": "https://schema.org",
-        "@type": "CollectionPage",
+        "@type": opts.extraType ? [opts.extraType, "CollectionPage"] : "CollectionPage",
         name: opts.name,
         url: canonicalFromPathname(opts.path),
         description: opts.description,
         inLanguage: "en-US",
         isPartOf: { "@id": WEBSITE_ID },
+        publisher: { "@id": PERSON_ID },
         mainEntity: {
             "@type": "ItemList",
             itemListElement: opts.items.map((item, index) => ({
@@ -190,13 +239,156 @@ export function sitemapLastmodByPath(): Map<string, string> {
 
     const latestBlog = blogDates.reduce((a, b) => (a > b ? a : b), "");
     const latestProject = projectDates.reduce((a, b) => (a > b ? a : b), "");
-    if (latestBlog) map.set("/blogs/", latestBlog);
+    if (latestBlog) {
+        map.set("/blogs/", latestBlog);
+        map.set("/rss.xml", latestBlog);
+    }
     if (latestProject) map.set("/projects/", latestProject);
 
     const home = [latestBlog, latestProject].filter(Boolean).reduce((a, b) => (a > b ? a : b), "");
     if (home) map.set("/", home);
 
     return map;
+}
+
+export function webPageJsonLd(opts: {
+    name: string;
+    path: string;
+    description: string;
+    image?: string;
+    datePublished?: string;
+    dateModified?: string;
+    keywords?: string[];
+    mainEntityId?: string;
+    breadcrumbId?: string;
+}): Record<string, unknown> {
+    const url = canonicalFromPathname(opts.path);
+    return {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": url,
+        url,
+        name: opts.name,
+        description: opts.description,
+        inLanguage: "en-US",
+        isPartOf: { "@id": WEBSITE_ID },
+        ...(opts.image
+            ? {
+                  primaryImageOfPage: {
+                      "@type": "ImageObject",
+                      url: absoluteUrl(opts.image),
+                  },
+              }
+            : {}),
+        ...(opts.datePublished ? { datePublished: opts.datePublished } : {}),
+        ...(opts.dateModified ? { dateModified: opts.dateModified } : {}),
+        ...(opts.keywords?.length ? { keywords: opts.keywords.join(", ") } : {}),
+        ...(opts.breadcrumbId ? { breadcrumb: { "@id": opts.breadcrumbId } } : {}),
+        ...(opts.mainEntityId ? { mainEntity: { "@id": opts.mainEntityId } } : {}),
+        author: { "@id": PERSON_ID },
+    };
+}
+
+export function blogPostingJsonLd(opts: {
+    title: string;
+    description: string;
+    path: string;
+    image: string;
+    datePublished: string;
+    dateModified?: string;
+    wordCount?: number;
+    keywords?: string[];
+    section?: string;
+}): Record<string, unknown> {
+    const url = canonicalFromPathname(opts.path);
+    const modified = opts.dateModified || opts.datePublished;
+    return {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": `${url}#article`,
+        headline: opts.title,
+        name: opts.title,
+        description: opts.description,
+        image: {
+            "@type": "ImageObject",
+            url: absoluteUrl(opts.image),
+        },
+        datePublished: opts.datePublished,
+        dateModified: modified,
+        inLanguage: "en-US",
+        url,
+        ...(opts.wordCount ? { wordCount: opts.wordCount } : {}),
+        ...(opts.keywords?.length ? { keywords: opts.keywords.join(", ") } : {}),
+        ...(opts.section ? { articleSection: opts.section } : {}),
+        author: { "@id": PERSON_ID },
+        publisher: { "@id": PERSON_ID },
+        mainEntityOfPage: { "@id": url },
+        isPartOf: {
+            "@type": "Blog",
+            name: opts.section || "Blog",
+            url: canonicalFromPathname("/blogs/"),
+        },
+    };
+}
+
+export function softwareApplicationJsonLd(opts: {
+    name: string;
+    description: string;
+    path: string;
+    image: string;
+    thumb?: string;
+    category: string;
+    datePublished: string;
+    dateModified: string;
+    installUrl?: string;
+    sourceCode?: string;
+    featureList?: string[];
+    keywords?: string[];
+}): Record<string, unknown> {
+    const pageUrl = canonicalFromPathname(opts.path);
+    const images = uniqueKeywords(opts.image, opts.thumb).map((src) => ({
+        "@type": "ImageObject",
+        url: absoluteUrl(src),
+    }));
+    const sameAs = uniqueKeywords(opts.installUrl, opts.sourceCode);
+
+    return {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "@id": `${pageUrl}#app`,
+        name: opts.name,
+        description: opts.description,
+        image: images.length === 1 ? images[0] : images,
+        screenshot: {
+            "@type": "ImageObject",
+            url: absoluteUrl(opts.image),
+        },
+        applicationCategory: schemaSoftwareCategory(opts.category),
+        applicationSubCategory: opts.category,
+        operatingSystem: "Android",
+        inLanguage: "en-US",
+        url: pageUrl,
+        author: { "@id": PERSON_ID },
+        publisher: { "@id": PERSON_ID },
+        datePublished: opts.datePublished,
+        dateModified: opts.dateModified,
+        ...(opts.keywords?.length ? { keywords: opts.keywords.join(", ") } : {}),
+        ...(opts.featureList?.length ? { featureList: opts.featureList } : {}),
+        ...(sameAs.length ? { sameAs } : {}),
+        ...(opts.installUrl
+            ? {
+                  installUrl: opts.installUrl,
+                  downloadUrl: opts.installUrl,
+                  offers: {
+                      "@type": "Offer",
+                      price: "0",
+                      priceCurrency: "USD",
+                      availability: "https://schema.org/InStock",
+                      url: opts.installUrl,
+                  },
+              }
+            : {}),
+    };
 }
 
 export function sitemapFilter(page: string): boolean {

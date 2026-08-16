@@ -13,6 +13,7 @@ const jsonLd = [
         name: "Blog",
         path: "/blogs/",
         description: seoDescription,
+        extraType: "Blog",
         items: blogs.map((blog) => ({
             name: blog.title,
             path: `/blogs/${blog.slug}/`,

@@ -5,11 +5,13 @@ import SectionProjects from "../../../components/sections/SectionProjects.astro"
 import Footer from "../../../components/Footer.astro";
 import { getProjects } from "../../../utils/projects";
 import {
-    absoluteUrl,
     breadcrumbJsonLd,
+    canonicalFromPathname,
     isoDate,
-    siteAuthor,
-    siteOrigin,
+    keywordsFromCategory,
+    softwareApplicationJsonLd,
+    uniqueKeywords,
+    webPageJsonLd,
 } from "../../../utils/seo";
 
 const { project } = Astro.props;
@@ -21,52 +23,56 @@ export async function getStaticPaths() {
     }));
 }
 
-const description = project.desc.short || project.desc.long;
+const description = project.desc.long || project.desc.short;
 const image = project.images.banner || project.images.thumb;
 const published = isoDate(project.header.released_date);
 const modified = isoDate(project.header.updated_date);
 const canonicalPath = `/projects/${project.slug}/`;
-const pageUrl = absoluteUrl(canonicalPath);
+const pageUrl = canonicalFromPathname(canonicalPath);
+const appId = `${pageUrl}#app`;
+const breadcrumbId = `${pageUrl}#breadcrumb`;
+const keywords = uniqueKeywords(
+    project.title,
+    "Android",
+    keywordsFromCategory(project.header.category),
+);
+const featureList = project.page.body.flatMap((block) =>
+    block.type === "content" ? [block.title] : [],
+);
 const jsonLd = [
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
+    webPageJsonLd({
         name: project.title,
-        description: project.desc.long || project.desc.short,
-        image: {
-            "@type": "ImageObject",
-            url: absoluteUrl(image),
-        },
-        applicationCategory: project.header.category,
-        operatingSystem: "Android",
-        inLanguage: "en-US",
-        author: {
-            "@type": "Person",
-            name: siteAuthor.name,
-            url: siteOrigin + "/",
-        },
+        path: canonicalPath,
+        description,
+        image,
         datePublished: published,
         dateModified: modified,
-        url: project.header.link || pageUrl,
-        ...(project.header.link
-            ? {
-                  installUrl: project.header.link,
-                  offers: {
-                      "@type": "Offer",
-                      price: "0",
-                      priceCurrency: "USD",
-                      availability: "https://schema.org/InStock",
-                      url: project.header.link,
-                  },
-              }
-            : {}),
-        ...(project.source_code ? { codeRepository: project.source_code } : {}),
-    },
-    breadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Projects", path: "/projects/" },
-        { name: project.title, path: canonicalPath },
-    ]),
+        keywords,
+        mainEntityId: appId,
+        breadcrumbId,
+    }),
+    softwareApplicationJsonLd({
+        name: project.title,
+        description,
+        path: canonicalPath,
+        image,
+        thumb: project.images.thumb,
+        category: project.header.category,
+        datePublished: published,
+        dateModified: modified,
+        installUrl: project.header.link,
+        sourceCode: project.source_code,
+        featureList,
+        keywords,
+    }),
+    breadcrumbJsonLd(
+        [
+            { name: "Home", path: "/" },
+            { name: "Projects", path: "/projects/" },
+            { name: project.title, path: canonicalPath },
+        ],
+        breadcrumbId,
+    ),
 ];
 ---
 
@@ -75,8 +81,8 @@ const jsonLd = [
     title={project.title}
     description={description}
     image={image}
-    imageAlt={project.title}
-    type="article"
+    imageAlt={`${project.title} — ${project.desc.short}`}
+    type="website"
     publishedTime={published}
     modifiedTime={modified}
     jsonLd={jsonLd}

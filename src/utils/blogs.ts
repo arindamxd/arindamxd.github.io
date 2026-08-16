@@ -61,9 +61,32 @@ function parseFrontmatter(raw: string): { data: Record<string, string>; body: st
     return { data, body: match[2] };
 }
 
-function phrasingText(nodes: PhrasingContent[] | undefined): string {
+function phrasingNodeToString(node: PhrasingContent): string {
+    switch (node.type) {
+        case "inlineCode":
+            return `\`${node.value.replace(/`/g, "")}\``;
+        case "text":
+            return node.value;
+        case "break":
+            return "\n";
+        case "strong":
+        case "emphasis":
+        case "delete":
+        case "link":
+        case "linkReference":
+            return phrasingToString(node.children);
+        default:
+            return toString(node);
+    }
+}
+
+function phrasingToString(nodes: PhrasingContent[] | undefined): string {
     if (!nodes?.length) return "";
-    return toString({ type: "paragraph", children: nodes } as Paragraph).trim();
+    return nodes.map(phrasingNodeToString).join("");
+}
+
+function phrasingText(nodes: PhrasingContent[] | undefined): string {
+    return phrasingToString(nodes).trim();
 }
 
 function parseLabeledBullet(children: PhrasingContent[]): BlogBullet {
@@ -72,11 +95,8 @@ function parseLabeledBullet(children: PhrasingContent[]): BlogBullet {
         children[0]?.type === "strong" &&
         children[1]?.type === "text"
     ) {
-        const label = phrasingText(children[0].children).trim();
-        const rest = children
-            .slice(1)
-            .map((n) => toString(n))
-            .join("");
+        const label = phrasingText(children[0].children);
+        const rest = children.slice(1).map(phrasingNodeToString).join("");
         const colonMatch = rest.match(/^:\s*(.*)$/s);
         if (label && colonMatch) {
             return { label, text: colonMatch[1].trim() };
@@ -178,7 +198,39 @@ function toBlog(entry: BlogCatalogEntry): Blog {
         author: entry.author,
         date: new Date(entry.date),
         page: loadPage(entry.content),
+        ...(entry.tags?.length ? { tags: entry.tags } : {}),
     };
+}
+
+/** Word count of title + intro + body (for BlogPosting JSON-LD). */
+export function blogWordCount(blog: Blog): number {
+    const chunks: string[] = [
+        blog.title,
+        blog.page.intro.title,
+        blog.page.intro.paragraph,
+    ];
+    for (const block of blog.page.body) {
+        switch (block.type) {
+            case "title":
+            case "subtitle":
+            case "paragraph":
+                chunks.push(block.text);
+                break;
+            case "code":
+                chunks.push(block.code);
+                break;
+            case "bullets":
+                for (const item of block.items) {
+                    chunks.push(
+                        typeof item === "string"
+                            ? item
+                            : `${item.label} ${item.text}`,
+                    );
+                }
+                break;
+        }
+    }
+    return chunks.join(" ").trim().split(/\s+/).filter(Boolean).length;
 }
 
 /** Section title/description from the catalog root. */

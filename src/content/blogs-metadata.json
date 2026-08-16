@@ -11,7 +11,8 @@
                 "avatar": "/assets/author/author-grey.png"
             },
             "date": "2024-08-30",
-            "content": "blogs/upi-intent-launch-ios.md"
+            "content": "blogs/upi-intent-launch-ios.md",
+            "tags": ["UPI", "iOS", "Swift", "Intent", "Payments"]
         },
         {
             "slug": "webrtc-with-swift-ios",
@@ -22,18 +23,20 @@
                 "avatar": "/assets/author/author-grey.png"
             },
             "date": "2024-04-02",
-            "content": "blogs/webrtc-with-swift-ios.md"
+            "content": "blogs/webrtc-with-swift-ios.md",
+            "tags": ["WebRTC", "iOS", "Swift", "Real-time"]
         },
         {
             "slug": "ios-uicontrol-and-user-interaction",
-            "title": "Unveiling the Magic: A Deep Dive into iOS UIControl and User Interaction",
+            "title": "UIControl on iOS: Target-Action, States, and Custom Controls",
             "thumb": "/assets/blogs/ios-uicontrol-and-user-interaction/banner.jpg",
             "author": {
                 "name": "Arindam Karmakar",
                 "avatar": "/assets/author/author-grey.png"
             },
             "date": "2024-03-29",
-            "content": "blogs/ios-uicontrol-and-user-interaction.md"
+            "content": "blogs/ios-uicontrol-and-user-interaction.md",
+            "tags": ["iOS", "UIControl", "UIKit", "User Interaction"]
         }
     ]
 }

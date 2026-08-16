@@ -30,7 +30,7 @@ Site URL is set in `astro.config.ts`: production defaults to `https://arindamxd.
 - Living `/design` gallery (`noindex`) — live section mounts + preview dummy data
 - Private `/tools` suite (`noindex`): author, markdown preview, scramble compare, analytics reach
 - Dark / light theme (default dark), persisted in `localStorage`, flash-free boot script in `BaseLayout`
-- SEO: meta description, canonical, Open Graph (PNG + size), Twitter card, Person / ProfilePage / CollectionPage JSON-LD, sitemap lastmod
+- SEO: meta description, canonical, Open Graph / Twitter (per-page blog/project images), Person / WebSite / BlogPosting / SoftwareApplication JSON-LD, sitemap lastmod, `/rss.xml`
 - GA4 page views in production only (skipped in `astro dev`)
 - Client motion: Lenis, page-shell enter, scroll reveal (`data-reveal`), count-up, scramble — respects `prefers-reduced-motion`
 - App deep-link verification: `public/.well-known/assetlinks.json` (CameraX, certification app)
@@ -142,7 +142,7 @@ Edit files in `src/content/`. Sections and detail pages import these at build ti
 | `brands-metadata.json` | Brand marquee (`title` + `logos[]`) |
 | `skills-metadata.json` | Skills section (`tech.stack`, `tech.tools`) |
 | `experiences-metadata.json` | Work history (`title`, `company`, `start`, `end`) |
-| `credentials-metadata.json` | Credentials accordion |
+| `credentials-metadata.json` | Credentials accordion (`url` outbound, `file` view-only overlay) |
 | `testimonials-metadata.json` | Phone slider quotes |
 | `contributions-metadata.json` | GitHub contributions section copy + usernames |
 

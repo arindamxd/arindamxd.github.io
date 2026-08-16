@@ -53,7 +53,7 @@ global.css
   → base.css
   → motion.css
   → nav.css · utils.css
-  → hero.css · projects.css · testimonials.css · brands.css · skills.css
+  → hero.css · projects.css · viewer.css · testimonials.css · brands.css · skills.css
 ```
 
 | File | Owns |
@@ -65,7 +65,8 @@ global.css
 | [`nav.css`](../src/styles/nav.css) | `.nav-bar-container`, shared `.nav-glass` / `.nav-pill` / `.nav-theme-toggle` |
 | [`utils.css`](../src/styles/utils.css) | Presence, scrollbars, overflow helpers; gallery `.design-media-ph` shell |
 | [`hero.css`](../src/styles/hero.css) | Hero ID card, tie, scramble, location |
-| [`projects.css`](../src/styles/projects.css) | Sticky project media cards |
+| [`projects.css`](../src/styles/projects.css) | Sticky project media cards + body-image zoom trigger |
+| [`viewer.css`](../src/styles/viewer.css) | View-only media overlay (credentials `file`, images / PDF / text) |
 | [`testimonials.css`](../src/styles/testimonials.css) | Phone carousel, hand art, gestures |
 | [`brands.css`](../src/styles/brands.css) | Logo marquee |
 | [`skills.css`](../src/styles/skills.css) | Skill chip tooltips |
@@ -321,7 +322,7 @@ button.setTitle("Tap", for: .normal)
 | Type | Mono stack 13px / 12px narrow, weight 500 — **not** Fragment Mono inside Shiki lines |
 | Spacing | ~24px between peers; ~20px under a heading (`BlogPage` rhythm) |
 
-**Inline `` `code` `` in blog paragraphs:** currently flattened to plain text by the MD → block pipeline (no styled inline chip). Prefer fenced blocks for real snippets. Tools/UI chrome may use `.tools-code` / `.md-doc-trigger` instead.
+**Inline `` `code` ``:** markdown inline code in paragraphs and bullets becomes a Fragment Mono chip (`.article-inline-code` — surface + `border-border`, same recipe as `.tools-code`). Parser keeps the backticks through [`blogs.ts`](../src/utils/blogs.ts); [`BlogPage`](../src/components/elements/BlogPage.astro) splits them into `<code>`. Use this for API names (`isEnabled == false`); keep real snippets in fenced `BlogCodeBlock`s.
 
 Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./blog-authoring.md).
 
@@ -389,7 +390,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 | Media | Banner image inside card (`rounded-[40→30]`) — gap to shell matches footer; radius is the image frame, not the footer inner `32px` |
 | Metadata rows | Organization / Category / Released (see below) |
 | Live Preview | Bottom text+arrow when `header.link` is set |
-| After card | Left H1 `50→34` + long desc `18→16` `/60`, **then** back control (blog is back → H1) |
+| After card | Left H1 `50→34` + long desc `18→16` `/60`, **then** back + share on one row (blog is back + share → H1) |
 
 ### Brand logo marquee
 
@@ -412,7 +413,7 @@ Testimonials phone reads `#testimonials-data` JSON from the section (preview emb
 
 ### Credentials accordion
 
-[`SectionCredentials`](../src/components/sections/SectionCredentials.astro): `data-credentials-accordion`; trigger `20→17` + plus→minus; CSS grid-rows expand `~0.4s`; expanded panel = nested title/org rows; outbound URLs use text+arrow. Script: [`credentials-accordion.ts`](../src/scripts/credentials-accordion.ts) via `site-client` (not an inline Astro `<script>`). `/design` mounts with `preview`.
+[`SectionCredentials`](../src/components/sections/SectionCredentials.astro): `data-credentials-accordion`; trigger `20→17` + plus→minus; CSS grid-rows expand `~0.4s`; expanded panel = nested title/org rows (no outbound-arrow chrome). Rows with `file` are buttons (`data-media-viewer`) that open the shared view-only overlay; `url` rows stay outbound links with the same title/org layout. Script: [`credentials-accordion.ts`](../src/scripts/credentials-accordion.ts) via `site-client` (not an inline Astro `<script>`). `/design` mounts with `preview`.
 
 ### Testimonials phone
 
@@ -457,7 +458,20 @@ Height `64px`, `rounded-[46→36]` `bg-surface` `border-border`; evenly spaced t
 
 ### Project body media
 
-Content title `26→24`; body `18→16` `/60`. Media up to `~1180px`, `rounded-[30→20]`. Layouts: `image-large`, `images-pair`, `images-pair-then-large` — see [`project-authoring.md`](./project-authoring.md). Body shots are buttons (`data-project-lightbox`) that open a body-mounted fullscreen overlay (`project-lightbox.ts`, Motion spring; Escape / scrim / close). Hero banner, catalog cards, and decorative icons stay unchanged.
+Content title `26→24`; body `18→16` `/60`. Media up to `~1180px`, `rounded-[30→20]`. Layouts: `image-large`, `images-pair`, `images-pair-then-large` — see [`project-authoring.md`](./project-authoring.md). Body shots are buttons (`data-media-viewer`, class `project-lightbox-trigger`) that open the shared overlay. Hero banner, catalog cards, and decorative icons stay unchanged.
+
+### Media viewer (view-only)
+
+Fullscreen overlay for credentials `file` and project body screenshots (`data-media-viewer`). Chrome: 72% black scrim, Motion `springSoft`, 52px close circle, Escape / empty area / close. Loading: page-loader pulse dot + “Opening” + title over a delayed ghost page (`rounded-[30→20]`); cached screenshots skip it. Same-origin `data-src` only (a wrapped `<img>` is enough for shots).
+
+| Kind | How it shows |
+| --- | --- |
+| Image (`png` `jpg` `webp` `svg` …) | Contained `<img>`, `rounded-[30→20]`, max ~1100px |
+| PDF | pdf.js paints each page to canvas (lazy `media-viewer-pdf.ts`) — no browser PDF toolbar |
+| Text (`txt` `md` `json` …) | Fragment Mono `<pre>` |
+| Other | Status line only — no download link |
+
+View-only UX: no download button, context menu / drag / ⌘S / ⌘P blocked while open, print hides the overlay. Not DRM — the file is still requested by the browser. Credentials: optional `file` in [`credentials-metadata.json`](../src/content/credentials-metadata.json). Project shots: [`ProjectLightboxImage`](../src/components/elements/ProjectLightboxImage.astro) (hero banner stays plain). Overlay: [`media-viewer.ts`](../src/scripts/media-viewer.ts) · [`viewer.css`](../src/styles/viewer.css).
 
 ### Detail page H1 (left)
 
@@ -475,6 +489,7 @@ Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left*
 | --- | --- |
 | Order | Back → H1 → meta (project is hero → H1 → back) |
 | Meta row | Avatar `28px` + author `15→14` + date `14→13` `/50` |
+| Share | Top-right 52px circle (same chrome as Back): Framer home/share stroke arrow. Hover/open fills primary. Menu: Copy link, then Bluesky / Facebook / LinkedIn / Threads / X. [`ShareBar`](../src/components/elements/ShareBar.astro) |
 | Divider | `h-px bg-border` in `py-5` |
 | Intro | Lead `26→24`; support `18→16` `/60` |
 | Banner | Max `~1180px`, `rounded-[30→20]` |
@@ -810,7 +825,7 @@ Lenis wins on **desktop wheel feel** and hash navigation polish; native wins on 
 | **Traffic / reach meta line** | Quiet uppercase strip like `171.9K UNIQUE · 1.04M VIEWS / MONTH` — see **§12.3.1**. |
 | **Command palette** (`⌘K`) | Jump to Projects / Blogs / Tools / Contact; fits Technical Lead UX better than mega-menus. Pill modal, Manrope, surface shell. |
 | **Reading progress** | Thin primary bar on blog/project detail (CSS scroll-driven). |
-| **Share / copy deep links** | Quiet chip under article titles. |
+| **Share / copy deep links** | Shipped: top-right share icon + dropdown ([`ShareBar`](../src/components/elements/ShareBar.astro) — copy, Bluesky, Facebook, LinkedIn, Threads, X). |
 | **Tools as product** | Expand `/tools` as a private ops suite: OG image preview, contrast checker, sitemap diff, resume PDF checker — all hub-registered. |
 | **Empty / error / loading** | Formalize tools + content empty states (already started on hub search). |
 | **Focus rings** | Visible, on-brand focus (`outline` with primary / offset) for keyboard users — don’t rely on mouse-only hovers. |
@@ -929,7 +944,7 @@ If pursued: stream UI to existing shells (550px), not a second visual system.
 
 ### 12.7 Content, SEO & discoverability
 
-**Today:** [`src/utils/seo.ts`](../src/utils/seo.ts) + [`BaseLayout`](../src/layouts/BaseLayout.astro) — canonical, robots, OG/Twitter (PNG share image + dimensions), Person / WebSite / ProfilePage JSON-LD, CollectionPage + BreadcrumbList on catalogs/detail, sitemap `lastmod` from blog/project dates, `/tools` `/design` `/apps` filtered. Home meta uses the author bio. Catalog pages use topic-led descriptions (on-page headings stay the catalog voice).
+**Today:** [`src/utils/seo.ts`](../src/utils/seo.ts) + [`BaseLayout`](../src/layouts/BaseLayout.astro) — canonical, robots, OG/Twitter (PNG default share image + dimensions; per-page blog/project banners with correct MIME and no fake width/height), Person / WebSite / ProfilePage JSON-LD on every public page, CollectionPage + BreadcrumbList on catalogs, BlogPosting / SoftwareApplication + WebPage on detail, sitemap `lastmod` from blog/project dates, `/rss.xml` for posts, `/tools` `/design` `/apps` filtered. Home meta uses the author bio. Catalog pages use topic-led descriptions (on-page headings stay the catalog voice). Project SERP snippets use `desc.long` (not the 60-char card line).
 
 | Enhancement | Notes |
 | --- | --- |

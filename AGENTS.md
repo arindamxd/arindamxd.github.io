@@ -68,7 +68,7 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 | --- | --- | --- |
 | Author (intro + footer) | `src/content/author-metadata.json` | Intro, Footer, NotFound |
 | Experiences | `src/content/experiences-metadata.json` | `SectionExperiences`, YoE |
-| Credentials | `src/content/credentials-metadata.json` | `SectionCredentials` accordion |
+| Credentials | `src/content/credentials-metadata.json` | `SectionCredentials` accordion. Optional `file` (same-origin path) opens the media viewer; `url` stays an outbound link |
 | Brands | `src/content/brands-metadata.json` | `SectionBrands` marquee (`title` + `logos[]`) |
 | **Skills** | `src/content/skills-metadata.json` | `SectionSkills` + `SkillElement` (icons under `public/assets/skills/`) |
 | Testimonials | `src/content/testimonials-metadata.json` | Phone slider; DOM `#testimonials-data` |
@@ -123,7 +123,7 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | Script | Role |
 | --- | --- |
 | `boot-once.ts` | Guard so ClientRouter does not stack window listeners |
-| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme). Page widgets (`available-text`, testimonials, skill tooltips, count-up, credentials accordion, project lightbox) load only when their DOM exists |
+| `site-client.ts` | Layout entry: page fade, theme, motion, Lenis (one script so ClientRouter cannot drop theme). Page widgets (`available-text`, testimonials, skill tooltips, count-up, credentials accordion, share bar, media viewer) load only when their DOM exists |
 | `theme.ts` | Light/dark · `html.dark` · click delegation · `themechange` · syncs all `[data-theme-toggle]` |
 | `page-transition.ts` | Page-shell dissolve + Motion `springPage` rise/blur (reload and ClientRouter). First paint CSS-holds via `is-page-entering`; `__pageEnterStarted` when enter actually runs |
 | `smooth-scroll.ts` | Lenis on fine-pointer / wheel only · native scroll on coarse touch · `data-lenis-prevent` for nested panes · hash offset 80px on narrow |
@@ -135,7 +135,8 @@ All client scripts are TypeScript under [`src/scripts/`](src/scripts/) (`allowJs
 | `motion-tokens.ts` | House easing, `springPage` / `springSoft` / `springSnappy` |
 | `testimonial-slider.ts` | Phone stories · prefers `#testimonials-data` |
 | `image-fallback.ts` | Broken `<img>` → media shell or logo mark |
-| `project-lightbox.ts` | Project body screenshots (not hero banner) → body-mounted fullscreen overlay (Motion spring; `site-client` when triggers exist) |
+| `share-bar.ts` | Blog/project share icon — hover/tap menu (copy + social intents) (`data-share-bar`) |
+| `media-viewer.ts` | View-only overlay for images / PDF / text (`data-media-viewer`). Credentials `file` and project body screenshots (not hero banner). PDF via lazy `media-viewer-pdf.ts`. Not DRM. |
 | `analytics.ts` | GA4 + optional Microsoft Clarity (`CLARITY_ENABLED`) + ClientRouter page views |
 | `markdown-fullscreen.ts` | Fullscreen markdown doc panels |
 | Tools scripts | `tools-*.ts` for author / markdown / scramble-compare / analytics-reach |
@@ -193,7 +194,8 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 ### SEO
 
 - Helpers live in [`src/utils/seo.ts`](src/utils/seo.ts). Home description = author `bio`. Catalog **layout** descriptions are topic-led; on-page section copy stays in the JSON catalogs.
-- Sitemap: filter `/tools`, `/design`, `/apps`; `lastmod` from blog `date` / project `updated_date`.
+- Blog/project detail: per-page OG image (correct MIME; default PNG width/height only on the site fallback), WebPage + BlogPosting / SoftwareApplication JSON-LD, project meta from `desc.long` (not the 60-char card line). Optional blog `tags` → `article:tag`.
+- Sitemap: filter `/tools`, `/design`, `/apps`; `lastmod` from blog `date` / project `updated_date`. Public RSS at [`/rss.xml`](src/pages/rss.xml.ts).
 - Share image: `public/assets/resources/og-image.png` must be a real PNG (not AVIF with a `.png` name). Dimensions in `OG_IMAGE_WIDTH` / `OG_IMAGE_HEIGHT`.
 - Skip link: `.skip-link` → `#main` on every page `<main>`.
 
@@ -208,6 +210,13 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 - **Must match:** `.hero-card` (home intro, 404, project detail) and the blogs list wrapper.
 - **Do not** use `shadow-[inset_0_0_0_1px_…]` on those shells (inset sits inside the padding and looks tighter). Inset rings stay OK on small chrome (back circle, chips, hole, code).
 - Full recipe: [`docs/design-system.md`](docs/design-system.md) § Surface shell (grey gap) · Cursor rule: [`.cursor/rules/design-system.mdc`](.cursor/rules/design-system.mdc).
+
+### Media viewer (view-only)
+
+- Trigger: `[data-media-viewer][data-src]` (optional `data-title`, `data-kind`). Same-origin paths only. A wrapped `<img>` is enough for screenshots (`currentSrc` is reused).
+- Overlay is body-mounted (`media-viewer.ts`, `viewer.css`). PDFs paint to canvas (lazy pdf.js); no download button, save/print shortcuts, or context menu while open.
+- **Not DRM.** The browser still fetches the file. Do not use an `<iframe>` / `<embed>` of a PDF (native toolbar has Download).
+- Consumers: credentials optional `file`; project body shots via [`ProjectLightboxImage`](src/components/elements/ProjectLightboxImage.astro) (hero banner stays plain). `url` on credentials stays outbound.
 
 ### SVG sprite
 
@@ -230,7 +239,7 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 | Project authoring | [`docs/project-authoring.md`](docs/project-authoring.md) · [`.cursor/rules/project-authoring.mdc`](.cursor/rules/project-authoring.mdc) |
 | Skills data | `src/content/skills-metadata.json` |
 | Years of experience | [`src/utils/date.ts`](src/utils/date.ts) `yearsOfExperience()` — intro badge + experiences count |
-| SEO helpers | [`src/utils/seo.ts`](src/utils/seo.ts) — titles, canonical, JSON-LD, sitemap lastmod |
+| SEO helpers | [`src/utils/seo.ts`](src/utils/seo.ts) — titles, canonical, JSON-LD (incl. BlogPosting / SoftwareApplication), sitemap lastmod, RSS |
 | Tools registry | `src/utils/tools.ts` |
 | Gallery page / dummy data | `src/pages/design.astro`, `src/utils/design-preview-data.ts` |
 | Tokens | `src/styles/tokens.css` |
@@ -250,6 +259,9 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 
 ### Unreleased
 
+- Share icon on blog and project detail (top right): hover/tap dropdown with copy link plus Bluesky, Facebook, LinkedIn, Threads, and X. [`ShareBar`](src/components/elements/ShareBar.astro) · [`share-bar.ts`](src/scripts/share-bar.ts).
+- Blog/project SEO: per-page OG MIME, WebPage + BlogPosting / SoftwareApplication JSON-LD, project meta from `desc.long`, blog `tags`, `/rss.xml`.
+- Shared view-only media overlay (`data-media-viewer`, `media-viewer.ts`): credentials `file` (ACE Award PDF) and project body screenshots. Hero banner excluded. PDFs render to canvas (no download bar). License rows are title/org only (no outbound URLs or link arrows).
 - Project catalog: `desc.short` ≤ 60 characters; circular Play thumbs (22px in the 54px disc); light tint `thumb_bg_color` (not the logo fill); local banners; card hover 22→26px shares `0.3s ease-in-out` with banner/arrow. Rule: [`.cursor/rules/project-authoring.mdc`](.cursor/rules/project-authoring.mdc).
 
 ### 1.0.8 — 2026-08-14

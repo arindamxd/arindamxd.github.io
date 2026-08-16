@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Design system (follow for all UI)
 
-Full reference: [`docs/design-system.md`](docs/design-system.md). Living gallery: `/design` (`src/pages/design.astro`). Project memory (versions, content/skills/tools map): [`AGENTS.md`](AGENTS.md). Tokens: `src/styles/tokens.css` (via `global.css`). Feature CSS: `hero.css`, `projects.css`, `testimonials.css`, `brands.css`, `skills.css`, `nav.css`, `utils.css`. Tools: `tools.css`. Gallery: `design.css`. Page scope: `site-root` + `--site-*` vars.
+Full reference: [`docs/design-system.md`](docs/design-system.md). Living gallery: `/design` (`src/pages/design.astro`). Project memory (versions, content/skills/tools map): [`AGENTS.md`](AGENTS.md). Tokens: `src/styles/tokens.css` (via `global.css`). Feature CSS: `hero.css`, `projects.css`, `viewer.css`, `testimonials.css`, `brands.css`, `skills.css`, `nav.css`, `utils.css`. Tools: `tools.css`. Gallery: `design.css`. Page scope: `site-root` + `--site-*` vars.
 
 ## Personality
 
@@ -43,7 +43,7 @@ Borders: surface shells (footer, `.hero-card`, blogs list) use **`border border-
 
 ## Recipes to copy
 
-- **CSS home:** page content under `site-root`; feature sheets via `global.css` (`tokens`, `hero`, `projects`, …); layout/type/color in sheets via **`@apply`** (page-scoped `tools.css` / `design.css` need `@reference "./global.css"`); `--site-*` for layout helpers. Tools/gallery stay page-scoped. Nav chrome + SVG sprite live in `BaseLayout` (not per-page).
+- **CSS home:** page content under `site-root`; feature sheets via `global.css` (`tokens`, `hero`, `projects`, `viewer`, …); layout/type/color in sheets via **`@apply`** (page-scoped `tools.css` / `design.css` need `@reference "./global.css"`); `--site-*` for layout helpers. Tools/gallery stay page-scoped. Nav chrome + SVG sprite live in `BaseLayout` (not per-page).
 - **Surface shell:** copy Footer grey gap (`border-border` + `p-[9→6]`) onto `.hero-card` and blogs list — never inset-shadow those shells.
 - **Section header:** [`SectionHeading`](src/components/elements/SectionHeading.astro) for centered marketing titles (not left-aligned tools/detail H1s).
 - **Back control:** 52px circle + “Back to …” label (see blog/project/tools shell) — not plain “← text”.
@@ -51,8 +51,9 @@ Borders: surface shells (footer, `.hero-card`, blogs list) use **`border border-
 - **Home / 404 / Project / Blog / Footer:** `/design` mounts live sections/pages with `preview` + dummy copy (`src/utils/design-preview-data.ts`). Media = gradient shell (`design-media-placeholder` + `.design-media-ph`); project thumbs = white **A** logo mark (`design-logo-placeholder`). Broken imgs → `image-fallback.ts`.
 - **Nav gallery:** `/design` may mount in-flow `NavBar preview` inside `.design-nav-demo` (not a second fixed chrome). Theme toggle clips on `.nav-theme-toggle__clip`, never on the glass node; clip/track `pointer-events: none`.
 - **Skill chips:** hover tooltip on fine pointer; tap-to-toggle `.is-open` on touch via `skill-tooltips.ts`. Clamp the bubble to the viewport so edge chips are not clipped.
-- **Project:** sticky media cards (not blog list shell); circular 22px thumb in a light-tint 54px disc (hover 26px, same 0.3s as banner/arrow); `desc.short` ≤60 chars; local banners. Detail `.hero-card` uses footer grey gap; metadata rows; links bar; privacy page type. Body screenshots open a fullscreen lightbox (`data-project-lightbox`); hero banner does not. Catalog rules: [`docs/project-authoring.md`](docs/project-authoring.md) · [`.cursor/rules/project-authoring.mdc`](.cursor/rules/project-authoring.mdc).
-- **Blog article:** left H1 + meta row + hairline + intro; body scale 38/22/18; disc/labeled/numbered bullets; `BlogCodeBlock` for fenced code; inline View all.
+- **Project:** sticky media cards (not blog list shell); circular 22px thumb in a light-tint 54px disc (hover 26px, same 0.3s as banner/arrow); `desc.short` ≤60 chars; local banners. Detail `.hero-card` uses footer grey gap; metadata rows; back + share on one row under the long desc; links bar; privacy page type. Body screenshots open the shared media viewer (`data-media-viewer`); hero banner does not. Catalog rules: [`docs/project-authoring.md`](docs/project-authoring.md) · [`.cursor/rules/project-authoring.mdc`](.cursor/rules/project-authoring.mdc).
+- **Media viewer:** `[data-media-viewer][data-src]` opens a view-only overlay. Images / PDF (canvas via pdf.js) / text; no download button. Used by credentials `file` and project body shots. Not DRM.
+- **Blog article:** back + share icon (top right) → left H1 + meta row + hairline + intro; body scale 38/22/18; disc/labeled/numbered bullets; `BlogCodeBlock` for fenced code; `` `inline` `` → Fragment Mono chip; inline View all.
 - **Markdown docs:** `data-md-doc="<id>"` + `MarkdownDocPanel`; optional `.md-doc-trigger`.
 - **Tools:** register in `src/utils/tools.ts`; use `ToolsPageShell`; nested scroll → `data-lenis-prevent`.
 - **Search:** `type="text"` + custom clear button (no native search cancel).

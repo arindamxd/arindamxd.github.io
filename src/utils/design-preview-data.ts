@@ -136,6 +136,7 @@ export const previewCredentials = {
                 {
                     title: "Sample award",
                     org: "Conference",
+                    file: "/assets/resources/design-media-placeholder.svg",
                 },
             ],
         },
@@ -308,7 +309,7 @@ export const previewBlogs: Blog[] = [
                     style: "disc",
                     items: [
                         "Plain disc item",
-                        { label: "Label", text: "labeled bullet from MD" },
+                        { label: "Label", text: "labeled bullet with `inline code` from MD" },
                     ],
                 },
                 {

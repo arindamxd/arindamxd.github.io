@@ -1,4 +1,4 @@
-/** Plain bullet or labeled lead-in (“Target–Action: …”). */
+/** Plain bullet or labeled lead-in (“Target–Action: …”). Text may include `` `inline code` ``. */
 export type BlogBullet =
     | string
     | {
@@ -36,6 +36,8 @@ export interface BlogCatalogEntry {
     date: string
     /** Relative path under src/content/, e.g. blogs/my-post.md */
     content: string
+    /** Optional topic tags for article:tag / JSON-LD keywords. */
+    tags?: string[]
 }
 
 export interface Blog {
@@ -55,4 +57,5 @@ export interface Blog {
         }
         body: BlogBodyBlock[]
     }
+    tags?: string[]
 }

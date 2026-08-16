@@ -11,9 +11,12 @@ const label = alt.trim() ? `View ${alt}` : "View image";
 <button
     type="button"
     class="project-lightbox-trigger"
-    data-project-lightbox
+    data-media-viewer
+    data-src={src}
+    data-title={alt}
+    data-kind="image"
     aria-haspopup="dialog"
-    aria-controls="project-lightbox-root"
+    aria-controls="media-viewer-root"
     aria-label={label}
 >
     <img decoding="async" loading="lazy" src={src} alt={alt} />

@@ -18,11 +18,12 @@ Keep list fields here. Do **not** put article copy in JSON — only a path to th
   "thumb": "/assets/… or https://…",
   "author": { "name": "…", "avatar": "/assets/…" },
   "date": "2024-03-29",
-  "content": "blogs/my-post.md"
+  "content": "blogs/my-post.md",
+  "tags": ["iOS", "UIKit"]
 }
 ```
 
-`content` is relative to `src/content/`.
+`content` is relative to `src/content/`. Optional `tags` are topic keywords for Open Graph `article:tag` and BlogPosting JSON-LD — keep them short (e.g. `iOS`, `UPI`).
 
 ## Article file (Markdown)
 
@@ -72,6 +73,7 @@ Markdown is compiled into the typed blocks rendered by `BlogPage.astro`:
 | `-` list | Disc bullets |
 | `1.` list | Numbered bullets |
 | `- **Label**: text` | Labeled bullet (`{ label, text }`) |
+| `` `inline` `` | Fragment Mono chip in paragraphs and bullets |
 | Fenced code | Code panel (`BlogCodeBlock`; set language e.g. `swift`) |
 
 Spacing follows the rhythm in `BlogPage.astro` (~52px before titles/subtitles, ~20px heading → content, ~24px between peers).
@@ -87,7 +89,13 @@ Mix labeled and plain items in the same list if needed.
 
 ### Code
 
-Use a language tag so the panel shows a label and Shiki colors:
+Wrap API names and short expressions in backticks so they render as an inline chip (Fragment Mono, surface + border — same idea as `.tools-code`):
+
+```md
+- **disabled**: `isEnabled == false`. The control stops sending actions.
+```
+
+Use a language tag on **fenced** blocks so the panel shows a label and Shiki colors:
 
 ````md
 ```swift

@@ -2,6 +2,7 @@
 import { formatDate } from "../../utils/date";
 import type { ProjectBodyBlock } from "../../types/project";
 import ProjectLightboxImage from "./ProjectLightboxImage.astro";
+import ShareBar from "./ShareBar.astro";
 
 // props
 const { project } = Astro.props;
@@ -31,7 +32,7 @@ const body = project.page.body as ProjectBodyBlock[];
                 <div class="relative flex h-min w-full flex-none flex-row flex-nowrap content-center items-center justify-center gap-2.5 overflow-hidden rounded-[40px] p-0 will-change-transform max-narrow:rounded-[30px]">
                     <div class="relative aspect-[1.4627659574468086] h-auto w-px flex-1 overflow-hidden max-narrow:rounded-[30px]">
                         <div class="absolute inset-0" style="border-radius:inherit;">
-                            <img decoding="async" loading="lazy" src={project.images.banner} alt={project.title} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
+                            <img decoding="async" fetchpriority="high" src={project.images.banner} alt={project.title} style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover">
                         </div>
                     </div>
                 </div>
@@ -126,8 +127,8 @@ const body = project.page.body as ProjectBodyBlock[];
     </div>
 
         <!-- Project Header Info — original text gutter -->
-        <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-12 overflow-hidden p-0 max-narrow:gap-8 max-narrow:px-5">
-            <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-5 overflow-hidden p-0">
+        <div class="relative flex h-min w-full max-w-[550px] flex-none flex-col flex-nowrap content-start items-start justify-center gap-12 overflow-visible p-0 max-narrow:gap-8 max-narrow:px-5">
+            <div class="relative flex h-min w-full flex-none flex-col flex-nowrap content-start items-start justify-center gap-5 overflow-visible p-0">
                 <div class="relative h-auto w-full flex-none break-words max-narrow:order-0">
                     <h1 class="m-0 p-0 font-manrope text-[50px] font-semibold leading-[105%] tracking-[-0.05em] text-left text-text max-narrow:text-[34px]">{project.title}</h1>
                 </div>
@@ -135,7 +136,7 @@ const body = project.page.body as ProjectBodyBlock[];
                     <p class="m-0 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text max-narrow:text-[16px]">{project.desc.long}</p>
                 </div>
             </div>
-            <div class="relative h-auto w-auto flex-none max-narrow:order-2">
+            <div class="relative flex h-auto w-full flex-none flex-row items-center justify-between gap-4 overflow-visible max-narrow:order-2">
                 <a data-scramble data-scramble-variant="primary" class="group relative flex h-min w-min cursor-pointer flex-row flex-nowrap items-center justify-center gap-[14px] overflow-visible no-underline" href="/projects">
                     <div class="relative flex size-[52px] flex-none items-center justify-center rounded-full bg-bg shadow-[inset_0_0_0_1px_var(--color-border)] transition-colors duration-200 ease-in-out group-hover:bg-primary">
                         <div class="relative h-[14px] w-[15px] flex-none transition-[filter] duration-200 ease-in-out group-hover:brightness-0 group-hover:invert" style="image-rendering: pixelated;" aria-hidden="true">
@@ -148,6 +149,11 @@ const body = project.page.body as ProjectBodyBlock[];
                         <p class="m-0 p-0 font-manrope text-[14px] font-semibold leading-[130%] tracking-[-0.04em] text-left text-text max-narrow:text-[13px]">Back to projects</p>
                     </div>
                 </a>
+                <ShareBar
+                    title={project.title}
+                    url={`/projects/${project.slug}/`}
+                    text={project.desc.short}
+                />
             </div>
         </div>
 

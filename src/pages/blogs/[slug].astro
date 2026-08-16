@@ -4,13 +4,14 @@ import BlogPage from "../../components/elements/BlogPage.astro";
 import SectionBlogs from "../../components/sections/SectionBlogs.astro";
 import Footer from "../../components/Footer.astro";
 
-import { getBlogs } from "../../utils/blogs";
+import { blogWordCount, getBlogCatalogMeta, getBlogs } from "../../utils/blogs";
 import {
-    absoluteUrl,
+    blogPostingJsonLd,
     breadcrumbJsonLd,
+    canonicalFromPathname,
     isoDate,
-    siteAuthor,
-    siteOrigin,
+    uniqueKeywords,
+    webPageJsonLd,
 } from "../../utils/seo";
 
 const { blog } = Astro.props;
@@ -22,49 +23,46 @@ export async function getStaticPaths() {
     }));
 }
 
+const catalog = getBlogCatalogMeta();
 const description = blog.page.intro.paragraph;
 const image = blog.page.intro.banner || blog.thumb;
-const published = isoDate(blog.date);
+const publishedIso = isoDate(blog.date);
 const canonicalPath = `/blogs/${blog.slug}/`;
+const pageUrl = canonicalFromPathname(canonicalPath);
+const articleId = `${pageUrl}#article`;
+const breadcrumbId = `${pageUrl}#breadcrumb`;
+const keywords = uniqueKeywords(blog.tags);
 const jsonLd = [
-    {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: blog.title,
+    webPageJsonLd({
+        name: blog.title,
+        path: canonicalPath,
         description,
-        image: {
-            "@type": "ImageObject",
-            url: absoluteUrl(image),
-        },
-        datePublished: published,
-        dateModified: published,
-        inLanguage: "en-US",
-        url: absoluteUrl(canonicalPath),
-        author: {
-            "@type": "Person",
-            name: blog.author.name,
-            url: siteOrigin + "/",
-        },
-        publisher: {
-            "@type": "Person",
-            name: siteAuthor.name,
-            url: siteOrigin + "/",
-        },
-        mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": absoluteUrl(canonicalPath),
-        },
-        isPartOf: {
-            "@type": "Blog",
-            name: "Developer’s Log",
-            url: absoluteUrl("/blogs/"),
-        },
-    },
-    breadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Blog", path: "/blogs/" },
-        { name: blog.title, path: canonicalPath },
-    ]),
+        image,
+        datePublished: publishedIso,
+        dateModified: publishedIso,
+        keywords,
+        mainEntityId: articleId,
+        breadcrumbId,
+    }),
+    blogPostingJsonLd({
+        title: blog.title,
+        description,
+        path: canonicalPath,
+        image,
+        datePublished: publishedIso,
+        dateModified: publishedIso,
+        wordCount: blogWordCount(blog),
+        keywords,
+        section: catalog.title,
+    }),
+    breadcrumbJsonLd(
+        [
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blogs/" },
+            { name: blog.title, path: canonicalPath },
+        ],
+        breadcrumbId,
+    ),
 ];
 ---
 
@@ -75,8 +73,10 @@ const jsonLd = [
     image={image}
     imageAlt={blog.title}
     type="article"
-    publishedTime={published}
-    modifiedTime={published}
+    publishedTime={publishedIso}
+    modifiedTime={publishedIso}
+    section={catalog.title}
+    tags={keywords}
     jsonLd={jsonLd}
 >
 

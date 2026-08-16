@@ -64,7 +64,7 @@
     transform: scale(1.05);
 }
 
-/* Project body image lightbox — overlay mounted on document.body by project-lightbox.ts */
+/* Project body image trigger — overlay is the shared media viewer (media-viewer.ts) */
 .project-lightbox-trigger {
     @apply absolute inset-0 m-0 block size-full cursor-zoom-in appearance-none overflow-hidden border-0 bg-transparent p-0;
     border-radius: inherit;
@@ -89,140 +89,6 @@
 .project-lightbox-trigger:focus-visible {
     outline: 1px solid color-mix(in srgb, var(--color-text) 35%, transparent);
     outline-offset: 2px;
-}
-
-/* Plain CSS (no @apply) so sizing is not dropped by the utility pipeline */
-#project-lightbox-root.project-lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    overflow: hidden;
-    background: transparent;
-}
-
-#project-lightbox-root.project-lightbox[hidden] {
-    display: none !important;
-}
-
-#project-lightbox-root.project-lightbox.is-open {
-    display: block;
-}
-
-.project-lightbox-scrim {
-    position: absolute;
-    inset: 0;
-    background: rgb(0 0 0 / 0.72);
-}
-
-.project-lightbox-stage {
-    pointer-events: none;
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2.5rem;
-}
-
-@media (max-width: 609.98px) {
-    .project-lightbox-stage {
-        padding: 1.25rem;
-    }
-}
-
-.project-lightbox-img {
-    pointer-events: auto;
-    max-height: min(88vh, 900px);
-    width: auto;
-    max-width: min(1100px, calc(100vw - 80px));
-    border-radius: 30px;
-    object-fit: contain;
-}
-
-@media (max-width: 609.98px) {
-    .project-lightbox-img {
-        max-width: calc(100vw - 40px);
-        border-radius: 20px;
-    }
-}
-
-.project-lightbox-close {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.25rem;
-    z-index: 2;
-    display: flex;
-    width: 52px;
-    height: 52px;
-    cursor: pointer;
-    appearance: none;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    border: 0;
-    background-color: var(--color-bg);
-    padding: 0;
-    box-shadow: inset 0 0 0 1px var(--color-border);
-    transition: background-color 200ms ease-in-out;
-}
-
-@media (max-width: 609.98px) {
-    .project-lightbox-close {
-        top: 1rem;
-        right: 1rem;
-    }
-}
-
-.project-lightbox-close:hover {
-    background-color: var(--color-primary);
-}
-
-.project-lightbox-close:focus-visible {
-    outline: 1px solid color-mix(in srgb, var(--color-text) 35%, transparent);
-    outline-offset: 2px;
-}
-
-.project-lightbox-close-icon {
-    position: relative;
-    height: 0.875rem;
-    width: 0.875rem;
-    flex: none;
-}
-
-.project-lightbox-close-icon::before,
-.project-lightbox-close-icon::after {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    height: 1.5px;
-    width: 100%;
-    background-color: var(--color-text);
-    content: "";
-    transform-origin: center;
-}
-
-.project-lightbox-close-icon::before {
-    transform: translateY(-50%) rotate(45deg);
-}
-
-.project-lightbox-close-icon::after {
-    transform: translateY(-50%) rotate(-45deg);
-}
-
-.project-lightbox-close:hover .project-lightbox-close-icon::before,
-.project-lightbox-close:hover .project-lightbox-close-icon::after {
-    background: #fff;
-}
-
-body.project-lightbox-open {
-    overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {

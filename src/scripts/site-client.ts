@@ -28,8 +28,11 @@ function loadPageWidgets(): void {
     if (document.querySelector('[data-credentials-accordion]')) {
         void import('./credentials-accordion');
     }
-    if (document.querySelector('[data-project-lightbox]')) {
-        void import('./project-lightbox');
+    if (document.querySelector('[data-share-bar]')) {
+        void import('./share-bar');
+    }
+    if (document.querySelector('[data-media-viewer]')) {
+        void import('./media-viewer');
     }
 }
 
