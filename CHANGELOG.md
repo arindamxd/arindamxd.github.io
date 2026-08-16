@@ -32,6 +32,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Contributions heatmap is grid-only (no month labels, count, or legend); first/last columns open the day tooltip to the side; cells are larger on mobile; heading gap matches other home sections
 - Experience year timeline on mobile: current year plus three past years, even content-sized gaps; last year clips under the edge fade (desktop unchanged)
 - Credentials: diploma lists DYCTC; ACE Award sits above the Google Developers Directory feature
+- ACE Award org label is Accenture (was Accenture India)
 - Project cards: circular Play Store icons in light-tint discs; local banners; short desc ≤60 characters; thumb hover 22→26px in sync with banner and arrow
 - Project card frame and caption use `rounded-[44→42]` (was 45 / pill 50)
 - Images, fonts, and first-party JS off the critical path: LCP avatar preload (~16KB), Lenis only on fine pointer, scramble as a page widget, gtag after idle, first-visit loader on Manrope (home skips Fragment Mono)
