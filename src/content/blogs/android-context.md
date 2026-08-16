@@ -1,6 +1,6 @@
 ---
 title: "The Activity is a window with a theme. The application is the process. Pass the one whose lifetime matches the object you are filling."
-description: "Most Android APIs take a Context. Holding an Activity on a long-lived object leaks the screen. Inflating or showing UI from the application drops the Activity theme. The fix is matching lifetime, not finding a universal instance."
+description: "Most Android APIs take a Context. Hold an Activity past the screen and you leak it; inflate from the application and you drop the theme."
 banner: "/assets/blogs/android-context/banner.jpg"
 ---
 

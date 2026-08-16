@@ -76,8 +76,8 @@ Nav chrome mounts **once** from [`BaseLayout.astro`](src/layouts/BaseLayout.astr
 | Projects catalog | `src/content/projects-metadata.json` | [`projects.ts`](src/utils/projects.ts) |
 | Project bodies | `src/content/projects/*.md` | Merged at build |
 | Privacy policies | `src/content/privacy-policies/*.md` | Project privacy pages |
-| Blogs catalog | `src/content/blogs-metadata.json` | [`blogs.ts`](src/utils/blogs.ts) |
-| Blog bodies | `src/content/blogs/*.md` | Merged at build |
+| Blogs catalog | `src/content/blogs-metadata.json` | [`blogs.ts`](src/utils/blogs.ts) — `getBlogs()` sorts by `date` descending; `content` path required (falls back to `blogs/<slug>.md`) |
+| Blog bodies | `src/content/blogs/*.md` | Merged at build. Local banner `public/assets/blogs/<slug>/banner.jpg` (~1180px). Labeled lists: `- **Label**: text` |
 
 **Authoring docs:** [`docs/blog-authoring.md`](docs/blog-authoring.md) · [`docs/project-authoring.md`](docs/project-authoring.md)  
 **Draft helpers:** `/tools/author` (download MD + catalog JSON).
@@ -193,8 +193,8 @@ Honor `prefers-reduced-motion`. Scramble stays custom until Motion+; no GSAP the
 
 ### SEO
 
-- Helpers live in [`src/utils/seo.ts`](src/utils/seo.ts). Home description = author `bio`. Catalog **layout** descriptions are topic-led; on-page section copy stays in the JSON catalogs.
-- Blog/project detail: per-page OG image (correct MIME; default PNG width/height only on the site fallback), WebPage + BlogPosting / SoftwareApplication JSON-LD, project meta from `desc.long` (not the 60-char card line). Optional blog `tags` → `article:tag`.
+- Helpers live in [`src/utils/seo.ts`](src/utils/seo.ts). Home description = author `bio`. Catalog **layout** descriptions are topic-led (`/blogs` covers Android + iOS notes); on-page section copy stays in the JSON catalogs.
+- Blog/project detail: per-page OG image (correct MIME; default PNG width/height only on the site fallback), WebPage + BlogPosting / SoftwareApplication JSON-LD, project meta from `desc.long` (not the 60-char card line). Blog intro `description` ≤160 characters (also the SERP snippet; truncated via `metaDescription`). Optional blog `tags` → `article:tag`.
 - Sitemap: filter `/tools`, `/design`, `/apps`; `lastmod` from blog `date` / project `updated_date`. Public RSS at [`/rss.xml`](src/pages/rss.xml.ts).
 - Share image: `public/assets/resources/og-image.png` must be a real PNG (not AVIF with a `.png` name). Dimensions in `OG_IMAGE_WIDTH` / `OG_IMAGE_HEIGHT`.
 - Skip link: `.skip-link` → `#main` on every page `<main>`.
@@ -259,6 +259,8 @@ Versioned notes for **this memory file** and related agent guidance — full pro
 
 ### Unreleased
 
+- Blog authoring: labeled bullets need `- **Label**:` (colon); inline `` `code` `` chips in labels and body; catalog `content` path required with `blogs/<slug>.md` fallback; `getBlogs()` sorts by date. [`docs/blog-authoring.md`](docs/blog-authoring.md).
+- `/blogs` catalog SEO is topic-led (KMP, Context, Hilt, processors, UPI, WebRTC, UIControl). Article meta from frontmatter `description` via `metaDescription`.
 - Share icon on blog and project detail (top right): hover/tap dropdown with copy link plus Bluesky, Facebook, LinkedIn, Threads, and X. [`ShareBar`](src/components/elements/ShareBar.astro) · [`share-bar.ts`](src/scripts/share-bar.ts).
 - Blog/project SEO: per-page OG MIME, WebPage + BlogPosting / SoftwareApplication JSON-LD, project meta from `desc.long`, blog `tags`, `/rss.xml`.
 - Shared view-only media overlay (`data-media-viewer`, `media-viewer.ts`): credentials `file` (ACE Award PDF) and project body screenshots. Hero banner excluded. PDFs render to canvas (no download bar). License rows are title/org only (no outbound URLs or link arrows).

@@ -1,6 +1,6 @@
 ---
 title: "Pass collaborators in through a constructor. Reach for a graph only at the Android edge, where the system constructs the screen."
-description: "On Android, types you own should take constructors. Activities cannot. A small handwritten graph, Hilt, or Koin all exist to fill that gap — they differ in whether a missing binding fails the build or shows up at runtime."
+description: "Types you own should take constructors. Activities cannot. A handwritten graph, Hilt, or Koin fills that edge — they differ in whether a missing binding fails the build."
 banner: "/assets/blogs/android-dependency-injection/banner.jpg"
 ---
 

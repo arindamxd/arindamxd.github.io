@@ -23,7 +23,9 @@ Keep list fields here. Do **not** put article copy in JSON — only a path to th
 }
 ```
 
-`content` is relative to `src/content/`. Optional `tags` are topic keywords for Open Graph `article:tag` and BlogPosting JSON-LD — keep them short (e.g. `iOS`, `UPI`).
+`content` is relative to `src/content/` and **required** in the catalog (the loader falls back to `blogs/<slug>.md` if it is missing, but list that path anyway). Optional `tags` are topic keywords for Open Graph `article:tag` and BlogPosting JSON-LD — keep them short (e.g. `iOS`, `UPI`).
+
+Newest posts first is not required in the JSON array — [`getBlogs()`](../src/utils/blogs.ts) sorts by `date` descending. Thumb and banner should be a local JPEG under `public/assets/blogs/<slug>/banner.jpg` (about **1180px** wide, display max).
 
 ## Article file (Markdown)
 
@@ -58,8 +60,8 @@ let button = UIButton(type: .system)
 | Field | Renders as |
 |-------|------------|
 | `title` | Intro lead under the meta row (not the list/h1 title in JSON) |
-| `description` | Intro supporting copy |
-| `banner` | Full-width article banner image |
+| `description` | Intro supporting copy **and** the SERP / OG snippet (keep ≤160 characters) |
+| `banner` | Full-width article banner (same path as catalog `thumb`) |
 
 ### Body → blocks
 
@@ -72,28 +74,32 @@ Markdown is compiled into the typed blocks rendered by `BlogPage.astro`:
 | Paragraph | Body copy |
 | `-` list | Disc bullets |
 | `1.` list | Numbered bullets |
-| `- **Label**: text` | Labeled bullet (`{ label, text }`) |
-| `` `inline` `` | Fragment Mono chip in paragraphs and bullets |
+| `- **Label**: text` | Labeled bullet (`{ label, text }`) — the colon after `**` is required |
+| `` `inline` `` | Fragment Mono chip in paragraphs, bullet bodies, **and** labels |
 | Fenced code | Code panel (`BlogCodeBlock`; set language e.g. `swift`) |
 
 Spacing follows the rhythm in `BlogPage.astro` (~52px before titles/subtitles, ~20px heading → content, ~24px between peers).
 
 ### Labeled bullets
 
+The bold run must be followed by a colon or it is not a label (the lead stays muted with the rest of the line).
+
 ```md
 - **Target–Action Mechanism**: Link a tap to a method in your code.
 - **Control States**: normal, highlighted, disabled, …
+```
+
+Put API names in the copy after the colon. Nested `` `code` `` inside `**…**` becomes a chip in the title — prefer a plain **Label**.
+
+```md
+- **disabled**: `isEnabled == false`. The control stops sending actions.
 ```
 
 Mix labeled and plain items in the same list if needed.
 
 ### Code
 
-Wrap API names and short expressions in backticks so they render as an inline chip (Fragment Mono, surface + border — same idea as `.tools-code`):
-
-```md
-- **disabled**: `isEnabled == false`. The control stops sending actions.
-```
+Wrap API names and short expressions in backticks so they render as an inline chip (Fragment Mono, surface + border — same idea as `.tools-code`). Put them in the bullet **text**, not inside the bold label.
 
 Use a language tag on **fenced** blocks so the panel shows a label and Shiki colors:
 

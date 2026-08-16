@@ -322,7 +322,7 @@ button.setTitle("Tap", for: .normal)
 | Type | Mono stack 13px / 12px narrow, weight 500 — **not** Fragment Mono inside Shiki lines |
 | Spacing | ~24px between peers; ~20px under a heading (`BlogPage` rhythm) |
 
-**Inline `` `code` ``:** markdown inline code in paragraphs and bullets becomes a Fragment Mono chip (`.article-inline-code` — surface + `border-border`, same recipe as `.tools-code`). Parser keeps the backticks through [`blogs.ts`](../src/utils/blogs.ts); [`BlogPage`](../src/components/elements/BlogPage.astro) splits them into `<code>`. Use this for API names (`isEnabled == false`); keep real snippets in fenced `BlogCodeBlock`s.
+**Inline `` `code` ``:** markdown inline code in paragraphs, bullet bodies, **and** labeled-bullet titles becomes a Fragment Mono chip (`.article-inline-code` — surface + `border-border`, same recipe as `.tools-code`). Parser keeps the backticks through [`blogs.ts`](../src/utils/blogs.ts); [`BlogPage`](../src/components/elements/BlogPage.astro) splits them into `<code>`. Use this for API names (`isEnabled == false`); keep real snippets in fenced `BlogCodeBlock`s. Labeled lists must be `- **Label**: text` (colon after the bold) or the lead never becomes a title.
 
 Live preview: `/design` → Components. Full authoring: [`blog-authoring.md`](./blog-authoring.md).
 
@@ -503,7 +503,7 @@ Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left*
 | Style | Spec |
 | --- | --- |
 | Disc | `5px` circle `bg-text/40` |
-| Labeled | `<span class="text-text">Label:</span>` + muted rest (`- **Label**: text` in MD) |
+| Labeled | `<span class="text-text">Label:</span>` + muted rest (`- **Label**: text` in MD; colon required). Inline `` `code` `` chips in the label and the body. |
 | Numbered | `1.` `text-text/40` tabular nums |
 
 ### Blog “View all” (inline)
@@ -944,7 +944,7 @@ If pursued: stream UI to existing shells (550px), not a second visual system.
 
 ### 12.7 Content, SEO & discoverability
 
-**Today:** [`src/utils/seo.ts`](../src/utils/seo.ts) + [`BaseLayout`](../src/layouts/BaseLayout.astro) — canonical, robots, OG/Twitter (PNG default share image + dimensions; per-page blog/project banners with correct MIME and no fake width/height), Person / WebSite / ProfilePage JSON-LD on every public page, CollectionPage + BreadcrumbList on catalogs, BlogPosting / SoftwareApplication + WebPage on detail, sitemap `lastmod` from blog/project dates, `/rss.xml` for posts, `/tools` `/design` `/apps` filtered. Home meta uses the author bio. Catalog pages use topic-led descriptions (on-page headings stay the catalog voice). Project SERP snippets use `desc.long` (not the 60-char card line).
+**Today:** [`src/utils/seo.ts`](../src/utils/seo.ts) + [`BaseLayout`](../src/layouts/BaseLayout.astro) — canonical, robots, OG/Twitter (PNG default share image + dimensions; per-page blog/project banners with correct MIME and no fake width/height), Person / WebSite / ProfilePage JSON-LD on every public page, CollectionPage + BreadcrumbList on catalogs, BlogPosting / SoftwareApplication + WebPage on detail, sitemap `lastmod` from blog/project dates, `/rss.xml` for posts, `/tools` `/design` `/apps` filtered. Home meta uses the author bio. Catalog pages use topic-led descriptions (on-page headings stay the catalog voice; `/blogs` covers Android + iOS notes). Project SERP snippets use `desc.long` (not the 60-char card line). Blog intros are also the SERP snippet (≤160 characters).
 
 | Enhancement | Notes |
 | --- | --- |

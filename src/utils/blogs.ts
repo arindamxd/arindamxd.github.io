@@ -200,7 +200,7 @@ function toBlog(entry: BlogCatalogEntry): Blog {
         thumb: entry.thumb,
         author: entry.author,
         date: new Date(entry.date),
-        page: loadPage(entry.content),
+        page: loadPage(entry.content || `blogs/${entry.slug}.md`),
         ...(entry.tags?.length ? { tags: entry.tags } : {}),
     };
 }
@@ -245,7 +245,9 @@ export function getBlogCatalogMeta(): { title: string; description: string } {
 }
 
 export function getBlogs(): Blog[] {
-    return (catalog.data as BlogCatalogEntry[]).map(toBlog);
+    return (catalog.data as BlogCatalogEntry[])
+        .map(toBlog)
+        .sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
 export function getBlogBySlug(slug: string): Blog | undefined {

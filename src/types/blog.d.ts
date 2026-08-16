@@ -34,7 +34,7 @@ export interface BlogCatalogEntry {
         avatar: string
     }
     date: string
-    /** Relative path under src/content/, e.g. blogs/my-post.md */
+    /** Relative path under src/content/, e.g. blogs/my-post.md. Falls back to `blogs/<slug>.md`. */
     content: string
     /** Optional topic tags for article:tag / JSON-LD keywords. */
     tags?: string[]

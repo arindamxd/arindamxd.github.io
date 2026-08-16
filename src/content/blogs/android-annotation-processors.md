@@ -1,6 +1,6 @@
 ---
 title: "Scan annotations at compile time, fail the build when the contract is wrong, and generate the boilerplate you would rather not type."
-description: "Room and Dagger are annotation processors. The same javac hook can validate a singleton, or write a Java file for you, without reflection and without shipping the annotation in the APK."
+description: "Room and Dagger are annotation processors. The same javac hook can validate a type or write a Java file, without reflection and without shipping the annotation in the APK."
 banner: "/assets/blogs/android-annotation-processors/banner.jpg"
 ---
 

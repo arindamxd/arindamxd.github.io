@@ -18,6 +18,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Changed
 
 - Article labeled bullets render inline `` `code` `` in the title; lists use `**Label**:` so the bold lead actually shows
+- `/blogs` catalog meta covers Android and iOS notes (KMP, Context, Hilt, processors, UPI, WebRTC, UIControl); article SERP/OG copy is the intro, capped at 160 characters
+- New article banners resized to ~1180px JPEG
 - Credentials licenses drop placeholder certs and outbound URLs; rows are title/org only (no link arrow). ACE Award and Associate Android Developer open the PDF viewer
 - Article inline `` `code` `` renders as a Fragment Mono chip
 - Intro YoE chip fill matches the hero grey gap (`surface`) in light and dark, matching Framer
@@ -32,7 +34,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Fixed
 
-- `/blogs` no longer dies when a catalog entry is missing `content` (clear error instead of a blank page)
+- `/blogs` no longer dies when a catalog entry is missing `content` (clear error instead of a blank page; loader also falls back to `blogs/<slug>.md`)
 - Mid-page reload restores the saved scroll offset and still plays Motion `springPage` without a content flash (`is-scroll-hold` until opacity is pinned)
 - Contributions heatmap no longer vanishes in `astro dev` after Vite re-prebundles React (`jsxDEV` shim)
 - Experience year labels no longer overflow past the mobile edge fade when the row is squeezed

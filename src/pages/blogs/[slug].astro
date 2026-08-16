@@ -10,6 +10,7 @@ import {
     breadcrumbJsonLd,
     canonicalFromPathname,
     isoDate,
+    metaDescription,
     uniqueKeywords,
     webPageJsonLd,
 } from "../../utils/seo";
@@ -24,7 +25,7 @@ export async function getStaticPaths() {
 }
 
 const catalog = getBlogCatalogMeta();
-const description = blog.page.intro.paragraph;
+const description = metaDescription(blog.page.intro.paragraph);
 const image = blog.page.intro.banner || blog.thumb;
 const publishedIso = isoDate(blog.date);
 const canonicalPath = `/blogs/${blog.slug}/`;

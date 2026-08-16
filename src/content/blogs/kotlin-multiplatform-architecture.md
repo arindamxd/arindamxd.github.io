@@ -1,6 +1,6 @@
 ---
 title: "Share the feature layer, keep the views native — and start from a modular app, not a rewrite."
-description: "Android and iOS each come with types that do not travel. Kotlin Multiplatform holds up when you leave those couplings at the edge, pick a migration shape that matches the product, and give Swift an API it already knows how to subscribe to."
+description: "Android and iOS types do not travel. Kotlin Multiplatform holds up when you leave those couplings at the edge and give Swift an API it already knows how to subscribe to."
 banner: "/assets/blogs/kotlin-multiplatform-architecture/banner.jpg"
 ---
 
