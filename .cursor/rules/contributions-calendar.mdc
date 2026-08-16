@@ -18,6 +18,6 @@ The [Echo Astro template](https://echo-astro-template.vercel.app/projects/echo-u
 - Data: build fetch in `SectionContributions.astro` from `https://github-contributions-api.jogruber.de/v4/{username}?y=last`. Last **8 months**. Merge `usernames[]` from `contributions-metadata.json` by date. `/design` uses `previewContributionDays()` (no network).
 - Theme: `useSyncExternalStore` + `useDeferredValue` — do not remount with `key` on the toggle frame.
 - Tear down `ActivityCalendar` on `astro:before-preparation` / `astro:before-swap`.
-- Vite 8: include `react-activity-calendar` in `optimizeDeps`; **do not** include React / `jsx-dev-runtime`. Dev alias `react/jsx-dev-runtime` → `src/shims/react-jsx-dev-runtime.ts`.
+- Vite 8: include `react-activity-calendar` in `optimizeDeps`; **do not** include React / `jsx-dev-runtime`. Alias `react/jsx-dev-runtime` → `src/shims/react-jsx-dev-runtime.ts`. `@astrojs/react` re-includes that id — strip it in the `configResolved` plugin after merge.
 
 Full notes: [`AGENTS.md`](AGENTS.md) § Contributions calendar.

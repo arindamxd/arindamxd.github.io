@@ -1,11 +1,22 @@
 /**
  * Lazy PDF.js renderer for the media viewer.
  * Pages are painted to canvas only — no text layer, iframe, or download chrome.
+ *
+ * Cursor / VS Code Simple Browser often cannot start a module Worker.
+ * Importing the worker on the main thread lets pdf.js use its fake-worker path.
  */
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
+import { WorkerMessageHandler } from "pdfjs-dist/build/pdf.worker.min.mjs";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 
 GlobalWorkerOptions.workerSrc = pdfWorker;
+
+const host = globalThis as typeof globalThis & {
+    pdfjsWorker?: { WorkerMessageHandler: typeof WorkerMessageHandler };
+};
+if (!host.pdfjsWorker?.WorkerMessageHandler) {
+    host.pdfjsWorker = { WorkerMessageHandler };
+}
 
 export async function renderPdfPages(
     container: HTMLElement,
@@ -20,6 +31,9 @@ export async function renderPdfPages(
         disableRange: true,
         disableStream: true,
         useSystemFonts: true,
+        useWasm: false,
+        useWorkerFetch: false,
+        isOffscreenCanvasSupported: false,
     });
 
     const pdf = await loadingTask.promise;

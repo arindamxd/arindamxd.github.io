@@ -301,7 +301,6 @@ async function fillFrame(
     const response = await fetch(src.href, {
         signal,
         credentials: "same-origin",
-        cache: "force-cache",
     });
     if (!response.ok) throw new Error("fetch");
     if (token !== loadToken) return false;
@@ -361,6 +360,7 @@ async function openFrom(trigger: HTMLElement): Promise<void> {
     } catch (error) {
         if (token !== loadToken) return;
         if (error instanceof DOMException && error.name === "AbortError") return;
+        console.warn("[media-viewer]", error);
         clearFrame(root);
         setBusy(root, "error");
     }

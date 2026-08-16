@@ -57,19 +57,38 @@ export default defineConfig({
         resolve: {
             extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
             dedupe: ["react", "react-dom"],
+            // Top-level so dep-optimizer sees it. @astrojs/react also *includes*
+            // this id in optimizeDeps; the plugin below strips that after merge.
+            alias: {
+                "react/jsx-dev-runtime": reactJsxDevRuntimeShim,
+            },
         },
         plugins: [
             {
                 name: "react-jsx-dev-runtime-shim",
                 apply: "serve",
-                config() {
-                    return {
-                        resolve: {
-                            alias: {
-                                "react/jsx-dev-runtime": reactJsxDevRuntimeShim,
-                            },
-                        },
+                enforce: "post",
+                configResolved(config) {
+                    const strip = (list: string[] | undefined) => {
+                        if (!list) return;
+                        for (let i = list.length - 1; i >= 0; i--) {
+                            if (list[i] === "react/jsx-dev-runtime") list.splice(i, 1);
+                        }
                     };
+                    const exclude = (deps: { exclude?: string[] }) => {
+                        const next = deps.exclude ?? [];
+                        if (!next.includes("react/jsx-dev-runtime")) {
+                            next.push("react/jsx-dev-runtime");
+                        }
+                        deps.exclude = next;
+                    };
+                    strip(config.optimizeDeps.include);
+                    exclude(config.optimizeDeps);
+                    const client = config.environments?.client;
+                    if (client?.optimizeDeps) {
+                        strip(client.optimizeDeps.include);
+                        exclude(client.optimizeDeps);
+                    }
                 },
             },
             tailwindcss(),

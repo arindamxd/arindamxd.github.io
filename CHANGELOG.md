@@ -38,6 +38,8 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Fixed
 
+- Contributions heatmap hydrates in `astro dev`: strip `react/jsx-dev-runtime` from `optimizeDeps` after `@astrojs/react` re-includes it (Vite was prebundling production `jsxDEV = undefined`)
+- Media viewer PDFs render in Cursor / VS Code Simple Browser (main-thread pdf.js worker; no module Worker)
 - `/blogs` no longer dies when a catalog entry is missing `content` (clear error instead of a blank page; loader also falls back to `blogs/<slug>.md`)
 - Mid-page reload restores the saved scroll offset and still plays Motion `springPage` without a content flash (`is-scroll-hold` until opacity is pinned)
 - Contributions heatmap no longer vanishes in `astro dev` after Vite re-prebundles React (`jsxDEV` shim)

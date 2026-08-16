@@ -54,6 +54,7 @@ declare global {
         __scriptBoot?: Record<string, boolean>;
         __lenis?: Lenis;
         __applyScrollRestore?: (reveal: boolean) => void;
+        pdfjsWorker?: { WorkerMessageHandler?: unknown };
         google?: {
             accounts?: {
                 oauth2: GoogleOauth2;
