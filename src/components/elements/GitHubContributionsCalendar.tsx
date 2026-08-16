@@ -6,27 +6,31 @@ import {
     useState,
     useSyncExternalStore,
 } from "react";
+import { createPortal } from "react-dom";
 import { ActivityCalendar, type Activity, type ThemeInput } from "react-activity-calendar";
-import "react-activity-calendar/tooltips.css";
 
 const THEME: ThemeInput = {
     light: ["#efefef", "#c5c4ff", "#8a89ff", "#5554ff", "#2a29ff"],
     dark: ["#2a2a2a", "#3a3999", "#4a49cc", "#3a39e6", "#2a29ff"],
 };
 
-/** Footer HTML size. Month labels are SVG and need this inverted by stretch. */
-const CALENDAR_FONT_PX = 11;
-
-function syncMonthLabelSize(root: HTMLElement) {
-    const svg = root.querySelector<SVGSVGElement>("svg.react-activity-calendar__calendar");
-    if (!svg) return;
-    const vb = svg.viewBox.baseVal.width;
-    const cssW = svg.getBoundingClientRect().width;
-    if (vb <= 0 || cssW <= 0) return;
-    root.style.setProperty("--contrib-month-fs", `${(CALENDAR_FONT_PX * vb) / cssW}px`);
-}
-
 type Scheme = "light" | "dark";
+type Placement = "top" | "left" | "right";
+
+type Tip = {
+    date: string;
+    text: string;
+    placement: Placement;
+    cell: SVGRectElement;
+};
+
+const GAP = 8;
+const VIEW_PAD = 8;
+const ARROW_INSET = 10;
+/** Same cutoff as Tailwind `max-narrow:` / `--breakpoint-narrow`. */
+const NARROW_MQ = "(max-width: 609.98px)";
+const BLOCK_DESKTOP = { size: 12, margin: 4 };
+const BLOCK_MOBILE = { size: 14, margin: 2 };
 
 function readScheme(): Scheme {
     if (typeof document === "undefined") return "dark";
@@ -47,10 +51,91 @@ function subscribeScheme(onStoreChange: () => void): () => void {
     };
 }
 
+function readNarrow(): boolean {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(NARROW_MQ).matches;
+}
+
+function subscribeNarrow(onStoreChange: () => void): () => void {
+    const mq = window.matchMedia(NARROW_MQ);
+    mq.addEventListener("change", onStoreChange);
+    return () => mq.removeEventListener("change", onStoreChange);
+}
+
+function isTouchUi(): boolean {
+    return window.matchMedia("(hover: none)").matches;
+}
+
+function weekPlacement(cell: SVGRectElement): Placement {
+    const week = cell.parentElement;
+    if (!(week instanceof SVGGElement)) return "top";
+    const svg = week.parentElement;
+    if (!svg) return "top";
+    const weeks = [...svg.children].filter(
+        (el): el is SVGGElement =>
+            el instanceof SVGGElement && el.querySelector("rect[data-date]") !== null,
+    );
+    const index = weeks.indexOf(week);
+    if (index === 0) return "right";
+    if (index === weeks.length - 1) return "left";
+    return "top";
+}
+
+function tooltipText(activity: Activity): string {
+    const when = new Date(`${activity.date}T12:00:00`).toLocaleDateString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
+    const noun = activity.count === 1 ? "contribution" : "contributions";
+    return `${activity.count} ${noun} on ${when}`;
+}
+
+function placeTooltip(tip: HTMLElement, cell: DOMRect, placement: Placement): void {
+    const tw = tip.offsetWidth;
+    const th = tip.offsetHeight;
+    if (tw <= 0 || th <= 0) return;
+
+    const cx = cell.left + cell.width / 2;
+    const cy = cell.top + cell.height / 2;
+
+    let left = cx - tw / 2;
+    let top = cell.top - GAP - th;
+    if (placement === "right") {
+        left = cell.right + GAP;
+        top = cy - th / 2;
+    } else if (placement === "left") {
+        left = cell.left - GAP - tw;
+        top = cy - th / 2;
+    }
+
+    const clampedLeft = Math.min(window.innerWidth - VIEW_PAD - tw, Math.max(VIEW_PAD, left));
+    const clampedTop = Math.min(window.innerHeight - VIEW_PAD - th, Math.max(VIEW_PAD, top));
+
+    let arrowX = tw / 2;
+    let arrowY = th / 2;
+    if (placement === "top") {
+        arrowX = Math.min(tw - ARROW_INSET, Math.max(ARROW_INSET, cx - clampedLeft));
+    } else {
+        arrowY = Math.min(th - ARROW_INSET, Math.max(ARROW_INSET, cy - clampedTop));
+    }
+
+    tip.style.left = `${clampedLeft}px`;
+    tip.style.top = `${clampedTop}px`;
+    tip.style.setProperty("--arrow-x", `${arrowX}px`);
+    tip.style.setProperty("--arrow-y", `${arrowY}px`);
+}
+
+function cellFromEvent(target: EventTarget | null): SVGRectElement | null {
+    if (!(target instanceof Element)) return null;
+    const rect = target.closest("rect[data-date]");
+    return rect instanceof SVGRectElement ? rect : null;
+}
+
 type Props = {
     username: string;
     contributions: Activity[];
-    totalCount?: number;
 };
 
 /**
@@ -58,14 +143,12 @@ type Props = {
  * swap frame. Before ClientRouter swaps we unmount ActivityCalendar so its
  * head `<style>` cleanup can `removeChild` while still under `document.head`.
  */
-export default function GitHubContributionsCalendar({
-    username,
-    contributions,
-    totalCount,
-}: Props) {
+export default function GitHubContributionsCalendar({ username, contributions }: Props) {
     const rootRef = useRef<HTMLDivElement>(null);
+    const tipRef = useRef<HTMLDivElement>(null);
     const [alive, setAlive] = useState(true);
     const [mounted, setMounted] = useState(false);
+    const [tip, setTip] = useState<Tip | null>(null);
     const colorScheme = useSyncExternalStore<Scheme>(
         subscribeScheme,
         readScheme,
@@ -73,28 +156,18 @@ export default function GitHubContributionsCalendar({
     );
     // Paint html.dark immediately; rebuild the heatmap when the main thread is free
     const calendarScheme = useDeferredValue(colorScheme);
+    const narrow = useSyncExternalStore(subscribeNarrow, readNarrow, (): boolean => false);
+    const block = narrow ? BLOCK_MOBILE : BLOCK_DESKTOP;
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    useLayoutEffect(() => {
-        const root = rootRef.current;
-        if (!root || !alive || !mounted) return;
-
-        const sync = () => syncMonthLabelSize(root);
-        sync();
-
-        const ro = new ResizeObserver(sync);
-        ro.observe(root);
-        const svg = root.querySelector("svg.react-activity-calendar__calendar");
-        if (svg) ro.observe(svg);
-
-        return () => ro.disconnect();
-    }, [alive, mounted, contributions, calendarScheme]);
-
     useEffect(() => {
-        const tearDown = () => setAlive(false);
+        const tearDown = () => {
+            setTip(null);
+            setAlive(false);
+        };
         const revive = () => setAlive(true);
         document.addEventListener("astro:before-preparation", tearDown);
         document.addEventListener("astro:before-swap", tearDown);
@@ -108,6 +181,85 @@ export default function GitHubContributionsCalendar({
         };
     }, []);
 
+    useEffect(() => {
+        const root = rootRef.current;
+        if (!root || !alive || !mounted) return;
+
+        const byDate = new Map(contributions.map((day) => [day.date, day]));
+
+        const open = (cell: SVGRectElement) => {
+            const date = cell.getAttribute("data-date");
+            if (!date) return;
+            const activity = byDate.get(date);
+            if (!activity) return;
+            setTip((current) => {
+                if (current?.date === date) return isTouchUi() ? null : current;
+                return {
+                    date,
+                    text: tooltipText(activity),
+                    placement: weekPlacement(cell),
+                    cell,
+                };
+            });
+        };
+
+        const close = () => setTip(null);
+
+        const onPointerOver = (event: PointerEvent) => {
+            if (isTouchUi()) return;
+            const cell = cellFromEvent(event.target);
+            if (cell) open(cell);
+        };
+
+        const onPointerLeave = () => {
+            if (!isTouchUi()) close();
+        };
+
+        const onClick = (event: MouseEvent) => {
+            if (!isTouchUi()) return;
+            const cell = cellFromEvent(event.target);
+            if (cell) open(cell);
+            else close();
+        };
+
+        const onDocPointerDown = (event: PointerEvent) => {
+            if (!isTouchUi()) return;
+            if (event.target instanceof Node && root.contains(event.target)) return;
+            close();
+        };
+
+        root.addEventListener("pointerover", onPointerOver);
+        root.addEventListener("pointerleave", onPointerLeave);
+        root.addEventListener("click", onClick);
+        document.addEventListener("pointerdown", onDocPointerDown, true);
+
+        return () => {
+            root.removeEventListener("pointerover", onPointerOver);
+            root.removeEventListener("pointerleave", onPointerLeave);
+            root.removeEventListener("click", onClick);
+            document.removeEventListener("pointerdown", onDocPointerDown, true);
+        };
+    }, [alive, mounted, contributions]);
+
+    useLayoutEffect(() => {
+        if (!tip || !tipRef.current) return;
+        const sync = () => {
+            if (!tipRef.current || !tip.cell.isConnected) {
+                setTip(null);
+                return;
+            }
+            placeTooltip(tipRef.current, tip.cell.getBoundingClientRect(), tip.placement);
+            tipRef.current.dataset.ready = "1";
+        };
+        sync();
+        window.addEventListener("scroll", sync, true);
+        window.addEventListener("resize", sync);
+        return () => {
+            window.removeEventListener("scroll", sync, true);
+            window.removeEventListener("resize", sync);
+        };
+    }, [tip]);
+
     if (!contributions.length) {
         return (
             <p className="m-0 p-0 text-center font-manrope text-[14px] font-semibold tracking-[-0.04em] text-text/50">
@@ -115,11 +267,6 @@ export default function GitHubContributionsCalendar({
             </p>
         );
     }
-
-    const count =
-        typeof totalCount === "number"
-            ? totalCount
-            : contributions.reduce((sum, day) => sum + day.count, 0);
 
     return (
         <div
@@ -132,39 +279,34 @@ export default function GitHubContributionsCalendar({
                     data={contributions}
                     colorScheme={calendarScheme}
                     theme={THEME}
-                    fontSize={CALENDAR_FONT_PX}
-                    blockSize={12}
-                    blockMargin={4}
+                    blockSize={block.size}
+                    blockMargin={block.margin}
                     maxLevel={4}
-                    labels={{
-                        totalCount: `${count} contributions in the last 8 months`,
-                    }}
-                    tooltips={{
-                        activity: {
-                            text: ({ count: dayCount, date }) => {
-                                const when = new Date(`${date}T12:00:00`).toLocaleDateString(
-                                    undefined,
-                                    {
-                                        weekday: "short",
-                                        month: "short",
-                                        day: "numeric",
-                                        year: "numeric",
-                                    },
-                                );
-                                const noun = dayCount === 1 ? "contribution" : "contributions";
-                                return `${dayCount} ${noun} on ${when}`;
-                            },
-                            placement: "top",
-                            withArrow: true,
-                        },
-                    }}
+                    showMonthLabels={false}
+                    showTotalCount={false}
+                    showColorLegend={false}
                 />
             ) : (
                 <div
-                    className="w-full min-h-[132px] rounded-[14px] bg-surface"
+                    className="w-full min-h-[108px] rounded-[14px] bg-surface"
                     aria-hidden="true"
                 />
             )}
+            {mounted &&
+                tip &&
+                createPortal(
+                    <div
+                        ref={tipRef}
+                        className="contrib-tooltip"
+                        data-placement={tip.placement}
+                        data-color-scheme={calendarScheme}
+                        role="tooltip"
+                    >
+                        {tip.text}
+                        <span className="contrib-tooltip-arrow" aria-hidden="true" />
+                    </div>,
+                    document.body,
+                )}
         </div>
     );
 }

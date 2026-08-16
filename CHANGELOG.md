@@ -16,6 +16,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 - Page enter (reload and ClientRouter) is Motion `springPage` only; first paint CSS-holds `is-page-entering` (no WAAPI tween)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
 - Contributions calendar month labels match the footer size at every width (SVG stretch no longer blows them up on desktop)
+- Contributions heatmap is grid-only (no month labels, count, or legend); first/last columns open the day tooltip to the side; cells are larger on mobile; heading gap matches other home sections
 - Experience year timeline on mobile: current year plus three past years, even content-sized gaps; last year clips under the edge fade (desktop unchanged)
 - Credentials: diploma lists DYCTC; ACE Award sits above the Google Developers Directory feature
 - Project cards: circular Play Store icons in light-tint discs; local banners; short desc ≤60 characters; thumb hover 22→26px in sync with banner and arrow

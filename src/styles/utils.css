@@ -79,6 +79,7 @@ img.design-media-ph[src=''] {
 .github-contributions-calendar .react-activity-calendar__scroll-container {
     max-width: 100% !important;
     overflow: hidden !important;
+    padding-top: 0 !important;
 }
 
 .github-contributions-calendar .react-activity-calendar__calendar {
@@ -92,27 +93,54 @@ img.design-media-ph[src=''] {
     pointer-events: auto;
 }
 
-/* Month labels are SVG; --contrib-month-fs keeps them at the footer size after stretch. */
-.github-contributions-calendar .react-activity-calendar__legend-month {
-    font-family: var(--font-manrope);
-    font-size: var(--contrib-month-fs, 11px);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-}
-
-.github-contributions-calendar .react-activity-calendar__footer {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-}
-
-/* Floating UI portals tooltips to body — style outside the calendar root */
-.react-activity-calendar__tooltip {
-    font-family: var(--font-manrope);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    border-radius: 8px;
+/* Calendar day tooltip — portaled to body (library scroll pane clips overflow) */
+.contrib-tooltip {
+    position: fixed;
+    z-index: 50;
+    width: max-content;
+    max-width: calc(100vw - 20px);
     padding: 0.35em 0.65em;
+    border-radius: 8px;
+    background-color: hsl(0 0% 10%);
+    color: hsl(0 0% 94%);
+    font-family: var(--font-manrope);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    pointer-events: none;
+}
+
+.contrib-tooltip:not([data-ready]) {
+    opacity: 0;
+}
+
+.contrib-tooltip[data-color-scheme='dark'] {
+    background-color: hsl(0 0% 94%);
+    color: hsl(0 0% 6%);
+}
+
+.contrib-tooltip-arrow {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: inherit;
+    pointer-events: none;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.contrib-tooltip[data-placement='top'] .contrib-tooltip-arrow {
+    left: var(--arrow-x);
+    top: 100%;
+}
+
+.contrib-tooltip[data-placement='right'] .contrib-tooltip-arrow {
+    left: 0;
+    top: var(--arrow-y);
+}
+
+.contrib-tooltip[data-placement='left'] .contrib-tooltip-arrow {
+    left: 100%;
+    top: var(--arrow-y);
 }
 
 /* Credentials accordion — grid open/close state (not expressible as utilities) */

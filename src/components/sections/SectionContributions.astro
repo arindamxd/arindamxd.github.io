@@ -28,7 +28,6 @@ type ContributionDay = {
 };
 
 type ContributionsResponse = {
-    total?: { lastYear?: number };
     contributions?: ContributionDay[];
 };
 
@@ -71,12 +70,10 @@ function filterFromDate(days: ContributionDay[], fromDate: string): Contribution
 }
 
 let contributions: ContributionDay[] = [];
-let totalCount = 0;
 const windowFrom = lastEightMonthsFromDate();
 
 if (preview) {
     contributions = previewContributionDays();
-    totalCount = contributions.reduce((sum, day) => sum + day.count, 0);
 } else {
     const fetched: ContributionDay[][] = await Promise.all(
         usernames.map(async (username: string): Promise<ContributionDay[]> => {
@@ -97,7 +94,6 @@ if (preview) {
         .filter((set: ContributionDay[]) => set.length > 0)
         .map((set: ContributionDay[]) => filterFromDate(set, windowFrom));
     contributions = mergeContributionDays(recentSets);
-    totalCount = contributions.reduce((sum, day) => sum + day.count, 0);
 }
 
 const label = preview ? "preview" : usernames.join(" + ");
@@ -111,17 +107,16 @@ const label = preview ? "preview" : usernames.join(" + ");
 
     <div
         data-reveal
-        class="relative flex h-min min-h-[132px] w-full flex-none flex-col flex-nowrap content-center items-center justify-center overflow-visible p-0"
+        class="relative flex h-min w-full flex-none flex-col flex-nowrap content-center items-center justify-center overflow-visible p-0"
     >
         <GitHubContributionsCalendar
             client:visible={{ rootMargin: "200px" }}
             username={label}
             contributions={contributions}
-            totalCount={totalCount}
         >
             <div
                 slot="fallback"
-                class="github-contributions-calendar w-full min-h-[132px] rounded-[14px] bg-surface"
+                class="github-contributions-calendar w-full min-h-[108px] rounded-[14px] bg-surface"
                 aria-hidden="true"
             />
         </GitHubContributionsCalendar>
