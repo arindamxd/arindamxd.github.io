@@ -3,6 +3,42 @@
     "description": "Random code experiments, bugs I’ve squashed, and things I’m tinkering with.",
     "data": [
         {
+            "slug": "android-dependency-injection",
+            "title": "Constructor injection on Android, and a graph at the Activity edge",
+            "thumb": "/assets/blogs/android-dependency-injection/banner.jpg",
+            "author": {
+                "name": "Arindam Karmakar",
+                "avatar": "/assets/author/author-grey.png"
+            },
+            "date": "2026-08-17",
+            "content": "blogs/android-dependency-injection.md",
+            "tags": ["Android", "Dagger", "Hilt", "Koin", "Dependency Injection"]
+        },
+        {
+            "slug": "android-annotation-processors",
+            "title": "Compile-time codegen on Android with annotation processors",
+            "thumb": "/assets/blogs/android-annotation-processors/banner.jpg",
+            "author": {
+                "name": "Arindam Karmakar",
+                "avatar": "/assets/author/author-grey.png"
+            },
+            "date": "2026-08-17",
+            "content": "blogs/android-annotation-processors.md",
+            "tags": ["Android", "Java", "Annotation Processor", "JavaPoet", "Compile-time"]
+        },
+        {
+            "slug": "kotlin-multiplatform-architecture",
+            "title": "Sharing Android and iOS logic with Kotlin Multiplatform",
+            "thumb": "/assets/blogs/kotlin-multiplatform-architecture/banner.jpg",
+            "author": {
+                "name": "Arindam Karmakar",
+                "avatar": "/assets/author/author-grey.png"
+            },
+            "date": "2026-08-17",
+            "content": "blogs/kotlin-multiplatform-architecture.md",
+            "tags": ["Kotlin", "KMP", "Multiplatform", "Architecture", "Android", "iOS"]
+        },
+        {
             "slug": "upi-intent-launch-ios",
             "title": "Setting Up UPI Intent Launch and Opening UPI Apps from iOS",
             "thumb": "/assets/blogs/upi-intent-launch-ios/banner.jpg",

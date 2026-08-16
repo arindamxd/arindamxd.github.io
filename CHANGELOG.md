@@ -8,6 +8,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+- Three Developer’s Log posts: Kotlin Multiplatform architecture, Android annotation processors, and constructor injection at the Activity edge (Hilt / Koin)
 - View-only media overlay (`data-media-viewer`) for credentials `file` (ACE Award and Associate Android Developer PDFs) and project body screenshots (hero banner excluded). Images, PDF, and text; no download chrome.
 - Media viewer loading: pulse dot + title over a delayed ghost page (cached screenshots skip it)
 - Share icon on blog and project detail: copy link plus Bluesky, Facebook, LinkedIn, Threads, and X
