@@ -188,11 +188,11 @@ Shared logic, native view, disposable subscription. That is the whole feature-la
 
 ## What to take into a real migration
 
-- **Modularize before you multiplatform.** One module at a time is the only conversion that survives a release schedule.
-- **Limit platform types to View and Repo.** LiveData in the feature layer is a conversion blocker.
-- **Pick the path from the product.** Single app: start anywhere, replicate. Different apps: bottom-up per feature. Similar apps: new feature, vertical, or horizontal — in small PRs.
-- **`expect`/`actual` is for wrapping, not only for rewriting.** Typealias onto the repo you already have.
-- **Views stay native.** Share actions, state, and the ViewModel that reduces them.
-- **Give iOS an API it already knows.** `watch` / `dispose`, or a Combine `Publisher`, will get further than asking Swift to collect a `Flow`.
+- **Modularize before you multiplatform**: one module at a time is the only conversion that survives a release schedule.
+- **Limit platform types to View and Repo**: LiveData in the feature layer is a conversion blocker.
+- **Pick the path from the product**: single app: start anywhere, replicate. Different apps: bottom-up per feature. Similar apps: new feature, vertical, or horizontal — in small PRs.
+- **expect / actual**: wrap the repo you already have. Typealias onto it.
+- **Views stay native**: share actions, state, and the ViewModel that reduces them.
+- **Give iOS an API it already knows**: `watch` / `dispose`, or a Combine `Publisher`, will get further than asking Swift to collect a `Flow`.
 
-The libraries change — `StateFlow` instead of a broadcast channel, SKIE or KMP-NativeCoroutines if you want generated Swift. The architecture does not. Isolate the platform, share the feature, and migrate in the shape of the product you actually ship.
+The libraries change — `StateFlow`, SKIE, or KMP-NativeCoroutines if you want generated Swift. The architecture does not. Isolate the platform, share the feature, and migrate in the shape of the product you actually ship.

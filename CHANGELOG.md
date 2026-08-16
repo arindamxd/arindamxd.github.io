@@ -9,6 +9,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 ### Added
 
 - Three Developer’s Log posts: Kotlin Multiplatform architecture, Android annotation processors, and constructor injection at the Activity edge (Hilt / Koin)
+- Developer’s Log post on Activity vs application Context
 - View-only media overlay (`data-media-viewer`) for credentials `file` (ACE Award and Associate Android Developer PDFs) and project body screenshots (hero banner excluded). Images, PDF, and text; no download chrome.
 - Media viewer loading: pulse dot + title over a delayed ghost page (cached screenshots skip it)
 - Share icon on blog and project detail: copy link plus Bluesky, Facebook, LinkedIn, Threads, and X
@@ -16,6 +17,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Changed
 
+- Article labeled bullets render inline `` `code` `` in the title; lists use `**Label**:` so the bold lead actually shows
 - Credentials licenses drop placeholder certs and outbound URLs; rows are title/org only (no link arrow). ACE Award and Associate Android Developer open the PDF viewer
 - Article inline `` `code` `` renders as a Fragment Mono chip
 - Intro YoE chip fill matches the hero grey gap (`surface`) in light and dark, matching Framer
@@ -30,6 +32,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Fixed
 
+- `/blogs` no longer dies when a catalog entry is missing `content` (clear error instead of a blank page)
 - Mid-page reload restores the saved scroll offset and still plays Motion `springPage` without a content flash (`is-scroll-hold` until opacity is pinned)
 - Contributions heatmap no longer vanishes in `astro dev` after Vite re-prebundles React (`jsxDEV` shim)
 - Experience year labels no longer overflow past the mobile edge fade when the row is squeezed

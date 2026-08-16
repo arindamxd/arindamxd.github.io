@@ -33,8 +33,8 @@ saveButton.addTarget(self, action: #selector(didTapSave), for: .touchUpInside)
 
 Two details from Apple’s docs that the selector version hides:
 
-- **The control does not retain the target.** You keep the target alive (usually the view controller). If the target is gone, the action is a no-op.
-- **A nil target walks the responder chain** until something implements the selector. Useful for first-responder actions; easy to misuse in a view hierarchy.
+- **The control does not retain the target**: you keep the target alive (usually the view controller). If the target is gone, the action is a no-op.
+- **A nil target walks the responder chain**: until something implements the selector. Useful for first-responder actions; easy to misuse in a view hierarchy.
 
 From iOS 14, prefer UIAction. No `@objc`, no selector, and the closure captures what it needs:
 

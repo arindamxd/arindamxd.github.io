@@ -10,7 +10,7 @@
                 "name": "Arindam Karmakar",
                 "avatar": "/assets/author/author-grey.png"
             },
-            "date": "2026-08-17",
+            "date": "2026-05-12",
             "content": "blogs/android-dependency-injection.md",
             "tags": ["Android", "Dagger", "Hilt", "Koin", "Dependency Injection"]
         },
@@ -22,7 +22,7 @@
                 "name": "Arindam Karmakar",
                 "avatar": "/assets/author/author-grey.png"
             },
-            "date": "2026-08-17",
+            "date": "2026-01-28",
             "content": "blogs/android-annotation-processors.md",
             "tags": ["Android", "Java", "Annotation Processor", "JavaPoet", "Compile-time"]
         },
@@ -34,7 +34,7 @@
                 "name": "Arindam Karmakar",
                 "avatar": "/assets/author/author-grey.png"
             },
-            "date": "2026-08-17",
+            "date": "2025-08-21",
             "content": "blogs/kotlin-multiplatform-architecture.md",
             "tags": ["Kotlin", "KMP", "Multiplatform", "Architecture", "Android", "iOS"]
         },
@@ -73,6 +73,18 @@
             "date": "2024-03-29",
             "content": "blogs/ios-uicontrol-and-user-interaction.md",
             "tags": ["iOS", "UIControl", "UIKit", "User Interaction"]
+        },
+        {
+            "slug": "android-context",
+            "title": "Activity Context is the window, application Context is the process",
+            "thumb": "/assets/blogs/android-context/banner.jpg",
+            "author": {
+                "name": "Arindam Karmakar",
+                "avatar": "/assets/author/author-grey.png"
+            },
+            "date": "2020-09-14",
+            "content": "blogs/android-context.md",
+            "tags": ["Android", "Context", "Activity", "Memory Leaks"]
         }
     ]
 }

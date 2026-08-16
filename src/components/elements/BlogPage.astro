@@ -154,7 +154,16 @@ const inlineCodeClass =
                                         <p class="m-0 min-w-0 flex-1 p-0 font-manrope text-[18px] font-semibold leading-[155%] tracking-[-0.04em] text-left text-text/50 max-narrow:text-[16px]">
                                             {label ? (
                                                 <>
-                                                    <span class="text-text">{label}:</span>
+                                                    <span class="text-text">
+                                                        {inlineParts(label).map((part) =>
+                                                            part.code ? (
+                                                                <code class={inlineCodeClass}>{part.text}</code>
+                                                            ) : (
+                                                                part.text
+                                                            ),
+                                                        )}
+                                                        :
+                                                    </span>
                                                     {" "}
                                                 </>
                                             ) : null}

@@ -10,9 +10,9 @@ An annotation is syntactic metadata on a class, method, field, or parameter. `@O
 
 An annotation processor is a compiler plugin. During `javac` (or kapt / KSP in a Kotlin module) it:
 
-- **Scans** source for the annotations it cares about
-- **Reports** notes, warnings, and errors on those elements
-- **Writes** new source files that the next compilation round will compile
+- **Scans**: the annotations it cares about
+- **Reports**: notes, warnings, and errors on those elements
+- **Writes**: new source files that the next compilation round will compile
 
 Room’s `@Entity` and Dagger’s `@Module` are this machinery. The interesting part is that you can register your own.
 
@@ -22,9 +22,9 @@ Reflection can read annotations after the app starts. That is late, slow, and ea
 
 A processor runs while the project is still compiling:
 
-- **The build fails** if a class marked as a single instance still has a public constructor
-- **There is no reflection** in the generated path
-- **Boilerplate is generated** — factories, bindings, `getInstance()` holders — so the handwritten code stays small
+- **Build fails**: a class marked as a single instance still has a public constructor
+- **No reflection**: the generated path does not look up types at runtime
+- **Boilerplate**: factories, bindings, `getInstance()` holders — so the handwritten code stays small
 
 Keep the annotation at `RetentionPolicy.SOURCE` unless a runtime library actually needs to see it. Source retention means the marker never lands in the dex file.
 
@@ -52,12 +52,12 @@ Usage stays ordinary:
 
 ```java
 @SingleInstance
-public final class LocationClient {
-    private static final LocationClient INSTANCE = new LocationClient();
+public final class DeviceIdStore {
+    private static final DeviceIdStore INSTANCE = new DeviceIdStore();
 
-    private LocationClient() {}
+    private DeviceIdStore() {}
 
-    public static LocationClient get() {
+    public static DeviceIdStore get() {
         return INSTANCE;
     }
 }
@@ -204,8 +204,6 @@ JavaFile.builder("com.example.generated", hello)
 
 `$T` and `$S` are the placeholders that keep imports and string escaping honest. In a real processor you would derive the package and type name from the annotated `TypeElement`, then `writeTo(filer)` so the next round compiles the result. Writing to `System.out` is only for debugging the spec.
 
-The same pattern is how view-binding libraries turn `@BindView` / `@OnClick` into a class that assigns fields and sets click listeners. You would scan methods, emit a binder type, and keep the Activity as a few annotated members.
-
 ## What to keep in the module graph
 
 - **Annotation module**: the `@interface`, `SOURCE` retention, no processor code.
@@ -218,8 +216,8 @@ KSP is the better default for new Kotlin processors. If you already have a Java 
 
 ## Checklist
 
-- **Claim types explicitly** in `getSupportedAnnotationTypes()`. A wildcard processor that runs on every type is a compile-time tax.
-- **Anchor errors on the element**. `printMessage(kind, msg, element)` is what makes the red underline useful.
-- **Return `true` from `process`** when you handled the annotation set.
-- **Expect extra rounds** after you write files. Idempotent `process` implementations survive that.
-- **Generate with JavaPoet (or KotlinPoet)**. String-concatenated source breaks on the first nested class.
+- **Supported types**: claim them in `getSupportedAnnotationTypes()`. A wildcard processor that runs on every type is a compile-time tax.
+- **Error element**: `printMessage(kind, msg, element)` is what makes the red underline useful.
+- **process()**: return `true` when you handled the annotation set.
+- **Extra rounds**: generated files run processors again. Keep `process` idempotent.
+- **Codegen**: JavaPoet or KotlinPoet. String-concatenated source breaks on the first nested class.

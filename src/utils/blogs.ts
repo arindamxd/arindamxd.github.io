@@ -26,6 +26,9 @@ const mdModules = import.meta.glob("../content/blogs/*.md", {
 }) as Record<string, string>;
 
 function resolveMdRaw(contentPath: string): string {
+    if (!contentPath) {
+        throw new Error("Blog catalog entry is missing content path");
+    }
     const fileName = contentPath.replace(/^.*\//, "");
     const key = Object.keys(mdModules).find((k) => k.endsWith(`/${fileName}`));
     if (!key) {

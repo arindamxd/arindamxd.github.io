@@ -97,8 +97,6 @@ The generated component is ordinary Java: factories for `@Provides`, constructor
 
 `@Singleton` (and Hilt’s `@ActivityRetainedScoped`, `@ViewModelScoped`) is the lifetime of a binding, not a design pattern. One instance while that component lives.
 
-Under the hood this is still Dagger `@Component` + modules. You only write those by hand if you are not on Hilt. Older `dagger.android` (`AndroidInjection.inject(this)`, a dispatching map of Activity classes) is the same entry-point problem, solved. Do not add it to a new app.
-
 ## Koin if you want a DSL instead of codegen
 
 Koin keeps the graph as Kotlin lambdas. `get()` is a lookup. Nothing is generated.
@@ -129,10 +127,10 @@ class SessionActivity : AppCompatActivity(), SessionView {
 
 ## What to actually ship
 
-- **Constructors** on presenters, stores, and use cases.
-- **One graph at the Activity / Application edge** — handwritten, Hilt, or Koin.
-- **Hilt** when a missing binding should fail CI.
-- **Koin** when the team wants a module DSL and will catch misses in tests.
-- **No framework** when `SessionGraph.presenter(view)` still fits on one screen.
+- **Constructors**: presenters, stores, and use cases.
+- **One graph at the Activity / Application edge**: handwritten, Hilt, or Koin.
+- **Hilt**: when a missing binding should fail CI.
+- **Koin**: when the team wants a module DSL and will catch misses in tests.
+- **No framework**: when `SessionGraph.presenter(view)` still fits on one screen.
 
 Injection is the technique. The library is optional.
