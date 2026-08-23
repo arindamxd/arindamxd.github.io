@@ -25,30 +25,12 @@ const jobs = [
     { src: "public/assets/projects/coco/logo.png", maxEdge: 128, format: "png" },
     { src: "public/assets/projects/ensecure/logo.png", maxEdge: 128, format: "png" },
 
-    { src: "public/assets/projects/camerax/screenshot-1.png", maxEdge: 1080, format: "png" },
-    { src: "public/assets/projects/camerax/screenshot-2.png", maxEdge: 1080, format: "png" },
-    { src: "public/assets/projects/camerax/screenshot-3.png", maxEdge: 1080, format: "png" },
-    {
-        src: "public/assets/projects/camerax/screenshot-4.png",
-        dest: "public/assets/projects/camerax/screenshot-4.jpg",
-        maxEdge: 1080,
-        format: "jpeg",
-        quality: 76,
-    },
-    {
-        src: "public/assets/projects/camerax/screenshot-5.png",
-        dest: "public/assets/projects/camerax/screenshot-5.jpg",
-        maxEdge: 1080,
-        format: "jpeg",
-        quality: 76,
-    },
-    {
-        src: "public/assets/projects/camerax/screenshot-6.png",
-        dest: "public/assets/projects/camerax/screenshot-6.jpg",
-        maxEdge: 1080,
-        format: "jpeg",
-        quality: 76,
-    },
+    { src: "public/assets/projects/camerax/screenshot-1.jpg", maxEdge: 1080, format: "jpeg", quality: 76 },
+    { src: "public/assets/projects/camerax/screenshot-2.jpg", maxEdge: 1080, format: "jpeg", quality: 76 },
+    { src: "public/assets/projects/camerax/screenshot-3.jpg", maxEdge: 1080, format: "jpeg", quality: 76 },
+    { src: "public/assets/projects/camerax/screenshot-4.jpg", maxEdge: 1080, format: "jpeg", quality: 76 },
+    { src: "public/assets/projects/camerax/screenshot-5.jpg", maxEdge: 1080, format: "jpeg", quality: 76 },
+    { src: "public/assets/projects/camerax/screenshot-6.jpg", maxEdge: 1080, format: "jpeg", quality: 76 },
 
     {
         src: "public/assets/testimonials/1589283973304.png",

@@ -6,8 +6,8 @@
             "slug": "camerax",
             "title": "CameraX",
             "desc": {
-                "short": "Open-source Android camera demo in Kotlin",
-                "long": "CameraX aims to demonstrate how to use CameraX APIs written in Kotlin. It is a Jetpack support library that makes camera app development easier, with a consistent API across most Android devices and backward-compatibility to Android 5.0 (API level 21). Built on camera2 with a simpler, lifecycle-aware use-case approach, it resolves many device compatibility issues for you. Optional Extensions unlock experiences like Portrait, HDR, Night, and Beauty on supported devices."
+                "short": "Open-source Kotlin camera app on Google Play",
+                "long": "CameraX is a Play Store camera app in Kotlin built with Jetpack CameraX — a working reference you can install, use, and copy. It covers photo, video, slo-mo, live ColorMatrix effects, panorama, and dual preview, plus OEM Extensions (HDR, Night, Portrait, Beauty) when the device supports them. Compose UI, Clean Architecture, and the full source on GitHub."
             },
             "images": {
                 "thumb": "/assets/projects/camerax/logo.png",
@@ -18,12 +18,12 @@
                 "organization": "Personal",
                 "category": "Productivity / Camera App",
                 "released_date": "2019-09-27",
-                "updated_date": "2025-08-30",
+                "updated_date": "2026-08-23",
                 "downloads": "100K+",
                 "link": "https://play.google.com/store/apps/details?id=com.arindam.camerax"
             },
             "content": "projects/camerax.md",
-            "source_code": "https://github.com/arindamxd/android-camerax",
+            "source_code": "https://github.com/arindamxd/camerax-android",
             "privacy_policy": true
         },
         {
