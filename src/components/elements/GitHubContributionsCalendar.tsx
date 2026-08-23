@@ -27,10 +27,11 @@ type Tip = {
 const GAP = 8;
 const VIEW_PAD = 8;
 const ARROW_INSET = 10;
-/** Same cutoff as Tailwind `max-narrow:` / `--breakpoint-narrow`. */
-const NARROW_MQ = "(max-width: 609.98px)";
-const BLOCK_DESKTOP = { size: 12, margin: 4 };
-const BLOCK_MOBILE = { size: 14, margin: 2 };
+/**
+ * SVG rect size + gap. Same on all viewports — the calendar SVG scales to column
+ * width, so this margin/size ratio (1:3) is what you see on desktop and mobile.
+ */
+const BLOCK = { size: 12, margin: 4 };
 
 function readScheme(): Scheme {
     if (typeof document === "undefined") return "dark";
@@ -49,17 +50,6 @@ function subscribeScheme(onStoreChange: () => void): () => void {
         window.removeEventListener("storage", onStoreChange);
         window.removeEventListener("pageshow", onStoreChange);
     };
-}
-
-function readNarrow(): boolean {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia(NARROW_MQ).matches;
-}
-
-function subscribeNarrow(onStoreChange: () => void): () => void {
-    const mq = window.matchMedia(NARROW_MQ);
-    mq.addEventListener("change", onStoreChange);
-    return () => mq.removeEventListener("change", onStoreChange);
 }
 
 function isTouchUi(): boolean {
@@ -156,8 +146,6 @@ export default function GitHubContributionsCalendar({ username, contributions }:
     );
     // Paint html.dark immediately; rebuild the heatmap when the main thread is free
     const calendarScheme = useDeferredValue(colorScheme);
-    const narrow = useSyncExternalStore(subscribeNarrow, readNarrow, (): boolean => false);
-    const block = narrow ? BLOCK_MOBILE : BLOCK_DESKTOP;
 
     useEffect(() => {
         setMounted(true);
@@ -279,8 +267,8 @@ export default function GitHubContributionsCalendar({ username, contributions }:
                     data={contributions}
                     colorScheme={calendarScheme}
                     theme={THEME}
-                    blockSize={block.size}
-                    blockMargin={block.margin}
+                    blockSize={BLOCK.size}
+                    blockMargin={BLOCK.margin}
                     maxLevel={4}
                     showMonthLabels={false}
                     showTotalCount={false}

@@ -10,7 +10,12 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Changed
 
+- CameraX project page: Play Store assets (logo, banner, screenshots), refreshed catalog/body copy, and public source link to [camerax-android](https://github.com/arindamxd/camerax-android)
+- Footer reach ticker figures refreshed (`footer-reach.json`)
+
 ### Fixed
+
+- Contributions heatmap uses the same block size/gap ratio on mobile as desktop (no tighter mobile packing)
 
 ## [1.0.9] — 2026-08-17
 
