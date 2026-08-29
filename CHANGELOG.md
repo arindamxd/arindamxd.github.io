@@ -8,10 +8,12 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Added
 
+- Markdown tool: Print Light / Print Dark opens the browser print dialog as an isolated sheet (Save as PDF) so the live preview does not snap back to app chrome
+
 ### Changed
 
 - CameraX project page: Play Store assets (logo, banner, screenshots), refreshed catalog/body copy, and public source link to [camerax-android](https://github.com/arindamxd/camerax-android)
-- Footer reach ticker figures refreshed (`footer-reach.json`)
+- Footer reach ticker refreshed (`footer-reach.json`, yearly uniques/views as of 2026-08-29)
 - Dead-code cleanup: unused `/design` skeleton CSS, unused catalog/tool lookup helpers, and reach-tool copy now pointing at `footer-reach.json` (author gallery photos kept)
 
 ### Fixed
