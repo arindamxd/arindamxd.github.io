@@ -17,9 +17,29 @@ import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
                 </label>
                 <button type="button" class="tools-chip" data-md-action="sample">Sample</button>
                 <button type="button" class="tools-chip" data-md-action="clear">Clear</button>
-                <button type="button" class="tools-btn-primary" data-md-action="fullscreen">Full page preview</button>
             </div>
             <p id="md-filename" class="tools-md-filename" aria-live="polite"></p>
+            <div class="tools-md-toolbar-end">
+                <div class="tools-md-print" role="group" aria-label="Print as PDF">
+                    <button
+                        type="button"
+                        class="tools-chip"
+                        data-md-action="print-light"
+                        title="Opens the browser print dialog in light mode (Save as PDF)"
+                    >
+                        Print Light
+                    </button>
+                    <button
+                        type="button"
+                        class="tools-chip"
+                        data-md-action="print-dark"
+                        title="Opens the browser print dialog in dark mode (Save as PDF)"
+                    >
+                        Print Dark
+                    </button>
+                </div>
+                <button type="button" class="tools-btn-primary" data-md-action="fullscreen">Full page preview</button>
+            </div>
         </div>
 
         <!-- Flat grid: both boxes share one row track → identical height -->
@@ -29,7 +49,6 @@ import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
             </div>
             <div class="tools-md-pane-head tools-md-head-preview">
                 <p class="tools-md-pane-label">Preview</p>
-                <button type="button" class="tools-chip" data-md-action="copy-html">Copy HTML</button>
             </div>
 
             <div class="tools-md-box tools-md-editor-wrap">
@@ -51,7 +70,27 @@ import ToolsPageShell from "../../components/tools/ToolsPageShell.astro";
         <div id="md-fullscreen" class="tools-md-fullscreen" hidden>
             <div class="tools-md-fullscreen-bar">
                 <p class="tools-md-pane-label">Full page preview</p>
-                <button type="button" class="tools-chip" data-md-action="close-fullscreen">Close</button>
+                <div class="tools-md-fullscreen-actions">
+                    <div class="tools-md-print" role="group" aria-label="Print as PDF">
+                        <button
+                            type="button"
+                            class="tools-chip"
+                            data-md-action="print-light"
+                            title="Opens the browser print dialog in light mode (Save as PDF)"
+                        >
+                            Print Light
+                        </button>
+                        <button
+                            type="button"
+                            class="tools-chip"
+                            data-md-action="print-dark"
+                            title="Opens the browser print dialog in dark mode (Save as PDF)"
+                        >
+                            Print Dark
+                        </button>
+                    </div>
+                    <button type="button" class="tools-chip" data-md-action="close-fullscreen">Close</button>
+                </div>
             </div>
             <div id="md-fullscreen-body" class="tools-md-fullscreen-body tools-md-preview" data-lenis-prevent></div>
         </div>

@@ -114,7 +114,7 @@
 }
 
 .tools-md-toolbar {
-    @apply flex flex-wrap items-center justify-between gap-x-4 gap-y-3;
+    @apply flex w-full flex-wrap items-center gap-x-4 gap-y-3;
 }
 
 .tools-md-toolbar-actions {
@@ -126,8 +126,12 @@
 }
 
 .tools-md-filename {
-    @apply m-0 font-manrope text-[13px] font-semibold tracking-[-0.04em];
+    @apply m-0 min-w-0 flex-1 truncate font-manrope text-[13px] font-semibold tracking-[-0.04em];
     color: color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+
+.tools-md-toolbar-end {
+    @apply ms-auto flex flex-wrap items-center justify-end gap-[0.65rem];
 }
 
 .tools-md-pane-label {
@@ -271,7 +275,15 @@
 }
 
 .tools-md-fullscreen-bar {
-    @apply flex shrink-0 items-center justify-between gap-4 border-b border-border bg-surface px-5 py-4;
+    @apply flex shrink-0 flex-wrap items-center justify-between gap-4 border-b border-border bg-surface px-5 py-4;
+}
+
+.tools-md-fullscreen-actions {
+    @apply flex flex-wrap items-center justify-end gap-[0.65rem];
+}
+
+.tools-md-print {
+    @apply flex flex-wrap items-center gap-[0.5rem];
 }
 
 .tools-md-fullscreen-body {

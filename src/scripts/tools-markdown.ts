@@ -3,6 +3,7 @@
  */
 import { bootOnce } from './boot-once';
 import { marked } from 'marked';
+import { printMarkdownHtml } from './tools-markdown-print';
 
 const STORAGE_KEY = 'tools-markdown-draft-v1';
 
@@ -116,6 +117,18 @@ function init(): void {
         document.body.classList.remove('tools-md-fullscreen-open');
     }
 
+    function printPreview(theme: 'light' | 'dark'): void {
+        const fileLabel = filenameEl?.textContent?.trim();
+        const title = fileLabel
+            ? fileLabel.replace(/\.(md|markdown|txt)$/i, '')
+            : 'Markdown preview';
+        printMarkdownHtml({
+            html: lastHtml,
+            title,
+            theme,
+        });
+    }
+
     function loadDraft(): void {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -128,7 +141,7 @@ function init(): void {
     }
 
     root.querySelectorAll('[data-md-action]').forEach((btn) => {
-        btn.addEventListener('click', async () => {
+        btn.addEventListener('click', () => {
             const action = btn.getAttribute('data-md-action');
             if (action === 'sample') {
                 source.value = SAMPLE;
@@ -152,18 +165,13 @@ function init(): void {
                 closeFullscreen();
                 return;
             }
-            if (action === 'copy-html') {
-                if (!lastHtml) return;
-                try {
-                    await navigator.clipboard.writeText(lastHtml);
-                    const prev = btn.textContent;
-                    btn.textContent = 'Copied';
-                    setTimeout(() => {
-                        btn.textContent = prev;
-                    }, 1200);
-                } catch {
-                    /* ignore */
-                }
+            if (action === 'print-light') {
+                printPreview('light');
+                return;
+            }
+            if (action === 'print-dark') {
+                printPreview('dark');
+                return;
             }
         });
     });
