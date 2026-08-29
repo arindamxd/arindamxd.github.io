@@ -6,5 +6,3 @@ export const AVAILABLE_WORDS = [
     "meetups",
     "projects",
 ] as const;
-
-export type AvailableWord = (typeof AVAILABLE_WORDS)[number];

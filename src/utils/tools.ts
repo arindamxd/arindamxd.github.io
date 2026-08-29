@@ -32,11 +32,7 @@ export const siteTools: SiteTool[] = [
         slug: "analytics-reach",
         title: "Reach stats",
         description:
-            "Format GA4 uniques and views into footer.reach JSON for author-metadata.",
+            "Format GA4 uniques and views into src/content/footer-reach.json.",
         href: "/tools/analytics-reach",
     },
 ];
-
-export function getTool(slug: string): SiteTool | undefined {
-    return siteTools.find((tool) => tool.slug === slug);
-}

@@ -249,7 +249,3 @@ export function getBlogs(): Blog[] {
         .map(toBlog)
         .sort((a, b) => b.date.getTime() - a.date.getTime());
 }
-
-export function getBlogBySlug(slug: string): Blog | undefined {
-    return getBlogs().find((b) => b.slug === slug);
-}

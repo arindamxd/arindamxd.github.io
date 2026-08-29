@@ -1,5 +1,5 @@
 /**
- * /tools/analytics-reach — format GA4 metrics into footer.reach JSON for author-metadata.
+ * /tools/analytics-reach — format GA4 metrics into src/content/footer-reach.json.
  * OAuth tokens stay in the browser; nothing is sent to a custom backend.
  */
 import { bootOnce } from "./boot-once";

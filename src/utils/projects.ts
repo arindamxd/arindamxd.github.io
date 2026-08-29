@@ -190,7 +190,3 @@ export function getProjectCatalogMeta(): { title: string; description: string } 
 export function getProjects(): Project[] {
     return (catalog.data as ProjectCatalogEntry[]).map(toProject);
 }
-
-export function getProjectBySlug(slug: string): Project | undefined {
-    return getProjects().find((p) => p.slug === slug);
-}

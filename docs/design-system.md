@@ -875,8 +875,7 @@ Do **not** put it in the first viewport as a stat strip beside the brand.
 Notes:
 
 - Extend `count-up.ts` if decimals aren’t supported yet (`data-count-decimals`); until then, render static formatted strings and only animate integers (e.g. experience years — already live).
-- Prefer **static curated numbers** in `author-metadata.json` (e.g. `footer.reach`) updated monthly over live analytics in the browser (keeps the site static, private keys off GitHub Pages).
-- Optional later: a `/tools` private fetcher that prints updated JSON for you to commit — not a public API call on every page view.
+- Prefer **static curated numbers** in [`footer-reach.json`](../src/content/footer-reach.json) (updated via `/tools/analytics-reach`) over live analytics in the browser (keeps the site static, private keys off GitHub Pages).
 
 **Data shape (suggested)**
 

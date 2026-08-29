@@ -94,7 +94,7 @@ import { clearMotionStyles, springSoft, staggerList } from "./motion-tokens";
     function armLooping(): void {
         stopLoops?.();
         stopLoops = null;
-        const tracks = [...document.querySelectorAll(".logo-track, .design-marquee-track")];
+        const tracks = [...document.querySelectorAll(".logo-track")];
         if (!tracks.length) return;
 
         const onscreen = new Set<Element>();
