@@ -12,6 +12,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 - CameraX project page: Play Store assets (logo, banner, screenshots), refreshed catalog/body copy, and public source link to [camerax-android](https://github.com/arindamxd/camerax-android)
 - Footer reach ticker figures refreshed (`footer-reach.json`)
+- Dead-code cleanup: unused `/design` skeleton CSS, unused catalog/tool lookup helpers, and reach-tool copy now pointing at `footer-reach.json` (author gallery photos kept)
 
 ### Fixed
 
