@@ -12,6 +12,7 @@ Versioning follows [SemVer](https://semver.org/). Site version lives in [`packag
 
 ### Changed
 
+- First-session page loader: quieter lockup (no fake percent / pulse / name splash), fade instead of a curtain, and dismiss when the document is usable instead of waiting on `window` `load`
 - CameraX project page: Play Store assets (logo, banner, screenshots), refreshed catalog/body copy, and public source link to [camerax-android](https://github.com/arindamxd/camerax-android)
 - Footer reach ticker refreshed (`footer-reach.json`, yearly uniques/views as of 2026-08-29)
 - Dead-code cleanup: unused `/design` skeleton CSS, unused catalog/tool lookup helpers, and reach-tool copy now pointing at `footer-reach.json` (author gallery photos kept)

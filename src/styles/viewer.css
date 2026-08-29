@@ -287,6 +287,18 @@ body.media-viewer-open {
     overflow: hidden;
 }
 
+@keyframes page-loader-pulse {
+    0% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-active) 45%, transparent);
+    }
+    70% {
+        box-shadow: 0 0 0 10px color-mix(in srgb, var(--color-active) 0%, transparent);
+    }
+    100% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-active) 0%, transparent);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .media-viewer-skeleton,
     .media-viewer-status-dot,

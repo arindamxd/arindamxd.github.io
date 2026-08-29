@@ -526,7 +526,7 @@ Blog / project / privacy: `50→34`, leading `105%`, tracking `-0.05em`, **left*
 
 | Mechanism | When |
 | --- | --- |
-| Page loader | First paint hold, then exit slide |
+| Page loader | First-session cover (quiet lockup + indeterminate bar), then fade |
 | **Scroll reveal** | Section / list enter — Motion `inView` + `animate` (`reveal.ts`, §12.2.2). CSS only holds first paint / prep. |
 | Lenis | Smooth **wheel** scroll on fine pointer; native on coarse touch |
 | **Spring physics** | Below-fold reveals use `springSoft` (`motion-tokens.ts`). Interactive chrome still CSS `200ms` until tools adopt `springSnappy`. |
